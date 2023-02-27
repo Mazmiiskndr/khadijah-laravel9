@@ -10,19 +10,21 @@
     <meta name="keywords"
         content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{asset('assets/images/favicon.png')}}" type="image/x-icon">
+
+    {{-- Start Favicon --}}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon_khadijah.png') }}" />
+    {{-- End Favicon --}}
     <title>{{ $title ?? config('app.name') }}</title>
     <!-- Google font-->
     {{-- <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i&amp;display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
         rel="stylesheet"> --}}
-    {{-- @include('layouts.css') --}}
-    <x-layouts.css />
+    {{-- @include('backend.css') --}}
+    <x-backend.css />
 
     {{--
-    <x-layouts.css /> --}}
+    <x-backend.css /> --}}
     {{-- @yield('style') --}}
     @stack('styles')
 </head>
@@ -48,15 +50,15 @@
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
 
         <!-- Page Header Start-->
-        {{-- @include('layouts.header') --}}
-        <x-layouts.header />
+        {{-- @include('backend.header') --}}
+        <x-backend.header />
         <!-- Page Header Ends  -->
 
         <!-- Page Body Start-->
         <div class="page-body-wrapper">
             <!-- Page Sidebar Start-->
-            {{-- @include('layouts.sidebar') --}}
-            <x-layouts.sidebar />
+            {{-- @include('backend.sidebar') --}}
+            <x-backend.sidebar />
             <!-- Page Sidebar Ends-->
             <div class="page-body">
                 <div class="container-fluid">
@@ -71,7 +73,7 @@
                             <div class="col-6">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item">
-                                        <a href="{{ route('/')}}">
+                                        <a href="{{ route('backend.dashboard')}}">
                                             <svg class="stroke-icon">
                                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                                             </svg>
@@ -92,16 +94,16 @@
                 <!-- Container-fluid Ends-->
             </div>
             <!-- footer start-->
-            {{-- @include('layouts.footer') --}}
-            <x-layouts.footer />
+            {{-- @include('backend.footer') --}}
+            <x-backend.footer />
             <!-- footer end-->
 
         </div>
     </div>
 
     <!-- latest jquery-->
-    <x-layouts.script />
-    {{-- @include('layouts.script') --}}
+    <x-backend.script />
+    {{-- @include('backend.script') --}}
     @stack('scripts')
     <!-- Plugin used-->
 

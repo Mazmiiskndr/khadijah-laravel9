@@ -1,13 +1,13 @@
 <div class="sidebar-wrapper" sidebar-layout="fill-svg">
     <div>
-        <div class="logo-wrapper"><a href="{{ route('/')}}">
-                <img class="img-fluid for-light" src="{{ asset('assets/images/logo/logo.png') }}" alt="">
-                <img class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}" alt="">
+        <div class="logo-wrapper">
+            <a href="{{ route('backend.dashboard')}}">
+                <img class="img-fluid for-dark" src="{{ asset('assets/images/logo/khadijah-label.png') }}" alt="Logo" width="150">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar"><i class="status_toggle middle sidebar-toggle" data-feather="grid"> </i></div>
         </div>
-        <div class="logo-icon-wrapper"><a href="{{ route('/')}}">
+        <div class="logo-icon-wrapper"><a href="{{ route('backend.dashboard')}}">
                 <img class="img-fluid" src="{{ asset('assets/images/logo/logo-icon.png') }}" alt="">
             </a>
         </div>
@@ -21,14 +21,23 @@
                             <i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
                         </div>
                     </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('index') }}">
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('backend.dashboard') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
                             </svg>
                             <span>Dashboard</span></a>
+                    </li>
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('backend.users.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Data Pelanggan</span></a>
                     </li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title"
                             href="#">

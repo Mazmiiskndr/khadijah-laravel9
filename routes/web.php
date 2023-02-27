@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -33,21 +35,16 @@ Route::controller(CustomerLoginController::class)->name('customer.')->prefix('cu
     Route::post('/logout', 'destroy')->name('logout');
 });
 
-// Route::get('/index', function () {
-//     return view('index');
-// })->name('index');
-// Route::get('/log', function () {
-//     return view('frontend.auth.login');
-// })->name('log');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// Dashboard
+Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->group(function () {
+    Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::resource('users', UserController::class);
 });
+
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__.'/auth.php';
