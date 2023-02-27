@@ -4,7 +4,7 @@ namespace App\View\Components\layouts;
 
 use Illuminate\View\Component;
 
-class Header extends Component
+class Css extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class Header extends Component
      */
     public function render()
     {
-        return view('components.layouts.header');
+        return view('components.backend.css');
     }
 }

@@ -4,17 +4,16 @@ namespace App\View\Components\layouts;
 
 use Illuminate\View\Component;
 
-class Master extends Component
+class Footer extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public $title;
-    public function __construct($title = "Khadijah | Dashboard")
+    public function __construct()
     {
-        $this->title = $title;
+        //
     }
 
     /**
@@ -24,6 +23,6 @@ class Master extends Component
      */
     public function render()
     {
-        return view('components.layouts.master');
+        return view('components.backend.footer');
     }
 }
