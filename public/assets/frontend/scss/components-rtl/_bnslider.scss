@@ -1,0 +1,63 @@
+.bnslider-text-content {
+  &.txt-right .bnslider-text-content-flex {
+    align-items: flex-start;
+    .bnslider-text2-1,
+    .bnslider-text2-2,
+    .bnslider-text2-3 {
+      float: left;
+    }
+  }
+  &.txt-left .bnslider-text-content-flex {
+    align-items: flex-end;
+  }
+  @media (max-width: $mobile-slider-breikpoint) {
+    &.txt-left-m .bnslider-text-content-flex {
+      align-items: flex-end;
+      .bnslider-text2-1,
+      .bnslider-text2-2,
+      .bnslider-text2-3 {
+        float: right;
+      }
+    }
+    &.txt-right-m .bnslider-text-content-flex {
+      align-items: flex-start;
+      .bnslider-text2-1,
+      .bnslider-text2-2,
+      .bnslider-text2-3 {
+        float: left;
+      }
+    }
+    &.txt-top-m .bnslider-text-content-flex {
+      justify-content: flex-end;
+    }
+    &.txt-bottom-m .bnslider-text-content-flex {
+      justify-content: flex-start;
+    }
+  }
+}
+.text-right {
+  .bnslider-text--price-sale, .bnslider-text--price {
+    justify-content: flex-start;
+  }
+}
+.btn-wrap.text-left {
+  text-align: right !important;
+}
+.btn-wrap.text-right {
+  text-align: left !important;
+}
+@media (min-width: $screen-sm-min) {
+  .text-sm-left.text-right {
+    .bnslider-text--price-sale, .bnslider-text--price {
+      justify-content: flex-end;
+    }
+  }
+}
+.bnslider {
+  .countdown-box {
+    .countdown > span:after {
+      right: auto;
+      left: -.07em;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.hdr-style2 .hdr-content {
+  .hdr-links {
+    text-align: left;
+  }
+}
+@media (min-width: $mobile-menu-breikpoint) {
+  .hdr-style2 .hdr-content {
+    .hdr-nav {
+      text-align: right;
+    }
+  }
+}

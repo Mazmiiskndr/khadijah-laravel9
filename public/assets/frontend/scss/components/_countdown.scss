@@ -1,0 +1,567 @@
+.countdown-box {
+  position: relative;
+  text-align: center;
+  background: $countdown-box_bg;
+  border: 1px solid $countdown-box_border;
+  @include transition (opacity 0.3s ease 0s, visibility 0.3s linear 0s);
+  @media (max-width: $screen-sm-max) {
+    max-width: 100%;
+  }
+  .countdown-box-bg {
+    position: absolute;
+    @include fullAbsolute();
+    z-index: 1;
+  }
+  .countdown {
+    position: relative;
+    display: flex;
+    z-index: 2;
+    justify-content: center;
+    padding: 13px 10px;
+    color: $countdown-box_text_color;
+    -webkit-backface-visibility: hidden;
+    &:empty {
+      display: none;
+    }
+  }
+  .countdown > span {
+    position: relative;
+    display: inline-block;
+    padding: 0 .8em;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 1.25em;
+    font-weight: 300;
+    span {
+      min-width: 1.36em;
+      font-size: 1.563em;
+      line-height: 1.2em;
+      font-weight: bold;
+      display: block;
+      text-align: center;
+    }
+  }
+  .countdown > span:after {
+    position: absolute;
+    top: 50%;
+    right: -.15em;
+    display: block;
+    content: ':';
+    transform: translateY(-50%);
+    font-size: 2.188em;
+    line-height: 1em;
+    font-weight: 600;
+    content: ":";
+  }
+  .countdown > span:last-child:after {
+    display: none;
+  }
+}
+.countdown-box-bg {
+  position: relative;
+  z-index: 1;
+  & + * {
+    margin-top: 40px;
+  }
+  .countdown {
+    display: inline-flex;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .countdown > span {
+    position: relative;
+    margin: 0 10px;
+    padding: 5px 15px;
+    color: $countdown-box_text_color;
+    font-size: 16px;
+    line-height: 1.25em;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    text-transform: lowercase;
+    @media (max-width: $screen-xs-max) {
+      font-size: 14px;
+      margin: 0 5px;
+    }
+    &:after {
+      position: absolute;
+      z-index: -1;
+      content: '';
+      display: block;
+      height: calc(100% + 10px);
+      width: 100%;
+      top: -5px;
+      left: 0;
+      -webkit-mask-size: cover;
+      mask-size: cover;
+      background-color: $custom_color;
+    }
+    span {
+      min-width: 1.36em;
+      font-size: 30px;
+      line-height: 1em;
+      font-weight: 600;
+      font-family: $heading_font_family;
+      display: block;
+      text-align: center;
+    }
+  }
+}
+
+.countdown-box-full {
+  position: relative;
+  padding: 22px 20px;
+  background: $countdown-box-full_bg;
+  border: 1px solid $countdown-box-full_border;
+  @media (max-width: $screen-xs-max) {
+    padding: 12px 15px;
+  }
+  & + * {
+    margin-top: 40px;
+  }
+  [class*='icon'] {
+    margin-right: 25px;
+    font-size: 59px;
+    color: $countdown-box-full_text_color;
+    -webkit-backface-visibility: hidden;
+    @media (max-width: $screen-xs-max) {
+      font-size: 36px;
+      margin-right: 20px;
+    }
+  }
+  .countdown-txt {
+    margin-bottom: 5px;
+    font-size: 19px;
+    line-height: 23px;
+    font-weight: 500;
+    color: $countdown-box-full_text_color;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+    transform: translateZ(0);
+    @media (max-width: $screen-xs-max) {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+  .countdown {
+    margin-left: -13px;
+    margin-right: -13px;
+  }
+  .countdown > span {
+    position: relative;
+    display: inline-block;
+    padding: 0 .8em;
+    color: $countdown-box_text_color;
+    vertical-align: middle;
+    font-size: 16px;
+    line-height: 1.25em;
+    font-weight: 300;
+    @media (max-width: $screen-xs-max) {
+      font-size: 11px;
+    }
+    span {
+      min-width: 1.36em;
+      font-size: 1.563em;
+      line-height: 1.2em;
+      font-weight: bold;
+      display: block;
+      text-align: center;
+    }
+  }
+  .countdown > span:after {
+    position: absolute;
+    top: 50%;
+    right: -.15em;
+    display: block;
+    content: ':';
+    transform: translateY(-50%);
+    font-size: 2.333em;
+    line-height: 1em;
+    font-weight: 400;
+  }
+  .countdown > span:last-child:after {
+    display: none;
+  }
+}
+.countdown-box-full .row > .col  {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+.countdown-box-full-text {
+  max-width: 800px;
+  position: relative;
+  padding: 0;
+  background: $countdown-box-full_bg;
+  border: 1px solid $countdown-box-full_border;
+  @media (max-width: $screen-xs-max) {
+    .row {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+  .row > * {
+    padding: 18px 40px;
+    @media (max-width: $screen-xl-max) {
+      padding: 15px 30px;
+    }
+    @media (max-width: $screen-xs-max) {
+      padding: 10px;
+      flex: 1;
+      text-align: center;
+      &:last-child {
+        padding-top: 0;
+        flex: 1;
+      }
+    }
+  }
+  .row > *:first-child:not(:only-child) {
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: calc(50% - 24px);
+      right: 0;
+      height: 48px;
+      width: 1px;
+      background-color: $countdown-box-full_border;
+      @media (max-width: $screen-xs-max) {
+        display: none;
+      }
+    }
+  }
+  .countdown-txt {
+    font-size: 21px;
+    line-height: 1.5em;
+    font-weight: 500;
+    color: $countdown-box-full_text_color;
+    -webkit-backface-visibility: hidden;
+    text-align: center;
+    @media (max-width: $screen-xl-max) {
+      font-size: 20px;
+    }
+    @media (max-width: $screen-md-max) {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+  .countdown {
+    white-space: nowrap;
+  }
+  .countdown > span {
+    position: relative;
+    display: inline-block;
+    padding: 0 1.1em;
+    color: $countdown-box-full_text_color;
+    vertical-align: middle;
+    font-size: 15px;
+    line-height: 1.25em;
+    font-weight: 400;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 14px;
+    }
+    @media (max-width: $screen-xs-max) {
+      font-size: 13px;
+    }
+    span {
+      min-width: 1.36em;
+      font-size: 1.933em;
+      line-height: 1.5em;
+      font-weight: 600;
+      display: block;
+      text-align: center;
+    }
+  }
+  .countdown > span:after {
+    position: absolute;
+    top: 50%;
+    right: -.15em;
+    display: block;
+    content: ':';
+    transform: translateY(-50%);
+    font-size: 2.333em;
+    line-height: 1em;
+    font-weight: 400;
+  }
+  .countdown > span:last-child:after {
+    display: none;
+  }
+}
+@media (min-width: $screen-sm-min) {
+  .countdown-box-full-text.w-md {
+    .countdown-txt {
+      font-size: 16px;
+    }
+    .countdown > span {
+      font-size: 11px;
+    }
+    .countdown-txt {
+      font-size: 19px;
+    }
+    .row > * {
+      padding: 18px 30px;
+    }
+    .row > *:first-child:not(:only-child):after {
+      top: calc(50% - 19px);
+      height: 38px;
+    }
+  }
+  .countdown-box-full-text.w-sm {
+    .countdown-txt {
+      font-size: 15px;
+    }
+    .countdown > span {
+      font-size: 11px;
+    }
+    .countdown-txt {
+      font-size: 18px;
+    }
+    .row > * {
+      padding: 15px 25px;
+    }
+    .row > *:first-child:not(:only-child):after {
+      top: calc(50% - 19px);
+      height: 38px;
+    }
+  }
+}
+.countdown-box-full-text-modal {
+  max-width: 800px;
+  position: relative;
+  padding: 0 0 25px;
+  margin-bottom: 20px;
+  background: $countdown-box-full_bg;
+  border-bottom: 1px solid $countdown-box-full_border;
+  @media (max-width: $screen-xs-max) {
+    padding-bottom: 20px;
+    .row {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  .row > * {
+    padding: 0 10px;
+    @media (max-width: $screen-xs-max) {
+      flex: 1;
+      text-align: center;
+    }
+  }
+  .row > *:first-child:not(:only-child) {
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      right: -10px;
+      height: 38px;
+      width: 1px;
+      background-color: $countdown-box-full_border;
+      @media (max-width: $screen-xs-max) {
+        display: none;
+      }
+    }
+  }
+  .countdown-txt {
+    padding: 0 0 0 10px;
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: 500;
+    color: $countdown-box-full_text_color;
+    -webkit-backface-visibility: hidden;
+    text-align: center;
+    @media (max-width: 1199px) and (min-width: $screen-md-min) {
+      font-size: 15px;
+    }
+    @media (max-width: $screen-xs-max) {
+      padding: 10px 10px 0;
+      font-size: 15px;
+    }
+  }
+  .countdown {
+    white-space: nowrap;
+  }
+  .countdown > span {
+    position: relative;
+    display: inline-block;
+    padding: 0 1.1em;
+    color: $countdown-box_text_color;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 1.25em;
+    font-weight: 400;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    @media (max-width: 1199px) and (min-width: $screen-md-min) {
+      font-size: 11px;
+    }
+    @media (max-width: $screen-xs-max) {
+      font-size: 11px;
+    }
+    span {
+      min-width: 1.36em;
+      font-size: 1.933em;
+      line-height: 1.5em;
+      font-weight: 600;
+      display: block;
+      text-align: center;
+    }
+  }
+  .countdown > span:after {
+    position: absolute;
+    top: 50%;
+    right: -.15em;
+    display: block;
+    content: ':';
+    transform: translateY(-50%);
+    font-size: 2.333em;
+    line-height: 1em;
+    font-weight: 400;
+  }
+  .countdown > span:last-child:after {
+    display: none;
+  }
+}
+.prd-block-three-column .countdown-box-full-text {
+  .row > * {
+    padding: 18px 20px;
+    @media (max-width: $screen-xl-max) {
+      padding: 15px 15px;
+    }
+    @media (max-width: $screen-xs-max) {
+      padding: 10px;
+      &:last-child {
+        padding-top: 0;
+      }
+    }
+  }
+  .row > *:first-child:not(:only-child) {
+    &:after {
+      top: 17px;
+    }
+  }
+  .countdown-txt {
+    font-size: 18px;
+    line-height: 24px;
+    @media (max-width: $screen-xl-max) {
+      font-size: 16px;
+    }
+    @media (max-width: $screen-lg-max) and (min-width: $screen-md-min) {
+      font-size: 16px;
+    }
+    @media (max-width: $screen-md-max) {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+  .countdown > span {
+    padding: 0 .7em;
+    font-size: 13px;
+    @media (max-width: $screen-xs-max) {
+      font-size: 13px;
+    }
+  }
+}
+.countdown-circle {
+  position: relative;
+  text-align: center;
+  border-top: 1px solid $label_sale_color;
+  margin-top: 0;
+  @include transition (opacity 0.3s ease 0s, visibility 0.3s linear 0s);
+  @media (max-width: $screen-sm-max) {
+    max-width: 100%;
+  }
+  .countdown {
+    margin-top: 7px;
+    display: flex;
+    justify-content: center;
+    -webkit-backface-visibility: hidden;
+    &:empty {
+      display: none;
+    }
+  }
+  .countdown > span {
+    position: relative;
+    display: inline-block;
+    padding: 0 .8em;
+    color: $label_sale_color;
+    vertical-align: middle;
+    font-size: 6px;
+    line-height: 1.25em;
+    font-weight: 600;
+    span {
+      min-width: 1.36em;
+      font-size: 2em;
+      line-height: 1.2em;
+      font-weight: bold;
+      display: block;
+      text-align: center;
+    }
+    &:nth-child(4) {
+      display: none;
+    }
+    &:nth-child(3):after {
+      display: none;
+    }
+  }
+  .countdown > span:after {
+    position: absolute;
+    top: 50%;
+    right: -.15em;
+    display: block;
+    content: ':';
+    transform: translateY(-50%);
+    font-size: 2.188em;
+    line-height: 1em;
+    font-weight: 600;
+  }
+  .countdown > span:last-child:after {
+    display: none;
+  }
+}
+a.minicart-drop-countdown {
+  display: block;
+  text-decoration: none;
+}
+@media (max-width: $screen-lg-max) {
+  .minicart-drop-countdown .countdown-box {
+    .countdown {
+      padding: 18px 18px;
+    }
+    .countdown > span {
+      font-size: 14px;
+    }
+  }
+}
+.icon--giftAnimate {
+  display: block;
+  animation: giftAnimate 4s infinite;
+}
+@keyframes giftAnimate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  5% {
+    transform: scale(1.15) rotate(-10deg);
+  }
+  10% {
+    transform: scale(1.3) rotate(10deg);
+  }
+  20% {
+    transform: scale(1) rotate(0deg);
+  }
+}

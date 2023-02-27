@@ -1,0 +1,15 @@
+.shop-feature-single {
+  .shop-feature-icon {
+    margin-right: 0;
+    margin-left: 15px;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .shop-feature-compact {
+    .shop-feature-icon {
+      padding-left: 10px;
+      padding-right: 0;
+    }
+  }
+}

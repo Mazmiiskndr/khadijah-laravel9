@@ -1,0 +1,22 @@
+.welcome-block-text-wrap {
+  @media (min-width: $screen-lg-min) {
+    padding-left: 90px;
+    padding-right: 0;
+  }
+}
+@media (min-width: $screen-lg-min) {
+  .welcome-block-social {
+    right: auto;
+    left: 0;
+  }
+}
+@media (max-width: $screen-xl-max) and (min-width: $screen-lg-min) {
+  .welcome-block-social {
+      right: auto;
+      left: 15px;
+  }
+}
+.welcome-block-icon {
+  right: auto;
+  left: 15%;
+}

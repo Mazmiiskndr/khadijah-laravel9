@@ -1,0 +1,167 @@
+/*----------------------------------------
+
+	Theme Name: FOX HTML5 eCommerce Template
+	Author: BigSteps
+	Author URI: http://themeforest.net/user/bigsteps
+
+-----------------------------------------*/
+/*----------------------------------------
+
+[Table of contents]
+
+1. Main Structure
+2. Main Typography
+  2.1. Headers / Text Blocks
+  2.2. Buttons
+  2.3. Forms Elements
+  2.4. Tags
+  2.5. Tooltips
+3. Menu
+  3.1. Megamenu
+  3.1. Mobile Menu
+3. Header
+  3.1. Promo Topline
+  3.2. Header Structure
+4. Footer
+6. Main Slider
+7. Banners
+8. Product and Category Page
+  8.1. Product Card
+  8.2. Product Page
+  8.3. Category Page
+  8.4. Product Swatches
+  8.4. Product Colors
+  8.4. Product Countdown
+9. Content Blocks
+  9.1. Brand Block
+  9.2. Shop Features Block
+  9.3. Subscribe Block
+  9.4. Instagram Block
+  9.5. Person Block
+  9.6. Testimonials Block
+  9.7. Text plus Icons Block
+  9.8. Facts Block
+  9.9. Contact Forms
+  9.10. Creative Carouse
+  9.11. Welcome Block
+10. Pages
+  10.1. Blog Pages
+  10.2. Cart Page
+  10.3. Coming Soon Page
+  10.4. Gallery Page
+  10.5. Collections Page
+  10.6. FAQ Page
+11. Tabs
+12. Breadcrumbs
+13. Modals
+14. Plugins
+
+---------------------------------------*/
+
+@import "_variables_lingeries.scss";
+
+@import "_mixins.scss";
+/*  1. Main Structure  */
+@import "components/_loader.scss";
+@import "components/_structure.scss";
+@import "components/_carousels-loading-hacks.scss";
+/*  2. Main Typography  */
+/*  2.1. Headers / Text Blocks  */
+@import "components/_typography.scss";
+/*  2.2. Buttons  */
+@import "components/_buttons.scss";
+/*  2.3. Forms Elements  */
+@import "components/_form.scss";
+/*  2.4. Tags  */
+@import "components/_tags.scss";
+/*  2.5. Tooltips  */
+@import "components/_tooltip.scss";
+/*  3. Menu  */
+/*  3.1. Megamenu  */
+@import "components/_megamenu.scss";
+/*  3.1. Mobile Menu  */
+@import "components/_mobilemenu";
+/*  3. Header  */
+/*  3.1. Promo Topline  */
+@import "components/_promo-topline.scss";
+/*  3.2. Header Structure  */
+@import "components/_header.scss";
+@import "components/_header2.scss";
+@import "components/_header3.scss";
+@import "components/_header4.scss";
+@import "components/_header5.scss";
+@import "components/_header6.scss";
+@import "components/_header7.scss";
+/*  4. Footer  */
+@import "components/_footer.scss";
+@import "components/_discount-coupon.scss";
+/*  6. Main Slider  */
+@import "components/_bnslider.scss";
+@import "components/_bnslider-video.scss";
+/*  7. Banners  */
+@import "components/_banners.scss";
+/*  8. Product and Category Page  */
+/*  8.1. Product Card  */
+@import "components/_product.scss";
+/*  8.2. Product Page  */
+@import "components/_product-page.scss";
+/*  8.3. Category Page  */
+@import "components/_category-filter.scss";
+/*  8.4. Product Swatches  */
+@import "components/_color-swatch.scss";
+@import "components/_size-swatch.scss";
+/*  8.4. Product Colors  */
+@import "components/_colors.scss";
+/*  8.4. Product Countdown  */
+@import "components/_countdown.scss";
+/*  8.5. Product Single  */
+@import "components/_product-full.scss";
+/*  9. Content Blocks  */
+/*  9.1. Brand Block  */
+@import "components/_brand-product.scss";
+@import "components/_brand-carousel.scss";
+/*  9.2. Shop Features Block  */
+@import "components/_shop-features.scss";
+/*  9.3. Subscribe Block  */
+@import "components/_subscribe-form.scss";
+/*  9.4. Instagram Block  */
+@import "components/_instagram.scss";
+/*  9.5. Person Block  */
+@import "components/_person.scss";
+/*  9.6. Testimonials Block  */
+@import "components/_testimonials.scss";
+/*  9.7. Text plus Icons Block  */
+@import "components/_text-icons-block.scss";
+/*  9.8. Facts Block  */
+@import "components/_facts-block.scss";
+/*  9.9. Contact Forms  */
+@import "components/_contact.scss";
+/*  9.10. Creative Carouse  */
+@import "components/_creative-carousel.scss";
+/*  9.11. Welcome Block  */
+@import "components/_welcome-block.scss";
+/*  10. Pages  */
+/*  10.1. Blog Pages  */
+@import "components/_post.scss";
+@import "components/_reviews.scss";
+/*  10.2. Cart Page  */
+@import "components/_cart-table.scss";
+/*  10.3. Coming Soon Page  */
+@import "components/_coming-soon.scss";
+/*  10.4. Gallery Page  */
+@import "components/_gallery.scss";
+/*  10.5. Collections Page  */
+@import "components/_collections.scss";
+/*  10.6. FAQ Page  */
+@import "components/_faq.scss";
+/*  11. Tabs  */
+@import "components/_tabs.scss";
+/*  12. Breadcrumbs  */
+@import "components/_breadcrumbs.scss";
+/*  13. Modals  */
+@import "components/_modal.scss";
+/*  14. Side Images  */
+@import "components/_side-fixed.scss";
+/*  15. Plugins  */
+@import "components/_plugins.scss";
+@import "components/_animation.scss";

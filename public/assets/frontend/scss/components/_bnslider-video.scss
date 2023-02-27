@@ -1,0 +1,231 @@
+.video-section-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  & > * {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .video {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .video-background-wrapper--no-overlay {
+    background-color: rgba(61, 66, 70, 0.2)
+  }
+
+  &.video-is-loaded .video__text-content::after, .no-js .video__text-content::after {
+    opacity: 0;
+    visibility: hidden;
+    content: none
+  }
+
+  .video--background {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease-in
+  }
+
+  .video-control__play {
+    pointer-events: none
+  }
+
+  .video-background-wrapper .video-control__play {
+    top: 50%;
+    transform: translateY(-50%)
+  }
+
+  .video-control__play .icon {
+    opacity: 0.5
+  }
+
+  .video-control__play-wrapper .video-control__pause {
+    display: none;
+  }
+
+  &.video-is-loaded {
+    .video-control__play-wrapper .video-control__pause {
+      display: block;
+    }
+  }
+
+  &.video-is-loaded .video-control__play {
+    pointer-events: auto
+  }
+
+  &.video-is-playing .video-control__play {
+    display: none;
+    visibility: hidden;
+    opacity: 0
+  }
+
+  &.video-is-loaded .video-control__play-wrapper-mobile .video-control__pause-mobile {
+    display: none;
+  }
+
+  &.video-is-loaded.video-is-playing .video-control__play-wrapper-mobile .video-control__pause-mobile {
+    display: flex;
+  }
+
+  &.video-is-playing .video {
+    display: block;
+  }
+
+  .video__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: .2 !important;
+    z-index: 3;
+  }
+
+  .video__image {
+    transition: opacity 0.8s cubic-bezier(0.44, 0.13, 0.48, 0.87);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    z-index: 1
+  }
+
+  &.video-is-loaded.video-is-playing .video__image {
+    opacity: 0;
+  }
+
+  @media only screen and (min-width: 750px) {
+    .video-background-wrapper .video__image {
+      opacity: 0
+    }
+  }
+
+  .no-autoplay .video__image {
+    opacity: 1
+  }
+
+  .video-control.is-paused .video-play {
+    display: none;
+  }
+
+  .video-control.is-paused .video-stop {
+    display: flex;
+  }
+
+  .bnslider-text-content .bnslider-text {
+    color: #ffffff;
+  }
+
+  .bnslider-text-content .bnslider-vert {
+    display: block;
+  }
+
+  .video-control__play.is-started {
+    background: red;
+    border-radius: 50% / 10%;
+    color: #FFFFFF;
+    font-size: 14px;
+    height: 3em;
+    width: 4em;
+    padding: 0;
+    position: relative;
+    text-align: center;
+    text-indent: 0.1em;
+    transition: all .2s;
+    cursor: pointer;
+
+    &:hover {
+      background: #282828;
+    }
+
+    &:before {
+      background: inherit;
+      border-radius: 5% / 50%;
+      bottom: 9%;
+      content: "";
+      left: -5%;
+      position: absolute;
+      right: -5%;
+      top: 9%;
+    }
+
+    &:after {
+      border-style: solid;
+      border-width: 1em 0 1em 1.732em;
+      border-color: transparent transparent transparent rgba(255, 255, 255, 0.75);
+      content: ' ';
+      font-size: 0.75em;
+      height: 0;
+      margin: -1em 0 0 -0.75em;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      width: 0;
+    }
+  }
+
+  .video-control__play-wrapper-mobile {
+    display: none;
+  }
+
+  .video-control__play-wrapper .video-control, .video-control__play-wrapper-mobile .video-control {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .video__copyright {
+    position: absolute;
+    padding: 4px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    font-size: 11px;
+    line-height: 1.6em;
+    color: #ffffff;
+    text-align: center;
+  }
+
+  .video__copyright:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: #000000;
+    opacity: .3;
+  }
+
+}
+
+.autoplay .video-section-wrapper.video-is-loaded .video--background {
+  display: block;
+  visibility: visible;
+  opacity: 1
+}
+
+.no-autoplay .video-section-wrapper .video-control__play-wrapper {
+  display: none;
+}
+
+.no-autoplay .video-section-wrapper .video-control__play-wrapper-mobile {
+  display: block;
+}

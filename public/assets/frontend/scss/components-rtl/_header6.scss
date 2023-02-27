@@ -1,0 +1,32 @@
+@media (max-width: $screen-xl-max) {
+  .hdr-style6 {
+    .hdr-inline-link > .dropdn_language:last-child .dropdn-content, .dropdn_currency .dropdn-content {
+      left: 0;
+      right: auto;
+    }
+  }
+}
+@media (min-width: $mobile-menu-breikpoint) {
+  .hdr-style6 {
+    .hdr-links-wrap {
+      & > *:last-child {
+        margin-right: 30px;
+        margin-left: 0;
+      }
+      .hdr-inline-link > *:last-child > a {
+        padding-right: 18px;
+        padding-left: 0;
+      }
+    }
+  }
+}
+@media (max-width: $screen-lg-max) and (min-width: $mobile-menu-breikpoint) {
+  .hdr-style6 {
+    .hdr-links-wrap {
+      & > .hdr-inline-link {
+        margin-right: 30px;
+        margin-left: 0;
+      }
+    }
+  }
+}

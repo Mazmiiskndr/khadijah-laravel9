@@ -1,0 +1,25 @@
+.prd-block {
+  .size-list {
+    li {
+      @include flex-inline();
+      margin: 5px 0 0 7px;
+      @media (max-width: $screen-sm-max) {
+        margin-left: 5px;
+        margin-right: 0;
+      }
+      span.value:after {
+        padding: 0 6px 0 0;
+      }
+    }
+  }
+  .images-list {
+    li {
+      @include flex-inline();
+      margin: 5px 0 0 7px;
+      @media (max-width: $screen-sm-max) {
+        margin-left: 5px;
+        margin-right: 0;
+      }
+    }
+  }
+}

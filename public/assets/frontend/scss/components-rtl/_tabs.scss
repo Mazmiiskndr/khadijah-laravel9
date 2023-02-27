@@ -1,0 +1,45 @@
+.panel-group--style1 {
+  .panel > .panel-heading {
+    .toggle-arrow {
+      right: auto;
+      left: 0;
+      span:first-child {
+        left: 50%;
+        margin-left: -6px;
+      }
+      span:last-child {
+        left: 50%;
+        margin-left: 0;
+      }
+    }
+  }
+}
+.panel-group--style1 .panel-heading a {
+  padding: 17px 0 17px 30px;
+}
+.panel-group--style1.panel-body-bg .panel-heading {
+  a {
+    padding: 17px 40px 17px 12px;
+  }
+}
+.panel-group--style2 {
+  .panel-heading {
+    a {
+      padding: 22px 20px 22px 40px;
+    }
+  }
+  .panel > .panel-heading {
+    .toggle-arrow {
+      left: 0;
+      right: auto;
+      span:first-child {
+        left: 50%;
+        margin-left: -5px;
+      }
+      span:last-child {
+        left: 50%;
+        margin-left: 0;
+      }
+    }
+  }
+}

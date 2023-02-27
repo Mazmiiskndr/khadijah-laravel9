@@ -1,0 +1,742 @@
+.holder-subscribe-full {
+  position: relative;
+  overflow: hidden;
+
+  .subscribe-form-title-lg {
+    margin-left: -.05em;
+    font-size: 90px;
+    line-height: 1.2em;
+    font-weight: 600;
+    color: $subscribe-form-bg-title_color;
+    @media (max-width: $screen-lg-max) {
+      font-size: 60px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 45px;
+    }
+  }
+
+  .subscribe-form-title-md {
+    font-size: 40px;
+    line-height: 1.2em;
+    font-weight: 600;
+    color: $subscribe-form-bg-title_color;
+    @media (max-width: $screen-sm-max) {
+      font-size: 30px;
+    }
+  }
+
+  .subscribe-form-title-sm {
+    font-size: 30px;
+    line-height: 1em;
+    color: $subscribe-form-bg-title_color;
+    @media (max-width: $screen-lg-max) {
+      font-size: 20px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 15px;
+    }
+  }
+
+  .subscribe-form-title-xs {
+    font-size: 17px;
+    color: $subscribe-form-bg-title_color;
+    @media (max-width: $screen-sm-max) {
+      font-size: 15px;
+    }
+  }
+
+  @media (max-width: $screen-md-max) {
+    .subscribe-form {
+      margin-top: 20px;
+    }
+  }
+
+  .subscribe-form .btn {
+    height: auto;
+    padding: 20px 50px;
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: 700;
+    color: $subscribe-form-bg-button_color;
+    background-color: $subscribe-form-bg-button_bg;
+    border-radius: 5px;
+
+    &:hover {
+      color: $subscribe-form-bg-button-hover_color;
+      background-color: $subscribe-form-bg-button-hover_bg;
+    }
+
+    @media (max-width: $screen-md-max) {
+      padding: 15px 30px;
+      font-size: 14px;
+      line-height: 16px;
+      font-weight: 700;
+    }
+    @media (max-width: $screen-sm-max) {
+      width: 100%;
+    }
+  }
+
+  .form-control-wrap {
+    position: relative;
+    margin-left: 100px;
+    margin-right: 30px;
+    @media (max-width: $screen-xl-max) {
+      margin-left: 60px;
+    }
+    @media (max-width: $screen-lg-max) {
+      margin-left: 30px;
+    }
+    @media (max-width: $screen-md-max) {
+      margin-left: 0;
+      margin-right: 10px;
+    }
+    @media (max-width: $screen-sm-max) {
+      margin-right: 0;
+    }
+
+    .bottom {
+      position: absolute;
+      background-color: $newsletter-form-input_border;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      transition: all .2s .5s;
+      @media (max-width: $screen-sm-max) {
+        height: 1px;
+      }
+    }
+
+    @media (max-width: $screen-sm-max) {
+      margin-bottom: 20px;
+      border-bottom-width: 1px;
+    }
+  }
+
+  input.form-control {
+    width: 100%;
+    height: 67px;
+    padding: 0;
+    font-size: 24px;
+    background-color: transparent;
+    color: $subscribe-form-input_color;
+    border: 0;
+    transition: padding .1s ease .25s;
+    @include input-placeholder-noupper($subscribe-form-input_color);
+    @media (max-width: $screen-lg-max) {
+      font-size: 17px;
+    }
+    @media (max-width: $screen-md-max) {
+      height: 46px;
+    }
+  }
+
+  input.form-control:focus {
+    padding: 0 15px;
+    transition: padding .1s ease;
+    @media only screen and (min-device-width: 1025px) {
+      ~ .bottom {
+        left: 10px;
+        right: 10px;
+        opacity: 0;
+        transition: all .2s 0s;
+      }
+    }
+  }
+
+  .form-control-wrap {
+    flex: 1;
+    @media (max-width: $screen-sm-max) {
+      min-width: 100%;
+    }
+  }
+
+  .form-control-wrap svg,
+  .form-control-wrap svg rect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    fill: none;
+    transition: 0s;
+    pointer-events: none;
+  }
+
+  .form-control-wrap svg rect {
+    stroke: $newsletter-form-input_border;
+    stroke-width: 2;
+    width: calc(100% - 4px)!important;
+    height: calc(100% - 4px)!important;
+    stroke-dasharray: 400%;
+    stroke-dashoffset: 400%;
+    transform: rotateY(0) rotateX(180deg) translate(0, -100%);
+    @media (max-width: $screen-sm-max) {
+      stroke-width: 2;
+    }
+  }
+
+  input.form-control:focus + svg rect {
+    stroke-dashoffset: 0;
+    transition: 1s;
+  }
+
+  @media (max-width: $screen-sm-max) {
+    .form-inline {
+      flex-direction: column;
+    }
+  }
+
+  .circle_decor {
+    opacity: 1;
+
+    path, circle {
+      fill: $subscribe-form-circle-decor_color;
+    }
+
+    width: 50%;
+    @media (max-width: $screen-sm-max) {
+      width: 70%;
+    }
+    @media (max-width: $screen-xs-max) {
+      width: 100%;
+    }
+  }
+
+  .errors {
+    position: absolute;
+    margin-top: 10px;
+    color: inherit;
+  }
+
+  .form--success {
+    font-size: 18px;
+    font-weight: 600;
+    color: inherit;
+    text-align: center;
+    width: 100%;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px $custom_color inset !important;
+  }
+
+  input:-webkit-autofill {
+    -webkit-text-fill-color: $newsletter-form-input_color !important;
+  }
+}
+
+.holder-subscribe-full:not(.holder-subscribe--compact) {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: $custom_color;
+  color: $subscribe-form-bg-text_color;
+  padding: 89px 0;
+  @media (min-width: $screen-lg-min) {
+    .row {
+      align-items: center;
+    }
+    .col-auto {
+      @include flexWidth(46%)
+    }
+  }
+  @media (max-width: $screen-md-max) {
+    padding: 60px 0;
+    .row {
+      display: block;
+    }
+    .col {
+      width: 100%;
+
+      .circle_decor {
+        width: 80% !important;
+      }
+    }
+  }
+  @media (max-width: $screen-md-max) {
+    padding: 50px 0;
+  }
+}
+
+.holder-subscribe-full.holder-subscribe--compact {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: $custom_color;
+    color: $subscribe-form-bg-text_color;
+    padding: 42px 45px;
+    @media (max-width: $screen-lg-max) {
+      padding: 40px 40px;
+    }
+    @media (max-width: $screen-md-max) {
+      padding: 40px 30px;
+    }
+    @media (max-width: $screen-md-max) {
+      padding: 30px 20px;
+    }
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .holder-subscribe-full .form-control-wrap svg {
+    display: none;
+  }
+}
+
+.popup-newsletter {
+  position: fixed;
+  z-index: 172;
+  left: 0;
+  right: 0;
+  bottom: -40px;
+  padding: 140px 0 180px;
+  color: $newsletter-modal_color;
+  @include transform(translate3d(0, 100%, 0));
+  @media (min-width: $screen-lg-min) {
+    .row {
+      align-items: center;
+    }
+  }
+  @media (max-width: 1600px) {
+    padding: 80px 0 120px;
+  }
+  @media (max-width: $screen-md-max) {
+    padding: 60px 0 100px;
+    .row {
+      display: block;
+    }
+  }
+  @media (max-width: $screen-sm-max) {
+    padding: 40px 0 80px;
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $newsletter-modal_bg;
+    opacity: .95;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .row {
+    @media (min-width: $screen-xl-min) {
+      margin-left: -50px;
+      margin-right: -50px;
+      & > * {
+        padding: 0 50px;
+      }
+    }
+    @media (max-width: $screen-lg-max) {
+      margin-left: -30px;
+      margin-right: -30px;
+      & > * {
+        padding: 0 30px;
+      }
+    }
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  form .errors {
+    position: absolute;
+    top: 100%;
+    color: $newsletter-modal_color;
+  }
+}
+
+.popup-newsletter-logo {
+  margin-bottom: 30px;
+  max-width: 350px;
+  @media (max-width: $screen-xl-max) {
+    max-width: 300px;
+  }
+  @media (max-width: $screen-lg-max) {
+    max-width: 200px;
+  }
+}
+
+.newsletter-form-title-lg {
+  margin-left: -.05em;
+  font-size: 50px;
+  line-height: 1.2em;
+  font-weight: 700;
+  color: $newsletter-form-bg-title_color;
+  @media (max-width: $screen-xl-max) {
+    font-size: 45px;
+  }
+  @media (max-width: 1600px) {
+    font-size: 36px;
+  }
+  @media (max-width: $screen-sm-max) {
+    font-size: 26px;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+    @media (max-width: $screen-sm-max) {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.newsletter-form-title-sm {
+  font-size: 17px;
+  font-weight: 600;
+  color: $newsletter-form-bg-title_color;
+  @media (max-width: $screen-sm-max) {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+    @media (max-width: $screen-sm-max) {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+@media (max-width: $screen-md-max) {
+  .newsletter-form {
+    margin-top: 20px;
+  }
+}
+
+.newsletter-form {
+  .btn {
+    height: auto !important;
+    padding: 20px 50px;
+    font-size: 21px;
+    line-height: 27px;
+    font-weight: 700;
+    color: $newsletter-form-bg-button_color;
+    background-color: $newsletter-form-bg-button_bg;
+
+    &, &:last-child {
+      border-radius: 6px;
+    }
+
+    &:hover {
+      color: $newsletter-form-bg-button-hover_color;
+      background-color: $newsletter-form-bg-button-hover_bg;
+    }
+
+    @media (max-width: $screen-md-max) {
+      padding: 15px 30px;
+      font-size: 14px;
+      line-height: 16px;
+      font-weight: 700;
+    }
+    @media (max-width: $screen-sm-max) {
+      width: 100%;
+    }
+  }
+
+  .form-control-wrap {
+    flex: 1;
+    position: relative;
+    margin-right: 30px;
+    @media (max-width: 1600px) {
+      min-width: 100%;
+      margin-bottom: 30px;
+    }
+    @media (max-width: $screen-md-max) {
+      margin-right: 10px;
+    }
+    @media (max-width: $screen-sm-max) {
+      margin-right: 0;
+    }
+
+    .bottom {
+      position: absolute;
+      background-color: $newsletter-form-input_border;
+      height: 2px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      transition: all .2s .2s;
+      @media (max-width: $screen-sm-max) {
+        height: 1px;
+      }
+    }
+
+    input.form-control {
+      width: 100%;
+      height: 67px;
+      padding: 0;
+      font-size: 24px;
+      background-color: transparent;
+      color: $newsletter-form-input_color;
+      border: 0;
+      transition: padding .1s ease .25s;
+      @include input-placeholder-noupper($newsletter-form-input_color);
+      @media (max-width: $screen-lg-max) {
+        font-size: 22px;
+      }
+      @media (max-width: $screen-md-max) {
+        height: 46px;
+        font-size: 20px;
+      }
+      @media (max-width: $screen-sm-max) {
+        font-size: 18px;
+      }
+    }
+
+    input.form-control:focus {
+      padding: 0 15px;
+      transition: padding .1s ease;
+      @media only screen and (min-device-width: 1025px) {
+        ~ .bottom {
+          left: 10px;
+          right: 10px;
+          opacity: 0;
+          transition: all .2s 0s;
+        }
+      }
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0px 1000px $newsletter-modal_bg inset !important;
+    }
+
+    input:-webkit-autofill {
+      -webkit-text-fill-color: $newsletter-form-input_color !important;
+    }
+
+    svg,
+    svg rect {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      width: 100%;
+      height: 100%;
+      fill: none;
+      transition: 0s;
+      pointer-events: none;
+    }
+
+    svg rect {
+      stroke: $newsletter-form-input_border;
+      stroke-width: 2;
+      width: calc(100% - 4px)!important;
+      height: calc(100% - 4px)!important;
+      stroke-dasharray: 500%;
+      stroke-dashoffset: 500%;
+      transform: rotateY(0) rotateX(180deg) translate(0, -100%);
+      @media (max-width: $screen-sm-max) {
+        stroke-width: 2;
+      }
+    }
+
+    input.form-control:focus + svg rect {
+      stroke-dashoffset: 0;
+      transition: 1s;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      .form-inline {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .newsletter-form svg {
+    display: none;
+  }
+}
+
+.popup-newsletter-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  z-index: 1;
+  cursor: pointer;
+  right: 15px;
+  top: 15px;
+  color: $newsletter-form-close_color;
+  background-color: $newsletter-form-close_bg;
+  font-size: 24px;
+  border-radius: 50%;
+  transition: .2s;
+
+  &:hover {
+    opacity: .75;
+  }
+
+  @media (max-width: $screen-sm-max) {
+    width: 32px;
+    height: 32px;
+    font-size: 24px;
+  }
+}
+
+.popup-newsletter.opened .row > * {
+  -webkit-animation: anim-elem 0.3s both;
+  animation: anim-elem 0.3s both;
+}
+
+.popup-newsletter .row > *:first-child {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.popup-newsletter .row > *:nth-child(2) {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.popup-newsletter .row > *:nth-child(3) {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+@-webkit-keyframes anim-elem {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100px, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes anim-elem {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100px, 0);
+    transform: translate3d(0, 100px, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.newslettermodal--classic.fancybox-content {
+  width: 800px;
+  color: $newsletter-modal-classic_color;
+  background: $newsletter-modal-classic_bg;
+
+  .popup-newsletter-content {
+    padding: 30px 30px 30px 0;
+    @media (max-width: $screen-xs-max) {
+      padding: 35px 20px;
+    }
+  }
+
+  .newslettermodal-content-title {
+    font-size: 26px;
+    line-height: 32px;
+    font-weight: bold;
+    font-family: $heading_font_family;
+    color: $newsletter-modal-classic_title;
+  }
+
+  .popup-newsletter-image {
+    height: 100%;
+  }
+
+  .popup-newsletter-image .placeholder-svg {
+    width: 100px;
+  }
+
+  .popup-newsletter-info-sm {
+    font-size: 11px;
+    line-height: 1.6em;
+  }
+
+  .popup-newsletter-info-sm a {
+    color: $newsletter-modal-classic_color;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.holder-subscribe-simple {
+  background-color: $custom_color;
+  padding: 25px 0;
+  @media (max-width: $screen-xs-max) {
+    padding: 20px 0;
+  }
+  .subscribe-form {
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+  }
+
+  .form-control-wrap {
+    flex: 1;
+  }
+
+  .form-inline .form-control {
+    border-radius: 4px;
+    width: calc(100% - 25px);
+    @media (max-width: $screen-xs-max) {
+      .holder-subscribe-simple .form-inline .form-control {
+        width: calc(100% - 15px);
+      }
+    }
+  }
+
+  .btn:not(:hover) {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .form-inline .btn:last-child {
+    height: 48px;
+    @media (max-width: $screen-xs-max) {
+      height: 44px;
+    }
+  }
+
+  .holder-subscribe-simple-title {
+    margin-bottom: 15px;
+    color: #ffffff;
+  }
+}
+body:not(.has-squared-btns):not(.has-round-btns) {
+  .form-inline .btn:last-child {
+    border-radius: 4px;
+  }
+}
+body.has-squared-btns {
+  .form-inline .form-control {
+    border-radius: 0;
+  }
+}
+body.has-round-btns {
+  .form-inline .form-control {
+      border-radius: 24px;
+    }
+}

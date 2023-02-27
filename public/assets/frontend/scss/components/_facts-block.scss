@@ -1,0 +1,63 @@
+.fact-blocks-row {
+  margin-top: -30px;
+}
+.fact-block {
+  margin-top: 30px;
+  text-align: center;
+  .number {
+    font-size: 100px;
+    line-height: 1.1em;
+    font-weight: 800;
+    color: $custom_color;
+    @media (max-width: $screen-xl-max) {
+      font-size: 90px;
+    }
+    @media (max-width: $screen-lg-max) {
+      font-size: 70px;
+    }
+    @media (max-width: $screen-md-max) {
+      font-size: 60px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 40px;
+    }
+  }
+  .title {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 600;
+    font-family: $heading_font_family;
+    @media (max-width: $screen-md-max) {
+      font-size: 20px;
+      line-height: 30px;
+      font-weight: 700;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 17px;
+      line-height: 28px;
+    }
+  }
+  .text {
+    padding: 25px 35px 0;
+    font-size: 16px;
+    line-height: 28px;
+    font-weight: 500;
+    @media (max-width: $screen-lg-max) {
+      font-size: 15px;
+      line-height: 26px;
+      padding: 20px 0 0;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 14px;
+      line-height: 24px;
+      padding: 10px 0 0;
+    }
+    a {
+      text-decoration: underline;
+      color: inherit;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

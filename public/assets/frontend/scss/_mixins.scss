@@ -1,0 +1,214 @@
+@mixin rotate($degrees) {
+  -webkit-transform: rotate($degrees);
+  -moz-transform: rotate($degrees);
+  -ms-transform: rotate($degrees);
+  -o-transform: rotate($degrees);
+  transform: rotate($degrees);
+}
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+@mixin box-shadow-clear {
+  -webkit-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+@mixin box-shadow($params) {
+  -webkit-box-shadow: $params;
+  -moz-box-shadow: $params;
+  box-shadow: $params;
+}
+@mixin transition($transition...) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+@mixin input-placeholder($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+    text-transform: uppercase;
+  }
+  &:-moz-placeholder {
+    color: $color;
+    text-transform: uppercase;
+  }
+  &::-moz-placeholder {
+    color: $color;
+    text-transform: uppercase;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    text-transform: uppercase;
+  }
+}
+@mixin input-placeholder-noupper($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+    text-transform: none;
+  }
+  &:-moz-placeholder {
+    color: $color;
+    text-transform: none;
+  }
+  &::-moz-placeholder {
+    color: $color;
+    text-transform: none;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    text-transform: none;
+  }
+}
+
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@mixin fullAbsolute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+@mixin flexboxImportant() {
+  display: -webkit-box !important;
+  display: -moz-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important;
+  display: flex !important;
+}
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+@mixin flex-inline() {
+  display: -webkit-inline-flex;
+  display: inline-flex;
+}
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex: $values;
+  -webkit-flex: $values;
+  -ms-flex: $values;
+  flex: $values;
+}
+@mixin flexWidth($values) {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 $values;
+  -ms-flex: 0 0 $values;
+  flex: 0 0 $values;
+  max-width: $values;
+}
+@mixin flex-direction($value: row) {
+  @if $value==row-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: horizontal;
+  } @else if $value==column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+  } @else if $value==column-reverse {
+    -webkit-box-direction: reverse;
+    -webkit-box-orient: vertical;
+  } @else {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+  }
+  -webkit-flex-direction: $value;
+  -moz-flex-direction: $value;
+  -ms-flex-direction: $value;
+  flex-direction: $value;
+}
+@mixin order($val) {
+  -webkit-box-ordinal-group: $val;
+  -moz-box-ordinal-group: $val;
+  -ms-flex-order: $val;
+  -webkit-order: $val;
+  order: $val;
+}
+@mixin align-items($value: stretch) {
+  @if $value==flex-start {
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+  } @else if $value==flex-end {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+  } @else {
+    -webkit-box-align: $value;
+    -ms-flex-align: $value;
+  }
+  -webkit-align-items: $value;
+  -moz-align-items: $value;
+  align-items: $value;
+}
+@mixin justify-content($value: flex-start) {
+  @if $value==flex-start {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+  } @else if $value==flex-end {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+  } @else if $value==space-between {
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+  } @else if $value==space-around {
+    -ms-flex-pack: distribute;
+  } @else {
+    -webkit-box-pack: $value;
+    -ms-flex-pack: $value;
+  }
+  -webkit-justify-content: $value;
+  -moz-justify-content: $value;
+  justify-content: $value;
+}
+@mixin respond-to($media) {
+  @if $media==xs-only {
+    @media only screen and (max-width: $screen-xs-max) {
+      @content;
+    }
+  }
+  @if $media==sm-only {
+    @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      @content;
+    }
+  } @else if $media==md-only {
+    @media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+      @content;
+    }
+  } @else if $media==lg-only {
+    @media only screen and (min-width: $screen-lg-min) and (max-width: $screen-lg-max) {
+      @content;
+    }
+  } @else if $media==xl-only {
+    @media only screen and (min-width: $screen-xl-min) {
+      @content;
+    }
+  }
+}
+@mixin imagePixel(){
+  image-rendering: optimizeSpeed;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -o-crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+  image-rendering: optimize-contrast;
+  -ms-interpolation-mode: nearest-neighbor;
+}
+@mixin hoverSupported {
+  @media not all and (hover: none) {
+    @content;
+  }
+}

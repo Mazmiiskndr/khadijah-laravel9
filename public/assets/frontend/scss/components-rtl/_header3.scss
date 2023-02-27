@@ -1,0 +1,8 @@
+@media (max-width: ($mobile-menu-breikpoint - 1)) {
+  .hdr-style3 {
+    .hdr-content .hdr-links {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.creative-product-carousel {
+  .prd-labels {
+    left: 0;
+    right: 15px;
+  }
+}
+.creative-product-carousel-wrap {
+  .collection-grid-1-vertical {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+.creative-product-carousel--reversed {
+  .collection-grid-1-vertical {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+@media (max-width: $screen-sm-max) {
+  .creative-product-carousel-loader, .creative-product-carousel--reversed .creative-product-carousel-loader {
+    left: 0;
+    right: 0;
+  }
+}

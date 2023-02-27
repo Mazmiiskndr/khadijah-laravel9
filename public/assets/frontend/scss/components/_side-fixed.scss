@@ -1,0 +1,97 @@
+body {
+  position: relative;
+}
+
+.side-fixed {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  svg {
+    width: 40vw;
+    height: 40vw;
+  }
+  .left-fixed svg {
+    transform: translate3d(-65%, 0, 0);
+  }
+  .right-fixed svg {
+    transform: translate3d(65%, 0, 0);
+  }
+}
+
+@media (max-width: 1620px) {
+  .side-fixed {
+    display: none;
+  }
+}
+
+.left-fixed {
+  position: absolute;
+  width: 100%;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+}
+
+.left-fixed > * {
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  &:nth-child(1){
+    top: 1250px;
+  }
+  &:nth-child(2){
+    top: 2500px;
+  }
+}
+
+.left-fixed img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: smRotate_l 7s infinite;
+}
+
+.right-fixed {
+  position: absolute;
+  width: 100%;
+  right: -20px;
+  top: 0;
+  bottom: 0;
+  text-align: right;
+}
+
+.right-fixed > * {
+  height: 100vh;
+  position: relative;
+  right: 0;
+  &:nth-child(1){
+    top: 850px;
+  }
+  &:nth-child(2){
+    top: 1200px;
+  }
+}
+
+.right-fixed img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  animation: smRotate_r 7s infinite;
+}
+
+@keyframes smRotate_l {
+  50% {
+    transform: rotate(-7deg);
+  }
+}
+
+@keyframes smRotate_r {
+  50% {
+    transform: rotate(7deg);
+  }
+}

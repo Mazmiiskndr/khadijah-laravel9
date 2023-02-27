@@ -1,0 +1,9 @@
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('assets/frontend/js/vendor-special/lazysizes.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor-special/ls.bgset.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor-special/ls.aspectratio.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor-special/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor-special/jquery.ez-plus.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor-special/instafeed.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/vendor/vendor.min.js') }}"></script>
+<script src="{{ asset('assets/frontend/js/app-html.js') }}"></script>

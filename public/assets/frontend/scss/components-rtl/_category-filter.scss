@@ -1,0 +1,145 @@
+
+.sidebar-block {
+  .sidebar-block_title {
+    padding: 16px 0 24px 45px;
+  }
+  .toggle-arrow {
+    left: 0;
+    right: auto;
+    span:first-child {
+      left: auto;
+      right: 50%;
+      margin-right: -5px;
+    }
+    span:last-child {
+      right: 50%;
+      left: auto;
+      margin-right: 0;
+    }
+  }
+}
+
+.selected-filters li > a {
+  padding: 0 13px 0 32px;
+  &:after {
+    left: 10px;
+    right: auto;
+  }
+}
+
+.sidebar-block ul.category-list {
+  .toggle-category {
+    right: auto;
+    left: 0;
+  }
+  &.two-column li:first-child:not(:only-child) {
+    float: right;
+  }
+  li a {
+    padding: 5px 25px 4px 0;
+    &:after, &:before {
+      left: auto;
+      right: 0;
+    }
+    &:after {
+      left: auto;
+      right: 5px;
+    }
+  }
+}
+
+ul.category-list-lg {
+  li a {
+    padding: 4px 25px 5px 0;
+  }
+}
+
+.filter-row {
+  .select-label {
+    & + * {
+      margin-right: 7px;
+      margin-left: 0;
+    }
+  }
+  .select-wrapper-sm select {
+    padding: 0 15px 0 30px;
+  }
+  .selected-filters-wrap {
+    .selected-filters li {
+      margin: 5px 0 5px 5px;
+    }
+  }
+}
+
+@media (min-width: 1921px) {
+  .filter-col {
+    margin-left: 0;
+    margin-right: -425px;
+  }
+}
+
+@media (max-width: 1920px) {
+  .filter-col {
+    margin-left: 0;
+    margin-right: -320px;
+  }
+}
+
+.filter-col--opened {
+  margin-right: 0;
+  right: 0 !important;
+}
+
+@media (min-width: $mobile-filter-breikpoint) {
+  .filter-col.filter-col--opened-desktop {
+    margin-right: 0;
+    right: 0 !important;
+  }
+}
+
+.filter-toggle, .filter-toggle-horizontal {
+  margin-right: -50px;
+  margin-left: 0;
+}
+
+@media (min-width: $mobile-filter-breikpoint) {
+  .filter-col.filter-col--opened + .filter-toggle {
+    margin-right: -38px !important;
+    margin-left: -8px !important;
+  }
+}
+
+@media (max-width: ($mobile-filter-breikpoint - 1)) {
+  .filter-mobile-col {
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
+
+.listing-show-more {
+  & + * {
+    margin-left: 0;
+    margin-right: 40px;
+  }
+}
+
+@media (min-width: $mobile-filter-breikpoint) {
+  .filter-row-content {
+    .sidebar-block-horizontal {
+      & > * + * {
+        margin-left: 0;
+        margin-right: 15px;
+      }
+      .filter-row-close {
+        margin-right: auto;
+        margin-left: 0;
+        padding-right: 10px;
+        padding-left: 0;
+      }
+    }
+  }
+  .filter-col-horizontal + .filter-toggle {
+    margin-right: -50px;
+    margin-left: 0;
+  }
+}

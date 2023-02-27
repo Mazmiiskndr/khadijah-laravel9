@@ -1,0 +1,11 @@
+
+.tab-category.nav-tabs {
+  &:not(.text-center):not(.justify-content-center) > *:first-child {
+    margin-left: 15px;
+    margin-right: 0;
+  }
+  &:not(.text-center):not(.justify-content-center) > *:last-child {
+    margin-right: 15px;
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,134 @@
+.title-with-arrows:not(.title-with-arrows--center) {
+  justify-content: flex-end;
+  h2, .h2-style {
+    padding-left: 45px;
+    padding-right: 0;
+  }
+}
+.title-with-arrows:not(.title-with-arrows--center) > *:last-child {
+  margin-left: 0;
+  margin-right: auto;
+}
+.list-icon-lg {
+  li {
+    padding: 0 35px 0 0;
+    [class*='icon'] {
+      left: auto;
+      right: 0;
+      transform: scaleX(-1);
+    }
+  }
+}
+.list-icon, .dropdn-content ul.list-icon {
+  li {
+    padding: 0 28px 0 0;
+    [class*='icon'] {
+      left: auto;
+      right: 0;
+    }
+  }
+}
+.list-marker {
+  li {
+    padding-right: 24px;
+    padding-left: 0;
+  }
+  li:before {
+    left: auto;
+    right: 0;
+  }
+}
+.text-right .list-marker {
+  li {
+    padding-left: 24px;
+    padding-right: 0;
+  }
+  li:before {
+    left: 0;
+    right: auto;
+  }
+}
+blockquote {
+  padding: 40px 40px 40px 100px;
+  @media (max-width: $screen-md-max) {
+    padding: 30px 30px 30px 70px;
+  }
+  @media (max-width: $screen-sm-max) {
+    padding: 20px 20px 20px 60px;
+  }
+  &:after {
+    left: 50px;
+    right: auto;
+    @media (max-width: $screen-md-max) {
+      left: 20px;
+      right: auto;
+    }
+  }
+}
+.text-left-not-xs, .text-left-not-sm, .text-left-not-md, .text-left-not-lg {
+  text-align: right;
+}
+.text-right-not-xs, .text-right-not-sm, .text-right-not-md, .text-right-not-lg {
+  text-align: left;
+}
+@media (max-width: $screen-xs-max) {
+  .text-left-xs {
+    text-align: right;
+  }
+  .text-right-xs {
+    text-align: left;
+  }
+}
+@media (max-width: $screen-sm-max) {
+  .text-left-sm {
+    text-align: right;
+  }
+  .text-right-sm {
+    text-align: left;
+  }
+}
+@media (max-width: $screen-md-max) {
+  .text-left-md {
+    text-align: right;
+  }
+  .text-right-md {
+    text-align: left;
+  }
+}
+.col-divider {
+  left: auto;
+  right: 50%;
+}
+.table-order-history {
+  td {
+    &:last-child {
+      text-align: left;
+    }
+  }
+}
+.page-title-bg {
+  border-left: 0;
+  border-right-width: 3px;
+  border-right-style: solid;
+  border-right-color: $custom_color;
+}
+.video-wrap-content {
+  .video-control {
+    left: 15px;
+    right: auto;
+  }
+}
+.circle_decor_wrap {
+  transform: scaleX(-1);
+}
+
+.feature-list {
+  li {
+    margin-left: 0;
+    margin-right: 34px;
+  }
+  li:before {
+    left: auto;
+    right: -34px;
+  }
+}

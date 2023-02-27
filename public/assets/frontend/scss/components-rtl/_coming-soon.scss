@@ -1,0 +1,14 @@
+.countdown-box-coming-soon {
+  .countdown > span:after {
+    left: -.15em;
+    right: 0;
+  }
+}
+.countdown-box-login {
+  left: 20px;
+  right: 0;
+  @media (max-width: $screen-sm-max) {
+    left: 15px;
+    right: 0;
+  }
+}

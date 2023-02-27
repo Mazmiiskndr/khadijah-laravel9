@@ -1,0 +1,20 @@
+.btn {
+  [class*="icon-"]:not(:only-child):not(:last-child) {
+    float: right;
+    top: 0;
+  }
+  .icon-arrow-left, .icon-arrow-right {
+    transform: scaleX(-1);
+    display: inline-flex;
+  }
+  [class*="icon-"]:not(:only-child):last-child {
+    padding-left: .45em;
+    padding-right: 0;
+  }
+}
+.btn--sm [class*='icon-']:not(:only-child):not(:last-child) {
+  top: 2px;
+  float: right;
+  padding-left: .45em;
+  padding-right: 0;
+}

@@ -1,0 +1,68 @@
+.tags-list {
+  list-style: none;
+  padding: 0;
+  position: relative;
+  &:not(:first-child) {
+    margin-top: 30px;
+    @include respond-to(md-only) {
+      margin-top: 30px;
+    }
+    @include respond-to(sm-only) {
+      margin-top: 25px;
+    }
+    @include respond-to(xs-only) {
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+  }
+  li {
+    display: inline-block;
+    margin-bottom: 9px;
+    margin-right: 6px;
+    padding: 0;
+    @media (max-width: $screen-sm-max) {
+      margin-bottom: 5px;
+    }
+    a {
+      @include transition (all .2s ease);
+      background: $tag_bg;
+      color: $tag_text_color;
+      display: flex;
+      font-size: 12px;
+      line-height: 36px;
+      font-weight: 500;
+      padding: 0 16px;
+      position: relative;
+      text-decoration: none;
+      text-transform: uppercase;
+      border-radius: 3px;
+      &:hover, &:focus {
+        background: $tag_hover_bg;
+        color: $tag_hover_text_color;
+      }
+    }
+  }
+  a:after {
+    position: absolute;
+    right: 7px;
+    content: "\e901";
+    display: none;
+    font-family: 'icon-foxic';
+    font-size: 12px;
+  }
+  li.active {
+    a {
+      padding: 0 23px 0 9px;
+      background: $tag_active_bg;
+      color: $tag_active_text_color;
+    }
+    a:after {
+      display: block;
+    }
+  }
+}
+.aside-block .tags-list {
+  &:not(:first-child) {
+    margin-top: 0;
+  }
+}
