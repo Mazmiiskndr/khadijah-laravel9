@@ -33,14 +33,14 @@ class CustomerLogin extends Component
         if (Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password])) {
             // login berhasil untuk User
             return redirect()->intended(RouteServiceProvider::HOME);
-        } elseif (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
+        } else
+        if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
             // login berhasil untuk Customer
             // *** TODO: ***
-            return redirect()->intended(RouteServiceProvider::CUSTOMER_HOME);
+            return redirect('');
         } else {
             // login gagal
             session()->flash('error', 'Alamat Email atau Password Anda salah!.');
-            // return redirect()->route('login');
         }
     }
 
