@@ -14,35 +14,47 @@ class CustomerLogin extends Component
     public $password;
     public $email;
 
-    // protected $rules = [
-    //     'email' => 'required|email',
-    //     'password' => 'required|min:6',
-    // ];
+    protected $rules = [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
 
+    protected $messages = [
+        'email.required' => 'Email harus diisi!',
+        'email.email' => 'Format harus email!',
+        'password.required' => 'Password harus diisi!',
+    ];
+
+    public function updated($property)
+    {
+        // Every time a property changes
+        // (only `text` for now), validate it
+        $this->validateOnly($property);
+    }
     public function submit()
     {
 
-        $this->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ], [
-            'email.required' => 'Email harus diisi!',
-            'password.required' => 'Password harus diisi!',
-        ]);
+        $this->validate();
+
 
         if (Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password])) {
             // login berhasil untuk User
             return redirect()->intended(RouteServiceProvider::HOME);
-        } elseif (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
+        } else
+        if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
             // login berhasil untuk Customer
             // *** TODO: ***
-            return redirect()->intended(RouteServiceProvider::CUSTOMER_HOME);
+            return redirect('');
         } else {
             // login gagal
             session()->flash('error', 'Alamat Email atau Password Anda salah!.');
-            // return redirect()->route('login');
         }
     }
+
+    // public function updated($propertyName)
+    // {
+    //     $this->validateOnly($propertyName);
+    // }
 
     // *** TODO: ***
     // public function submit()

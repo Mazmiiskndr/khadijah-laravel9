@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
@@ -39,6 +40,7 @@ Route::controller(CustomerLoginController::class)->name('customer.')->prefix('cu
 Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->group(function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('users', UserController::class);
+    Route::resource('categories', CategoryController::class);
 });
 
 // Route::middleware('auth')->group(function () {
