@@ -39,6 +39,15 @@
                             </svg>
                             <span>Data Pelanggan</span></a>
                     </li>
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('backend.categories.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-others') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-others') }}"></use>
+                            </svg>
+                            <span>Data Kategori</span></a>
+                    </li>
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title"
                             href="#">
                             <svg class="stroke-icon">

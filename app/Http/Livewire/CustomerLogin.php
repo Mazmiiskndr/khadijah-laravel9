@@ -14,21 +14,28 @@ class CustomerLogin extends Component
     public $password;
     public $email;
 
-    // protected $rules = [
-    //     'email' => 'required|email',
-    //     'password' => 'required|min:6',
-    // ];
+    protected $rules = [
+        'email' => 'required|email',
+        'password' => 'required',
+    ];
 
+    protected $messages = [
+        'email.required' => 'Email harus diisi!',
+        'email.email' => 'Format harus email!',
+        'password.required' => 'Password harus diisi!',
+    ];
+
+    public function updated($property)
+    {
+        // Every time a property changes
+        // (only `text` for now), validate it
+        $this->validateOnly($property);
+    }
     public function submit()
     {
 
-        $this->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ], [
-            'email.required' => 'Email harus diisi!',
-            'password.required' => 'Password harus diisi!',
-        ]);
+        $this->validate();
+
 
         if (Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password])) {
             // login berhasil untuk User
@@ -43,6 +50,11 @@ class CustomerLogin extends Component
             session()->flash('error', 'Alamat Email atau Password Anda salah!.');
         }
     }
+
+    // public function updated($propertyName)
+    // {
+    //     $this->validateOnly($propertyName);
+    // }
 
     // *** TODO: ***
     // public function submit()

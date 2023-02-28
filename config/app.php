@@ -189,12 +189,17 @@ return [
         /*
          * Application Service Providers...
          */
-        AzisHapidin\IndoRegion\IndoRegionServiceProvider::class,
+
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // Data Indonesian Region
+        AzisHapidin\IndoRegion\IndoRegionServiceProvider::class,
+        // Yajra DataTables
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
@@ -211,6 +216,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        // Yajra DataTables
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ])->toArray(),
 
 ];
