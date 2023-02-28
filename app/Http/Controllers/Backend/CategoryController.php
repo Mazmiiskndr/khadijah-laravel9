@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Services\Category\CategoryService;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 
 class CategoryController extends Controller
 {
@@ -27,25 +26,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = $this->categoryService->getAllData();
-        return view('backend.categories.index',['data', $data]);
-    }
-    public function datatables()
-    {
-        $data = $this->categoryService->getAllData();
-        return DataTables::of($data)
-        ->addIndexColumn()
-        ->addColumn('description_short', function ($row) {
-            return substr($row->category_description, 0, 50) . '...';
-        })
-        ->addColumn('action', function ($row) {
-
-            return '<a href="javascript:void(0);" class="btn btn-pill btn-sm btn-primary"><i class="fa fa-lg fa-edit"></i></a>' .
-            '<a href="javascript:void(0);" class="btn btn-pill btn-sm btn-danger" style="margin-left:5px;"><i class="fa fa-lg fa-trash"></i></a>';
-        })
-        ->rawColumns(['description_short', 'action'])
-        ->make(true);
-
+        $categories = $this->categoryService->getAllData();
+        return view('backend.categories.index',['categories' => $categories]);
     }
 
     /**

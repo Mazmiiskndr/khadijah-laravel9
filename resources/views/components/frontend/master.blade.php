@@ -61,7 +61,7 @@
     <x-frontend.script />
     {{-- End Script --}}
     @livewireScripts
-@stack('scripts')
+    @stack('scripts')
 </body>
 
 </html>

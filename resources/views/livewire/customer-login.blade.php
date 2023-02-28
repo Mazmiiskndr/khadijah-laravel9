@@ -1,13 +1,5 @@
 <form wire:submit.prevent="submit" method="POST">
     @csrf
-    {{-- *** TODO: *** --}}
-
-
-    {{-- @if (session()->has('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif --}}
     <div class="form-group">
         <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Masukan email.." name="email" id="email"
             wire:model.lazy="email" autofocus>
