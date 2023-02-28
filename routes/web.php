@@ -39,6 +39,7 @@ Route::controller(CustomerLoginController::class)->name('customer.')->prefix('cu
 // Dashboard
 Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->group(function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
+    Route::get('categories/datatables', [CategoryController::class,'datatables'])->name('categories.datatables');
     Route::resource('users', UserController::class);
     Route::resource('categories', CategoryController::class);
 });
