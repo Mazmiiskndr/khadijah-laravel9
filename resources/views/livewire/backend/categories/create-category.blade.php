@@ -35,8 +35,6 @@
         title: '{{ session('success') }}',
         showConfirmButton: false,
         timer: 1500
-        }).then(() => {
-        window.location.reload();
         });
     </script>
     @endif

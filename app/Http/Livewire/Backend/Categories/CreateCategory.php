@@ -49,7 +49,7 @@ class CreateCategory extends Component
 
         try {
             // Create Category
-            Category::create([
+            $category = Category::create([
                 'category_name' => $this->category_name,
                 'category_description' => $this->category_description
             ]);
@@ -59,7 +59,7 @@ class CreateCategory extends Component
 
             // Reset Form Fields After Creating Category
             $this->resetFields();
-            $this->emit('createdCategory');
+            $this->emit('createdCategory', $category);
         } catch (\Exception $e) {
             // Set Flash Message
             session()->flash('error', 'Kategori Gagal di Tambahkan!');
