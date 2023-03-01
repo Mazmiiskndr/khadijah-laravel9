@@ -27,6 +27,7 @@
     <x-backend.css /> --}}
     {{-- @yield('style') --}}
     @stack('styles')
+    @livewireStyles
 </head>
 {{-- @dd(Route::current()->getName()); --}}
 
@@ -106,13 +107,7 @@
     {{-- @include('backend.script') --}}
     @stack('scripts')
     <!-- Plugin used-->
-
-    {{-- <script type="text/javascript">
-        if ($(".page-wrapper").hasClass("horizontal-wrapper")) {
-            $(".according-menu.other" ).css( "display", "none" );
-            $(".sidebar-submenu" ).css( "display", "block" );
-        }
-    </script> --}}
+    @livewireScripts
 </body>
 
 </html>
