@@ -20,22 +20,22 @@
     @if (session()->has('error'))
     <script>
         Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '{{ session('error') }}',
-        })
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+                })
 
     </script>
     @endif
     @if (session()->has('success'))
     <script>
         Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: '{{ session('success') }}',
-        showConfirmButton: false,
-        timer: 1500
-        });
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+                });
     </script>
     @endif
 </form>

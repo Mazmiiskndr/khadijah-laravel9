@@ -11,9 +11,13 @@ class Category extends Model
     protected $table = 'category';
 
     protected $fillable = [
+        'category_id',
         'category_name',
         'category_description',
     ];
+
+    // buatkan id primary key
+    protected $primaryKey = 'category_id';
 
     public function products()
     {
