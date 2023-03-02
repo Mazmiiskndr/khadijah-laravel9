@@ -17,7 +17,6 @@
     <div class="form-group mt-3">
         <button class="btn btn-sm btn-primary d-block btn-block" type="submit">Tambah</button>
     </div>
-
     @if (session()->has('error'))
     <script>
         Swal.fire({
@@ -25,6 +24,7 @@
         title: 'Oops...',
         text: '{{ session('error') }}',
         })
+
     </script>
     @endif
     @if (session()->has('success'))

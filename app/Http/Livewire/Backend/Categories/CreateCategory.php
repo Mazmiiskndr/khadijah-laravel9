@@ -69,6 +69,7 @@ class CreateCategory extends Component
         }
     }
 
+
     /**
      * resetFields
      *
