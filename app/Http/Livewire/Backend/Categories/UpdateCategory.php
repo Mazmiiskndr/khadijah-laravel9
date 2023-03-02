@@ -7,10 +7,7 @@ use Livewire\Component;
 
 class UpdateCategory extends Component
 {
-    public $category_id;
-    public $category_name;
-    public $category_description;
-    public $updateModal = false;
+    public  $category_id, $category_name, $category_description, $updateModal = false;
     protected $rules = [
         'category_name' => 'required',
         'category_description' => 'required',
@@ -38,12 +35,16 @@ class UpdateCategory extends Component
     public function show($category)
     {
         $this->updateModal = true;
-        // dd($category);
         $this->category_id = $category['category_id'];
         $this->category_name = $category['category_name'];
         $this->category_description = $category['category_description'];
     }
 
+    /**
+     * update
+     *
+     * @return void
+     */
     public function update()
     {
         // buatkan validate dengan message error harus diisi
@@ -76,6 +77,7 @@ class UpdateCategory extends Component
         $this->updateModal = false;
         $this->resetFields();
     }
+
     /**
      * resetFields
      *
