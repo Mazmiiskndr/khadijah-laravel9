@@ -8,12 +8,11 @@ use Livewire\Component;
 class CreateCategory extends Component
 {
 
+
+    public $category_description, $category_name;
     protected $listeners = [
         'createdCategory' => '$refresh',
     ];
-
-    public $category_description;
-    public $category_name;
     protected $rules = [
         'category_name' => 'required',
         'category_description' => 'required',

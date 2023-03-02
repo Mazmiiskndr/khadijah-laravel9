@@ -3,21 +3,21 @@
 namespace App\Http\Livewire\Backend\Categories;
 
 use App\Models\Category;
+use App\Services\Category\CategoryService;
 use Livewire\Component;
 
 class DatatableCategory extends Component
 {
-     public $category;
+    public $category;
 
     protected $listeners = [
         'createdCategory' => 'handleStored',
         'updatedCategory' => 'handleUpdated',
     ];
 
-    public function render()
-    {
-        return view('livewire.backend.categories.datatable-category',[
-            'categories' => Category::latest()->get(),
+    public function render(CategoryService $categoryService)
+    {   return view('livewire.backend.categories.datatable-category',[
+            'categories' => $categoryService->getAllData(),
         ]);
     }
 
@@ -49,8 +49,7 @@ class DatatableCategory extends Component
      */
     public function handleUpdated()
     {
-        // Set Flash Message
-        session()->flash('success', 'Kategori Berhasil di Update!');
+        //
     }
 
 
