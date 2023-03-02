@@ -22,4 +22,5 @@ class DatatableCategory extends Component
     {
         //
     }
+
 }

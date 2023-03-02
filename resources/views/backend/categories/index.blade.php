@@ -26,12 +26,27 @@
             <!-- Add Categories Ends-->
             <!-- Data Categories-->
             <div class="col-sm-8">
+
                 <div class="card">
                     <div class="card-header pb-0 card-no-border d-flex">
                         <h5>Data Kategori</h5>
                     </div>
                     <div class="card-body">
-                        @livewire('backend.categories.datatable-category')
+                        <div class="table-responsive">
+                            <table class="display" id="datatables">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">No.</th>
+                                        <th>Nama Kategori</th>
+                                        <th>Deskripsi</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @livewire('backend.categories.datatable-category')
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,6 +54,11 @@
         </div>
     </div>
     @push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#datatables').DataTable();
+        });
+    </script>
     @endpush
 
 </x-backend.master>
