@@ -19,7 +19,7 @@
                         <h5>Tambah Data Kategori</h5>
                     </div>
                     <div class="card-body">
-                        @livewire('backend.categories.create-category', ['categories' => $categories])
+                        @livewire('backend.categories.create-category')
                     </div>
                 </div>
             </div>
@@ -42,9 +42,7 @@
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
                                     @livewire('backend.categories.datatable-category')
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -53,12 +51,23 @@
             <!-- Data Categories Ends-->
         </div>
     </div>
+    {{-- Include livewire modal --}}
+    @livewire('backend.categories.update-category')
+    {{-- @include('livewire.backend.categories.modal-category') --}}
+
+    {{-- Include livewire modal --}}
     @push('scripts')
+
     <script>
+
+        window.addEventListener('close-modal', event =>{
+        $('#updateCategoryModal').modal('hide');
+        });
         $(document).ready(function() {
             $('#datatables').DataTable();
         });
     </script>
+
     @endpush
 
 </x-backend.master>
