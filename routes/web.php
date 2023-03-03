@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
@@ -7,19 +8,6 @@ use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 
 // Route::view('index', 'index')->name('index');
 
@@ -35,12 +23,16 @@ Route::controller(CustomerLoginController::class)->name('customer.')->prefix('cu
     Route::post('/login', 'store')->name('store');
     Route::post('/logout', 'destroy')->name('logout');
 });
+Route::controller(LoginController::class)->name('admin.')->prefix('admin')->group(function () {
+    Route::get('/login','index')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
 
 // Dashboard
 Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->group(function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('users', UserController::class);
-    Route::resource('categories', CategoryController::class);
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
 });
 
 // Route::middleware('auth')->group(function () {

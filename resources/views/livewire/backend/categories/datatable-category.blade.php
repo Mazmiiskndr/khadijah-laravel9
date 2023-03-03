@@ -1,12 +1,25 @@
-@foreach ($categories as $index => $category)
-<tr>
-    <td>{{ $index + 1 }}</td>
-    <td>{{ $category->category_name }}</td>
-    <td>{{ substr($category->category_description, 0, 25) }}...</td>
-    <td>
-        <a href="#" class="btn btn-pill btn-primary"><i class="fa fa-edit"></i></a>
-        </li>
-        <a href="#" class="btn btn-pill btn-danger"><i class="fa fa-trash"></i></a>
-    </td>
-</tr>
-@endforeach
+<tbody>
+    @foreach ($categories as $category)
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td>{{ $category->category_name }}</td>
+        <td>{{ substr($category->category_description, 0, 25) }}...</td>
+        <td>
+            <button wire:click="getCategory({{ $category->category_id }})" class="btn btn-pill btn-primary"
+                data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="fa fa-edit"></i></button>
+            <button wire:click="deleteConfirmation({{ $category->category_id }})" class="btn btn-pill btn-danger"><i class="fa fa-trash"></i></button>
+        </td>
+    </tr>
+    @endforeach
+    @if (session()->has('success'))
+    <script>
+        Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+    </script>
+    @endif
+</tbody>
