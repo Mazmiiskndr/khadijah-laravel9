@@ -1,19 +1,20 @@
 <?php
 
-namespace App\View\Components\Backend\Categories;
+namespace App\View\Components\Auth\Admin;
 
 use Illuminate\View\Component;
 
-class Datatables extends Component
+class Master extends Component
 {
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct()
+    public $title;
+    public function __construct($title = "Khadijah | Halaman Login")
     {
-        //
+        $this->title = $title;
     }
 
     /**
@@ -23,6 +24,6 @@ class Datatables extends Component
      */
     public function render()
     {
-        return view('components.backend.categories.datatables');
+        return view('components.auth.admin.master');
     }
 }

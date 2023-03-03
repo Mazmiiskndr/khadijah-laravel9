@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class CustomerLogin extends Component
+class Login extends Component
 {
     public $password;
     public $email;
@@ -27,20 +28,19 @@ class CustomerLogin extends Component
         // (only `text` for now), validate it
         $this->validateOnly($property);
     }
-    public function submit()
+    public function loginAdmin()
     {
-
         $this->validate();
-        if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
-            return redirect('');
+        if (Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password])) {
+            // login berhasil untuk User
+            return redirect()->intended(RouteServiceProvider::HOME);
         } else {
             // login gagal
             session()->flash('error', 'Alamat Email atau Password Anda salah!.');
         }
     }
-
     public function render()
     {
-        return view('livewire.customer-login');
+        return view('livewire.admin.login');
     }
 }

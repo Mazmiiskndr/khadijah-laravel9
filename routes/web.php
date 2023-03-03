@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
@@ -21,6 +22,10 @@ Route::controller(CustomerLoginController::class)->name('customer.')->prefix('cu
     Route::get('/login','create')->name('login');
     Route::post('/login', 'store')->name('store');
     Route::post('/logout', 'destroy')->name('logout');
+});
+Route::controller(LoginController::class)->name('admin.')->prefix('admin')->group(function () {
+    Route::get('/login','index')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
 });
 
 // Dashboard

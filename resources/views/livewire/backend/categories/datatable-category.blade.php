@@ -7,7 +7,6 @@
         <td>
             <button wire:click="getCategory({{ $category->category_id }})" class="btn btn-pill btn-primary"
                 data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="fa fa-edit"></i></button>
-            {{-- *** TODO: DELETE!! *** --}}
             <button wire:click="deleteConfirmation({{ $category->category_id }})" class="btn btn-pill btn-danger"><i class="fa fa-trash"></i></button>
         </td>
     </tr>
