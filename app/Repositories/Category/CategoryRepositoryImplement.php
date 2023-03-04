@@ -23,8 +23,4 @@ class CategoryRepositoryImplement extends Eloquent implements CategoryRepository
     {
         return $this->model->latest()->get();
     }
-    public function store(array $data)
-    {
-        return $this->model->create($data);
-    }
 }

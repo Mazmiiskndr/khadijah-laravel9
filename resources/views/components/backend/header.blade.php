@@ -133,7 +133,7 @@
                         <ul>
                             <li>
                                 <div class="media"><img class="img-fluid b-r-5 me-3 img-60"
-                                        src="{{ asset('assets/images/other-images/cart-img.jpg') }}" alt="">
+                                        src="#" alt="">
                                     <div class="media-body"><span>Furniture Chair for Home</span>
                                         <div class="qty-box">
                                             <div class="input-group"><span class="input-group-prepend">
@@ -153,7 +153,7 @@
                             </li>
                             <li>
                                 <div class="media"><img class="img-fluid b-r-5 me-3 img-60"
-                                        src="{{ asset('assets/images/other-images/cart-img.jpg') }}" alt="">
+                                        src="#" alt="">
                                     <div class="media-body"><span>Furniture Chair for Home</span>
                                         <div class="qty-box">
                                             <div class="input-group"><span class="input-group-prepend">

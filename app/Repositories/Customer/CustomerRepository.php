@@ -7,7 +7,10 @@ use LaravelEasyRepository\Repository;
 
 interface CustomerRepository extends Repository{
 
-    public function findById(int $id): ?Customer;
-    public function findByEmail(string $email): ?Customer;
-    public function save(Customer $customer): void;
+    /**
+     * Get All Categories
+     *
+     * @return void
+     */
+    public function getAllData();
 }

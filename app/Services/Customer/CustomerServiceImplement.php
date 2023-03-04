@@ -4,8 +4,7 @@ namespace App\Services\Customer;
 
 use LaravelEasyRepository\Service;
 use App\Repositories\Customer\CustomerRepository;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class CustomerServiceImplement extends Service implements CustomerService
 {
@@ -21,21 +20,14 @@ class CustomerServiceImplement extends Service implements CustomerService
         $this->mainRepository = $mainRepository;
     }
 
-    public function attemptLogin(string $email, string $password)
+    public function getAllData()
     {
-        $credentials = [
-            'email' => $email,
-            'password' => $password
-        ];
-
-        if (Auth::guard('customer')->attempt($credentials)) {
-            return true;
+        try {
+            return $this->mainRepository->getAllData();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
         }
-
-        throw ValidationException::withMessages([
-            'email' => __('auth.failed'),
-        ]);
     }
-
-    // Define your custom methods :)
 }
