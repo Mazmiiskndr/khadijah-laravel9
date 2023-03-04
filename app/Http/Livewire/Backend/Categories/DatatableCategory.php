@@ -44,10 +44,8 @@ class DatatableCategory extends Component
      */
     public function deleteConfirmation($category_id)
     {
-        // $category = Category::find($category_id);
         $this->category_id  = $category_id;
         $this->dispatchBrowserEvent('delete-show-confirmation');
-        // $this->emit('deleteConfirmation', $category);
     }
 
     /**

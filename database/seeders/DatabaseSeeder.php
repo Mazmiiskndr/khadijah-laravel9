@@ -26,12 +26,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'azmiiskandar0@gmail.com',
             'password' => Hash::make('tasik123'),
             'address' => 'Perum Mitra Batik',
-            'city' => 'Kota Tasikmalaya',
-            'province' => 'Jawa Barat',
+            'city_id' => 3278,
+            'province_id' => 32,
+            'district_id' => 3278010,
             'postal_code' => '46182',
             'phone' => '+62 8211-892-3691',
             'registration_date' => now(),
         ]);
+        $this->call(IndoRegionProvinceSeeder::class);
+        $this->call(IndoRegionRegencySeeder::class);
+        $this->call(IndoRegionDistrictSeeder::class);
+        $this->call(IndoRegionVillageSeeder::class);
         User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@gmail.com',
@@ -40,15 +45,7 @@ class DatabaseSeeder extends Seeder
         User::factory(50)->create();
         Category::factory(50)->create();
         Product::factory(50)->create();
-        Customer::factory()
-            ->count(100)
-            ->state(new Sequence(
-                ['province' => 'DKI Jakarta'],
-                ['province' => 'Jawa Barat'],
-                ['province' => 'Jawa Tengah'],
-                ['province' => 'Jawa Timur']
-            ))
-            ->create();
+        Customer::factory(100)->create();
 
     }
 }

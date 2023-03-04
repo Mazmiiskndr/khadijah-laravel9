@@ -19,15 +19,21 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('province');
-            $table->string('city');
-            $table->string('district');
+            $table->unsignedBigInteger('province_id');
+            $table->unsignedBigInteger('city_id');
+            $table->unsignedBigInteger('district_id');
             $table->string('address');
             $table->string('postal_code');
             $table->string('phone');
-            $table->timestamp('registration_date')->nullable();
+            $table->timestamp('registration_date');
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::table('customer', function (Blueprint $table) {
+            $table->foreign('province_id')->references('id')->on('provinces');
+            $table->foreign('city_id')->references('id')->on('cities');
+            $table->foreign('district_id')->references('id')->on('districts');
         });
     }
 

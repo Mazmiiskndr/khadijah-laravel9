@@ -20,10 +20,10 @@
     @if (session()->has('error'))
     <script>
         Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '{{ session('error') }}',
-                })
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        })
 
     </script>
     @endif

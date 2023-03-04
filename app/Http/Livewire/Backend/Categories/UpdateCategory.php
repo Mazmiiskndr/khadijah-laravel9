@@ -10,11 +10,10 @@ class UpdateCategory extends Component
     public  $category_id, $category_name, $category_description, $updateModal = false;
     protected $rules = [
         'category_name' => 'required',
-        'category_description' => 'required',
+        'category_description' => 'nullable',
     ];
     protected $messages = [
         'category_name.required' => 'Nama Kategori harus diisi!',
-        'category_description.required' => 'Deskripsi harus diisi!',
     ];
     protected $listeners = [
         'updatedCategory' => '$refresh',
