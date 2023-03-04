@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Category;
+namespace App\Repositories\Product;
 
 use LaravelEasyRepository\Repository;
 
-interface CategoryRepository extends Repository{
+interface ProductRepository extends Repository{
 
     /**
      * getAllData

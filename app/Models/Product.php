@@ -14,7 +14,7 @@ class Product extends Model
         'product_name',
         'product_description',
         'price',
-        'image',
+        'thumbnail',
         'color',
         'weight',
         'stock',
@@ -25,5 +25,10 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

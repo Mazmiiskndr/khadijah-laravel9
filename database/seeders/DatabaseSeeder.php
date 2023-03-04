@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
+use App\Models\ProductImage;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -21,22 +22,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Customer::factory()->create([
-            'name' => 'Moch Azmi Iskandar',
-            'email' => 'azmiiskandar0@gmail.com',
-            'password' => Hash::make('tasik123'),
-            'address' => 'Perum Mitra Batik',
-            'city_id' => 3278,
-            'province_id' => 32,
-            'district_id' => 3278010,
-            'postal_code' => '46182',
-            'phone' => '+62 8211-892-3691',
-            'registration_date' => now(),
-        ]);
+        // Customer::factory()->create([
+        //     'name' => 'Moch Azmi Iskandar',
+        //     'email' => 'azmiiskandar0@gmail.com',
+        //     'password' => Hash::make('tasik123'),
+        //     'province_id' => '32',
+        //     'city_id' => '3278',
+        //     'district_id' => '3278010',
+        //     'address' => 'Perum Mitra Batik',
+        //     'postal_code' => '46182',
+        //     'phone' => '+62 8211-892-3691',
+        //     'registration_date' => now(),
+        //     'remember_token' => str()->random(10)
+        // ]);
+        Product::factory()->count(10)->create()->each(function ($product) {
+            $images = ProductImage::factory()->count(rand(1, 3))->make();
+            $product->images()->createMany($images->toArray());
+        });
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
-        $this->call(IndoRegionVillageSeeder::class);
+        // $this->call(IndoRegionVillageSeeder::class);
         User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@gmail.com',
@@ -46,6 +52,8 @@ class DatabaseSeeder extends Seeder
         Category::factory(50)->create();
         Product::factory(50)->create();
         Customer::factory(100)->create();
+
+
 
     }
 }

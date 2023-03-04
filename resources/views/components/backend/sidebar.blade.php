@@ -21,16 +21,21 @@
                             <i class="fa fa-angle-right ps-2" aria-hidden="true"></i>
                         </div>
                     </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('backend.dashboard') }}">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
-                            </svg>
-                            <span>Dashboard</span></a>
+
+                    {{-- START SIDEBAR DASHBOARD --}}
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.dashboard') }}">
+                        <svg class="stroke-icon">
+                            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
+                        </svg>
+                        <svg class="fill-icon">
+                            <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
+                        </svg>
+                        <span>Dashboard</span></a>
                     </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('backend.customer.index') }}">
+                    {{-- END SIDEBAR DASHBOARD --}}
+
+                    {{-- START SIDEBAR PELANGGAN --}}
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.customer.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
                             </svg>
@@ -39,16 +44,59 @@
                             </svg>
                             <span>Data Pelanggan</span></a>
                     </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="{{ route('backend.categories.index') }}">
+                    {{-- END SIDEBAR PELANGGAN --}}
+
+                    {{-- START SIDEBAR SUBMENU PRODUK --}}
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="#">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-others') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ecommerce') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-others') }}"></use>
-                            </svg>
-                            <span>Data Kategori</span></a>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ecommerce') }}"></use>
+                            </svg><span>Produk</span>
+                            <label class="badge badge-light-primary">3</label>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: block;">
+                            <li>
+                                <a href="{{ route('backend.categories.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-others') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-others') }}"></use>
+                                    </svg>
+                                    <span>Kategori</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend.product.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-bonus-kit') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-bonus-kit') }}"></use>
+                                    </svg>
+                                    <span>Produk</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-table') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-table') }}"></use>
+                                    </svg>
+                                    <span>Tabel Produk</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title"
+                    {{-- END SIDEBAR SUBMENU PRODUK --}}
+
+                    {{-- *** TODO: ***  --}}
+                    {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title"
                             href="#">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-social') }}"></use>
@@ -65,7 +113,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-form') }}"></use>
                             </svg><span>Documentation </span></a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
