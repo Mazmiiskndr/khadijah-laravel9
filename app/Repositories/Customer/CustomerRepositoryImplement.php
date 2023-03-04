@@ -19,5 +19,8 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
         $this->model = $model;
     }
 
-    // Write something awesome :)
+    public function getAllData()
+    {
+        return $this->model->latest()->get();
+    }
 }

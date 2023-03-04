@@ -31,21 +31,5 @@ class CategoryServiceImplement extends Service implements CategoryService
         }
     }
 
-    /**
-     * Create a new category
-     *
-     * @param array $data
-     * @return mixed
-     */
-    public function store(array $data)
-    {
-        try {
-            return $this->mainRepository->store($data);
-        } catch (\Throwable $th) {
-            Log::debug($th->getMessage());
-            return false;
-        }
-    }
-
 
 }

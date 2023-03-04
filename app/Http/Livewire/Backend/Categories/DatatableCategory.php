@@ -18,7 +18,8 @@ class DatatableCategory extends Component
     ];
 
     public function render(CategoryService $categoryService)
-    {   return view('livewire.backend.categories.datatable-category',[
+    {
+        return view('livewire.backend.categories.datatable-category',[
             'categories' => $categoryService->getAllData(),
         ]);
     }

@@ -22,6 +22,11 @@ class CreateCategory extends Component
         'category_description.required' => 'Deskripsi harus diisi!',
     ];
 
+    public function render()
+    {
+        return view('livewire.backend.categories.create-category');
+    }
+
     /**
      * updated
      *
@@ -78,15 +83,5 @@ class CreateCategory extends Component
     {
         $this->category_name = '';
         $this->category_description = '';
-    }
-
-    /**
-     * render
-     *
-     * @return void
-     */
-    public function render()
-    {
-        return view('livewire.backend.categories.create-category');
     }
 }

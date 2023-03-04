@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
@@ -9,20 +10,19 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Route::view('index', 'index')->name('index');
-
-// Route::get('/', function () {
-//     return view('welcome');
-// })->name('/');
-
+// Index Page
 Route::controller(HomeController::class)->group(function () {
     Route::get('/','index')->name('index');
 });
+
+// Login For Customer
 Route::controller(CustomerLoginController::class)->name('customer.')->prefix('customer')->group(function () {
     Route::get('/login','create')->name('login');
     Route::post('/login', 'store')->name('store');
     Route::post('/logout', 'destroy')->name('logout');
 });
+
+// Login For Admin
 Route::controller(LoginController::class)->name('admin.')->prefix('admin')->group(function () {
     Route::get('/login','index')->name('login');
     Route::post('/logout', 'logout')->name('logout');
@@ -31,8 +31,9 @@ Route::controller(LoginController::class)->name('admin.')->prefix('admin')->grou
 // Dashboard
 Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->group(function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
-    Route::resource('users', UserController::class);
+    // Route::resource('users', UserController::class);
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('customer', [CustomerController::class, 'index'])->name('customer.index');
 });
 
 // Route::middleware('auth')->group(function () {
