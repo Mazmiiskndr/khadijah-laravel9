@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('product_name', 200);
             $table->text('product_description');
             $table->integer('price');
-            $table->string('image', 200);
+            $table->string('thumbnail', 200);
             $table->string('color', 50);
             $table->decimal('weight', 10, 2);
             $table->integer('stock');
