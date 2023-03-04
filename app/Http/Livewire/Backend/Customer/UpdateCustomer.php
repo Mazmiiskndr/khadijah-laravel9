@@ -11,8 +11,9 @@ use Livewire\Component;
 
 class UpdateCustomer extends Component
 {
-    // Declare variable
+    // UpdateModal
     public $updateModal = false;
+    // Declare variable
     public $customer_id, $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
@@ -31,35 +32,53 @@ class UpdateCustomer extends Component
         'getCustomer' => 'show'
     ];
 
+    /**
+     * updated
+     *
+     * @param  mixed $property
+     * @return void
+     */
+    public function updated($property)
+    {
+        // Every time a property changes
+        // (only `text` for now), validate it
+        $this->validateOnly($property);
+    }
+
     // Rules Validation
-    // *** TODO: Password and Email Validation***
-    protected $rules = [
-        'name' => 'required',
-        'email' => 'required|email',
-        // 'password' => 'required|min:6',
-        'address' => 'required',
-        'city_id' => 'required',
-        'province_id' => 'required',
-        'district_id' => 'required',
-        'postal_code' => 'required',
-        'phone' => 'required',
-    ];
+    protected function getRules()
+    {
+        return [
+            'name'          => 'required',
+            'email'         => 'required|email|unique:customer,email,' . $this->customer_id . '',
+            'password'      => 'min:6,' . $this->customer_id . '',
+            'address'       => 'required',
+            'city_id'       => 'required',
+            'province_id'   => 'required',
+            'district_id'   => 'required',
+            'postal_code'   => 'required',
+            'phone'         => 'required',
+        ];
+    }
 
     // Make Validation message
-    // *** TODO: Password and Email Validation***
-    protected $messages = [
-        'name.required' => 'Nama harus diisi',
-        'email.required' => 'Email harus diisi',
-        'email.email' => 'Email harus valid',
-        // 'password.required' => 'Password harus diisi',
-        // 'password.min' => 'Password harus memiliki setidaknya 6 karakter',
-        'address.required' => 'Alamat harus diisi',
-        'city_id.required' => 'Kota harus diisi',
-        'district_id.required' => 'Kecamatan harus diisi',
-        'province_id.required' => 'Provinsi harus diisi',
-        'postal_code.required' => 'Kode Pos harus diisi',
-        'phone.required' => 'No. Telepon harus diisi',
-    ];
+    protected function getMessages()
+    {
+        return [
+            'name.required'         => 'Nama harus diisi',
+            'email.required'        => 'Email harus diisi',
+            'email.email'           => 'Email harus valid',
+            'email.unique'          => 'Email telah digunakan oleh customer lain',
+            'password.min'          => 'Password harus memiliki setidaknya 6 karakter',
+            'address.required'      => 'Alamat harus diisi',
+            'city_id.required'      => 'Kota harus diisi',
+            'district_id.required'  => 'Kecamatan harus diisi',
+            'province_id.required'  => 'Provinsi harus diisi',
+            'postal_code.required'  => 'Kode Pos harus diisi',
+            'phone.required'        => 'No. Telepon harus diisi',
+        ];
+    }
+
     /**
      * mount
      *
@@ -143,21 +162,24 @@ class UpdateCustomer extends Component
     public function update()
     {
         // buatkan validate dengan message error harus diisi
-        $this->validate();
+        $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->customer_id) {
             $customer = Customer::find($this->customer_id);
-            $customer->update([
+            $customerData = [
                 'name' => $this->name,
                 'email' => $this->email,
-                // 'password' => Hash::make($this->password),
                 'address' => $this->address,
                 'city_id' => $this->city_id,
                 'district_id' => $this->district_id,
                 'province_id' => $this->province_id,
                 'postal_code' => $this->postal_code,
                 'phone' => $this->phone,
-            ]);
+            ];
+            if (!empty($this->password)) {
+                $customerData['password'] = Hash::make($this->password);
+            }
+            $customer->update($customerData);
             $this->updateModal = false;
             // Set Flash Message
             session()->flash('success', 'Kategori Berhasil di Update!');
