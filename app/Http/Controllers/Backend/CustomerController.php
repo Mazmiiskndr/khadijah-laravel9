@@ -26,7 +26,6 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = $this->customerService->getAllData();
-        return view('backend.customer.index', ['customers' => $customers]);
+        return view('backend.customer.index');
     }
 }
