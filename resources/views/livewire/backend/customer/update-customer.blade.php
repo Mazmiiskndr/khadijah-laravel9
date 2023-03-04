@@ -15,7 +15,8 @@
                         <div class="row">
                             <div class="col-6">
                                 <label for="name_input">Nama Customer</label>
-                                <input type="hidden" class="form-control" name="customer_id" id="customer_id" wire:model="customer_id">
+                                <input type="hidden" class="form-control" name="customer_id" id="customer_id"
+                                    wire:model="customer_id">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                     placeholder="Masukan Nama Customer.." name="name" id="name_input" wire:model="name"
                                     autofocus>
@@ -24,7 +25,8 @@
                             <div class="col-6">
                                 <label for="email_input">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
-                                    placeholder="Masukan Email.." name="email" id="email_input" wire:model="email" autofocus>
+                                    placeholder="Masukan Email.." name="email" id="email_input" wire:model="email"
+                                    autofocus>
                                 @error('email') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
@@ -41,9 +43,13 @@
                             <div class="col-6">
                                 <label for="password_input">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    placeholder="Masukan Password.." name="password" id="password_input" wire:model="password"
-                                    autofocus>
+                                    placeholder="Masukan Password.." name="password" id="password_input"
+                                    wire:model="password" autofocus>
+                                @if($password)
                                 @error('password') <small class="error text-danger">{{ $message }}</small> @enderror
+                                @else
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                @endif
                             </div>
                         </div>
 
@@ -53,18 +59,18 @@
                             <div class="col-4">
                                 <label for="province_id_input">Provinsi</label>
                                 <select class="select2 col-sm-12 @error('province_id') is-invalid @enderror"
-                                    id="province_id_input" name="province_id" wire:model="province_id" >
+                                    id="province_id_input" name="province_id" wire:model="province_id">
                                     <option value="">-- Pilih Provinsi --</option>
                                     @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}" >{{ $province->name }}</option>
+                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('province_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-4">
                                 <label for="city_id_input">Kota / Kabupaten</label>
-                                <select class="select2 col-sm-12 @error('city_id') is-invalid @enderror" id="city_id_input"
-                                    name="city_id" wire:model="city_id">
+                                <select class="select2 col-sm-12 @error('city_id') is-invalid @enderror"
+                                    id="city_id_input" name="city_id" wire:model="city_id">
                                     <option value="" selected>-- Pilih Kota / Kabupaten --</option>
                                     @if(!is_null($cities))
                                     @foreach($cities as $city)
@@ -102,8 +108,8 @@
                             <div class="col-8">
                                 <label for="address_input">Alamat</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror"
-                                    placeholder="Masukan Alamat.." name="address" id="address_input" wire:model="address"
-                                    autofocus>
+                                    placeholder="Masukan Alamat.." name="address" id="address_input"
+                                    wire:model="address" autofocus>
                                 @error('address') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>

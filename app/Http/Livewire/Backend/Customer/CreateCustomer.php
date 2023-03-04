@@ -45,7 +45,7 @@ class CreateCustomer extends Component
         'name.required' => 'Nama harus diisi',
         'email.required' => 'Email harus diisi',
         'email.email' => 'Email harus valid',
-        'email.unique' => 'Email sudah ada',
+        'email.unique' => 'Email telah digunakan oleh customer lain',
         'password.required' => 'Password harus diisi',
         'password.min' => 'Password harus memiliki setidaknya 6 karakter',
         'address.required' => 'Alamat harus diisi',
