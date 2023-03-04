@@ -16,7 +16,6 @@ class Category extends Model
         'category_description',
     ];
 
-    // buatkan id primary key
     protected $primaryKey = 'category_id';
 
     public function products()

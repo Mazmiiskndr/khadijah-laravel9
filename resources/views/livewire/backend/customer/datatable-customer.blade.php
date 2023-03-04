@@ -7,7 +7,7 @@
         <td>{{ $customer->phone }}</td>
         <td>{{ date('d - F - Y',strtotime($customer->registration_date)) }}</td>
         <td>
-            <button wire:click="getCategory({{ $customer->id }})" class="btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#updateCategoryModal">
+            <button wire:click="getCustomer({{ $customer->id }})" class="btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#updateCustomerModal">
                 <i class="fa fa-edit"></i>
             </button>
             <button wire:click="deleteConfirmation({{ $customer->id }})" class="btn btn-pill btn-danger">

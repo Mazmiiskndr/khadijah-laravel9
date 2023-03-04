@@ -17,17 +17,33 @@ class Customer extends Authenticatable
         'name',
         'email',
         'password',
-        'province',
-        'city',
-        'district',
+        'province_id',
+        'city_id',
+        'district_id',
         'address',
         'postal_code',
         'phone',
         'registration_date',
     ];
+    protected $primaryKey = 'id';
 
     protected $hidden = [
         'password',
         'remember_token',
     ];
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(Regency::class);
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class);
+    }
 }

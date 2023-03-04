@@ -51,6 +51,7 @@
             <!-- Data Categories Ends-->
         </div>
     </div>
+
     {{-- Include livewire modal --}}
     @livewire('backend.categories.update-category')
     {{-- @include('livewire.backend.categories.modal-category') --}}
@@ -74,11 +75,6 @@
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                 if (result.isConfirmed) {
-                    // Swal.fire(
-                    // 'Deleted!',
-                    // 'Your file has been deleted.',
-                    // 'success'
-                    // )
                     Livewire.emit('deleteConfirmation');
                 }
             })

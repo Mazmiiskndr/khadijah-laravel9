@@ -15,11 +15,10 @@ class CreateCategory extends Component
     ];
     protected $rules = [
         'category_name' => 'required',
-        'category_description' => 'required',
+        'category_description' => 'nullable',
     ];
     protected $messages = [
         'category_name.required' => 'Nama Kategori harus diisi!',
-        'category_description.required' => 'Deskripsi harus diisi!',
     ];
 
     public function render()
