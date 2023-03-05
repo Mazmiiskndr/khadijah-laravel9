@@ -18,6 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('product_name', 200);
             $table->text('product_description');
+            $table->string('dimension', 150); // Added material column
+            $table->string('material', 150); // Added material column
+            $table->string('size', 50); // Added size column
+            $table->string('type', 100); // Added type column
             $table->integer('price');
             $table->string('thumbnail', 200);
             $table->string('color', 50);

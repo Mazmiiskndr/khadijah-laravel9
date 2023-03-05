@@ -64,7 +64,7 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
 
     public function findById($id)
     {
-        return $this->model->findOrFail($id);
+        return $this->model->with('images')->findOrFail($id);
     }
 
 

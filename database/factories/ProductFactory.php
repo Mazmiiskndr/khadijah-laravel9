@@ -22,6 +22,10 @@ class ProductFactory extends Factory
             'category_id' => $categoryId,
             'product_name' => $this->faker->word(),
             'product_description' => $this->faker->paragraph(),
+            'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2), // Added dimension field
+            'material' => $this->faker->word(), // added material field
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']), // Added size field
+            'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']), // Added type field
             'price' => $this->faker->numberBetween(10000, 1000000),
             'thumbnail' => $this->faker->imageUrl(),
             'color' => $this->faker->colorName(),

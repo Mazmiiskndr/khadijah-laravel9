@@ -14,6 +14,10 @@ class Product extends Model
         'category_id',
         'product_name',
         'product_description',
+        'dimension',
+        'material',
+        'size',
+        'type',
         'price',
         'thumbnail',
         'color',
@@ -30,6 +34,6 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
     }
 }

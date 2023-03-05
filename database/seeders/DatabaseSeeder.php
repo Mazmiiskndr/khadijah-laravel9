@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         //     'registration_date' => now(),
         //     'remember_token' => str()->random(10)
         // ]);
-        Product::factory()->count(10)->create()->each(function ($product) {
+        Product::factory()->count(150)->create()->each(function ($product) {
             $images = ProductImage::factory()->count(rand(1, 3))->make();
             $product->images()->createMany($images->toArray());
         });

@@ -1,5 +1,8 @@
 <x-backend.master title="Detail Produk | Khadijah">
     @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/owlcarousel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/rating.css') }}">
     @endpush
 
     @slot('breadcrumbTitle')
@@ -18,24 +21,22 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="product-slider owl-carousel owl-theme" id="sync1">
-                                <div class="item"><img src="../assets/images/ecommerce/01.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/02.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/03.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/04.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/05.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/06.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/07.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/08.jpg" alt=""></div>
+
+                                <div class="item"><img src="{{ $product->thumbnail }}" alt="Gambar Produk"></div>
+                                {{-- PRODUCT IMAGES --}}
+                                @foreach ($product->images as $image)
+                                <div class="item"><img src="{{ $image->image_name }}" alt=""></div>
+                                @endforeach
+                                {{-- END PRODUCT IMAGES --}}
+
                             </div>
                             <div class="owl-carousel owl-theme" id="sync2">
-                                <div class="item"><img src="../assets/images/ecommerce/01.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/02.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/03.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/04.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/05.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/06.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/07.jpg" alt=""></div>
-                                <div class="item"><img src="../assets/images/ecommerce/08.jpg" alt=""></div>
+                                <div class="item"><img src="{{ $product->thumbnail }}" alt=""></div>
+                                {{-- PRODUCT IMAGES --}}
+                                @foreach ($product->images as $image)
+                                <div class="item"><img src="{{ $image->image_name }}" alt=""></div>
+                                @endforeach
+                                {{-- END PRODUCT IMAGES --}}
                             </div>
                         </div>
                     </div>
@@ -44,46 +45,54 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="product-page-details">
-                                <h3>Women Pink shirt.</h3>
+                                <h3>{{ $product->product_name }}</h3>
                             </div>
-                            <div class="product-price">$26.00
-                                <del>$350.00 </del>
+                            <div class="product-price">
+                                Rp. {{ number_format($product->price, 0, ',', '.') }}
+                                @if ($product->discount_percentage > 0)
+                                <del>Rp. {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
+                                @endif
                             </div>
-                            <ul class="product-color">
-                                <li class="bg-primary"></li>
-                                <li class="bg-secondary"></li>
-                                <li class="bg-success"></li>
-                                <li class="bg-info"></li>
-                                <li class="bg-warning"></li>
-                            </ul>
+                            <p>{{ $product->color }}</p>
                             <hr>
-                            <p>It is a long established fact that a reader will be distracted by the readable content of a
-                                page when looking at its layout. The point of using Lorem Ipsum is that.</p>
+                            <p>{{ $product->product_description }}</p>
                             <hr>
                             <div>
                                 <table class="product-page-width">
                                     <tbody>
                                         <tr>
-                                            <td> <b>Brand &nbsp;&nbsp;&nbsp;:</b></td>
-                                            <td>Pixelstrap</td>
+                                            <td> <b>Berat &nbsp;&nbsp;&nbsp;&nbsp;:</b></td>
+                                            <td>{{ $product->weight }} gr</td>
                                         </tr>
                                         <tr>
-                                            <td> <b>Availability &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-                                            <td class="txt-success">In stock</td>
+                                            <td> <b>Stok &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                            </td>
+                                            @if ($product->stock == 0)
+                                            <td class="txt-danger">{{ $product->stock }}</td>
+                                            @else
+                                            <td class="txt-success">{{ $product->stock }}</td>
+                                            @endif
                                         </tr>
                                         <tr>
-                                            <td> <b>Seller &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-                                            <td>ABC</td>
+                                            <td> <b>Bahan&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td>{{ $product->material }}</td>
                                         </tr>
                                         <tr>
-                                            <td> <b>Fabric &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-                                            <td>Cotton</td>
+                                            <td> <b>Dimensi &nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td>{{ $product->dimension }} cm</td>
+                                        </tr>
+                                        <tr>
+                                            <td> <b>Ukuran&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td>{{ $product->size }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> <b>Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td>{{ $product->type }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <hr>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-4">
                                     <h6 class="product-title">share it</h6>
                                 </div>
@@ -104,7 +113,7 @@
                                         <form class="d-inline-block f-right"></form>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <hr>
                             <div class="row">
                                 <div class="col-md-4">
@@ -123,11 +132,17 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="m-t-15 btn-showcase"><a class="btn btn-primary" href="cart.html" title=""> <i
-                                        class="fa fa-shopping-basket me-1"></i>Add To Cart</a><a class="btn btn-success"
-                                    href="checkout.html" title=""> <i class="fa fa-shopping-cart me-1"></i>Buy Now</a><a
-                                    class="btn btn-secondary" href="list-wish.html"> <i class="fa fa-heart me-1"></i>Add To
-                                    WishList</a></div>
+                            <div class="m-t-15 btn-showcase">
+                                <a class="btn btn-info" href="#" title="">
+                                    <i class="fa fa-edit me-1"></i>
+                                    Edit
+                                </a>
+
+                                <a class="btn btn-danger" href="#">
+                                    <i class="fa fa-trash me-1"></i>
+                                    Hapus
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -195,65 +210,71 @@
             <div class="row product-page-main">
                 <div class="col-sm-12">
                     <ul class="nav nav-tabs border-tab nav-primary mb-0" id="top-tab" role="tablist">
-                        <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-bs-toggle="tab"
-                                href="#top-home" role="tab" aria-controls="top-home" aria-selected="false">Febric</a>
+                        <li class="nav-item"><a class="nav-link active" id="top-detail-tab" data-bs-toggle="tab"
+                                href="#top-detail" role="tab" aria-controls="top-detail" aria-selected="false">Deskripsi </a>
                             <div class="material-border"></div>
                         </li>
-                        <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-bs-toggle="tab"
-                                href="#top-profile" role="tab" aria-controls="top-profile" aria-selected="false">Video</a>
+                        {{-- *** TODO: **** --}}
+                        {{-- <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-bs-toggle="tab"
+                                href="#top-profile" role="tab" aria-controls="top-profile"
+                                aria-selected="false">Video</a>
                             <div class="material-border"></div>
                         </li>
                         <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
-                                href="#top-contact" role="tab" aria-controls="top-contact" aria-selected="true">Details</a>
+                                href="#top-contact" role="tab" aria-controls="top-contact"
+                                aria-selected="true">Details</a>
                             <div class="material-border"></div>
                         </li>
-                        <li class="nav-item"><a class="nav-link" id="brand-top-tab" data-bs-toggle="tab" href="#top-brand"
-                                role="tab" aria-controls="top-brand" aria-selected="true">Brand</a>
+                        <li class="nav-item"><a class="nav-link" id="brand-top-tab" data-bs-toggle="tab"
+                                href="#top-brand" role="tab" aria-controls="top-brand" aria-selected="true">Brand</a>
                             <div class="material-border"></div>
-                        </li>
+                        </li> --}}
+
                     </ul>
                     <div class="tab-content" id="top-tabContent">
-                        <div class="tab-pane fade active show" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
-                            <p class="mb-0 m-t-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                laborum."</p>
-                            <p class="mb-0 m-t-20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                                in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                                sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                                laborum."</p>
+                        <div class="tab-pane fade active show" id="top-detail" role="tabpanel"
+                            aria-labelledby="top-detail-tab">
+                            <p class="mb-0 m-t-20">{{ $product->product_description }}</p>
                         </div>
-                        <div class="tab-pane fade" id="top-profile" role="tabpanel" aria-labelledby="profile-top-tab">
+
+                        {{-- *** TODO: *** --}}
+                        {{-- <div class="tab-pane fade" id="top-profile" role="tabpanel" aria-labelledby="profile-top-tab">
                             <p class="mb-0 m-t-20">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                an unknown printer took a galley of type and scrambled it to make a type specimen book. It
+                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when
+                                an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It
                                 has survived not only five centuries, but also the leap into electronic typesetting,
                                 remaining essentially unchanged. It was popularised in the 1960s with the release of
-                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing
                                 software like Aldus PageMaker including versions of Lorem Ipsum</p>
                         </div>
                         <div class="tab-pane fade" id="top-contact" role="tabpanel" aria-labelledby="contact-top-tab">
                             <p class="mb-0 m-t-20">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                an unknown printer took a galley of type and scrambled it to make a type specimen book. It
+                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when
+                                an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It
                                 has survived not only five centuries, but also the leap into electronic typesetting,
                                 remaining essentially unchanged. It was popularised in the 1960s with the release of
-                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing
                                 software like Aldus PageMaker including versions of Lorem Ipsum</p>
                         </div>
                         <div class="tab-pane fade" id="top-brand" role="tabpanel" aria-labelledby="brand-top-tab">
                             <p class="mb-0 m-t-20">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                an unknown printer took a galley of type and scrambled it to make a type specimen book. It
+                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                                when
+                                an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                It
                                 has survived not only five centuries, but also the leap into electronic typesetting,
                                 remaining essentially unchanged. It was popularised in the 1960s with the release of
-                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing
+                                Letraset sheets containing Lorem Ipsum passages, and more recently with desktop
+                                publishing
                                 software like Aldus PageMaker including versions of Lorem Ipsum</p>
-                        </div>
+                        </div> --}}
+
                     </div>
                 </div>
             </div>
@@ -268,6 +289,10 @@
 
     {{-- Include livewire modal --}}
     @push('scripts')
+    <script src="{{ asset('assets/js/rating/jquery.barrating.js') }}"></script>
+    <script src="{{ asset('assets/js/rating/rating-script.js') }}"></script>
+    <script src="{{ asset('assets/js/owlcarousel/owl.carousel.js') }}"></script>
+    <script src="{{ asset('assets/js/ecommerce.js') }}"></script>
     {{-- <script>
         window.addEventListener('close-modal', event =>{
             $('#updateCategoryModal').modal('hide');
@@ -291,7 +316,7 @@
         $(document).ready(function() {
             $('#datatables').DataTable();
         });
-    </script>  --}}
+    </script> --}}
 
     @endpush
 

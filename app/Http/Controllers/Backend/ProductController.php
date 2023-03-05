@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Services\Product\ProductService;
 use Illuminate\Http\Request;
 
@@ -52,7 +53,10 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+
+        // $product = Product::with('images')->find($id);
         $product = $this->productService->getProductById($id);
+        $productImages = $product->images;
         return view('backend.product.show', compact('product'));
     }
 
