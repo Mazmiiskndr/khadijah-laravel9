@@ -20,7 +20,7 @@ class ProductFactory extends Factory
 
         return [
             'category_id' => $categoryId,
-            'product_name' => $this->faker->word(),
+            'product_name' => $this->faker->words(3, true),
             'product_description' => $this->faker->paragraph(),
             'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2), // Added dimension field
             'material' => $this->faker->word(), // added material field
