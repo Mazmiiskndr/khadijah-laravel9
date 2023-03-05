@@ -18,6 +18,9 @@
                             <li>
                                 <button class="btn" type="button"><i class="fa fa-trash"></i></button>
                             </li>
+                            <li>
+                                <a class="btn" href="{{ route('backend.product.show', ['product' => $product->product_id]) }}"><i class="fa fa-link"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -9,10 +9,15 @@ class Product extends Model
 {
     use HasFactory;
     protected $table = 'product';
+    protected $primaryKey = 'product_id';
     protected $fillable = [
         'category_id',
         'product_name',
         'product_description',
+        'dimension',
+        'material',
+        'size',
+        'type',
         'price',
         'thumbnail',
         'color',
@@ -29,6 +34,6 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany(ProductImage::class);
+        return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
     }
 }

@@ -14,6 +14,13 @@ interface ProductService extends BaseService{
     public function getAllData();
 
     /**
+     * Get Product By ID
+     *
+     * @return void
+     */
+    public function getProductById($id);
+
+    /**
      * Get Paginated Data Product
      *
      * @param  int  $perPage

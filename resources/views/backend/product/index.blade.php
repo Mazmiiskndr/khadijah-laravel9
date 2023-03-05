@@ -39,11 +39,10 @@
 
                     <div class="col-md-3 text-sm-end">
                         <div class="mr-3">
-                            {{-- Button Modal Create Produk --}}
-                            <button class="pull-right btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#createProdukModal">
-                                <i class="fa fa-plus"></i>
-                                Tambah Data Produk
-                            </button>
+                            {{-- START CREATE BUTTON PRODUCT --}}
+                            @livewire('backend.product.create-product')
+                            {{-- END CREATE BUTTON PRODUCT --}}
+
                         </div>
                     </div>
 
