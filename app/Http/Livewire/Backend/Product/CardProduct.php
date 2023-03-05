@@ -13,9 +13,11 @@ class CardProduct extends Component
     public $perPage = 6;
     public $paginationTheme = 'bootstrap';
     public $search = '';
+    public $showing = '';
 
     protected $listeners = [
-        'searchProduct' => 'updateSearch'
+        'searchProduct' => 'updateSearch',
+        'showingProduct' => 'updateShowing',
     ];
     public function updatingSearch()
     {
@@ -26,11 +28,20 @@ class CardProduct extends Component
     {
         $this->search = $keyword;
     }
+    public function updateShowing($showing)
+    {
+        $this->showing = $showing;
+    }
 
     public function render(ProductService $productService)
     {
-        $products = $productService->getPaginatedData($this->perPage, $this->search);
-
+        $products = $productService->getPaginatedData($this->perPage, $this->search, $this->showing);
+        $paginationData = [
+            'firstItem' => $products->firstItem(),
+            'lastItem' => $products->lastItem(),
+            'total' => $products->total()
+        ];
+        $this->emit('paginationData', $paginationData);
         return view('livewire.backend.product.card-product', ['products' => $products]);
     }
 }

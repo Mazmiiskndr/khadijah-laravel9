@@ -31,9 +31,9 @@
                                             src="{{ $product->thumbnail }}" alt="{{ $product->product_name }}"></div>
                                     <div class="product-details col-lg-6 text-start">
                                         <h4>{{ $product->product_name }}</h4>
-                                        <div class="product-price">${{ $product->price }}
+                                        <div class="product-price">Rp. {{ number_format($product->price, 0, ',', '.') }}
                                             @if ($product->discount_percentage > 0)
-                                            <del>${{ $product->price_with_discount }}</del>
+                                            <del>Rp. {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
                                             @endif
                                         </div>
                                         <div class="product-view">
@@ -79,10 +79,15 @@
                     </div><a href="product-page.html">
                         <h4>{{ $product->product_name }}</h4>
                     </a>
-                    <p>{{ $product->product_description }}</p>
-                    <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}
+                    @if($product->product_description)
+                    <td>{{ substr($product->product_description, 0, 80) }}...</td>
+                    @else
+                    <td> - </td>
+                    @endif
+                    {{-- <p>{{ $product->product_description }}</p> --}}
+                    <div class="product-price">Rp. {{ number_format($product->price, 0, ',', '.') }}
                         @if ($product->discount_percentage > 0)
-                        <del>Rp {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
+                        <del>Rp. {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
                         @endif
                     </div>
                 </div>

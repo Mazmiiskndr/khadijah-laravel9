@@ -1,5 +1,5 @@
-<select class="form-control btn-square" name="select">
-    <option value="opt1">Featured</option>
-    <option value="opt2">Lowest Prices</option>
-    <option value="opt3">Highest Prices</option>
+<select wire:model="selectedFilter" class="form-select mb-3" name="select">
+    <option value="featured">Pilihan</option>
+    <option value="lowest_price">Harga Terendah</option>
+    <option value="highest_price">Harga Tertinggi</option>
 </select>

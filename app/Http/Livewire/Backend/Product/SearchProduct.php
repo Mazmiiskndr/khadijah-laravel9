@@ -11,7 +11,6 @@ class SearchProduct extends Component
     public function updatedKeyword($keyword)
     {
         $this->emit('searchProduct', $keyword);
-        // dd($value);
     }
 
     public function render()

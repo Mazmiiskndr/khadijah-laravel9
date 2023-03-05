@@ -18,7 +18,8 @@ interface ProductService extends BaseService{
      *
      * @param  int  $perPage
      * @param  string  $search
+     * @param  string  $showing
      * @return \Illuminate\Pagination\Paginator
      */
-    public function getPaginatedData($perPage, $search);
+    public function getPaginatedData($perPage, $search,$showing);
 }
