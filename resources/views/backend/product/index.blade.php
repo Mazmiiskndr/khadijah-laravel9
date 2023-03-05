@@ -69,12 +69,10 @@
                         </div>
                     </div>
                     <div class="col-md-9 col-sm-12">
-                        <form>
-                            <div class="form-group m-0">
-                                <input class="form-control" type="search" placeholder="Search.." data-original-title=""
-                                    title=""><i class="fa fa-search"></i>
-                            </div>
-                        </form>
+                        {{-- START SEARCH PRODUCT --}}
+                        @livewire('backend.product.search-product')
+                        {{-- END SEARCH PRODUCT --}}
+
                     </div>
                 </div>
             </div>
@@ -98,6 +96,7 @@
     {{-- Include livewire modal --}}
     @push('scripts')
     {{-- *** TODO: *** --}}
+
     {{-- <script>
         window.addEventListener('close-modal', event =>{
             $('#updateCategoryModal').modal('hide');

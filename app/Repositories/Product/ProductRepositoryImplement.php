@@ -29,4 +29,19 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         return $this->model->latest()->get();
     }
 
+    /**
+     * getPaginatedData
+     *
+     * @param  int  $perPage
+     * @param  string  $search
+     * @return \Illuminate\Pagination\Paginator
+     */
+    public function getPaginatedData($perPage, $search)
+    {
+        return $this->model->where('product_name', 'LIKE', '%' . $search . '%')
+            // ->orWhere('product_description', 'LIKE', '%' . $search . '%')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+    }
+
 }

@@ -12,4 +12,13 @@ interface ProductRepository extends Repository{
      * @return void
      */
     public function getAllData();
+
+    /**
+     * getPaginatedData
+     *
+     * @param  int  $perPage
+     * @param  string  $search
+     * @return \Illuminate\Pagination\Paginator
+     */
+    public function getPaginatedData($perPage, $search);
 }
