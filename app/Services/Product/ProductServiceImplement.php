@@ -20,6 +20,11 @@ class ProductServiceImplement extends Service implements ProductService
         $this->mainRepository = $mainRepository;
     }
 
+    /**
+     * getAllData
+     *
+     * @return void
+     */
     public function getAllData()
     {
         try {
@@ -31,6 +36,14 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+    /**
+     * getPaginatedData
+     *
+     * @param  mixed $perPage
+     * @param  mixed $search
+     * @param  mixed $showing
+     * @return void
+     */
     public function getPaginatedData($perPage, $search,$showing)
     {
         try {
@@ -40,4 +53,21 @@ class ProductServiceImplement extends Service implements ProductService
             return [];
         }
     }
+
+    /**
+     * getProductById
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function getProductById($id)
+    {
+        try {
+            return $this->mainRepository->findById($id);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return null;
+        }
+    }
+
 }

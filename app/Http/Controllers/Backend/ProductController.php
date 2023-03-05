@@ -52,7 +52,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = $this->productService->getProductById($id);
+        return view('backend.product.show', compact('product'));
     }
 
     /**

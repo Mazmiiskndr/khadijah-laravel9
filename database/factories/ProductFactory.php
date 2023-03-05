@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'category_id' => $categoryId,
             'product_name' => $this->faker->word(),
             'product_description' => $this->faker->paragraph(),
-            'price' => $this->faker->numberBetween(1000, 10000),
+            'price' => $this->faker->numberBetween(10000, 1000000),
             'thumbnail' => $this->faker->imageUrl(),
             'color' => $this->faker->colorName(),
             'weight' => $this->faker->randomFloat(2, 0.1, 10),

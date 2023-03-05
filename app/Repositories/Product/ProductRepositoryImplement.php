@@ -62,4 +62,10 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         return $query;
     }
 
+    public function findById($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+
 }

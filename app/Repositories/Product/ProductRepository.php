@@ -14,6 +14,14 @@ interface ProductRepository extends Repository{
     public function getAllData();
 
     /**
+     * Get a product by ID from the repository.
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function findById($id);
+
+    /**
      * getPaginatedData
      *
      * @param  int  $perPage
