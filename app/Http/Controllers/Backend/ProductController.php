@@ -20,8 +20,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->productService->getAllData();
-        return view('backend.product.index', ['products' => $products]);
+        return view('backend.product.index');
     }
 
     /**

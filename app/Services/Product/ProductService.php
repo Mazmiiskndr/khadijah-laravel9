@@ -12,4 +12,14 @@ interface ProductService extends BaseService{
      * @return void
      */
     public function getAllData();
+
+    /**
+     * Get Paginated Data Product
+     *
+     * @param  int  $perPage
+     * @param  string  $search
+     * @param  string  $showing
+     * @return \Illuminate\Pagination\Paginator
+     */
+    public function getPaginatedData($perPage, $search,$showing);
 }

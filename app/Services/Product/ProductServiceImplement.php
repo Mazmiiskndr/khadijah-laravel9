@@ -30,4 +30,14 @@ class ProductServiceImplement extends Service implements ProductService
             //throw $th;
         }
     }
+
+    public function getPaginatedData($perPage, $search,$showing)
+    {
+        try {
+            return $this->mainRepository->getPaginatedData($perPage, $search,$showing);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+        }
+    }
 }

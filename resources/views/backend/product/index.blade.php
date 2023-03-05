@@ -19,7 +19,7 @@
         <div class="product-grid">
             <div class="feature-products">
                 <div class="row">
-                    <div class="col-md-6 products-total">
+                    <div class="col-md-4 products-total">
 
                         {{-- START SQUARE PRODUCT --}}
                         <x-backend.product.square-product />
@@ -31,17 +31,22 @@
                         </div>
 
                     </div>
-                    <div class="col-md-6 text-sm-end">
-                        <span class="f-w-600 m-r-5">Showing Products 1 - 24 Of 200 Results
-                        </span>
-
-                        <div class="select2-drpdwn-product select-options d-inline-block">
-                            {{-- START SHOWING PRODUCT --}}
-                            <x-backend.product.showing-product />
-                            {{-- END SHOWING PRODUCT --}}
-                        </div>
-
+                    <div class="col-md-5 text-sm-end">
+                        {{-- START SHOWING PRODUCT --}}
+                        @livewire('backend.product.showing-product')
+                        {{-- END SHOWING PRODUCT --}}
                     </div>
+
+                    <div class="col-md-3 text-sm-end">
+                        <div class="mr-3">
+                            {{-- Button Modal Create Produk --}}
+                            <button class="pull-right btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#createProdukModal">
+                                <i class="fa fa-plus"></i>
+                                Tambah Data Produk
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-sm-3">
@@ -59,7 +64,7 @@
                                     <div class="left-filter">
 
                                         {{-- START FILTER PRODUCT --}}
-                                        <x-backend.product.filter-product/>
+                                        @livewire('backend.product.filter-product')
                                         {{-- END FILTER PRODUCT --}}
 
                                     </div>
@@ -69,23 +74,19 @@
                         </div>
                     </div>
                     <div class="col-md-9 col-sm-12">
-                        <form>
-                            <div class="form-group m-0">
-                                <input class="form-control" type="search" placeholder="Search.." data-original-title=""
-                                    title=""><i class="fa fa-search"></i>
-                            </div>
-                        </form>
+                        {{-- START SEARCH PRODUCT --}}
+                        @livewire('backend.product.search-product')
+
+                        {{-- END SEARCH PRODUCT --}}
+
                     </div>
                 </div>
             </div>
             <div class="product-wrapper-grid">
-                <div class="row">
-                    {{-- START PRODUCT PAGE --}}
-                    {{-- *** TODO: *** --}}
-                    @livewire('backend.product.card-product')
-                    {{-- END PRODUCT PAGE --}}
-
-                </div>
+                {{-- START PRODUCT PAGE --}}
+                {{-- *** TODO: *** --}}
+                @livewire('backend.product.card-product')
+                {{-- END PRODUCT PAGE --}}
             </div>
         </div>
     </div>
@@ -98,6 +99,7 @@
     {{-- Include livewire modal --}}
     @push('scripts')
     {{-- *** TODO: *** --}}
+
     {{-- <script>
         window.addEventListener('close-modal', event =>{
             $('#updateCategoryModal').modal('hide');
