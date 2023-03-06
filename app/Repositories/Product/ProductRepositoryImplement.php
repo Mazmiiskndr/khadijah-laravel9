@@ -29,19 +29,29 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         return $this->model->latest()->get();
     }
 
+
     /**
      * getPaginatedData
      *
-     * @param  int  $perPage
-     * @param  string  $search
-     * @return \Illuminate\Pagination\Paginator
+     * @param  mixed $perPage
+     * @param  mixed $search
+     * @param  mixed $showing
+     * @param  mixed $categoryFilters
+     * @return void
      */
-    public function getPaginatedData($perPage, $search,$showing)
+    public function getPaginatedData($perPage, $search, $showing, $categoryFilters)
     {
-        $query =  $this->model->join('category', 'category.category_id', '=', 'product.category_id')
-        ->where('product_name', 'LIKE', '%' . $search . '%')
-        ->orWhere('category_name', 'LIKE', '%' . $search . '%')
-        ->orderBy('created_at', 'desc');
+        $query = $this->model->join('category', 'category.category_id', '=', 'product.category_id')
+        ->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('category_name', 'LIKE', '%' . $search . '%');
+        });
+
+        if (!empty($categoryFilters)) {
+            $query->whereHas('category', function ($query) use ($categoryFilters) {
+                $query->whereIn('category_id', $categoryFilters);
+            });
+        }
 
         switch ($showing) {
             case 'featured':
@@ -54,6 +64,7 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
                 $query->orderBy('price', 'desc');
                 break;
             default:
+                $query->orderBy('created_at', 'desc');
                 break;
         }
 
@@ -62,10 +73,21 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
         return $query;
     }
 
+
     public function findById($id)
     {
         return $this->model->with('images','category','tags')->findOrFail($id);
     }
 
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
+    public function getLimitData($limit)
+    {
+        return $this->model->orderBy('created_at', 'DESC')->limit($limit)->get();
+    }
 
 }

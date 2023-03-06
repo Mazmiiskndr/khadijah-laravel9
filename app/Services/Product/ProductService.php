@@ -21,12 +21,21 @@ interface ProductService extends BaseService{
     public function getProductById($id);
 
     /**
-     * Get Paginated Data Product
+     * getPaginatedData
      *
-     * @param  int  $perPage
-     * @param  string  $search
-     * @param  string  $showing
-     * @return \Illuminate\Pagination\Paginator
+     * @param  mixed $perPage
+     * @param  mixed $search
+     * @param  mixed $showing
+     * @param  mixed $categoryFilters
+     * @return void
      */
-    public function getPaginatedData($perPage, $search,$showing);
+    public function getPaginatedData($perPage, $search, $showing, $categoryFilters);
+
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
+    public function getLimitData($limit);
 }

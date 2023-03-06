@@ -1,6 +1,6 @@
 'use strict';
 var range_slider_custom = {
-    init: function() { 
+    init: function() {
         $("#u-range-01").ionRangeSlider(),
         $("#u-range-02").ionRangeSlider({
             min: 100,
@@ -11,7 +11,7 @@ var range_slider_custom = {
             grid: true,
             min: 0,
             max: 1000,
-            from: 200, 
+            from: 200,
             to: 800,
             prefix: "$"
         }),$("#u-range-04").ionRangeSlider({

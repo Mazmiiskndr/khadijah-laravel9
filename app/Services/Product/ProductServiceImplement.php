@@ -36,18 +36,20 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+
     /**
      * getPaginatedData
      *
      * @param  mixed $perPage
      * @param  mixed $search
      * @param  mixed $showing
+     * @param  mixed $categoryFilters
      * @return void
      */
-    public function getPaginatedData($perPage, $search,$showing)
+    public function getPaginatedData($perPage, $search,$showing,$categoryFilters = [])
     {
         try {
-            return $this->mainRepository->getPaginatedData($perPage, $search,$showing);
+            return $this->mainRepository->getPaginatedData($perPage, $search,$showing,$categoryFilters);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return [];
@@ -67,6 +69,23 @@ class ProductServiceImplement extends Service implements ProductService
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return null;
+        }
+    }
+
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
+    public function getLimitData($limit)
+    {
+        try {
+            return $this->mainRepository->getLimitData($limit);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
         }
     }
 

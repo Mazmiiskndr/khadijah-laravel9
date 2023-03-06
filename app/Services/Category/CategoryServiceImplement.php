@@ -20,10 +20,26 @@ class CategoryServiceImplement extends Service implements CategoryService
         $this->mainRepository = $mainRepository;
     }
 
+    /**
+     * getAllData
+     *
+     * @return void
+     */
     public function getAllData()
     {
         try {
             return $this->mainRepository->getAllData();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
+    public function getLimitData($limit)
+    {
+        try {
+            return $this->mainRepository->getLimitData($limit);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return [];

@@ -53,7 +53,7 @@
                             <div class="filter-section">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h6 class="mb-0 f-w-600">Filters
+                                        <h6 class="mb-0 f-w-600">Filter
                                             <span class="pull-right">
                                                 <i class="fa fa-chevron-down toggle-data"></i>
                                             </span>
@@ -121,9 +121,9 @@
         });
     </script> --}}
 
-    <script src="{{ asset('assets/js/range-slider/ion.rangeSlider.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/range-slider/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ asset('assets/js/range-slider/rangeslider-script.js') }}"></script>
-    <script src="{{ asset('assets/js/touchspin/vendors.min.js') }}"></script>
+    <script src="{{ asset('assets/js/touchspin/vendors.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/touchspin/touchspin.js') }}"></script>
     <script src="{{ asset('assets/js/touchspin/input-groups.min.js') }}"></script>
     <script src="{{ asset('assets/js/owlcarousel/owl.carousel.js') }}"></script>
