@@ -53,7 +53,9 @@
                                 <del>Rp. {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
                                 @endif
                             </div>
-                            <p>{{ $product->color }}</p>
+                            <p>
+                                <b>Kategori</b> : {{ $product->category->category_name }}
+                            </p>
                             <hr>
                             <p>{{ $product->product_description }}</p>
                             <hr>
@@ -78,7 +80,7 @@
                                             <td>{{ $product->material }}</td>
                                         </tr>
                                         <tr>
-                                            <td> <b>Dimensi &nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td> <b>Dimensi&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
                                             <td>{{ $product->dimension }} cm</td>
                                         </tr>
                                         <tr>
@@ -88,6 +90,10 @@
                                         <tr>
                                             <td> <b>Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
                                             <td>{{ $product->type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> <b>Warna &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td>{{ $product->color }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -151,13 +157,11 @@
                         <div class="card-body">
                             <!-- side-bar colleps block stat-->
                             <div class="filter-block">
-                                <h4>Brand</h4>
+                                <h4>Label</h4>
                                 <ul>
-                                    <li>Clothing</li>
-                                    <li>Bags</li>
-                                    <li>Footwear</li>
-                                    <li>Watches</li>
-                                    <li>ACCESSORIES</li>
+                                    @foreach ($product->tags as $tag)
+                                    <li>{{ ucwords($tag->tag_name) }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

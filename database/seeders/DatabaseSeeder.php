@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductTag;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -35,10 +37,6 @@ class DatabaseSeeder extends Seeder
         //     'registration_date' => now(),
         //     'remember_token' => str()->random(10)
         // ]);
-        Product::factory()->count(150)->create()->each(function ($product) {
-            $images = ProductImage::factory()->count(rand(1, 3))->make();
-            $product->images()->createMany($images->toArray());
-        });
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
@@ -50,10 +48,17 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(50)->create();
         Category::factory(50)->create();
-        Product::factory(50)->create();
+        Tag::factory(50)->create();
+        // Product::factory(100)->create();
+        Product::factory()->count(150)->create()->each(function ($product) {
+            // For each product, generate 3-5 product tags
+            $tag_ids = Tag::pluck('tag_id')->random(rand(3, 5))->toArray();
+            $product->tags()->attach($tag_ids);
+
+            $images = ProductImage::factory()->count(rand(1, 3))->make();
+            $product->images()->createMany($images->toArray());
+        });
         Customer::factory(100)->create();
-
-
 
     }
 }
