@@ -8,6 +8,8 @@ use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Models\ProductTag;
+use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -50,6 +52,12 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(50)->create();
         Category::factory(50)->create();
+        Tag::factory(50)->create();
+        Product::factory()->count(100)->create()->each(function ($product) {
+            // For each product, generate 3-5 product tags
+            $tag_ids = Tag::pluck('tag_id')->random(rand(3, 5))->toArray();
+            $product->tags()->attach($tag_ids);
+        });
         Product::factory(50)->create();
         Customer::factory(100)->create();
 

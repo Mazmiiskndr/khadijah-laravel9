@@ -53,7 +53,9 @@
                                 <del>Rp. {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
                                 @endif
                             </div>
-                            <p>{{ $product->color }}</p>
+                            <p>
+                                <b>Kategori</b> : {{ $product->category->category_name }}
+                            </p>
                             <hr>
                             <p>{{ $product->product_description }}</p>
                             <hr>
@@ -78,7 +80,7 @@
                                             <td>{{ $product->material }}</td>
                                         </tr>
                                         <tr>
-                                            <td> <b>Dimensi &nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td> <b>Dimensi&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
                                             <td>{{ $product->dimension }} cm</td>
                                         </tr>
                                         <tr>
@@ -88,6 +90,10 @@
                                         <tr>
                                             <td> <b>Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
                                             <td>{{ $product->type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td> <b>Warna &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
+                                            <td>{{ $product->color }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

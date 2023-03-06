@@ -1,3 +1,4 @@
+{{-- *** TODO: *** --}}
 <div class="card-body filter-cards-view animate-chk">
     <div class="product-filter">
         <h6 class="f-w-600">Category</h6>
@@ -19,7 +20,7 @@
             </label>
         </div>
     </div>
-    <div class="product-filter">
+    {{-- <div class="product-filter">
         <h6 class="f-w-600">Brand</h6>
         <div class="checkbox-animated mt-0">
             <label class="d-block" for="chk-ani">
@@ -41,7 +42,7 @@
                 <input class="checkbox_animated" id="chk-ani5" type="checkbox" data-original-title="" title="">Spykar
             </label>
         </div>
-    </div>
+    </div> --}}
     <div class="product-filter slider-product">
         <h6 class="f-w-600">Colors</h6>
         <div class="color-selector">
