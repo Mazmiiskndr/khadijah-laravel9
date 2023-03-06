@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('product_id');
             $table->unsignedBigInteger('category_id');
             $table->string('product_name', 200);
+            $table->string('product_slug', 200); // Added product_slug column
             $table->text('product_description');
             $table->string('dimension', 150); // Added material column
             $table->string('material', 150); // Added material column

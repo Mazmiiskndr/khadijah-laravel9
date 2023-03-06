@@ -17,10 +17,12 @@ class ProductFactory extends Factory
     public function definition()
     {
         $categoryId = $this->faker->randomElement(range(1, 20));
+        $productName = ucwords($this->faker->words(3, true));
 
         return [
             'category_id' => $categoryId,
-            'product_name' => ucwords($this->faker->words(3, true)),
+            'product_name' => $productName,
+            'product_slug' => str()->slug($productName, '-'),
             'product_description' => $this->faker->paragraph(),
             'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2), // Added dimension field
             'material' => $this->faker->word(), // added material field

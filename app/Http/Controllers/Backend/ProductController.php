@@ -51,6 +51,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // *** TODO:  Detail By Slug ***
     public function show($id)
     {
 
