@@ -10,9 +10,14 @@ class Tag extends Model
     use HasFactory;
 
     protected $table = 'tags';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'tag_id';
     protected $fillable = [
         'tag_name',
         'tag_description',
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_tags', 'tag_id', 'product_id');
+    }
 }

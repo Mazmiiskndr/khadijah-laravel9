@@ -157,13 +157,11 @@
                         <div class="card-body">
                             <!-- side-bar colleps block stat-->
                             <div class="filter-block">
-                                <h4>Brand</h4>
+                                <h4>Label</h4>
                                 <ul>
-                                    <li>Clothing</li>
-                                    <li>Bags</li>
-                                    <li>Footwear</li>
-                                    <li>Watches</li>
-                                    <li>ACCESSORIES</li>
+                                    @foreach ($product->tags as $tag)
+                                    <li>{{ ucwords($tag->tag_name) }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

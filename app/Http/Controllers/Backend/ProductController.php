@@ -56,6 +56,7 @@ class ProductController extends Controller
 
         // $product = Product::with('images')->find($id);
         $product = $this->productService->getProductById($id);
+        $productTags = $product->tags;
         $productImages = $product->images;
         return view('backend.product.show', compact('product'));
     }

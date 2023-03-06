@@ -20,7 +20,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
-            'tag_name' => $this->faker->word,
+            'tag_name' => ucwords($this->faker->word),
             'tag_description' => $this->faker->sentence,
         ];
     }
