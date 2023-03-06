@@ -2,8 +2,8 @@
 
 
 Create Databases and Tables
-    - php artisan migrate / php artisan migrate:fresh 
+    ```php artisan migrate / php artisan migrate:fresh``` 
 
 Create Data Factory and Data Indonesian Region
-    - php artisan db:seed 
+    ```php artisan db:seed```
 
