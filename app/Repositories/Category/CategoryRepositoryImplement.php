@@ -24,4 +24,9 @@ class CategoryRepositoryImplement extends Eloquent implements CategoryRepository
     {
         return $this->model->latest()->get();
     }
+
+    public function getLimitData($limit)
+    {
+        return $this->model->orderBy('category_name','DESC')->limit($limit)->get();
+    }
 }

@@ -20,6 +20,7 @@ class Login extends Component
         'email.required' => 'Email harus diisi!',
         'email.email' => 'Format harus email!',
         'password.required' => 'Password harus diisi!',
+        // 'password.min' => 'Password harus memiliki setidaknya 6 karakter',
     ];
 
     public function updated($property)

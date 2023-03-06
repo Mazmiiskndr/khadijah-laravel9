@@ -12,4 +12,12 @@ interface CategoryRepository extends Repository{
      * @return void
      */
     public function getAllData();
+
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
+    public function getLimitData($limit);
 }

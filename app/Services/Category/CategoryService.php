@@ -13,4 +13,12 @@ interface CategoryService extends BaseService{
      */
     public function getAllData();
 
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
+    public function getLimitData($limit);
+
 }

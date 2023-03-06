@@ -1,6 +1,11 @@
 # *** README KHADIJAH ***
 
 
+### Composer Install
+```bash
+composer install
+```
+
 ### Create Databases and Tables
 ```bash
 php artisan migrate / php artisan migrate:fresh
