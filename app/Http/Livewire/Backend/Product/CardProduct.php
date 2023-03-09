@@ -3,7 +3,10 @@
 namespace App\Http\Livewire\Backend\Product;
 
 use App\Models\Product;
+use App\Models\ProductImage;
+use App\Models\ProductTag;
 use App\Services\Product\ProductService;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -19,6 +22,7 @@ class CardProduct extends Component
     public $categoryFilters = [];
 
     protected $listeners = [
+        'productDeleted' => 'handleDeleted',
         'searchProduct' => 'updateSearch',
         'showingProduct' => 'updateShowing',
         'categorySelected' => 'updateCategorySelected',
@@ -85,6 +89,18 @@ class CardProduct extends Component
     }
 
     /**
+     * getProduct
+     *
+     * @param  mixed $product_id
+     * @return void
+     */
+    public function getProduct($product_id)
+    {
+        $product = Product::with('images','category','tags')->findOrFail($product_id);
+        $this->emit('getProduct', $product);
+    }
+
+    /**
      * deleteConfirmation
      *
      * @param  mixed $product_id
@@ -102,11 +118,25 @@ class CardProduct extends Component
      * @param  mixed $product_id
      * @return void
      */
-    // *** TODO: Delete Tag, Product Images ***
     public function destroy()
     {
         $product = Product::find($this->product_id);
+        $productTag = ProductTag::where('product_id', $this->product_id)->delete();
+
+        // Menghapus product images
+        $productImages = ProductImage::where('product_id', $this->product_id)->get();
+        foreach ($productImages as $productImage) {
+            // Delete Image from Storage
+            Storage::delete('public/'.$productImage->image_name);
+            // Hapus record product image dari database
+            $productImage->delete();
+
+        }
+        // Delete Thumbnail from Storage
+        Storage::delete('public/' . $product->thumbnail);
         $product->delete();
+        // Emit event to reload datatable
+        $this->emit('productDeleted', $product);
         // Set Flash Message
         session()->flash('success', 'Produk Berhasil di Hapus!');
     }
@@ -117,6 +147,16 @@ class CardProduct extends Component
      * @return void
      */
     public function handleStored()
+    {
+        //
+    }
+
+    /**
+     * handleDeleted
+     *
+     * @return void
+     */
+    public function handleDeleted()
     {
         //
     }

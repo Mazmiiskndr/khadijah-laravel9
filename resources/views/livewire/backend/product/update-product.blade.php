@@ -1,14 +1,8 @@
 <div>
-    {{-- Start Button Modal Create Produk --}}
-    <button class="pull-right btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">
-        <i class="fa fa-plus"></i>
-        Tambah Data Produk
-    </button>
-    {{-- End Button Modal Create Produk --}}
 
     {{-- Start Modal Create Produk --}}
     <!-- Create Modal Produk-->
-    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="createProductModal" data-bs-backdrop="static"
+    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="updateProductModal" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -17,6 +11,7 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
+                {{-- *** TODO: Update to Store *** --}}
                 <form wire:submit.prevent="submit" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
@@ -51,14 +46,16 @@
                                 </select>
                                 @error('category_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
+                            {{-- *** TODO: --}}
                             <div class="col-6" wire:ignore>
                                 <label for="tag_id">Tag Produk</label>
+                                {{-- {{ dd($tag_id) }} --}}
                                 <select class="select2 col-sm-12 @error('tag_id') is-invalid @enderror" id="tag_id"
                                     name="tag_id" wire:model.defer="tag_id" multiple data-placeholder="-- Pilih Tag --">
-
-                                    @foreach($tags as $tag)
-                                    <option value="{{ $tag->tag_id }}">{{ $tag->tag_name }}</option>
-                                    @endforeach
+                                        @foreach($tags as $tag)
+                                        <option value="{{ $tag->tag_id }}" @if(in_array($tag->tag_id, $tagsSelect)) selected @endif>{{ $tag->tag_name }}
+                                        </option>
+                                        @endforeach
                                 </select>
                                 @error('tag_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -165,7 +162,12 @@
                                 <label for="thumbnail">Thumbnail</label>
                                 <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
                                     name="thumbnail" id="thumbnail" wire:model.defer="thumbnail" autofocus>
-                                @error('thumbnail') <small class="error text-danger">{{ $message }}</small> @enderror
+                                @if($productImages)
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                @else
+                                @error('productImages') <small class="error text-danger">{{ $message }}</small>
+                                @enderror
+                                @endif
                             </div>
                             <div class="col-6">
                                 <label for="productImages">Gambar Produk</label>
@@ -173,10 +175,10 @@
                                     name="productImages" id="productImages" wire:model.defer="productImages" autofocus
                                     multiple>
                                 @if($productImages)
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                @else
                                 @error('productImages') <small class="error text-danger">{{ $message }}</small>
                                 @enderror
-                                @else
-                                <small class="text-danger">Gambar Produk bisa lebih dari satu.</small>
                                 @endif
                             </div>
                         </div>
@@ -185,7 +187,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
                             wire:click="closeModal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Tambah</button>
+                        <button class="btn btn-primary" type="submit">Update</button>
                     </div>
                 </form>
             </div>

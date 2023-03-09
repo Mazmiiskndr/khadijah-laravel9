@@ -83,7 +83,7 @@ class CreateProduct extends Component
         $this->validateOnly($property);
     }
 
-    // *** TODO: ***
+
     /**
      *
      * mount
@@ -195,8 +195,6 @@ class CreateProduct extends Component
      */
     public function resetFields()
     {
-        // *** TODO: ***
-
         $this->tag_id             = [];
         $this->product_name         = '';
         $this->productImages        = [];
@@ -204,7 +202,7 @@ class CreateProduct extends Component
         $this->price                = '';
         $this->size                 = '';
         $this->stock                = '';
-        $this->thumbnail            = '';
+        $this->thumbnail            = null;
         $this->color                = '';
         $this->type                 = '';
         $this->product_description  = '';

@@ -31,7 +31,6 @@
                             </div>
                         </div>
                         {{-- Password and Number Phone --}}
-                        {{-- *** TODO: *** --}}
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="phone_input">No. Telepon / WhatsApp</label>
@@ -54,7 +53,6 @@
                         </div>
 
                         {{-- Province, City and District--}}
-                        {{-- *** TODO: *** --}}
                         <div class="row mt-3">
                             <div class="col-4">
                                 <label for="province_id_input">Provinsi</label>
@@ -96,7 +94,6 @@
                         </div>
 
                         {{-- Address and Postal Code --}}
-                        {{-- *** TODO: *** --}}
                         <div class="row mt-3">
                             <div class="col-4">
                                 <label for="postal_code_input">Kode Pos</label>

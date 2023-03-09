@@ -98,8 +98,12 @@
                                             <td> <b>Ukuran&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
                                             <td>
                                                 <div class="product-size">
-                                                    {{-- TODO:*** --}}
-                                                    <button class="btn btn-outline-dark btn-sm" type="button">{{ $product->size }}</button>
+                                                    @php
+                                                    $sizes = explode(', ', $product->size);
+                                                    @endphp
+                                                    @foreach ($sizes as $size)
+                                                    <button class="btn btn-outline-dark btn-sm" type="button" style="display: inline-block">{{ $size }}</button>
+                                                    @endforeach
                                                 </div>
                                             </td>
                                         </tr>
@@ -114,29 +118,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                            {{-- <div class="row">
-                                <div class="col-md-4">
-                                    <h6 class="product-title">share it</h6>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="product-icon">
-                                        <ul class="product-social">
-                                            <li class="d-inline-block"><a href="https://www.facebook.com/"
-                                                    target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                            <li class="d-inline-block"><a href="https://accounts.google.com/"
-                                                    target="_blank"><i class="fa fa-google-plus"></i></a></li>
-                                            <li class="d-inline-block"><a href="https://twitter.com/" target="_blank"><i
-                                                        class="fa fa-twitter"></i></a></li>
-                                            <li class="d-inline-block"><a href="https://www.instagram.com/"
-                                                    target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                            <li class="d-inline-block"><a href="https://rss.app/" target="_blank"><i
-                                                        class="fa fa-rss"></i></a></li>
-                                        </ul>
-                                        <form class="d-inline-block f-right"></form>
-                                    </div>
-                                </div>
-                            </div> --}}
                             <hr>
+                            {{-- *** TODO: *** --}}
                             <div class="row">
                                 <div class="col-md-4">
                                     <h6 class="product-title">Rate Now</h6>
