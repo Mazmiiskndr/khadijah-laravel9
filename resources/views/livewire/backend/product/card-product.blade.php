@@ -15,7 +15,7 @@
                         style="width:450px;" alt="{{ $product->product_name }}">
                     <div class="product-hover">
                         <ul>
-                            <li>
+                            <li wire:click="getProduct({{ $product->product_id }})" data-bs-toggle="modal" data-bs-target="#updateProductModal">
                                 <button class="btn" type="button"><i class="fa fa-edit"></i></button>
                             </li>
                             <li data-bs-toggle="modal" data-bs-target="#exampleModalCenter-{{ $product->product_id }}">

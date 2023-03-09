@@ -89,6 +89,18 @@ class CardProduct extends Component
     }
 
     /**
+     * getProduct
+     *
+     * @param  mixed $product_id
+     * @return void
+     */
+    public function getProduct($product_id)
+    {
+        $product = Product::with('images','category','tags')->findOrFail($product_id);
+        $this->emit('getProduct', $product);
+    }
+
+    /**
      * deleteConfirmation
      *
      * @param  mixed $product_id

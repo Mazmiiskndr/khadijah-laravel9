@@ -83,7 +83,7 @@ class CreateProduct extends Component
         $this->validateOnly($property);
     }
 
-    // *** TODO: ***
+
     /**
      *
      * mount

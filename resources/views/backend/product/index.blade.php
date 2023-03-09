@@ -83,7 +83,6 @@
             </div>
             <div class="product-wrapper-grid">
                 {{-- START PRODUCT PAGE --}}
-                {{-- *** TODO: *** --}}
                 @livewire('backend.product.card-product')
                 {{-- END PRODUCT PAGE --}}
             </div>
@@ -92,12 +91,11 @@
     <!-- Container-fluid Ends-->
     {{-- *** TODO: *** --}}
     {{-- Include livewire modal --}}
-    {{-- @livewire('backend.categories.update-category') --}}
+    @livewire('backend.product.update-product')
     {{-- @include('livewire.backend.categories.modal-category') --}}
 
     {{-- Include livewire modal --}}
     @push('scripts')
-    {{-- *** TODO: *** --}}
     @if (session()->has('success'))
     <script>
         Swal.fire({

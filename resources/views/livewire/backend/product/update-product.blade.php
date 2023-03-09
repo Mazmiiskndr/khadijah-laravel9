@@ -1,14 +1,8 @@
 <div>
-    {{-- Start Button Modal Create Produk --}}
-    <button class="pull-right btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">
-        <i class="fa fa-plus"></i>
-        Tambah Data Produk
-    </button>
-    {{-- End Button Modal Create Produk --}}
 
     {{-- Start Modal Create Produk --}}
     <!-- Create Modal Produk-->
-    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="createProductModal" data-bs-backdrop="static"
+    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="updateProductModal" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -17,7 +11,7 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
-                {{-- *** TODO: Created to Store *** --}}
+                {{-- *** TODO: Update to Store *** --}}
                 <form wire:submit.prevent="submit" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
@@ -33,8 +27,8 @@
                             <div class="col-6">
                                 <label for="material">Bahan</label>
                                 <input type="text" class="form-control @error('material') is-invalid @enderror"
-                                    placeholder="Masukan Bahan.." name="material" id="material" wire:model.defer="material"
-                                    autofocus>
+                                    placeholder="Masukan Bahan.." name="material" id="material"
+                                    wire:model.defer="material" autofocus>
                                 @error('material') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
@@ -55,12 +49,13 @@
                             {{-- *** TODO: and FIXME: --}}
                             <div class="col-6" wire:ignore>
                                 <label for="tag_id">Tag Produk</label>
+                                {{-- {{ dd($tag_id) }} --}}
                                 <select class="select2 col-sm-12 @error('tag_id') is-invalid @enderror" id="tag_id"
                                     name="tag_id" wire:model.defer="tag_id" multiple data-placeholder="-- Pilih Tag --">
-
-                                    @foreach($tags as $tag)
-                                    <option value="{{ $tag->tag_id }}">{{ $tag->tag_name }}</option>
-                                    @endforeach
+                                        @foreach($tags as $tag)
+                                        <option value="{{ $tag->tag_id }}" @if(in_array($tag->tag_id, $tagsSelect)) selected @endif>{{ $tag->tag_name }}
+                                        </option>
+                                        @endforeach
                                 </select>
                                 @error('tag_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -78,8 +73,8 @@
                             <div class="col-6">
                                 <label for="discount">Diskon</label>
                                 <input type="number" class="form-control @error('discount') is-invalid @enderror"
-                                    placeholder="Masukan Diskon.." name="discount" id="discount" wire:model.defer="discount"
-                                    autofocus>
+                                    placeholder="Masukan Diskon.." name="discount" id="discount"
+                                    wire:model.defer="discount" autofocus>
                                 @if($discount)
                                 @error('discount') <small class="error text-danger">{{ $message }}</small> @enderror
                                 @else
@@ -100,7 +95,8 @@
                             <div class="col-6">
                                 <label for="type">Type</label>
                                 <input type="text" class="form-control @error('type') is-invalid @enderror"
-                                    placeholder="Masukan Type.." name="type" id="type" wire:model.defer="type" autofocus>
+                                    placeholder="Masukan Type.." name="type" id="type" wire:model.defer="type"
+                                    autofocus>
                                 @error('type') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
@@ -142,7 +138,8 @@
                             <div class="col-6">
                                 <label for="stock">Stok</label>
                                 <input type="number" class="form-control @error('stock') is-invalid @enderror"
-                                    placeholder="Masukan Stok.." name="stock" id="stock" wire:model.defer="stock" autofocus>
+                                    placeholder="Masukan Stok.." name="stock" id="stock" wire:model.defer="stock"
+                                    autofocus>
                                 @error('stock') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
@@ -165,17 +162,23 @@
                                 <label for="thumbnail">Thumbnail</label>
                                 <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
                                     name="thumbnail" id="thumbnail" wire:model.defer="thumbnail" autofocus>
-                                @error('thumbnail') <small class="error text-danger">{{ $message }}</small> @enderror
+                                @if($productImages)
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                @else
+                                @error('productImages') <small class="error text-danger">{{ $message }}</small>
+                                @enderror
+                                @endif
                             </div>
                             <div class="col-6">
                                 <label for="productImages">Gambar Produk</label>
                                 <input type="file" class="form-control @error('productImages') is-invalid @enderror"
-                                    name="productImages" id="productImages" wire:model.defer="productImages" autofocus multiple>
+                                    name="productImages" id="productImages" wire:model.defer="productImages" autofocus
+                                    multiple>
                                 @if($productImages)
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                @else
                                 @error('productImages') <small class="error text-danger">{{ $message }}</small>
                                 @enderror
-                                @else
-                                <small class="text-danger">Gambar Produk bisa lebih dari satu.</small>
                                 @endif
                             </div>
                         </div>
@@ -184,7 +187,7 @@
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
                             wire:click="closeModal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Tambah</button>
+                        <button class="btn btn-primary" type="submit">Update</button>
                     </div>
                 </form>
             </div>
@@ -193,7 +196,6 @@
 
     @push('scripts')
     <script>
-
         (function($){
             $(document).on('livewire:load', function() {
                 $('.select2').select2()
