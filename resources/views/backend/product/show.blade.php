@@ -22,19 +22,19 @@
                         <div class="card-body">
                             <div class="product-slider owl-carousel owl-theme" id="sync1">
 
-                                <div class="item"><img src="{{ $product->thumbnail }}" alt="Gambar Produk"></div>
+                                <div class="item"><img src="{{ asset('storage/'.$product->thumbnail) }}" alt="Gambar Produk"></div>
                                 {{-- PRODUCT IMAGES --}}
                                 @foreach ($product->images as $image)
-                                <div class="item"><img src="{{ $image->image_name }}" alt=""></div>
+                                <div class="item"><img src="{{ asset('storage/'.$image->image_name)  }}" alt=""></div>
                                 @endforeach
                                 {{-- END PRODUCT IMAGES --}}
 
                             </div>
                             <div class="owl-carousel owl-theme" id="sync2">
-                                <div class="item"><img src="{{ $product->thumbnail }}" alt=""></div>
+                                <div class="item"><img src="{{ asset('storage/'.$product->thumbnail) }}" alt=""></div>
                                 {{-- PRODUCT IMAGES --}}
                                 @foreach ($product->images as $image)
-                                <div class="item"><img src="{{ $image->image_name }}" alt=""></div>
+                                <div class="item"><img src="{{ asset('storage/'.$image->image_name)  }}" alt=""></div>
                                 @endforeach
                                 {{-- END PRODUCT IMAGES --}}
                             </div>
@@ -48,9 +48,10 @@
                                 <h3>{{ $product->product_name }}</h3>
                             </div>
                             <div class="product-price">
-                                Rp. {{ number_format($product->price, 0, ',', '.') }}
-                                @if ($product->discount_percentage > 0)
-                                <del>Rp. {{ number_format($product->price_with_discount, 0, ',', '.') }}</del>
+                                Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}
+                                @if ($product->discount > 0)
+                                <del>Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
+                                <small>({{ round(($product->discount / $product->price) * 100) }}%)</small>
                                 @endif
                             </div>
                             <p>
@@ -70,9 +71,19 @@
                                             <td> <b>Stok &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
                                             </td>
                                             @if ($product->stock == 0)
-                                            <td class="txt-danger">{{ $product->stock }}</td>
+                                            <td>
+                                                <div class="product-size">
+                                                    {{-- TODO:*** --}}
+                                                    <button class="btn btn-outline-danger btn-sm" type="button">{{ $product->stock }}</button>
+                                                </div>
+                                            </td>
                                             @else
-                                            <td class="txt-success">{{ $product->stock }}</td>
+                                            <td>
+                                                <div class="product-size">
+                                                    {{-- TODO:*** --}}
+                                                    <button class="btn btn-outline-success btn-sm" type="button">{{ $product->stock }}</button>
+                                                </div>
+                                            </td>
                                             @endif
                                         </tr>
                                         <tr>
@@ -85,7 +96,12 @@
                                         </tr>
                                         <tr>
                                             <td> <b>Ukuran&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-                                            <td>{{ $product->size }}</td>
+                                            <td>
+                                                <div class="product-size">
+                                                    {{-- TODO:*** --}}
+                                                    <button class="btn btn-outline-dark btn-sm" type="button">{{ $product->size }}</button>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td> <b>Type &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
@@ -138,17 +154,9 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="m-t-15 btn-showcase">
-                                <a class="btn btn-info" href="#" title="">
-                                    <i class="fa fa-edit me-1"></i>
-                                    Edit
-                                </a>
 
-                                <a class="btn btn-danger" href="#">
-                                    <i class="fa fa-trash me-1"></i>
-                                    Hapus
-                                </a>
-                            </div>
+                            <livewire:backend.product.detail.button :product="$product->product_id" />
+
                         </div>
                     </div>
                 </div>
@@ -166,7 +174,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card">
+                    {{-- *** TODO: *** --}}
+                    {{-- <div class="card">
                         <div class="card-body">
                             <div class="collection-filter-block">
                                 <ul class="pro-services">
@@ -206,7 +215,7 @@
                             </div>
                         </div>
                         <!-- silde-bar colleps block end here-->
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -293,14 +302,12 @@
 
     {{-- Include livewire modal --}}
     @push('scripts')
+
     <script src="{{ asset('assets/js/rating/jquery.barrating.js') }}"></script>
     <script src="{{ asset('assets/js/rating/rating-script.js') }}"></script>
     <script src="{{ asset('assets/js/owlcarousel/owl.carousel.js') }}"></script>
     <script src="{{ asset('assets/js/ecommerce.js') }}"></script>
-    {{-- <script>
-        window.addEventListener('close-modal', event =>{
-            $('#updateCategoryModal').modal('hide');
-        });
+    <script>
         window.addEventListener('delete-show-confirmation', event =>{
             Swal.fire({
                     title: 'Apakah kamu yakin?',
@@ -320,7 +327,7 @@
         $(document).ready(function() {
             $('#datatables').DataTable();
         });
-    </script> --}}
+    </script>
 
     @endpush
 

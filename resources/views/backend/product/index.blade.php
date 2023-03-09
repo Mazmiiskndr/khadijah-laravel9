@@ -37,7 +37,7 @@
                         {{-- END SHOWING PRODUCT --}}
                     </div>
 
-                    <div class="col-md-3 text-sm-end">
+                    <div class="col-md-3">
                         <div class="mr-3">
                             {{-- START CREATE BUTTON PRODUCT --}}
                             @livewire('backend.product.create-product')
@@ -98,10 +98,20 @@
     {{-- Include livewire modal --}}
     @push('scripts')
     {{-- *** TODO: *** --}}
-
-    {{-- <script>
+    @if (session()->has('success'))
+    <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+    @endif
+    <script>
         window.addEventListener('close-modal', event =>{
-            $('#updateCategoryModal').modal('hide');
+            $('#createProdukModal').modal('hide');
         });
         window.addEventListener('delete-show-confirmation', event =>{
             Swal.fire({
@@ -119,7 +129,7 @@
                 }
             })
         });
-    </script> --}}
+    </script>
 
     {{-- <script src="{{ asset('assets/js/range-slider/ion.rangeSlider.min.js') }}"></script>
     <script src="{{ asset('assets/js/range-slider/rangeslider-script.js') }}"></script>
@@ -128,7 +138,7 @@
     <script src="{{ asset('assets/js/touchspin/input-groups.min.js') }}"></script>
     <script src="{{ asset('assets/js/owlcarousel/owl.carousel.js') }}"></script>
     <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
-    <script src="{{ asset('assets/js/select2/select2-custom.') }}js"></script>
+    <script src="{{ asset('assets/js/select2/select2-custom.js') }}"></script>
     <script src="{{ asset('assets/js/product-tab.js') }}"></script>
 
     @endpush

@@ -18,15 +18,16 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('product_name', 200);
             $table->string('product_slug', 200); // Added product_slug column
-            $table->text('product_description');
-            $table->string('dimension', 150); // Added material column
-            $table->string('material', 150); // Added material column
-            $table->string('size', 50); // Added size column
-            $table->string('type', 100); // Added type column
+            $table->text('product_description')->nullable();
+            $table->string('dimension', 150)->nullable(); // Added material column
+            $table->string('material', 150)->nullable(); // Added material column
+            $table->string('size', 100); // Added size column
+            $table->string('type', 100)->nullable(); // Added type column
             $table->integer('price');
+            $table->integer('discount')->nullable(); // Added Discount column
             $table->string('thumbnail', 200);
-            $table->string('color', 50);
-            $table->decimal('weight', 10, 2);
+            $table->string('color', 50)->nullable();
+            $table->decimal('weight', 10, 2)->nullable();
             $table->integer('stock');
             $table->dateTime('date_added');
             $table->dateTime('date_updated')->nullable();

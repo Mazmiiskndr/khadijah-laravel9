@@ -102,12 +102,12 @@
         </div>
     </div>
 
+    @livewireScripts
     <!-- latest jquery-->
     <x-backend.script />
     {{-- @include('backend.script') --}}
     @stack('scripts')
     <!-- Plugin used-->
-    @livewireScripts
 </body>
 
 </html>

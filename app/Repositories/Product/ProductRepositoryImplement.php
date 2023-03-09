@@ -55,16 +55,16 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
 
         switch ($showing) {
             case 'featured':
-                // implement code for featured products
+                $query->orderBy('created_at', 'DESC');
                 break;
             case 'lowest_price':
-                $query->orderBy('price', 'asc');
+                $query->orderBy('price', 'ASC');
                 break;
             case 'highest_price':
-                $query->orderBy('price', 'desc');
+                $query->orderBy('price', 'DESC');
                 break;
             default:
-                $query->orderBy('created_at', 'desc');
+                $query->orderBy('created_at', 'DESC');
                 break;
         }
 

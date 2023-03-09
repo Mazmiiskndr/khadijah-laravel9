@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Backend\Product;
 
+use App\Models\Product;
 use App\Services\Product\ProductService;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,12 +15,15 @@ class CardProduct extends Component
     public $paginationTheme = 'bootstrap';
     public $search = '';
     public $showing = '';
+    public $product_id;
     public $categoryFilters = [];
 
     protected $listeners = [
         'searchProduct' => 'updateSearch',
         'showingProduct' => 'updateShowing',
         'categorySelected' => 'updateCategorySelected',
+        'deleteConfirmation' => 'destroy',
+        'productCreated' => 'handleStored',
     ];
 
     public function mount()
@@ -79,4 +83,42 @@ class CardProduct extends Component
         $this->emit('paginationData', $paginationData);
         return view('livewire.backend.product.card-product', ['products' => $products]);
     }
+
+    /**
+     * deleteConfirmation
+     *
+     * @param  mixed $product_id
+     * @return void
+     */
+    public function deleteConfirmation($product_id)
+    {
+        $this->product_id  = $product_id;
+        $this->dispatchBrowserEvent('delete-show-confirmation');
+    }
+
+    /**
+     * destroy
+     *
+     * @param  mixed $product_id
+     * @return void
+     */
+    // *** TODO: Delete Tag, Product Images ***
+    public function destroy()
+    {
+        $product = Product::find($this->product_id);
+        $product->delete();
+        // Set Flash Message
+        session()->flash('success', 'Produk Berhasil di Hapus!');
+    }
+
+    /**
+     * handleStored
+     *
+     * @return void
+     */
+    public function handleStored()
+    {
+        //
+    }
+
 }
