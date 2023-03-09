@@ -19,11 +19,8 @@ class CategoryController extends Controller
     {
         $this->categoryService = $categoryService;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    // View Index
     public function index()
     {
         return view('backend.categories.index');
