@@ -34,18 +34,6 @@
                     </li>
                     {{-- END SIDEBAR DASHBOARD --}}
 
-                    {{-- START SIDEBAR PELANGGAN --}}
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.customer.index') }}">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg>
-                            <span>Data Pelanggan</span></a>
-                    </li>
-                    {{-- END SIDEBAR PELANGGAN --}}
-
                     {{-- START SIDEBAR SUBMENU PRODUK --}}
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="#">
@@ -94,6 +82,30 @@
                         </ul>
                     </li>
                     {{-- END SIDEBAR SUBMENU PRODUK --}}
+
+                    {{-- START SIDEBAR PELANGGAN --}}
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.customer.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Data Pelanggan</span></a>
+                    </li>
+                    {{-- END SIDEBAR PELANGGAN --}}
+
+                    {{-- START SIDEBAR PROMO --}}
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-knowledgebase') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-knowledgebase') }}"></use>
+                            </svg>
+                            <span>Data Promo</span></a>
+                    </li>
+                    {{-- END SIDEBAR PROMO --}}
 
                     {{-- *** TODO: ***  --}}
                     {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title"

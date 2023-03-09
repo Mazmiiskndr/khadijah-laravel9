@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\PromoController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -32,9 +33,10 @@ Route::controller(LoginController::class)->name('admin.')->prefix('admin')->grou
 // Dashboard
 Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->group(function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
-    Route::resource('product', ProductController::class);
-    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('customer', [CustomerController::class, 'index'])->name('customer.index');
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::resource('product', ProductController::class);
+    Route::get('promo', [PromoController::class, 'index'])->name('promo.index');
 });
 
 // Route::middleware('auth')->group(function () {

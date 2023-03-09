@@ -63,16 +63,24 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="price">Harga</label>
-                                <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                    placeholder="Masukan Harga.." name="price" id="price" wire:model.defer="price"
-                                    autofocus>
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input type="number" class="form-control @error('price') is-invalid @enderror" placeholder="Masukan Harga.."
+                                        name="price" id="price" wire:model.defer="price" autofocus>
+                                </div>
                                 @error('price') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6">
                                 <label for="discount">Diskon</label>
-                                <input type="number" class="form-control @error('discount') is-invalid @enderror"
-                                    placeholder="Masukan Diskon.." name="discount" id="discount"
-                                    wire:model.defer="discount" autofocus>
+                                <div class="input-group">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Rp.</span>
+                                    </div>
+                                    <input type="number" class="form-control @error('discount') is-invalid @enderror"
+                                        placeholder="Masukan Diskon.." name="discount" id="discount" wire:model.defer="discount" autofocus>
+                                </div>
                                 @if($discount)
                                 @error('discount') <small class="error text-danger">{{ $message }}</small> @enderror
                                 @else

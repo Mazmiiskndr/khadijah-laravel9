@@ -207,16 +207,19 @@
                 <div class="col-sm-12">
                     <ul class="nav nav-tabs border-tab nav-primary mb-0" id="top-tab" role="tablist">
                         <li class="nav-item"><a class="nav-link active" id="top-detail-tab" data-bs-toggle="tab"
-                                href="#top-detail" role="tab" aria-controls="top-detail" aria-selected="false">Deskripsi </a>
+                                href="#top-detail" role="tab" aria-controls="top-detail" aria-selected="false">Deskripsi Produk</a>
                             <div class="material-border"></div>
                         </li>
-                        {{-- *** TODO: **** --}}
-                        {{-- <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-bs-toggle="tab"
+
+                        @if($product->category->category_description)
+                        <li class="nav-item"><a class="nav-link" id="profile-top-tab" data-bs-toggle="tab"
                                 href="#top-profile" role="tab" aria-controls="top-profile"
-                                aria-selected="false">Video</a>
+                                aria-selected="false">Deskripsi Kategori</a>
                             <div class="material-border"></div>
                         </li>
-                        <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
+                        @endif
+                        {{-- *** TODO: **** --}}
+                        {{-- <li class="nav-item"><a class="nav-link" id="contact-top-tab" data-bs-toggle="tab"
                                 href="#top-contact" role="tab" aria-controls="top-contact"
                                 aria-selected="true">Details</a>
                             <div class="material-border"></div>
@@ -232,6 +235,13 @@
                             aria-labelledby="top-detail-tab">
                             <p class="mb-0 m-t-20">{{ $product->product_description }}</p>
                         </div>
+                        @if ($product->category->category_description)
+
+                        <div class="tab-pane fade active show" id="top-profile" role="tabpanel"
+                            aria-labelledby="top-detail-tab">
+                            <p class="mb-0 m-t-20">{{ $product->category->category_description }}</p>
+                        </div>
+                        @endif
 
                         {{-- *** TODO: *** --}}
                         {{-- <div class="tab-pane fade" id="top-profile" role="tabpanel" aria-labelledby="profile-top-tab">
