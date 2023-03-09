@@ -46,7 +46,7 @@
                                 </select>
                                 @error('category_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
-                            {{-- *** TODO: and FIXME: --}}
+                            {{-- *** TODO: --}}
                             <div class="col-6" wire:ignore>
                                 <label for="tag_id">Tag Produk</label>
                                 {{-- {{ dd($tag_id) }} --}}

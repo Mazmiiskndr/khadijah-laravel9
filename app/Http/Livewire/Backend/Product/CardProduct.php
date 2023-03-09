@@ -118,7 +118,6 @@ class CardProduct extends Component
      * @param  mixed $product_id
      * @return void
      */
-    // *** TODO: Delete Tag, Product Images ***
     public function destroy()
     {
         $product = Product::find($this->product_id);

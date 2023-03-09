@@ -32,7 +32,6 @@
                         </ul>
                     </div>
                 </div>
-                {{-- *** TODO: *** --}}
                 <div class="modal fade" id="exampleModalCenter-{{ $product->product_id }}" tabindex="-1" role="dialog"
                     aria-labelledby="exampleModalCenter-{{ $product->product_id }}" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">

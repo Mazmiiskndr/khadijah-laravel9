@@ -195,8 +195,6 @@ class CreateProduct extends Component
      */
     public function resetFields()
     {
-        // *** TODO: ***
-
         $this->tag_id             = [];
         $this->product_name         = '';
         $this->productImages        = [];
