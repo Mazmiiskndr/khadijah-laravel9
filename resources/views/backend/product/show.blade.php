@@ -307,9 +307,6 @@
                 }
             })
         });
-        $(document).ready(function() {
-            $('#datatables').DataTable();
-        });
     </script>
 
     @endpush

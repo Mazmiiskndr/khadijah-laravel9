@@ -111,6 +111,9 @@
         window.addEventListener('close-modal', event =>{
             $('#createProdukModal').modal('hide');
         });
+        window.addEventListener('close-modal-update', event =>{
+            $('#updateProductModal').modal('hide');
+        });
         window.addEventListener('delete-show-confirmation', event =>{
             Swal.fire({
                     title: 'Apakah kamu yakin?',

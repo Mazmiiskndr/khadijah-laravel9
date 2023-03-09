@@ -46,8 +46,8 @@ class CreateProduct extends Component
         'price'                 => 'required',
         'size'                  => 'required',
         'stock'                 => 'required',
-        'thumbnail'             => 'required|max:5120',
-        'productImages'         => 'max:10240',
+        'thumbnail'             => 'required|max:5120|mimes:jpeg,jpg,png',
+        'productImages'         => 'max:20480|mimes:jpeg,jpg,png',
         // Nullable
         'color'                 => 'nullable',
         'type'                  => 'nullable',
@@ -67,7 +67,9 @@ class CreateProduct extends Component
         'stock.required'        => 'Stok harus diisi',
         'thumbnail.required'    => 'Thumbnail harus diisi',
         'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
+        'thumbnail.mimes'       => 'Format gambar harus berupa JPG, JPEG, atau PNG',
         'productImages.max'     => 'Ukuran gambar maksimal 5mb',
+        'productImages.mimes'   => 'Format gambar harus berupa JPG, JPEG, atau PNG',
     ];
 
     /**
@@ -161,7 +163,7 @@ class CreateProduct extends Component
             }
 
             // Set Flash Message
-            session()->flash('success', 'Customer Berhasil di Tambahkan!');
+            session()->flash('success', 'Produk Berhasil di Tambahkan!');
 
             // Reset Form Fields After Creating Category
             $this->resetFields();

@@ -24,7 +24,7 @@
                 @foreach ($products as $product)
                 <div class="product-box row">
                     <div class="product-img col-md-5">
-                        <img class="img-fluid img-100" src="{{ $product->thumbnail }}" alt="" title="">
+                        <a href="{{ route('backend.product.show', ['product' => $product->product_id]) }}"><img class="img-fluid img-100" src="{{ asset('storage/'.$product->thumbnail) }}" alt="" title=""></a>
                     </div>
                     <div class="product-details col-md-7 text-start">
                         {{-- <span>
