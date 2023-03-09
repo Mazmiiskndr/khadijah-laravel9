@@ -29,6 +29,7 @@ class ProductFactory extends Factory
             'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']), // Added size field
             'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']), // Added type field
             'price' => $this->faker->numberBetween(10000, 1000000),
+            'discount' => $this->faker->numberBetween(5000, 200000),
             'thumbnail' => $this->faker->imageUrl(),
             'color' => $this->faker->colorName(),
             'weight' => $this->faker->randomFloat(2, 0.1, 10),

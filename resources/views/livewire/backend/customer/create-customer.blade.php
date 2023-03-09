@@ -6,7 +6,7 @@
     </button>
 
     <!-- Create Modal Customer-->
-    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="createCustomerModal">
+    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="createCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">

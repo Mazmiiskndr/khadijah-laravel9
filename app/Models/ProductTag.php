@@ -15,6 +15,7 @@ class ProductTag extends Model
         'product_id',
         'tag_id',
     ];
+    public $timestamps = false;
 
     public function product()
     {
