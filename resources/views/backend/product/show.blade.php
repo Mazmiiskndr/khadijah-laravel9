@@ -98,8 +98,12 @@
                                             <td> <b>Ukuran&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
                                             <td>
                                                 <div class="product-size">
-                                                    {{-- TODO:*** --}}
-                                                    <button class="btn btn-outline-dark btn-sm" type="button">{{ $product->size }}</button>
+                                                    @php
+                                                    $sizes = explode(', ', $product->size);
+                                                    @endphp
+                                                    @foreach ($sizes as $size)
+                                                    <button class="btn btn-outline-dark btn-sm" type="button" style="display: inline-block">{{ $size }}</button>
+                                                    @endforeach
                                                 </div>
                                             </td>
                                         </tr>

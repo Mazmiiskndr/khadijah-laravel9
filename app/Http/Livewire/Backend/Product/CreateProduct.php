@@ -204,7 +204,7 @@ class CreateProduct extends Component
         $this->price                = '';
         $this->size                 = '';
         $this->stock                = '';
-        $this->thumbnail            = '';
+        $this->thumbnail            = null;
         $this->color                = '';
         $this->type                 = '';
         $this->product_description  = '';
