@@ -1,7 +1,6 @@
 <div>
-
-    {{-- Start Modal Create Produk --}}
-    <!-- Create Modal Produk-->
+    {{-- Start Modal Update Produk --}}
+    <!-- Update Modal Produk-->
     <div wire:ignore.self class="modal fade bd-example-modal-lg" id="updateProductModal" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
@@ -11,14 +10,14 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
-                {{-- *** TODO: Update to Store *** --}}
-                <form wire:submit.prevent="submit" enctype="multipart/form-data">
+                <form wire:submit.prevent="update" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
                         {{-- Product Name And Category --}}
                         <div class="row">
                             <div class="col-6">
                                 <label for="product_name">Nama Produk</label>
+                                <input type="hidden" class="form-control" name="product_id" id="product_id" wire:model="product_id">
                                 <input type="text" class="form-control @error('product_name') is-invalid @enderror"
                                     placeholder="Masukan Nama Produk.." name="product_name" id="product_name"
                                     wire:model.defer="product_name" autofocus>
@@ -46,7 +45,6 @@
                                 </select>
                                 @error('category_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
-                            {{-- *** TODO: --}}
                             <div class="col-6" wire:ignore>
                                 <label for="tag_id">Tag Produk</label>
                                 {{-- {{ dd($tag_id) }} --}}
@@ -161,24 +159,22 @@
                             <div class="col-6">
                                 <label for="thumbnail">Thumbnail</label>
                                 <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
-                                    name="thumbnail" id="thumbnail" wire:model.defer="thumbnail" autofocus>
-                                @if($productImages)
-                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                    name="thumbnail" id="thumbnail" wire:model="thumbnail" autofocus>
+                                @if ($errors->has('thumbnail'))
+                                <small class="error text-danger">{{ $errors->first('thumbnail') }}</small>
                                 @else
-                                @error('productImages') <small class="error text-danger">{{ $message }}</small>
-                                @enderror
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
                                 @endif
                             </div>
                             <div class="col-6">
                                 <label for="productImages">Gambar Produk</label>
                                 <input type="file" class="form-control @error('productImages') is-invalid @enderror"
-                                    name="productImages" id="productImages" wire:model.defer="productImages" autofocus
+                                    name="productImages" id="productImages" wire:model="productImages" autofocus
                                     multiple>
-                                @if($productImages)
-                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
+                                @if ($errors->has('productImages'))
+                                <small class="error text-danger">{{ $errors->first('productImages') }}</small>
                                 @else
-                                @error('productImages') <small class="error text-danger">{{ $message }}</small>
-                                @enderror
+                                <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
                                 @endif
                             </div>
                         </div>
@@ -237,6 +233,6 @@
         });
     </script>
     @endif
-    {{-- End Modal Create Produk --}}
+    {{-- End Modal Update Produk --}}
 
 </div>

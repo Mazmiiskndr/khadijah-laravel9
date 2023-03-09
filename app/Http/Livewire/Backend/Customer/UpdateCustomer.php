@@ -161,7 +161,7 @@ class UpdateCustomer extends Component
      */
     public function update()
     {
-        // buatkan validate dengan message error harus diisi
+        // Create Validate
         $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->customer_id) {
@@ -182,7 +182,7 @@ class UpdateCustomer extends Component
             $customer->update($customerData);
             $this->updateModal = false;
             // Set Flash Message
-            session()->flash('success', 'Kategori Berhasil di Update!');
+            session()->flash('success', 'Customer Berhasil di Update!');
             $this->resetFields();
             // buatkan emit dengan flash message
             $this->emit('updatedCustomer', $customer);

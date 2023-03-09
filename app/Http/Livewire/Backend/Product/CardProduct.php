@@ -28,6 +28,7 @@ class CardProduct extends Component
         'categorySelected' => 'updateCategorySelected',
         'deleteConfirmation' => 'destroy',
         'productCreated' => 'handleStored',
+        'updatedProduct' => 'handleUpdated',
     ];
 
     public function mount()
@@ -157,6 +158,16 @@ class CardProduct extends Component
      * @return void
      */
     public function handleDeleted()
+    {
+        //
+    }
+
+    /**
+     * handleUpdated
+     *
+     * @return void
+     */
+    public function handleUpdated()
     {
         //
     }
