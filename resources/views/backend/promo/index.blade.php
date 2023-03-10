@@ -1,5 +1,6 @@
 <x-backend.master title="Promo | Khadijah">
     @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css') }}">
     @endpush
 
     @slot('breadcrumbTitle')
@@ -12,39 +13,35 @@
 
     <div class="container-fluid">
         <div class="row">
-            <!-- Add Categories-->
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-header pb-0 card-no-border d-flex">
-                        <h5>Tambah Data Kategori</h5>
-                    </div>
-                    <div class="card-body">
-                        @livewire('backend.categories.create-category')
-                    </div>
-                </div>
+            {{-- START BUTTON ADD PROMO --}}
+            <div class="mb-3">
+                @livewire('backend.promo.create-promo')
             </div>
-            <!-- Add Categories Ends-->
-            <!-- Data Categories-->
-            <div class="col-sm-8">
+            {{-- END BUTTON ADD PROMO --}}
 
-                <div class="card">
-                    <div class="card-header pb-0 card-no-border d-flex">
-                        <h5>Data Kategori</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="display" id="datatables">
-                                <thead>
-                                    <tr>
-                                        <th width="5%">No.</th>
-                                        <th>Nama Kategori</th>
-                                        <th>Deskripsi</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                @livewire('backend.categories.datatable-category')
-                            </table>
-                        </div>
+            <div class="card">
+                <div class="card-header pb-0 card-no-border d-flex">
+                    <h5>Tabel Promo</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="display" id="datatables">
+                            <thead>
+                                <tr>
+                                    <th width="5%">No.</th>
+                                    <th>Nama</th>
+                                    <th>Kode</th>
+                                    <th>Tipe</th>
+                                    <th>Nilai</th>
+                                    <th>Tgl Mulai</th>
+                                    <th>Tgl Selesai</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            {{-- START DATATABLE PROMO --}}
+                            @livewire('backend.promo.datatable-promo')
+                            {{-- END DATATABLE PROMO --}}
+                        </table>
                     </div>
                 </div>
             </div>
@@ -59,12 +56,20 @@
 
     {{-- Include livewire modal --}}
     @push('scripts')
+    {{-- START DATEPICKER --}}
+    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.en.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.custom.js') }}"></script> --}}
+    {{-- END DATEPICKER --}}
+    {{-- START DATATABLE --}}
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
+    {{-- END DATATABLE --}}
     <script>
-        // window.addEventListener('close-modal', event =>{
-        //         $('#updateCategoryModal').modal('hide');
-        //     });
+        window.addEventListener('close-modal', event =>{
+            $('#createPromoModal').modal('hide');
+        });
+        // *** TODO: ***
         //     window.addEventListener('delete-show-confirmation', event =>{
         //         Swal.fire({
         //                 title: 'Apakah kamu yakin?',

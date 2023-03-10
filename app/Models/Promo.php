@@ -13,6 +13,7 @@ class Promo extends Model
     protected $primaryKey = 'promo_id';
     protected $fillable = [
         'promo_id',
+        'promo_name',
         'promo_code',
         'promo_description',
         'discount_type',

@@ -1,14 +1,14 @@
-<x-backend.master title="Customer | Khadijah">
+<x-backend.master title="Pelanggan | Khadijah">
     @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/select2.css') }}">
     @endpush
 
     @slot('breadcrumbTitle')
-    <h3>Data Customer</h3>
+    <h3>Data Pelanggan</h3>
     @endslot
     @slot('breadcrumbItems')
     <li class="breadcrumb-item active"><a href="{{ route('backend.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item">Data Customer</li>
+    <li class="breadcrumb-item">Data Pelanggan</li>
     @endslot
 
     <div class="container-fluid">
@@ -18,8 +18,7 @@
             </div>
             <div class="card">
                 <div class="card-header pb-0 card-no-border d-flex">
-                    <h5>Data Customer</h5>
-
+                    <h5>Tabel Pelanggan</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -27,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th width="5%">No.</th>
-                                    <th>Nama Customer</th>
+                                    <th>Nama Pelanggan</th>
                                     <th>Email</th>
                                     <th>No. Telepon</th>
                                     <th>Tanggal Daftar</th>
@@ -39,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Data Customer Ends-->
+            <!-- Data Pelanggan Ends-->
         </div>
     </div>
     {{-- Include livewire modal --}}
