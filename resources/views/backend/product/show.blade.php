@@ -54,8 +54,12 @@
                                 <small>({{ round(($product->discount / $product->price) * 100) }}%)</small>
                                 @endif
                             </div>
+                            @php
+                            $dateAdded = Carbon\Carbon::parse($product->date_added)->translatedFormat('d F Y');
+                            @endphp
                             <p>
-                                <b>Kategori</b> : {{ $product->category->category_name }}
+                                <b>Kategori</b> : {{ $product->category->category_name }} <br>
+                                <b>Tanggal di dibuat</b> : {{ $dateAdded }}
                             </p>
                             <hr>
                             <p>{{ $product->product_description }}</p>

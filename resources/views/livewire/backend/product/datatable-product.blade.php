@@ -1,5 +1,8 @@
 <tbody>
     @foreach ($products as $product)
+    @php
+        $dateAdded = Carbon\Carbon::parse($product->date_added)->translatedFormat('d F Y');
+    @endphp
     <tr>
         <td>{{ $loop->iteration }}</td>
         <td class="text-center"><img src="{{ asset('storage/'.$product->thumbnail) }}" style="width:50px;"
@@ -12,7 +15,7 @@
             <small>({{ round(($product->discount / $product->price) * 100) }}%)</small>
         </td>
         <td>{{ $product->size }}</td>
-        <td>{{ date('d - M - Y',strtotime($product->date_added)) }}</td>
+        <td>{{ $dateAdded }}</td>
         <td>
             <button onclick="detailProduct({{ $product->product_id }})" class="btn btn-pill btn-info">
                 <i class="fa fa-eye"></i>
