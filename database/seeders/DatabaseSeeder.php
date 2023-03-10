@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductTag;
+use App\Models\Promo;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
@@ -47,6 +48,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
         User::factory(50)->create();
+        Promo::factory(50)->create();
         Category::factory(50)->create();
         Tag::factory(50)->create();
         // Product::factory(100)->create();

@@ -32,6 +32,15 @@ interface ProductRepository extends Repository{
      */
     public function getPaginatedData($perPage, $search,$showing,$categoryFilters);
 
+
+    /**
+     * getGalleryProduct
+     *
+     * @param  mixed $perPage
+     * @return void
+     */
+    public function getGalleryProduct($perPage,$search);
+
     /**
      * getLimitData
      *

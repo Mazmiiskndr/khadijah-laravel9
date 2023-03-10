@@ -29,7 +29,7 @@
 
                 <div class="card">
                     <div class="card-header pb-0 card-no-border d-flex">
-                        <h5>Data Kategori</h5>
+                        <h5>Tabel Kategori</h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

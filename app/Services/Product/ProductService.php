@@ -32,6 +32,13 @@ interface ProductService extends BaseService{
     public function getPaginatedData($perPage, $search, $showing, $categoryFilters);
 
     /**
+     * getGalleryProduct
+     *
+     * @param  mixed $perPage
+     */
+    public function getGalleryProduct($perPage, $search);
+
+    /**
      * getLimitData
      *
      * @param  mixed $limit

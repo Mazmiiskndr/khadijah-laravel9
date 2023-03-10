@@ -2,7 +2,7 @@
     {{-- Button Modal Customer --}}
     <button class="pull-right btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#createCustomerModal">
         <i class="fa fa-plus"></i>
-        Tambah Data Customer
+        Tambah Data Pelanggan
     </button>
 
     <!-- Create Modal Customer-->
@@ -10,7 +10,7 @@
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Tambah Data Customer</h5>
+                    <h5 class="modal-title">Tambah Data Pelanggan</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
@@ -20,9 +20,9 @@
                         {{-- Name And Email --}}
                         <div class="row">
                             <div class="col-6">
-                                <label for="name">Nama Customer</label>
+                                <label for="name">Nama Pelanggan</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="Masukan Nama Customer.." name="name" id="name" wire:model="name"
+                                    placeholder="Masukan Nama Pelanggan.." name="name" id="name" wire:model="name"
                                     autofocus>
                                 @error('name') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>

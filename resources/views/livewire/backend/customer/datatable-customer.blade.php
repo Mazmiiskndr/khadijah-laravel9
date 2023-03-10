@@ -1,11 +1,14 @@
 <tbody>
     @foreach ($customers as $customer)
+    @php
+    $registrationDate = Carbon\Carbon::parse($customer->registration_date)->translatedFormat('d F Y');
+    @endphp
     <tr>
         <td>{{ $loop->iteration }}</td>
         <td>{{ $customer->name }}</td>
         <td>{{ $customer->email }}</td>
         <td>{{ $customer->phone }}</td>
-        <td>{{ date('d - F - Y',strtotime($customer->registration_date)) }}</td>
+        <td>{{ $registrationDate }}</td>
         <td>
             <button wire:click="getCustomer({{ $customer->id }})" class="btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#updateCustomerModal">
                 <i class="fa fa-edit"></i>

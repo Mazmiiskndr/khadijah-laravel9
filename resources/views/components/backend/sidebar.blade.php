@@ -65,20 +65,34 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-bonus-kit') }}"></use>
                                     </svg>
-                                    <span>Produk</span>
+                                    <span>Grid</span>
+
                                 </a>
                             </li>
+
                             <li>
-                                <a href="#">
+                                <a href="{{ route('backend.product.datatable') }}">
                                     <svg class="stroke-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-table') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-table') }}"></use>
                                     </svg>
-                                    <span>Tabel Produk</span>
+                                    <span>Tabel</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('backend.product.gallery') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                                    </svg>
+                                    <span>Galeri</span>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                     {{-- END SIDEBAR SUBMENU PRODUK --}}
@@ -91,7 +105,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
                             </svg>
-                            <span>Data Pelanggan</span></a>
+                            <span>Pelanggan</span></a>
                     </li>
                     {{-- END SIDEBAR PELANGGAN --}}
 
@@ -103,29 +117,13 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-knowledgebase') }}"></use>
                             </svg>
-                            <span>Data Promo</span></a>
+                            <span>Promo</span></a>
                     </li>
                     {{-- END SIDEBAR PROMO --}}
 
-                    {{-- *** TODO: ***  --}}
-                    {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title"
-                            href="#">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-social') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-social') }}"></use>
-                            </svg><span>Raise Support</span></a>
-                    </li>
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title"
-                            href="https://docs.pixelstrap.com/cuba/laravel/document/">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-form') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-form') }}"></use>
-                            </svg><span>Documentation </span></a>
-                    </li> --}}
+                    {{-- *** TODO: *** --}}
+
+
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

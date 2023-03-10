@@ -56,6 +56,16 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+    public function getGalleryProduct($perPage, $search)
+    {
+        try {
+            return $this->mainRepository->getGalleryProduct($perPage, $search);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+        }
+    }
+
     /**
      * getProductById
      *
