@@ -1,17 +1,20 @@
 <div class="my-gallery card-body row gallery-with-description" itemscope="">
     @foreach ($products as $product)
     @php
-    // buat path ke file gambar
+
+    // Make path file image
     $path = public_path('storage/'.$product->thumbnail);
 
-    // inisialisasi $size dengan nilai default
+    // Declare $size with value default
     $size = '1600x900';
 
-    // periksa apakah file gambar tersedia
+    // Check if file image Available
     if (file_exists($path)) {
-    // baca ukuran gambar menggunakan getimagesize()
+
+    // Read Size Image Used getimagesize()
     $imageSize = getimagesize($path);
-    // set $size dengan nilai lebar x tinggi gambar
+
+    // Setting $size with value width x height images
     $size = $imageSize[0].'x'.$imageSize[1];
     }
     @endphp

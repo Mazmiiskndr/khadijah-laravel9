@@ -65,7 +65,7 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-bonus-kit') }}"></use>
                                     </svg>
-                                    <span>Daftar Produk</span>
+                                    <span>Grid</span>
 
                                 </a>
                             </li>
@@ -78,7 +78,7 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-table') }}"></use>
                                     </svg>
-                                    <span>Tabel Produk</span>
+                                    <span>Tabel</span>
                                 </a>
                             </li>
                             <li>
@@ -89,7 +89,7 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                                     </svg>
-                                    <span>Galeri Produk</span>
+                                    <span>Galeri</span>
                                 </a>
                             </li>
 
@@ -105,7 +105,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
                             </svg>
-                            <span>Data Pelanggan</span></a>
+                            <span>Pelanggan</span></a>
                     </li>
                     {{-- END SIDEBAR PELANGGAN --}}
 
@@ -117,7 +117,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-knowledgebase') }}"></use>
                             </svg>
-                            <span>Data Promo</span></a>
+                            <span>Promo</span></a>
                     </li>
                     {{-- END SIDEBAR PROMO --}}
 

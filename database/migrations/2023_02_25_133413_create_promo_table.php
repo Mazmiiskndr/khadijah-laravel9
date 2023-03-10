@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('promo_id');
             $table->string('promo_code', 50);
             $table->text('promo_description');
-            $table->string('discount_type', 10);
+            $table->string('discount_type', 100);
             $table->integer('discount_value');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
