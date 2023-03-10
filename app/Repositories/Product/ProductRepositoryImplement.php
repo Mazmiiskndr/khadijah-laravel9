@@ -58,15 +58,36 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
                 $query->orderBy('created_at', 'DESC');
                 break;
             case 'lowest_price':
-                $query->orderBy('price', 'ASC');
+                $query->orderByRaw('price - IFNULL(discount, 0) ASC');
                 break;
             case 'highest_price':
-                $query->orderBy('price', 'DESC');
+                $query->orderByRaw('price - IFNULL(discount, 0) DESC');
                 break;
             default:
                 $query->orderBy('created_at', 'DESC');
                 break;
         }
+
+        $query = $query->select('product.*')->paginate($perPage);
+
+        return $query;
+    }
+
+    /**
+     * getGalleryProduct
+     *
+     * @param  mixed $perPage
+     * @param  mixed $search
+     * @return void
+     */
+    public function getGalleryProduct($perPage, $search)
+    {
+        $query = $this->model->join('category', 'category.category_id', '=', 'product.category_id')
+        ->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('category_name', 'LIKE', '%' . $search . '%');
+        });
+        $query->orderBy('created_at', 'DESC');
 
         $query = $query->select('product.*')->paginate($perPage);
 

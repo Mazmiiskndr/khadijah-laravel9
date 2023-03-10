@@ -22,7 +22,13 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
             linkEl = figureEl.children[0]; // <a> element
 
-            size = linkEl.getAttribute('data-size').split('x');
+            size = linkEl.getAttribute("data-size");
+            if (size !== null) {
+                size = size.split("x");
+            } else {
+                size = [0, 0];
+            }
+
 
             // create slide object
             item = {
@@ -138,19 +144,26 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
 
         // define options (if needed)
         options = {
-
             // define gallery index (for URL)
-            galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+            galleryUID: galleryElement.getAttribute("data-pswp-uid"),
 
-            getThumbBoundsFn: function(index) {
-                // See Options -> getThumbBoundsFn section of documentation for more info
-                var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
-                    pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+            getThumbBoundsFn: function (index) {
+                var thumbnail = items[index].el.getElementsByTagName("img")[0]; // mencari elemen gambar
+                if (!thumbnail) {
+                    return { x: 0, y: 0, w: 0 }; // kembalikan nilai default jika elemen gambar tidak tersedia
+                }
+
+                var pageYScroll =
+                        window.pageYOffset ||
+                        document.documentElement.scrollTop,
                     rect = thumbnail.getBoundingClientRect();
 
-                return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
-            }
-
+                return {
+                    x: rect.left,
+                    y: rect.top + pageYScroll,
+                    w: rect.width,
+                };
+            },
         };
 
         // PhotoSwipe opened from URL

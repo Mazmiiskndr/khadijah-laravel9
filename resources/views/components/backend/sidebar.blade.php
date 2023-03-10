@@ -65,11 +65,13 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-bonus-kit') }}"></use>
                                     </svg>
-                                    <span>Produk</span>
+                                    <span>Daftar Produk</span>
+
                                 </a>
                             </li>
+
                             <li>
-                                <a href="#">
+                                <a href="{{ route('backend.product.datatable') }}">
                                     <svg class="stroke-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-table') }}"></use>
                                     </svg>
@@ -79,6 +81,18 @@
                                     <span>Tabel Produk</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('backend.product.gallery') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                                    </svg>
+                                    <span>Galeri Produk</span>
+                                </a>
+                            </li>
+
                         </ul>
                     </li>
                     {{-- END SIDEBAR SUBMENU PRODUK --}}

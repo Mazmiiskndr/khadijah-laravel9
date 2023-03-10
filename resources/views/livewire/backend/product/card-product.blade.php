@@ -11,11 +11,12 @@
                     <div class="ribbon ribbon-danger">Stok Kosong</div>
                     @endif
 
-                    <img class="img-fluid" src="{{ asset('storage/'.$product->thumbnail) }}"
-                        style="width:450px;" alt="{{ $product->product_name }}">
+                    <img class="img-fluid" src="{{ asset('storage/'.$product->thumbnail) }}" style="width:450px;"
+                        alt="{{ $product->product_name }}">
                     <div class="product-hover">
                         <ul>
-                            <li wire:click="getProduct({{ $product->product_id }})" data-bs-toggle="modal" data-bs-target="#updateProductModal">
+                            <li wire:click="getProduct({{ $product->product_id }})" data-bs-toggle="modal"
+                                data-bs-target="#updateProductModal">
                                 <button class="btn" type="button"><i class="fa fa-edit"></i></button>
                             </li>
                             <li data-bs-toggle="modal" data-bs-target="#exampleModalCenter-{{ $product->product_id }}">
@@ -25,9 +26,7 @@
                                 <button class="btn" type="button"><i class="fa fa-trash"></i></button>
                             </li>
                             <li onclick="detailProduct({{ $product->product_id }})">
-                                <button class="btn"
-                                    type="button"><i
-                                        class="fa fa-link"></i></button>
+                                <button class="btn" type="button"><i class="fa fa-link"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -121,7 +120,7 @@
                     <div class="product-price">Rp. {{ number_format($product->price - $product->discount, 0, ',', '.')
                         }}
                         @if ($product->discount > 0)
-                        <del>Rp. {{ number_format($product->discount, 0, ',', '.') }}</del>
+                        <del>Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
                         <small>({{ round(($product->discount / $product->price) * 100) }}%)</small>
                         @endif
                     </div>

@@ -14,6 +14,7 @@ class ProductController extends Controller
     {
         $this->productService = $productService;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -23,19 +24,19 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * DataTable
      */
-    public function create()
+    public function datatable()
     {
-        //
+        return view('backend.product.datatable');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Gallery
      */
-    public function store(Request $request)
+    public function gallery()
     {
-        //
+        return view('backend.product.gallery');
     }
 
     /**
@@ -51,27 +52,4 @@ class ProductController extends Controller
         return view('backend.product.show', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
