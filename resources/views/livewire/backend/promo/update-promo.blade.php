@@ -1,12 +1,6 @@
 <div>
-    {{-- Button Modal Promo --}}
-    <button class="pull-right btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#createPromoModal">
-        <i class="fa fa-plus"></i>
-        Tambah Data Promo
-    </button>
-
-    <!-- Create Modal Promo-->
-    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="createPromoModal" data-bs-backdrop="static"
+    <!-- Update Modal Promo-->
+    <div wire:ignore.self class="modal fade bd-example-modal-lg" id="updatePromoModal" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
@@ -15,7 +9,8 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
-                <form wire:submit.prevent="store">
+                {{-- *** TODO: UPDATE PROMO *** --}}
+                <form wire:submit.prevent="update">
                     <div class="modal-body">
                         @csrf
                         {{-- Promo Name And Promo Code --}}
@@ -63,18 +58,16 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="start_date">Tanggal Mulai</label>
-                                <input
-                                    class="form-control digits @error('start_date') is-invalid @enderror"
-                                    wire:model="start_date" type="date"
-                                    placeholder="Masukan Tanggal Mulai.." style="background-color:transparent">
+                                <input class="form-control digits @error('start_date') is-invalid @enderror"
+                                    wire:model="start_date" type="date" placeholder="Masukan Tanggal Mulai.."
+                                    style="background-color:transparent">
                                 @error('start_date') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6">
                                 <label for="end_date">Tanggal Selesai</label>
-                                <input
-                                    class="form-control digits @error('end_date') is-invalid @enderror"
-                                    wire:model="end_date" type="date"
-                                    placeholder="Masukan Tanggal Selesai.." style="background-color:transparent">
+                                <input class="form-control digits @error('end_date') is-invalid @enderror"
+                                    wire:model="end_date" type="date" placeholder="Masukan Tanggal Selesai.."
+                                    style="background-color:transparent">
                                 @error('end_date') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>

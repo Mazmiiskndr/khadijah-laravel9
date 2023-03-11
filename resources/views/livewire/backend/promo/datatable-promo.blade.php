@@ -18,9 +18,9 @@
         <td>{{ $endDate }}</td>
         {{-- *** TODO: ***  --}}
         <td>
-            <button wire:click="getCategory({{ $promo->category_id }})" class="btn btn-pill btn-primary"
-                data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="fa fa-edit"></i></button>
-            <button wire:click="deleteConfirmation({{ $promo->category_id }})" class="btn btn-pill btn-danger"><i
+            <button wire:click="getPromo({{ $promo->promo_id }})" class="btn btn-pill btn-primary"
+                data-bs-toggle="modal" data-bs-target="#updatePromoModal"><i class="fa fa-edit"></i></button>
+            <button wire:click="deleteConfirmation({{ $promo->promo_id }})" class="btn btn-pill btn-danger"><i
                     class="fa fa-trash"></i></button>
         </td>
     </tr>

@@ -50,11 +50,9 @@
     </div>
 
     {{-- *** TODO: *** --}}
-    {{-- Include livewire modal --}}
-    {{-- @livewire('backend.categories.update-category') --}}
-    {{-- @include('livewire.backend.categories.modal-category') --}}
-
-    {{-- Include livewire modal --}}
+    {{-- START UPDATE MODAL PROMO --}}
+    @livewire('backend.promo.update-promo')
+    {{-- END UPDATE MODAL PROMO --}}
     @push('scripts')
     {{-- START DATEPICKER --}}
     <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.js') }}"></script>
@@ -68,24 +66,25 @@
     <script>
         window.addEventListener('close-modal', event =>{
             $('#createPromoModal').modal('hide');
+            $('#updatePromoModal').modal('hide');
         });
         // *** TODO: ***
-        //     window.addEventListener('delete-show-confirmation', event =>{
-        //         Swal.fire({
-        //                 title: 'Apakah kamu yakin?',
-        //                 text: "Anda tidak akan dapat mengembalikan data ini!",
-        //                 icon: 'warning',
-        //                 showCancelButton: true,
-        //                 confirmButtonColor: '#3085d6',
-        //                 cancelButtonColor: '#d33',
-        //                 confirmButtonText: 'Ya, Hapus!',
-        //                 cancelButtonText: 'Batal'
-        //             }).then((result) => {
-        //             if (result.isConfirmed) {
-        //                 Livewire.emit('deleteConfirmation');
-        //             }
-        //         })
-        //     });
+            window.addEventListener('delete-show-confirmation', event =>{
+                Swal.fire({
+                        title: 'Apakah kamu yakin?',
+                        text: "Anda tidak akan dapat mengembalikan data ini!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit('deleteConfirmation');
+                    }
+                })
+            });
             $(document).ready(function() {
                 $('#datatables').DataTable();
             });
