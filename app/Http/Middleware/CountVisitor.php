@@ -23,7 +23,7 @@ class CountVisitor
             Visitor::create([
                 'visitor_id' => $visitor_id,
                 'ip_address' => $request->ip(),
-                'user_agent' => $user_agent
+                'user_agent' => $request->header('User-Agent')
             ]);
 
             return $response;

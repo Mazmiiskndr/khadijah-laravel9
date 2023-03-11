@@ -25,7 +25,7 @@ class VisitorFactory extends Factory
         return [
             'visitor_id' => md5($now->timestamp . $this->faker->ipv4),
             'ip_address' => $this->faker->ipv4,
-            'user_agent' => $user_agent,
+            'user_agent' => $this->faker->userAgent,
             'created_at' => $this->faker->dateTimeBetween($now->format('Y') . '-01-01', $now),
             'updated_at' => $now,
         ];
