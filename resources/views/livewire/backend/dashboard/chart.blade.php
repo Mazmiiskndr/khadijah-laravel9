@@ -33,27 +33,27 @@
     }
 
     let barData = {
-        labels: ['Chrome', 'Firefox', 'Safari', 'Opera'],
+        labels: ['Google Chrome', 'Mozilla Firefox', 'Safari', 'Opera'],
         datasets: [{
             label: 'Jumlah Pengunjung Berdasarkan Browser',
             backgroundColor: [
-                'rgba(255, 206, 86, 0.5)', // warna untuk Chrome
-                'rgba(54, 162, 235, 0.5)', // warna untuk Firefox
-                'rgba(255, 99, 132, 0.5)', // warna untuk Safari
-                'rgba(75, 192, 192, 0.5)'  // warna untuk Opera
+                'rgba(255, 206, 86, 0.5)', // Color for Chrome
+                'rgba(54, 162, 235, 0.5)', // Color for Firefox
+                'rgba(255, 99, 132, 0.5)', // Color for Safari
+                'rgba(75, 192, 192, 0.5)'  // Color for Opera
             ],
             borderColor: [
-                'rgba(255, 206, 86, 1)', // warna untuk Chrome
-                'rgba(54, 162, 235, 1)', // warna untuk Firefox
-                'rgba(255, 99, 132, 1)', // warna untuk Safari
-                'rgba(75, 192, 192, 1)'  // warna untuk Opera
+                'rgba(255, 206, 86, 1)', // Color for Chrome
+                'rgba(54, 162, 235, 1)', // Color for Firefox
+                'rgba(255, 99, 132, 1)', // Color for Safari
+                'rgba(75, 192, 192, 1)'  // Color for Opera
             ],
             borderWidth: 1,
             data: [chromeCount, firefoxCount, safariCount, operaCount]
         }]
     };
 
-        let barConfig = {
+    let barConfig = {
         type: 'bar',
         data: barData,
         options: {
