@@ -121,6 +121,34 @@
                     </li>
                     {{-- END SIDEBAR PROMO --}}
 
+                    {{-- START SIDEBAR SUBMENU LAPORAN --}}
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="#">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-charts') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-charts') }}"></use>
+                            </svg><span>Laporan</span>
+                            <label class="badge badge-light-primary">3</label>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: block;">
+                            <li>
+                                <a href="{{ route('backend.report-product.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ecommerce') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ecommerce') }}"></use>
+                                    </svg>
+                                    <span>Produk</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    {{-- END SIDEBAR SUBMENU LAPORAN --}}
+
                     {{-- *** TODO: *** --}}
 
 
