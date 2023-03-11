@@ -12,6 +12,7 @@ use App\Models\ProductTag;
 use App\Models\Promo;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Visitor;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -48,15 +49,16 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('admin'),
         ]);
         User::factory(50)->create();
+        Visitor::factory(100)->create();
         Promo::factory(50)->create();
         Category::factory(50)->create();
         Tag::factory(50)->create();
-        // Product::factory(100)->create();
+        // PRODUCT TAGS AND PRODUCT IMAGES
         Product::factory()->count(150)->create()->each(function ($product) {
             // For each product, generate 3-5 product tags
             $tag_ids = Tag::pluck('tag_id')->random(rand(3, 5))->toArray();
             $product->tags()->attach($tag_ids);
-
+            // For each productImages, generate 1-3 product Images
             $images = ProductImage::factory()->count(rand(1, 3))->make();
             $product->images()->createMany($images->toArray());
         });

@@ -11,10 +11,11 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\CountVisitor;
 use Illuminate\Support\Facades\Route;
 
 // Index Page
-Route::controller(HomeController::class)->group(function () {
+Route::middleware(CountVisitor::class)->controller(HomeController::class)->group(function () {
     Route::get('/','index')->name('index');
 });
 

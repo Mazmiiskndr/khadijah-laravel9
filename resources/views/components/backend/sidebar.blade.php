@@ -43,7 +43,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ecommerce') }}"></use>
                             </svg><span>Produk</span>
-                            <label class="badge badge-light-primary">3</label>
+                            <label class="badge badge-light-primary">4</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             <li>
@@ -112,10 +112,10 @@
                     {{-- START SIDEBAR PROMO --}}
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-knowledgebase') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-task') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-knowledgebase') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-task') }}"></use>
                             </svg>
                             <span>Promo</span></a>
                     </li>
