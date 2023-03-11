@@ -77,14 +77,12 @@
                                             @if ($product->stock == 0)
                                             <td>
                                                 <div class="product-size">
-                                                    {{-- TODO:*** --}}
                                                     <button class="btn btn-outline-danger btn-sm" type="button">{{ $product->stock }}</button>
                                                 </div>
                                             </td>
                                             @else
                                             <td>
                                                 <div class="product-size">
-                                                    {{-- TODO:*** --}}
                                                     <button class="btn btn-outline-success btn-sm" type="button">{{ $product->stock }}</button>
                                                 </div>
                                             </td>
@@ -123,7 +121,6 @@
                                 </table>
                             </div>
                             <hr>
-                            {{-- *** TODO: *** --}}
                             <div class="row">
                                 <div class="col-md-4">
                                     <h6 class="product-title">Rate Now</h6>
@@ -291,11 +288,6 @@
         </div>
     </div>
     <!-- START DETAIL PRODUCT -->
-
-    {{-- *** TODO: *** --}}
-    {{-- Include livewire modal --}}
-    {{-- @livewire('backend.categories.update-category') --}}
-    {{-- @include('livewire.backend.categories.modal-category') --}}
 
     {{-- Include livewire modal --}}
     @push('scripts')

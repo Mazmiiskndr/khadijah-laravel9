@@ -124,7 +124,7 @@
                                     <option value="M">M</option>
                                     <option value="L">L</option>
                                     <option value="XL">XL</option>
-                                    <option value="XXL">XXL</option>
+                                    <option value=
                                     <option value="XXXL">XXXL</option>
                                     <option value="Semua Ukuran">Semua Ukuran</option>
                                 </select>
@@ -179,11 +179,15 @@
                                 <input type="file" class="form-control @error('productImages') is-invalid @enderror"
                                     name="productImages" id="productImages" wire:model="productImages" autofocus
                                     multiple>
-                                @if ($errors->has('productImages'))
-                                <small class="error text-danger">{{ $errors->first('productImages') }}</small>
+                                @if($productImages)
+                                @error('productImages.*') <small class="error text-danger">{{ $message }}</small>
+                                @enderror
                                 @else
                                 <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
                                 @endif
+                                <div class="">
+                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang upload...</small>
+                                </div>
                             </div>
                         </div>
 
@@ -192,6 +196,7 @@
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
                             wire:click="closeModal">Batal</button>
                         <button class="btn btn-primary" type="submit">Update</button>
+                        <div wire:loading wire:target="update">Memproses...</div>
                     </div>
                 </form>
             </div>

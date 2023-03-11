@@ -9,7 +9,6 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
-                {{-- *** TODO: UPDATE PROMO *** --}}
                 <form wire:submit.prevent="update">
                     <div class="modal-body">
                         @csrf

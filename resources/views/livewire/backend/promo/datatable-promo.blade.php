@@ -16,7 +16,6 @@
         @endif
         <td>{{ $startDate }}</td>
         <td>{{ $endDate }}</td>
-        {{-- *** TODO: ***  --}}
         <td>
             <button wire:click="getPromo({{ $promo->promo_id }})" class="btn btn-pill btn-primary"
                 data-bs-toggle="modal" data-bs-target="#updatePromoModal"><i class="fa fa-edit"></i></button>
