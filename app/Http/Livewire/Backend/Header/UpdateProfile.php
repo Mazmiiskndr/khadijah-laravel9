@@ -87,7 +87,7 @@ class UpdateProfile extends Component
             $user->update($userData);
             $this->updateModal = false;
             // Set Flash Message
-            session()->flash('success', 'User Berhasil di Update!');
+            session()->flash('success', 'Akun Berhasil di Update!');
             $this->resetFields();
             // buatkan emit dengan flash message
             $this->emit('updatedUser', $user);

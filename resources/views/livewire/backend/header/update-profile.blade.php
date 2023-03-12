@@ -14,17 +14,17 @@
                         {{-- Name And Email --}}
                         <div class="row">
                             <div class="col-12">
-                                <label for="email_input">Email</label>
+                                <label for="email_input_profile">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email.."
-                                    name="email" id="email_input" wire:model="email" autofocus>
+                                    name="email" id="email_input_profile" wire:model="email" autofocus>
                                 @error('email') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-12 mt-3">
-                                <label for="name_input">Nama</label>
+                                <label for="name_input_profile">Nama</label>
                                 <input type="hidden" class="form-control" name="id" id="id"
                                     wire:model="id">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="Masukan Nama.." name="name" id="name_input" wire:model="name"
+                                    placeholder="Masukan Nama.." name="name" id="name_input_profile" wire:model="name"
                                     autofocus>
                                 @error('name') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -33,9 +33,9 @@
                         {{-- Password and Number Phone --}}
                         <div class="row mt-3">
                             <div class="col-12">
-                                <label for="password_input">Password</label>
+                                <label for="password_input_profile">Password</label>
                                 <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                    placeholder="Masukan Password.." name="password" id="password_input"
+                                    placeholder="Masukan Password.." name="password" id="password_input_profile"
                                     wire:model="password" autofocus>
                                 @if($password)
                                 @error('password') <small class="error text-danger">{{ $message }}</small> @enderror

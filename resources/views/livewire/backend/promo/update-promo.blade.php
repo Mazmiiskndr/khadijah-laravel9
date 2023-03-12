@@ -15,16 +15,16 @@
                         {{-- Promo Name And Promo Code --}}
                         <div class="row">
                             <div class="col-6">
-                                <label for="promo_name">Nama Promo</label>
+                                <label for="promo_name_input">Nama Promo</label>
                                 <input type="text" class="form-control @error('promo_name') is-invalid @enderror"
-                                    placeholder="Masukan Nama Promo.." name="promo_name" id="promo_name"
+                                    placeholder="Masukan Nama Promo.." name="promo_name" id="promo_name_input"
                                     wire:model="promo_name" autofocus>
                                 @error('promo_name') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6">
-                                <label for="promo_code">Kode</label>
+                                <label for="promo_code_input">Kode</label>
                                 <input type="text" class="form-control @error('promo_code') is-invalid @enderror"
-                                    placeholder="Contoh : PRM-123ABC45.." name="promo_code" id="promo_code"
+                                    placeholder="Contoh : PRM-123ABC45.." name="promo_code" id="promo_code_input"
                                     wire:model="promo_code" autofocus>
                                 @error('promo_code') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -33,9 +33,9 @@
                         {{-- Discount Type And Discount Value --}}
                         <div class="row mt-3">
                             <div class="col-6">
-                                <label for="discount_type">Tipe Diskon</label>
+                                <label for="discount_type_input">Tipe Diskon</label>
                                 <select class="form-select col-sm-12 @error('discount_type') is-invalid @enderror"
-                                    id="discount_type" name="discount_type" wire:model="discount_type">
+                                    id="discount_type_input" name="discount_type" wire:model="discount_type">
                                     <option value="" selected hidden>-- Pilih Tipe Diskon --</option>
                                     <option value="Nominal">Nominal</option>
                                     <option value="Persen">Persen</option>
@@ -44,10 +44,10 @@
                                 @enderror
                             </div>
                             <div class="col-6">
-                                <label for="discount_value">Nilai Diskon</label>
+                                <label for="discount_value_input">Nilai Diskon</label>
                                 <input type="number" class="form-control @error('discount_value') is-invalid @enderror"
                                     placeholder="Persen : 1-100 %, Nominal : Contoh : 10000.. " name="discount_value"
-                                    id="discount_value" wire:model="discount_value" autofocus>
+                                    id="discount_value_input" wire:model="discount_value" autofocus>
                                 @error('discount_value') <small class="error text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -74,8 +74,8 @@
                         {{-- Description --}}
                         <div class="row mt-3">
                             <div class="col-12">
-                                <label for="promo_description">Deskripsi</label>
-                                <textarea name="promo_description" id="promo_description" wire:model="promo_description"
+                                <label for="promo_description_input">Deskripsi</label>
+                                <textarea name="promo_description" id="promo_description_input" wire:model="promo_description"
                                     class="form-control @error('promo_description') is-invalid @enderror" rows="3"
                                     placeholder="Masukan Deskripsi.."></textarea>
                                 @error('promo_description') <small class="error text-danger">{{ $message }}</small>

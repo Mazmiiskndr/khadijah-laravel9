@@ -13,18 +13,18 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label for="category_name">Nama Kategori</label>
+                            <label for="category_name_input">Nama Kategori</label>
                             <input type="hidden" class="form-control" name="category_id" id="category_id"
                                 wire:model="category_id">
                             <input type="text" class="form-control @error('category_name') is-invalid @enderror"
-                                placeholder="Masukan Nama Kategori.." name="category_name" id="category_name"
+                                placeholder="Masukan Nama Kategori.." name="category_name" id="category_name_input"
                                 wire:model="category_name" autofocus>
                             @error('category_name') <small class="error text-danger">{{ $message }}</small> @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="category_description">Deskripsi</label>
+                            <label for="category_description_input">Deskripsi</label>
                             <textarea class="form-control @error('category_description') is-invalid @enderror"
-                                name="category_description" id="category_description" wire:model="category_description"
+                                name="category_description" id="category_description_input" wire:model="category_description"
                                 rows="3" placeholder="Masukan Deskripsi.."></textarea>
                             @error('category_description') <small class="error text-danger">{{ $message }}</small>
                             @enderror

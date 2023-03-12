@@ -18,7 +18,7 @@
                                 <input type="hidden" class="form-control" name="customer_id" id="customer_id"
                                     wire:model="customer_id">
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                    placeholder="Masukan Nama Customer.." name="name" id="name_input" wire:model="name"
+                                    placeholder="Masukan Nama Pelanggan.." name="name" id="name_input" wire:model="name"
                                     autofocus>
                                 @error('name') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
