@@ -43,7 +43,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ecommerce') }}"></use>
                             </svg><span>Produk</span>
-                            <label class="badge badge-light-primary">4</label>
+                            <label class="badge badge-light-primary">5</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             <li>
@@ -58,6 +58,17 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="{{ route('backend.tags.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calender') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calender') }}"></use>
+                                    </svg>
+                                    <span>Label</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('backend.product.index') }}">
                                     <svg class="stroke-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-bonus-kit') }}"></use>
@@ -65,7 +76,7 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-bonus-kit') }}"></use>
                                     </svg>
-                                    <span>Grid</span>
+                                    <span>Grid Produk</span>
 
                                 </a>
                             </li>
@@ -78,7 +89,7 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-table') }}"></use>
                                     </svg>
-                                    <span>Tabel</span>
+                                    <span>Tabel Produk</span>
                                 </a>
                             </li>
                             <li>
@@ -89,7 +100,7 @@
                                     <svg class="fill-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                                     </svg>
-                                    <span>Galeri</span>
+                                    <span>Galeri Produk</span>
                                 </a>
                             </li>
 

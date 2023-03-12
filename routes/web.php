@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\Admin\LoginController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CustomerController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\PromoController;
 use App\Http\Controllers\Backend\ReportProductController;
@@ -37,6 +38,7 @@ Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->gro
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::get('customer', [CustomerController::class, 'index'])->name('customer.index');
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('tags', [TagController::class, 'index'])->name('tags.index');
     Route::get('datatable-product', [ProductController::class, 'datatable'])->name('product.datatable');
     Route::get('gallery-product', [ProductController::class, 'gallery'])->name('product.gallery');
     Route::resource('product', ProductController::class)->only(['index','show']);

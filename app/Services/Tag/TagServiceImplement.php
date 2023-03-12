@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services\Category;
+namespace App\Services\Tag;
 
 use LaravelEasyRepository\Service;
-use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Tag\TagRepository;
 use Illuminate\Support\Facades\Log;
 
-class CategoryServiceImplement extends Service implements CategoryService
+class TagServiceImplement extends Service implements TagService
 {
 
     /**
@@ -15,7 +15,7 @@ class CategoryServiceImplement extends Service implements CategoryService
      */
     protected $mainRepository;
 
-    public function __construct(CategoryRepository $mainRepository)
+    public function __construct(TagRepository $mainRepository)
     {
         $this->mainRepository = $mainRepository;
     }
@@ -52,6 +52,5 @@ class CategoryServiceImplement extends Service implements CategoryService
             //throw $th;
         }
     }
-
 
 }
