@@ -122,63 +122,6 @@
                         </svg>
                     </div>
                 </li>
-                <li class="cart-nav onhover-dropdown">
-                    <div class="cart-box">
-                        <svg>
-                            <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ecommerce') }}"></use>
-                        </svg><span class="badge rounded-pill badge-success">2</span>
-                    </div>
-                    <div class="cart-dropdown onhover-show-div">
-                        <h6 class="f-18 mb-0 dropdown-title">Cart</h6>
-                        <ul>
-                            <li>
-                                <div class="media"><img class="img-fluid b-r-5 me-3 img-60"
-                                        src="#" alt="">
-                                    <div class="media-body"><span>Furniture Chair for Home</span>
-                                        <div class="qty-box">
-                                            <div class="input-group"><span class="input-group-prepend">
-                                                    <button class="btn quantity-left-minus" type="button"
-                                                        data-type="minus" data-field="">-</button></span>
-                                                <input class="form-control input-number" type="text" name="quantity"
-                                                    value="1"><span class="input-group-prepend">
-                                                    <button class="btn quantity-right-plus" type="button"
-                                                        data-type="plus" data-field="">+</button></span>
-                                            </div>
-                                        </div>
-                                        <h6 class="font-primary">$500</h6>
-                                    </div>
-                                    <div class="close-circle"><a class="bg-danger" href="#"><i data-feather="x"></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="media"><img class="img-fluid b-r-5 me-3 img-60"
-                                        src="#" alt="">
-                                    <div class="media-body"><span>Furniture Chair for Home</span>
-                                        <div class="qty-box">
-                                            <div class="input-group"><span class="input-group-prepend">
-                                                    <button class="btn quantity-left-minus" type="button"
-                                                        data-type="minus" data-field="">-</button></span>
-                                                <input class="form-control input-number" type="text" name="quantity"
-                                                    value="1"><span class="input-group-prepend">
-                                                    <button class="btn quantity-right-plus" type="button"
-                                                        data-type="plus" data-field="">+</button></span>
-                                            </div>
-                                        </div>
-                                        <h6 class="font-primary">$500.00</h6>
-                                    </div>
-                                    <div class="close-circle"><a class="bg-danger" href="#"><i data-feather="x"></i></a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="total">
-                                <h6 class="mb-0">Order Total : <span class="f-right">$1000.00</span></h6>
-                            </li>
-                            <li class="text-center"><a class="d-block mb-3 view-cart f-w-700" href="#">Go to your
-                                    cart</a><a class="btn btn-primary view-checkout" href="#">Checkout</a></li>
-                        </ul>
-                    </div>
-                </li>
                 <li class="onhover-dropdown">
                     <div class="notification-box">
                         <svg>
@@ -204,56 +147,25 @@
                         </ul>
                     </div>
                 </li>
-                <li class="profile-nav onhover-dropdown pe-0 py-0">
-                    <div class="media profile-media"><img class="b-r-10"
-                            src="{{ asset('assets/images/users/default.png') }}" alt="Images" width="35">
-                        <div class="media-body"><span>{{ Auth::user()->name }}</span>
-                            <p class="mb-0 font-roboto">{{ Auth::user()->email }} <i
-                                    class="middle fa fa-angle-down"></i></p>
-                        </div>
-                    </div>
-                    <ul class="profile-dropdown onhover-show-div">
-                        <li><a href="#"><i data-feather="user"></i><span>Account </span></a></li>
-                        <li><a href="#"><i data-feather="mail"></i><span>Inbox</span></a></li>
-                        <li><a href="#"><i data-feather="file-text"></i><span>Taskboard</span></a></li>
-                        <li><a href="#"><i data-feather="settings"></i><span>Settings</span></a></li>
+                {{-- START PROFILE DROPDOWN --}}
+                @livewire('backend.header.profile-dropdown')
+                {{-- END PROFILE DROPDOWN --}}
 
-                        <li>
-                            <form id="form-logout" method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <a href="#" onclick="logoutButton();">
-                                    <i data-feather="log-out"> </i>
-                                    <span>Keluar</span>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
             </ul>
+
         </div>
     </div>
 </div>
+{{-- START PROFILE DROPDOWN --}}
+@livewire('backend.header.update-profile')
+{{-- END PROFILE DROPDOWN --}}
 
 @push('scripts')
 <script>
-    function logoutButton() {
-        // var form = $(this).closest("form");
-        event.preventDefault();
-        // console.log(id);
-        Swal.fire({
-            title: 'Anda yakin ingin keluar?',
-            text: "Anda tidak akan dapat mengakses data lagi!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Keluar!',
-            cancelButtonText: 'Tidak!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.querySelector("#form-logout").submit();
-            }
-        });
-    }
+    window.addEventListener('close-modal', event =>{
+        $('#updateUserModal').modal('hide');
+    });
 </script>
+
 @endpush
+
