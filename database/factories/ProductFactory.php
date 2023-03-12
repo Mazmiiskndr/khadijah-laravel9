@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -18,19 +19,30 @@ class ProductFactory extends Factory
     {
         $categoryId = $this->faker->randomElement(range(1, 20));
         $productName = ucwords($this->faker->words(3, true));
+        // Image URL
+        $imageUrl = 'https://source.unsplash.com/random/500x700/?fashion';
+
+        // Download Image
+        $imageData = file_get_contents($imageUrl);
+
+        // Generate Unique File Name
+        $fileName = uniqid() . '.jpg';
+
+        // Save Image to Storage
+        Storage::put('public/assets/images/products/' . $fileName, $imageData);
 
         return [
             'category_id' => $categoryId,
             'product_name' => $productName,
             'product_slug' => str()->slug($productName, '-'),
             'product_description' => $this->faker->paragraph(),
-            'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2), // Added dimension field
-            'material' => $this->faker->word(), // added material field
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']), // Added size field
-            'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']), // Added type field
+            'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2),
+            'material' => $this->faker->word(),
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
+            'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']),
             'price' => $this->faker->numberBetween(10000, 1000000),
             'discount' => $this->faker->numberBetween(5000, 200000),
-            'thumbnail' => $this->faker->imageUrl(),
+            'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
             'color' => $this->faker->colorName(),
             'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'stock' => $this->faker->numberBetween(1, 100),

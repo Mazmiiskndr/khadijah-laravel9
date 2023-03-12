@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
-        // $this->call(IndoRegionVillageSeeder::class);
         User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@gmail.com',
@@ -54,7 +53,7 @@ class DatabaseSeeder extends Seeder
         Category::factory(50)->create();
         Tag::factory(50)->create();
         // PRODUCT TAGS AND PRODUCT IMAGES
-        Product::factory()->count(150)->create()->each(function ($product) {
+        Product::factory()->count(10)->create()->each(function ($product) {
             // For each product, generate 3-5 product tags
             $tag_ids = Tag::pluck('tag_id')->random(rand(3, 5))->toArray();
             $product->tags()->attach($tag_ids);

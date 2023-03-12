@@ -1,7 +1,7 @@
 @push('styles')
 
 @endpush
-<x-frontend.master title="Khadijah Frontend">
+<x-frontend.master title="Khadijah Label">
     <div class="page-content">
         <!-- Main Slider -->
         <div class="holder fullwidth full-nopad mt-0">
