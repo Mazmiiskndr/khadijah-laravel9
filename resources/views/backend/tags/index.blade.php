@@ -1,5 +1,6 @@
 <x-backend.master title="Label | Khadijah">
     @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
     @endpush
 
     @slot('breadcrumbTitle')
