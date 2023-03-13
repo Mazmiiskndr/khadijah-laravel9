@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         //     'registration_date' => now(),
         //     'remember_token' => str()->random(10)
         // ]);
+        $this->call(ColorSeeder::class);
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
@@ -62,6 +63,8 @@ class DatabaseSeeder extends Seeder
             $product->images()->createMany($images->toArray());
         });
         Customer::factory(100)->create();
+
+
 
     }
 }

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('discount')->nullable(); // Added Discount column
             $table->string('thumbnail', 200);
-            $table->string('color', 50)->nullable();
+            $table->string('color', 200)->nullable();
             $table->decimal('weight', 10, 2)->nullable();
             $table->integer('stock');
             $table->dateTime('date_added');

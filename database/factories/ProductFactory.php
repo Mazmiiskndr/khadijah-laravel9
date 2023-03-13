@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Color;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
 
@@ -31,6 +32,16 @@ class ProductFactory extends Factory
         // Save Image to Storage
         Storage::put('public/assets/images/products/' . $fileName, $imageData);
 
+        // Get a list of color names from the 'colors' table
+        $colorNames = Color::pluck('color_name')->toArray();
+
+        // Select random number of colors (1 or 3)
+        $numColors = rand(0, 1) * 2 + 1;
+        $randomColorNames = collect($colorNames)->random($numColors)->toArray();
+
+        // Combine color names into a string
+        $colors = implode(', ', $randomColorNames);
+
         return [
             'category_id' => $categoryId,
             'product_name' => $productName,
@@ -43,7 +54,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->numberBetween(10000, 1000000),
             'discount' => $this->faker->numberBetween(5000, 200000),
             'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
-            'color' => $this->faker->colorName(),
+            'color' => $colors,
             'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'stock' => $this->faker->numberBetween(1, 100),
             'date_added' => $this->faker->dateTimeBetween('-1 year', 'now'),
