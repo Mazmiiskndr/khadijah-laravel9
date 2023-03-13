@@ -60,10 +60,10 @@
                             <li>
                                 <a href="{{ route('backend.tags.index') }}">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calender') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#tag') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calender') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#tag') }}"></use>
                                     </svg>
                                     <span>Label</span>
                                 </a>
@@ -132,6 +132,36 @@
                     </li>
                     {{-- END SIDEBAR PROMO --}}
 
+                    {{-- START SIDEBAR SUBMENU TRANSAKSI --}}
+                    {{-- *** TODO: *** --}}
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="#">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-landing-page') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-landing-page') }}"></use>
+                            </svg><span>Transaksi</span>
+                            <label class="badge badge-light-primary">3</label>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: block;">
+                            {{-- *** TODO: *** --}}
+                            <li>
+                                <a href="{{ route('backend.report-product.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
+                                    </svg>
+                                    <span>Penjualan</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    {{-- END SIDEBAR SUBMENU TRANSAKSI --}}
+
                     {{-- START SIDEBAR SUBMENU LAPORAN --}}
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="#">
@@ -153,6 +183,17 @@
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ecommerce') }}"></use>
                                     </svg>
                                     <span>Produk</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend.report-visitor.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#customers') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#customers') }}"></use>
+                                    </svg>
+                                    <span>Pengunjung</span>
                                 </a>
                             </li>
 

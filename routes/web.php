@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\TagController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\PromoController;
 use App\Http\Controllers\Backend\ReportProductController;
+use App\Http\Controllers\Backend\ReportVisitorController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -44,6 +45,7 @@ Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->gro
     Route::resource('product', ProductController::class)->only(['index','show']);
     Route::get('promo', [PromoController::class, 'index'])->name('promo.index');
     Route::get('report-product', [ReportProductController::class, 'index'])->name('report-product.index');
+    Route::get('report-visitor', [ReportVisitorController::class, 'index'])->name('report-visitor.index');
 });
 
 // Route::middleware('auth')->group(function () {
