@@ -21,6 +21,6 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
 
     public function getAllData()
     {
-        return $this->model->latest()->get();
+        return $this->model->latest('registration_date')->get();
     }
 }
