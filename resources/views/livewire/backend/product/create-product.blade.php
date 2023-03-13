@@ -183,11 +183,14 @@
                                     name="productImages" id="productImages" wire:model.defer="productImages" autofocus
                                     multiple>
                                 @if($productImages)
-                                @error('productImages') <small class="error text-danger">{{ $message }}</small>
+                                @error('productImages.*') <small class="error text-danger">{{ $message }}</small>
                                 @enderror
                                 @else
                                 <small class="text-danger">Gambar Produk bisa lebih dari satu.</small>
                                 @endif
+                                <div class="">
+                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang upload...</small>
+                                </div>
                             </div>
                         </div>
 
@@ -196,6 +199,7 @@
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
                             wire:click="closeModal">Batal</button>
                         <button class="btn btn-primary" type="submit">Tambah</button>
+                        <div wire:loading wire:target="submit" class="text-success">Memproses...</div>
                     </div>
                 </form>
             </div>

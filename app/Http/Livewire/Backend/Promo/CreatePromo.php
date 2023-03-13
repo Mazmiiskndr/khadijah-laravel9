@@ -9,6 +9,8 @@ class CreatePromo extends Component
 {
     public $promo_name, $promo_code, $promo_description,
             $discount_type, $discount_value, $start_date, $end_date;
+
+    public $createModal = false;
     protected $listeners = [
         'createdPromo' => '$refresh',
     ];
@@ -88,6 +90,16 @@ class CreatePromo extends Component
         }
     }
 
+    /**
+     * closeModal
+     *
+     * @return void
+     */
+    public function closeModal()
+    {
+        $this->createModal = false;
+        $this->resetFields();
+    }
 
     /**
      * resetFields

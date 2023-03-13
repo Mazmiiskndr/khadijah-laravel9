@@ -9,16 +9,16 @@ use Illuminate\Http\Request;
 
 class PromoController extends Controller
 {
-    private $PromoService;
+    private $promoService;
     /**
      * __construct
      *
-     * @param  mixed $PromoService
+     * @param  mixed $promoService
      * @return void
      */
-    public function __construct(PromoService $PromoService)
+    public function __construct(PromoService $promoService)
     {
-        $this->PromoService = $PromoService;
+        $this->promoService = $promoService;
     }
 
 

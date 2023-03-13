@@ -109,7 +109,7 @@
     @endif
     <script>
         window.addEventListener('close-modal', event =>{
-            $('#createProdukModal').modal('hide');
+            $('#createProductModal').modal('hide');
         });
         window.addEventListener('close-modal-update', event =>{
             $('#updateProductModal').modal('hide');

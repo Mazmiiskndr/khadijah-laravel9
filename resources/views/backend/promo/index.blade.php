@@ -1,6 +1,5 @@
 <x-backend.master title="Promo | Khadijah">
     @push('styles')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css') }}">
     @endpush
 
     @slot('breadcrumbTitle')
@@ -49,18 +48,11 @@
         </div>
     </div>
 
-    {{-- *** TODO: *** --}}
-    {{-- Include livewire modal --}}
-    {{-- @livewire('backend.categories.update-category') --}}
-    {{-- @include('livewire.backend.categories.modal-category') --}}
-
-    {{-- Include livewire modal --}}
+    {{-- START UPDATE MODAL PROMO --}}
+    @livewire('backend.promo.update-promo')
+    {{-- END UPDATE MODAL PROMO --}}
     @push('scripts')
-    {{-- START DATEPICKER --}}
-    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.en.js') }}"></script>
-    <script src="{{ asset('assets/js/datepicker/date-picker/datepicker.custom.js') }}"></script> --}}
-    {{-- END DATEPICKER --}}
+
     {{-- START DATATABLE --}}
     <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
@@ -68,27 +60,27 @@
     <script>
         window.addEventListener('close-modal', event =>{
             $('#createPromoModal').modal('hide');
+            $('#updatePromoModal').modal('hide');
         });
-        // *** TODO: ***
-        //     window.addEventListener('delete-show-confirmation', event =>{
-        //         Swal.fire({
-        //                 title: 'Apakah kamu yakin?',
-        //                 text: "Anda tidak akan dapat mengembalikan data ini!",
-        //                 icon: 'warning',
-        //                 showCancelButton: true,
-        //                 confirmButtonColor: '#3085d6',
-        //                 cancelButtonColor: '#d33',
-        //                 confirmButtonText: 'Ya, Hapus!',
-        //                 cancelButtonText: 'Batal'
-        //             }).then((result) => {
-        //             if (result.isConfirmed) {
-        //                 Livewire.emit('deleteConfirmation');
-        //             }
-        //         })
-        //     });
-            $(document).ready(function() {
-                $('#datatables').DataTable();
-            });
+        window.addEventListener('delete-show-confirmation', event =>{
+            Swal.fire({
+                    title: 'Apakah kamu yakin?',
+                    text: "Anda tidak akan dapat mengembalikan data ini!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, Hapus!',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit('deleteConfirmation');
+                }
+            })
+        });
+        $(document).ready(function() {
+            $('#datatables').DataTable();
+        });
     </script>
 
     @endpush

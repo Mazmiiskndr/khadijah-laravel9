@@ -36,6 +36,12 @@ class CategoryServiceImplement extends Service implements CategoryService
         }
     }
 
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
     public function getLimitData($limit)
     {
         try {

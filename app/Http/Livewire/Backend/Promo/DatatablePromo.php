@@ -22,7 +22,6 @@ class DatatablePromo extends Component
         ]);
     }
 
-    // *** TODO: ***
 
     /**
      * getPromo

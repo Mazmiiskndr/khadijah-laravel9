@@ -15,7 +15,6 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
-                {{-- *** TODO: CREATE PROMO *** --}}
                 <form wire:submit.prevent="store">
                     <div class="modal-body">
                         @csrf

@@ -78,13 +78,10 @@ class UpdateProduct extends Component
 
         // Add thumbnail validation rule if it's uploaded
         if ($this->thumbnail) {
-            $rules['thumbnail'] = 'nullable|max:5120|mimes:jpeg,jpg,png';
+            $rules['thumbnail'] = 'nullable|image|max:5120';
         }
+        $rules['productImages.*'] = 'nullable|image|max:20480';
 
-        // Add product images validation rule if there are any uploaded
-        if (count($this->productImages)) {
-            $rules['productImages'] = 'nullable|max:20480|mimes:jpeg,jpg,png';
-        }
 
         // Add nullable validation rule for optional fields
         $rules += [
@@ -113,15 +110,14 @@ class UpdateProduct extends Component
 
         // Add thumbnail validation message if it's uploaded
         if ($this->thumbnail) {
-            $messages['thumbnail.max'] = 'Ukuran gambar maksimal 5mb';
-            $messages['thumbnail.mimes'] = 'Format gambar harus berupa JPG, JPEG, atau PNG';
+            $messages['thumbnail.max']      = 'Ukuran gambar maksimal 5mb';
+            $messages['thumbnail.image']    = 'Format harus berupa gambar';
         }
 
         // Add product images validation message if there are any uploaded
-        if (count($this->productImages)) {
-            $messages['productImages.max'] = 'Ukuran gambar maksimal 5mb';
-            $messages['productImages.mimes'] = 'Format gambar harus berupa JPG, JPEG, atau PNG';
-        }
+        $messages['productImages.*.max']    = 'Ukuran gambar maksimal 20mb';
+        $messages['productImages.*.image']  = 'Format harus berupa gambar';
+
 
         return $messages;
     }

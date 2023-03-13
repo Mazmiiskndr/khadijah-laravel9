@@ -46,8 +46,8 @@ class CreateProduct extends Component
         'price'                 => 'required',
         'size'                  => 'required',
         'stock'                 => 'required',
-        'thumbnail'             => 'required|max:5120|mimes:jpeg,jpg,png',
-        'productImages'         => 'max:20480|mimes:jpeg,jpg,png',
+        'thumbnail'             => 'required|image|max:5120',
+        'productImages.*'       => 'image|max:20480',
         // Nullable
         'color'                 => 'nullable',
         'type'                  => 'nullable',
@@ -67,9 +67,9 @@ class CreateProduct extends Component
         'stock.required'        => 'Stok harus diisi',
         'thumbnail.required'    => 'Thumbnail harus diisi',
         'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
-        'thumbnail.mimes'       => 'Format gambar harus berupa JPG, JPEG, atau PNG',
-        'productImages.max'     => 'Ukuran gambar maksimal 5mb',
-        'productImages.mimes'   => 'Format gambar harus berupa JPG, JPEG, atau PNG',
+        'productImages.*.max'   => 'Ukuran gambar maksimal 20mb',
+        'thumbnail.image'       => 'Format harus berupa gambar',
+        'productImages.*.image' => 'Format harus berupa gambar',
     ];
 
     /**
