@@ -17,16 +17,16 @@
                         <ul>
                             <li wire:click="getProduct({{ $product->product_id }})" data-bs-toggle="modal"
                                 data-bs-target="#updateProductModal">
-                                <button class="btn" type="button"><i class="fa fa-edit"></i></button>
+                                <button class="btn" type="button" aria-label="updateProduct"><i class="fa fa-edit"></i></button>
                             </li>
                             <li data-bs-toggle="modal" data-bs-target="#exampleModalCenter-{{ $product->product_id }}">
-                                <button class="btn" type="button"><i class="fa fa-eye"></i></button>
+                                <button class="btn" type="button" aria-label="detailProduct"><i class="fa fa-eye"></i></button>
                             </li>
                             <li wire:click="deleteConfirmation({{ $product->product_id }})">
-                                <button class="btn" type="button"><i class="fa fa-trash"></i></button>
+                                <button class="btn" type="button" aria-label="deleteProduct"><i class="fa fa-trash"></i></button>
                             </li>
                             <li onclick="detailProduct({{ $product->product_id }})">
-                                <button class="btn" type="button"><i class="fa fa-link"></i></button>
+                                <button class="btn" type="button" aria-label="detailLinkProduct"><i class="fa fa-link"></i></button>
                             </li>
                         </ul>
                     </div>
@@ -54,11 +54,11 @@
                                         </div>
                                         <h6 class="f-w-600">Stok :
                                             @if($product->stock == 0)
-                                            <button class="btn btn-sm btn-outline-danger" type="button">
+                                            <button class="btn btn-sm btn-outline-danger" type="button" aria-label="stock1">
                                                 <b>{{ $product->stock }}</b>
                                             </button>
                                             @else
-                                            <button class="btn btn-sm btn-outline-dark" type="button">
+                                            <button class="btn btn-sm btn-outline-dark" type="button" aria-label="stock2">
                                                 <b>{{ $product->stock }}</b>
                                             </button>
                                             @endif
@@ -79,7 +79,7 @@
                                             <ul>
                                                 @foreach ($sizes as $size)
                                                 <li>
-                                                    <button class="btn btn-outline-dark" type="button">{{ $size
+                                                    <button class="btn btn-outline-dark" type="button" aria-label="size2">{{ $size
                                                         }}</button>
                                                 </li>
                                                 @endforeach

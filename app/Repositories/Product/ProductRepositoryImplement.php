@@ -26,7 +26,7 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
      */
     public function getAllData()
     {
-        return $this->model->latest('date_added')->get();
+        return $this->model->latest()->get();
     }
 
 

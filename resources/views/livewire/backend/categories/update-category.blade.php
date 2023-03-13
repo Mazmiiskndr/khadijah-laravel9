@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
+                        <button class="btn btn-secondary" aria-label="batal" type="button" data-bs-dismiss="modal"
                             wire:click="closeModal">Batal</button>
                         <button class="btn btn-primary" type="submit">Update</button>
                     </div>

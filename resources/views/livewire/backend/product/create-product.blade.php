@@ -197,7 +197,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
-                            wire:click="closeModal">Batal</button>
+                            wire:click="closeModal" aria-label="batalCreate">Batal</button>
                         <button class="btn btn-primary" type="submit">Tambah</button>
                         <div wire:loading wire:target="submit" class="text-success">Memproses...</div>
                     </div>

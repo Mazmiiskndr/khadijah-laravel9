@@ -77,13 +77,13 @@
                                             @if ($product->stock == 0)
                                             <td>
                                                 <div class="product-size">
-                                                    <button class="btn btn-outline-danger btn-sm" type="button">{{ $product->stock }}</button>
+                                                    <button class="btn btn-outline-danger btn-sm" type="button" aria-label="stock">{{ $product->stock }}</button>
                                                 </div>
                                             </td>
                                             @else
                                             <td>
                                                 <div class="product-size">
-                                                    <button class="btn btn-outline-success btn-sm" type="button">{{ $product->stock }}</button>
+                                                    <button class="btn btn-outline-success btn-sm" type="button" aria-label="stock">{{ $product->stock }}</button>
                                                 </div>
                                             </td>
                                             @endif
@@ -104,7 +104,7 @@
                                                     $sizes = explode(', ', $product->size);
                                                     @endphp
                                                     @foreach ($sizes as $size)
-                                                    <button class="btn btn-outline-dark btn-sm" type="button" style="display: inline-block">{{ $size }}</button>
+                                                    <button class="btn btn-outline-dark btn-sm" type="button" style="display: inline-block" aria-label="size">{{ $size }}</button>
                                                     @endforeach
                                                 </div>
                                             </td>

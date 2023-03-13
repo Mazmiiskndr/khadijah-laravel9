@@ -194,7 +194,7 @@
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
-                            wire:click="closeModal">Batal</button>
+                            wire:click="closeModal" aria-label="batal">Batal</button>
                         <button class="btn btn-primary" type="submit">Update</button>
                         <div wire:loading wire:target="update">Memproses...</div>
                     </div>
