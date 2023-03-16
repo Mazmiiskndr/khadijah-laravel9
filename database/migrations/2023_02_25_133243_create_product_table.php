@@ -21,14 +21,14 @@ return new class extends Migration
             $table->text('product_description')->nullable();
             $table->string('dimension', 150)->nullable(); // Added material column
             $table->string('material', 150)->nullable(); // Added material column
-            $table->string('size', 100); // Added size column
             $table->string('type', 100)->nullable(); // Added type column
             $table->integer('price');
             $table->integer('discount')->nullable(); // Added Discount column
-            $table->string('thumbnail', 200);
-            $table->string('color', 200)->nullable();
-            $table->decimal('weight', 10, 2)->nullable();
+            $table->string('color', 200);
             $table->integer('stock');
+            $table->string('size', 100); // Added size column
+            $table->string('thumbnail', 200);
+            $table->decimal('weight', 10, 2)->nullable();
             $table->dateTime('date_added');
             $table->dateTime('date_updated')->nullable();
             $table->timestamps();

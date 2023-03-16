@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Backend\Product;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductTag;
@@ -24,6 +25,7 @@ class CreateProduct extends Component
             $product_description,
             $thumbnail, $productImages = [];
     public $tag_id = [];
+    public $colors = [];
     public $size = [];
 
     // Declare Categories and Tags
@@ -50,8 +52,8 @@ class CreateProduct extends Component
         'productImages.*'       => 'image|max:20480',
         // Nullable
         'color'                 => 'nullable',
-        'type'                  => 'nullable',
         'product_description'   => 'nullable',
+        'type'                  => 'nullable',
         'weight'                => 'nullable',
         'material'              => 'nullable',
         'dimension'             => 'nullable',
@@ -97,12 +99,14 @@ class CreateProduct extends Component
         $this->resetFields();
         $this->categories   = Category::orderBy('created_at', 'DESC')->get();
         $this->tags         = Tag::orderBy('created_at', 'DESC')->get();
+        $this->colors       = Color::orderBy('color_name', 'ASC')->get();
     }
 
     public function render()
     {
         return view('livewire.backend.product.create-product');
     }
+
 
 
     /**
@@ -122,7 +126,7 @@ class CreateProduct extends Component
             $fileName = $this->thumbnail->store('assets/images/products','public');
             // Implode Array Size
             $size = implode(', ', $this->size);
-            // dd($size);
+            $color = implode(', ', $this->color);
             // Insert data and Del
             $product = Product::create([
                 'product_name'          => $this->product_name,
@@ -132,7 +136,7 @@ class CreateProduct extends Component
                 'size'                  => $size,
                 'stock'                 => $this->stock,
                 'thumbnail'             => $fileName,
-                'color'                 => $this->color,
+                'color'                 => $color,
                 'type'                  => $this->type,
                 'product_description'   => $this->product_description,
                 'weight'                => $this->weight,

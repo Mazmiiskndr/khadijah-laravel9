@@ -114,9 +114,9 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
+                        <button class="btn btn-secondary" aria-label="batalclose" type="button" data-bs-dismiss="modal"
                             wire:click="closeModal">Batal</button>
-                        <button class="btn btn-primary" type="submit">Update</button>
+                        <button class="btn btn-primary" type="submit" aria-label="submitupdate">Update</button>
                     </div>
                 </form>
             </div>

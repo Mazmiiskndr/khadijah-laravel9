@@ -21,13 +21,14 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i,900&amp;display=swap"
         rel="stylesheet"> --}}
     {{-- @include('backend.css') --}}
+    @stack('styles')
+    @livewireStyles
     <x-backend.css />
 
     {{--
     <x-backend.css /> --}}
     {{-- @yield('style') --}}
-    @stack('styles')
-    @livewireStyles
+
 </head>
 {{-- @dd(Route::current()->getName()); --}}
 

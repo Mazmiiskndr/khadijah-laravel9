@@ -1,5 +1,6 @@
 <x-backend.master title="Pelanggan | Khadijah">
     @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/select2.css') }}">
     @endpush
 

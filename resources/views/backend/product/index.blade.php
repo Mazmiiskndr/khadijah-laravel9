@@ -39,6 +39,12 @@
 
                     <div class="col-md-3">
                         <div class="mr-3">
+                            {{-- *** TODO: SAMPLE *** --}}
+                            {{-- <a class="pull-right btn btn-pill btn-primary" href="{{ route('backend.product.create') }}">
+                                <i class="fa fa-plus"></i>
+                                Tambah Data Produk
+                            </a> --}}
+
                             {{-- START CREATE BUTTON PRODUCT --}}
                             @livewire('backend.product.create-product')
                             {{-- END CREATE BUTTON PRODUCT --}}

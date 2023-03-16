@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Backend\Product;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\Tag;
@@ -27,10 +28,11 @@ class UpdateProduct extends Component
         $product_description,
         $thumbnail, $productImages = [];
     public $tag_id = [];
+    public $colors = [];
     public $size = [];
 
     // Declare Categories and Tags
-    public $categories, $tags = [], $tagsSelect = [];
+    public $categories, $tags = [], $tagsSelect = [], $colorsSelect = [];
 
     // Listeners
     protected $listeners = [
@@ -62,6 +64,7 @@ class UpdateProduct extends Component
         $this->resetFields();
         $this->categories   = Category::orderBy('created_at', 'DESC')->get();
         $this->tags         = Tag::orderBy('created_at', 'DESC')->get();
+        $this->colors       = Color::orderBy('color_name', 'ASC')->get();
     }
 
     // Validation Fields
@@ -134,6 +137,11 @@ class UpdateProduct extends Component
         // Explode Size to Array []
         $sizes                      = explode(', ', $product['size']);
         $this->size                 = $sizes;
+
+        // Explode Colors to Array []
+        $colors                      = explode(', ', $product['color']);
+        $this->color                 = $colors;
+
         // Set value for Tag dropdown
         $this->tag_id               = array_column($product['tags'], 'tag_id');
 
@@ -146,7 +154,6 @@ class UpdateProduct extends Component
         $this->discount             = $product['discount'];
         $this->dimension            = $product['dimension'];
         $this->type                 = $product['type'];
-        $this->color                = $product['color'];
         $this->weight               = $product['weight'];
         $this->stock                = $product['stock'];
         $this->product_description  = $product['product_description'];
@@ -205,6 +212,8 @@ class UpdateProduct extends Component
             // Update other product fields
             // Implode Array Size
             $size = implode(', ', $this->size);
+            // Implode Array Color
+            $color = implode(', ', $this->color);
             // DateNow for Updated
             $dateNow = Carbon::now()->format('Y-m-d h:i:s');
             // Declare Product Data
@@ -214,8 +223,8 @@ class UpdateProduct extends Component
                 'category_id'           => $this->category_id,
                 'price'                 => $this->price,
                 'size'                  => $size,
+                'color'                 => $color,
                 'stock'                 => $this->stock,
-                'color'                 => $this->color,
                 'type'                  => $this->type,
                 'product_description'   => $this->product_description,
                 'weight'                => $this->weight,

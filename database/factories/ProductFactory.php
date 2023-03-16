@@ -42,23 +42,28 @@ class ProductFactory extends Factory
         // Combine color names into a string
         $colors = implode(', ', $randomColorNames);
 
+        $price = $this->faker->numberBetween(10000, 1000000);
+        $discount = $this->faker->numberBetween(5000, $price - 1);
+
         return [
             'category_id' => $categoryId,
             'product_name' => $productName,
             'product_slug' => str()->slug($productName, '-'),
             'product_description' => $this->faker->paragraph(),
             'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2),
-            'material' => $this->faker->word(),
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
             'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']),
-            'price' => $this->faker->numberBetween(10000, 1000000),
-            'discount' => $this->faker->numberBetween(5000, 200000),
-            'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
+            'price' => $price,
+            'discount' => $discount,
             'color' => $colors,
-            'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'stock' => $this->faker->numberBetween(1, 100),
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL', 'Ukuran Jumbo']),
+            'material' => $this->faker->word(),
+            'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
+            'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'date_added' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'date_updated' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
+
         ];
+
     }
 }

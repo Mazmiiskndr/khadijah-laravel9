@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Customer;
+use App\Models\DetailProduct;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductTag;
@@ -53,13 +54,21 @@ class DatabaseSeeder extends Seeder
         Promo::factory(50)->create();
         Category::factory(50)->create();
         Tag::factory(50)->create();
-        // PRODUCT TAGS AND PRODUCT IMAGES
-        Product::factory()->count(10)->create()->each(function ($product) {
+        // PRODUCT TAGS, PRODUCT IMAGES AND DETAIL PRODUCTS
+        Product::factory()->count(15)->create()->each(function ($product) {
+            // Create For Detail Products
+            // TODO:
+            // $numDetailProducts = rand(1, 5);
+            // DetailProduct::factory()->count($numDetailProducts)->create(['product_id' => $product->product_id]);
+
             // For each product, generate 3-5 product tags
-            $tag_ids = Tag::pluck('tag_id')->random(rand(3, 5))->toArray();
-            $product->tags()->attach($tag_ids);
+            $numTags = rand(3, 5);
+            $tag_ids = Tag::pluck('tag_id')->random($numTags)->toArray();
+            $product->tags()->attach($tag_ids, ['product_id' => $product->product_id]);
+
             // For each productImages, generate 1-3 product Images
-            $images = ProductImage::factory()->count(rand(1, 3))->make();
+            $numImages = rand(1, 3);
+            $images = ProductImage::factory()->count($numImages)->make(['product_id' => $product->product_id]);
             $product->images()->createMany($images->toArray());
         });
         Customer::factory(100)->create();

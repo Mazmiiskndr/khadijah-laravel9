@@ -1,6 +1,7 @@
 <div class="page-header">
     <div class="header-wrapper row m-0">
-        <form class="form-inline search-full col" action="#" method="get">
+        {{-- SEARCH FORM --}}
+        {{-- <form class="form-inline search-full col" action="#" method="get">
             <div class="form-group w-100">
                 <div class="Typeahead Typeahead--twitterUsers">
                     <div class="u-posRelative">
@@ -12,7 +13,8 @@
                     <div class="Typeahead-menu"></div>
                 </div>
             </div>
-        </form>
+        </form> --}}
+        {{-- END SEARCH FORM --}}
         <div class="header-logo-wrapper col-auto p-0">
             {{-- <div class="logo-wrapper">
                 <a href="{{ route('backend.dashboard') }}">
@@ -60,10 +62,15 @@
                         </div>
                     </div>
                 </li> --}}
-                <li> <span class="header-search">
+                {{-- START SEARCH BUTTON --}}
+                {{-- <li>
+                    <span class="header-search">
                         <svg>
                             <use href="{{ asset('assets/svg/icon-sprite.svg#search') }}"></use>
-                        </svg></span></li>
+                        </svg>
+                    </span>
+                </li> --}}
+                {{-- END SEARCH BUTTON --}}
                 <li class="onhover-dropdown">
                     <svg>
                         <use href="{{ asset('assets/svg/icon-sprite.svg#star') }}"></use>
@@ -168,4 +175,3 @@
 </script>
 
 @endpush
-

@@ -1,0 +1,354 @@
+<div>
+    @push('styles')
+    <style>
+        .step-circle {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #7366ff;
+            margin: 0 2px;
+            opacity: 0.5;
+            /* menambahkan opacity */
+            /* tambahkan kode CSS lainnya sesuai kebutuhan */
+        }
+
+        .step-circle.active {
+            background-color: #7366ff;
+            /* Warna primary */
+            opacity: 1;
+        }
+    </style>
+    @endpush
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5>Form Tambah Produk </h5>
+
+            </div>
+            <div class="card-body">
+                <div class="">
+                    <h5 class="text-center"><b>@if ($currentStep == 1) Informasi Produk @elseif($currentStep == 2) Spesifikasi @elseif($currentStep == 3)
+                    Informasi Penjualan @else Lainnya @endif</b></h5>
+                </div>
+
+                {{-- START FIRST STEP --}}
+
+                <div class="first-step" style="{{ ($currentStep !== 1) ? 'display:none;' : '' }}">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="product_name">Nama Produk </label>
+                                <input class="form-control @error('product_name') is-invalid @enderror"
+                                    id="product_name" type="text" placeholder="Masukan Nama Produk.."
+                                    wire:model="product_name">
+                                @error('product_name') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="category_id">Kategori</label>
+                                <select class="select2 col-sm-12 @error('category_id') is-invalid @enderror"
+                                    id="category_id" name="category_id" wire:model="category_id">
+                                    <option value="" selected>-- Pilih Kategori --</option>
+                                    @foreach($categories as $category)
+                                    <option value="{{ $category->category_id }}">{{ $category->category_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('category_id') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="thumbnail">Thumbnail</label>
+                                <input type="file" class="form-control @error('thumbnail') is-invalid @enderror"
+                                    name="thumbnail" id="thumbnail" wire:model="thumbnail" autofocus>
+                                @error('thumbnail') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="productImages">Gambar Produk</label>
+                                <input type="file" class="form-control @error('productImages') is-invalid @enderror"
+                                    name="productImages" id="productImages" wire:model="productImages" autofocus
+                                    multiple>
+                                @if($productImages)
+                                @error('productImages.*') <small class="error text-danger">{{ $message }}</small>
+                                @enderror
+                                @else
+                                <small class="text-danger">Gambar Produk bisa lebih dari satu.</small>
+                                @endif
+                                <div class="">
+                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang
+                                        upload...</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- END FIRST STEP --}}
+
+                {{-- START SECOND STEP --}}
+                <div class="second-step" style="{{ ($currentStep !== 2) ? 'display:none;' : '' }}">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="material">Bahan</label>
+                                <input type="text" class="form-control @error('material') is-invalid @enderror"
+                                    placeholder="Masukan Bahan.." name="material" id="material" wire:model="material"
+                                    autofocus>
+                                @error('material') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="dimension">Dimensi</label>
+                                <input type="text" class="form-control @error('dimension') is-invalid @enderror"
+                                    placeholder="Contoh : 100 x 110 " name="dimension" id="dimension"
+                                    wire:model="dimension" autofocus>
+                                @error('dimension') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="type">Type</label>
+                                <input type="text" class="form-control @error('type') is-invalid @enderror"
+                                    placeholder="Masukan Type.." name="type" id="type" wire:model="type" autofocus>
+                                @error('type') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="weight">Berat</label>
+                                <input type="text" class="form-control @error('weight') is-invalid @enderror"
+                                    placeholder="Contoh : 4.30 " name="weight" id="weight" wire:model="weight"
+                                    autofocus>
+                                @error('weight') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- End SECOND STEP --}}
+
+                {{-- START SECOND STEP --}}
+                <div class="three-step" style="{{ ($currentStep !== 3) ? 'display:none;' : '' }}">
+                    <div class="row">
+                        {{-- TODO: --}}
+                        <!--begin::Form group-->
+                        <div class="form-group">
+                            <div>
+                                @foreach ($detailProducts as $index => $item)
+                                <div class="form-group row mt-2">
+                                    {{-- PRICE AND DISCOUNT --}}
+                                    <div class="col-md-6">
+                                        <label for="price">Harga</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input type="number"
+                                                class="form-control @error('detail.'. $index .'.price') is-invalid @enderror"
+                                                placeholder="Masukan Harga.." name="price" id="price"
+                                                wire:model="detail.{{ $index }}.price" autofocus>
+                                        </div>
+                                        @error('detail.'. $index .'.price') <small class="error text-danger">{{
+                                            $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="discount">Diskon</label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">Rp.</span>
+                                            </div>
+                                            <input type="number"
+                                                class="form-control @error('detail.'. $index .'.discount') is-invalid @enderror"
+                                                placeholder="Masukan Diskon.." name="discount" id="discount"
+                                                wire:model="detail.{{ $index }}.discount" autofocus>
+                                        </div>
+                                        @if($discount)
+                                        @error('detail.'. $index .'.discount')
+                                        <small class="error text-danger">{{ $message }}</small> @enderror
+                                        @else
+                                        <small class="text-danger text-right">Kosongkan jika tidak ingin memberi
+                                            diskon.</small>
+                                        @endif
+                                    </div>
+                                    {{-- COLOR AND SIZE --}}
+                                    <div class="col-md-6 mt-3">
+                                        <label for="color">Warna</label>
+                                        <select
+                                            class="select2 col-sm-12 @error('detail.'. $index .'.color') is-invalid @enderror"
+                                            id="color" name="color-{{ $index }}" wire:model="detail.{{ $index }}.color"
+                                            data-index="{{ $index }}">
+                                            <option value="" selected hidden>-- Pilih Warna --</option>
+                                            @foreach($colors as $color)
+                                            <option value="{{ $color->color_name }}">{{ $color->color_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        @error('detail.'. $index .'.color') <small class="error text-danger">{{
+                                            $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <label for="size">Ukuran</label>
+                                        <select
+                                            class="select2 col-sm-12 @error('detail.'. $index .'.size') is-invalid @enderror"
+                                            id="size" name="size-{{ $index }}" wire:model="detail.{{ $index }}.size"
+                                            multiple data-placeholder="-- Pilih Ukuran --" data-index="{{ $index }}">
+                                            <option value="S">S</option>
+                                            <option value="M">M</option>
+                                            <option value="L">L</option>
+                                            <option value="XL">XL</option>
+                                            <option value="XXL">XXL</option>
+                                            <option value="XXXL">XXXL</option>
+                                            <option value="Super Jumbo">Super Jumbo</option>
+                                            <option value="Semua Ukuran">Semua Ukuran</option>
+                                        </select>
+                                        @error('detail.'. $index .'.size') <small class="error text-danger">{{
+                                            $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mt-3">
+                                        <label for="stock">Stok</label>
+                                        <input type="number"
+                                            class="form-control @error('detail.'. $index .'.stock') is-invalid @enderror"
+                                            placeholder="Masukan Stok.." name="stock" id="stock"
+                                            wire:model="detail.{{ $index }}.stock" autofocus>
+                                        @error('detail.'. $index .'.stock') <small class="error text-danger">{{ $message
+                                            }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-2 mt-4">
+                                        <a style="margin-top:20px; {{ ($index == 0) ? 'display:none;' : '' }}"
+                                            href="javascript:;" wire:click.prevent="removeDetailProduct({{ $index }})"
+                                            class="btn btn-sm btn-danger">
+                                            <i class="fa fa-trash-o"></i> Hapus
+                                        </a>
+                                    </div>
+                                </div>
+                                <hr>
+                                @endforeach
+                            </div>
+                        </div>
+                        <!--end::Form group-->
+
+                        {{-- START BUTTON ADD VARIATION --}}
+                        <div class="form-group">
+                            <a href="javascript:;" wire:click.prevent="addDetailProduct"
+                                class="btn btn-primary">
+                                <i class="fa fa-plus"></i> Tambah Variasi
+                            </a>
+                        </div>
+                        {{-- END BUTTON ADD VARIATION --}}
+
+                    </div>
+                </div>
+                {{-- End SECOND STEP --}}
+
+                <div>
+                    <div class="text-end btn-mb">
+                        <button class="btn btn-secondary" style="{{ ($currentStep == 1) ? 'display:none;' : '' }}"
+                            type="button"
+                            wire:click="@if ($currentStep == 2) backStep(1) @elseif($currentStep == 3) backStep(2) @elseif($currentStep == 4) backStep(3) @else @endif">Kembali</button>
+                        <button class="btn btn-primary" type="button"
+                            wire:click="@if ($currentStep == 1) firstStepSubmit @elseif($currentStep == 2) secondStepSubmit @elseif($currentStep == 3) threeStepSubmit @else @endif">Lanjut</button>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span class="step-circle {{ ($currentStep == 1) ? 'active' : '' }}"></span>
+                    <span class="step-circle {{ ($currentStep == 2) ? 'active' : '' }}"></span>
+                    <span class="step-circle {{ ($currentStep == 3) ? 'active' : '' }}"></span>
+                    <span class="step-circle {{ ($currentStep == 4) ? 'active' : '' }}"></span>
+                </div>
+
+            </div>
+            {{-- END TAB 1 --}}
+            <!-- Container-fluid Ends-->
+        </div>
+    </div>
+</div>
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
+<script>
+    // $('#kt_docs_repeater_basic').repeater({
+    //         initEmpty: false,
+
+    //         defaultValues: {
+    //             'text-input': 'foo'
+    //         },
+
+    //         show: function () {
+    //             $(this).find('#delete-button').show();
+    //             $(this).slideDown();
+    //         },
+
+    //         hide: function (deleteElement) {
+    //             $(this).slideUp(deleteElement);
+    //         }
+    //     });
+</script>
+<script>
+    (function($){
+            $(document).on('livewire:load', function() {
+                $('.select2').select2()
+                $('select[name="category_id"]').on('change', function(){
+                    @this.category_id = $(this).val()
+                })
+                // $('select[name="tag_id"]').on('change', function(){
+                //     @this.tag_id = $(this).val()
+                // })
+                $(document).on('change', 'select[name^="color-"]', function() {
+                    let index = $(this).attr('name').split('-')[1];
+                    let color = $(this).val();
+                    // console.log('Index: ' + index + ', Color: ' + color);
+                    @this.set('detail.' + index + '.color', color);
+                });
+                $(document).on('change', 'select[name^="size-"]', function() {
+                    let index = $(this).attr('name').split('-')[1];
+                    let size = $(this).val();
+                    // console.log('Index: ' + index + ', Size: ' + size);
+                    @this.set('detail.' + index + '.size', size);
+                });
+
+                Livewire.hook('message.processed', (message, component) => {
+                    $('.select2').select2();
+                })
+            })
+        })(jQuery)
+</script>
+@endpush
+
+@if (session()->has('error'))
+<script>
+    Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        })
+
+</script>
+@endif
+@if (session()->has('success'))
+<script>
+    Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+</script>
+@endif
+{{-- End Modal Create Produk --}}
+
+</div>
