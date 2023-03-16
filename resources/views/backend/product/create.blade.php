@@ -1,17 +1,28 @@
-<x-backend.master title="Laporan Produk | Khadijah">
+<x-backend.master title="Tambah Data Produk | Khadijah">
     @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/select2.css') }}">
+    {{-- TODO: UPLOAD FILE --}}
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/dropzone.css') }}"> --}}
     @endpush
 
     @slot('breadcrumbTitle')
-    <h3>Data Laporan Produk</h3>
+    <h3>Tambah Data Produk</h3>
     @endslot
     @slot('breadcrumbItems')
-    <li class="breadcrumb-item active"><a href="{{ route('backend.dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item">Data Laporan Produk</li>
+    <li class="breadcrumb-item active"><a href="{{ route('backend.product.index') }}">Produk</a></li>
+    <li class="breadcrumb-item">Tambah Data Produk</li>
     @endslot
 
     <div class="container-fluid">
         {{-- TODO: --}}
+        <div class="row">
+            {{-- START CREATE BUTTON PRODUCT --}}
+            @livewire('backend.product.create-product')
+            {{-- END CREATE BUTTON PRODUCT --}}
+        </div>
+
+
+        {{--
         <!--begin::Repeater-->
         <div id="kt_docs_repeater_basic">
             <!--begin::Form group-->
@@ -29,7 +40,8 @@
                                     placeholder="Enter contact number" />
                             </div>
                             <div class="col-md-4 mt-2">
-                                <a style="display:none; margin-top:20px;" href="javascript:;" id="delete-button" data-repeater-delete class="btn btn-sm btn-danger" >
+                                <a style="display:none; margin-top:20px;" href="javascript:;" id="delete-button"
+                                    data-repeater-delete class="btn btn-sm btn-danger">
                                     <i class="fa fa-trash-o"></i> Delete
                                 </a>
                             </div>
@@ -47,34 +59,16 @@
             </div>
             <!--end::Form group-->
         </div>
-        <!--end::Repeater-->
+        <!--end::Repeater--> --}}
     </div>
 
-    {{-- *** TODO: *** --}}
-    {{-- START UPDATE MODAL PROMO --}}
-    {{-- @livewire('backend.promo.update-promo') --}}
-    {{-- END UPDATE MODAL PROMO --}}
     @push('scripts')
+    {{-- TODO: UPLOAD FILE --}}
+    {{-- <script src="{{ asset('assets/js/dropzone/dropzone.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/js/form-wizard/form-wizard.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/select2/select2-custom.js') }}"></script> --}}
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"></script>
-    <script>
-        $('#kt_docs_repeater_basic').repeater({
-            initEmpty: false,
-
-            defaultValues: {
-                'text-input': 'foo'
-            },
-
-            show: function () {
-                $(this).find('#delete-button').show();
-                $(this).slideDown();
-            },
-
-            hide: function (deleteElement) {
-                $(this).slideUp(deleteElement);
-            }
-        });
-    </script>
     {{-- *** TODO: *** --}}
     {{-- START DATATABLE --}}
     {{-- <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>

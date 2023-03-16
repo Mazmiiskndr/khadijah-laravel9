@@ -16,18 +16,24 @@ class Product extends Model
         'product_slug',
         'product_description',
         'dimension',
-        'material',
-        'size',
-        'type',
         'price',
         'discount',
-        'thumbnail',
         'color',
-        'weight',
         'stock',
+        'size',
+        'material',
+        'type',
+        'thumbnail',
+        'weight',
         'date_added',
         'date_updated',
     ];
+
+    // TODO: DETAIL PRODUCTS
+    // public function detailProducts()
+    // {
+    //     return $this->hasMany(DetailProduct::class, 'product_id', 'product_id');
+    // }
 
     public function tags()
     {

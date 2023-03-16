@@ -53,4 +53,12 @@ class ProductController extends Controller
         return view('backend.product.show', compact('product'));
     }
 
+    /**
+     * Create
+     */
+    // public function create()
+    // {
+    //     return view('backend.product.create');
+    // }
+
 }

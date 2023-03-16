@@ -40,9 +40,11 @@ Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->gro
     Route::get('customer', [CustomerController::class, 'index'])->name('customer.index');
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('tags', [TagController::class, 'index'])->name('tags.index');
+    // PRODUCT
     Route::get('datatable-product', [ProductController::class, 'datatable'])->name('product.datatable');
     Route::get('gallery-product', [ProductController::class, 'gallery'])->name('product.gallery');
-    Route::resource('product', ProductController::class)->only(['index','show']);
+    Route::resource('product', ProductController::class)->only(['index','show','create']);
+
     Route::get('promo', [PromoController::class, 'index'])->name('promo.index');
     Route::get('report-product', [ReportProductController::class, 'index'])->name('report-product.index');
     Route::get('report-visitor', [ReportVisitorController::class, 'index'])->name('report-visitor.index');

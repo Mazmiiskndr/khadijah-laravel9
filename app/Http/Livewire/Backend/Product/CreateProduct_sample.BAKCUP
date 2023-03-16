@@ -31,8 +31,15 @@ class CreateProduct extends Component
     // Declare Categories and Tags
     public $categories, $tags = [];
 
+    // Detail Products
+    public $detailProducts = [''];
+    public $detail = [];
+
+
     // Modal
     public $createModal = false;
+    // Form Wizard
+    public $currentStep = 1;
 
     // Listeners
     protected $listeners = [
@@ -40,39 +47,99 @@ class CreateProduct extends Component
         'tagIdSelected' => 'tagSelected',
     ];
 
-    // Rules Validation
-    protected $rules = [
-        // Required
-        'product_name'          => 'required',
-        'category_id'           => 'required',
-        'price'                 => 'required',
-        'size'                  => 'required',
-        'stock'                 => 'required',
-        'thumbnail'             => 'required|image|max:5120',
-        'productImages.*'       => 'image|max:20480',
-        // Nullable
-        'color'                 => 'nullable',
-        'product_description'   => 'nullable',
-        'type'                  => 'nullable',
-        'weight'                => 'nullable',
-        'material'              => 'nullable',
-        'dimension'             => 'nullable',
-        'discount'              => 'nullable'
-    ];
+    // public $rules = [
+    //         'product_name'          => 'required',
+    //         'category_id'           => 'required',
+    //         'thumbnail'             => 'required|image|max:5120',
+    //         'productImages.*'       => 'image|max:20480',
+    // ];
 
-    // Make Validation message
-    protected $messages = [
-        'product_name.required' => 'Nama Produk harus diisi',
-        'category_id.required'  => 'Kategori harus diisi',
-        'price.required'        => 'Harga harus diisi',
-        'size.required'         => 'Ukuran harus diisi',
-        'stock.required'        => 'Stok harus diisi',
-        'thumbnail.required'    => 'Thumbnail harus diisi',
-        'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
-        'productImages.*.max'   => 'Ukuran gambar maksimal 20mb',
-        'thumbnail.image'       => 'Format harus berupa gambar',
-        'productImages.*.image' => 'Format harus berupa gambar',
-    ];
+    // public $messages = [
+    //     'product_name.required' => 'Nama Produk harus diisi',
+    //     'category_id.required'  => 'Kategori harus diisi',
+    //     'thumbnail.required'    => 'Thumbnail harus diisi',
+    //     'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
+    //     'thumbnail.image'       => 'Format harus berupa gambar',
+    //     'productImages.*.max'   => 'Ukuran gambar maksimal 20mb',
+    //     'productImages.*.image' => 'Format harus berupa gambar',
+    // ];
+
+    protected function getRules()
+    {
+        $rules = [];
+
+        if ($this->currentStep == 1) {
+            $rules = [
+                // Required
+                'product_name'          => 'required',
+                'category_id'           => 'required',
+                'thumbnail'             => 'required|image|max:5120',
+                'productImages.*'       => 'image|max:20480',
+            ];
+        } if ($this->currentStep == 2) {
+            $rules = [
+                // Nullable
+                'type'                  => 'nullable',
+                'weight'                => 'nullable',
+                'material'              => 'nullable',
+                'dimension'             => 'nullable',
+            ];
+        } if ($this->currentStep == 3) {
+            $rules = [
+                // Required
+                'detail.0.price'             => 'required',
+                'detail.0.discount'          => 'nullable',
+                'detail.0.color'             => 'required',
+                'detail.0.size'              => 'required',
+                'detail.0.stock'              => 'required',
+                'detail.*.price'             => 'required',
+                'detail.*.discount'          => 'nullable',
+                'detail.*.color'             => 'required',
+                'detail.*.size'              => 'required',
+                'detail.*.stock'             => 'required',
+            ];
+        }
+        return $rules;
+    }
+
+    // Validation Messages
+    protected function getMessages()
+    {
+        $messages = [];
+
+        if ($this->currentStep == 1) {
+            $messages = [
+                'product_name.required' => 'Nama Produk harus diisi',
+                'category_id.required'  => 'Kategori harus diisi',
+                'thumbnail.required'    => 'Thumbnail harus diisi',
+                'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
+                'thumbnail.image'       => 'Format harus berupa gambar',
+                'productImages.*.max'   => 'Ukuran gambar maksimal 20mb',
+                'productImages.*.image' => 'Format harus berupa gambar',
+            ];
+            // *** TODO:
+        }
+        if ($this->currentStep == 3) {
+            $messages = [
+                'detail.*.price' => 'Harga harus diisi',
+                'detail.*.color'  => 'Warna harus diisi',
+                'detail.*.size'    => 'Ukuran harus diisi',
+                'detail.*.stock'    => 'Stok harus diisi',
+            ];
+        }
+        return $messages;
+    }
+
+    public function addDetailProduct()
+    {
+        $this->detailProducts[] = "";
+    }
+
+    public function removeDetailProduct($index)
+    {
+        unset($this->detailProducts[$index]);
+        $this->detailProducts = array_values($this->detailProducts);
+    }
 
     /**
      * updated
@@ -80,11 +147,10 @@ class CreateProduct extends Component
      * @param  mixed $property
      * @return void
      */
-    public function updated($property)
+    public function updated($value)
     {
-        // Every time a property changes
-        // (only `text` for now), validate it
-        $this->validateOnly($property);
+        // dd($key,$value);
+        $data = $this->validateOnly($value);
     }
 
 
@@ -106,11 +172,38 @@ class CreateProduct extends Component
     {
         return view('livewire.backend.product.create-product');
     }
+    public function threeStepSubmit()
+    {
+        $this->validate($this->getRules(), $this->getMessages());
+        // dd($this->currentStep);
+        $this->currentStep = 4;
+    }
 
+
+    public function firstStepSubmit()
+    {
+        $this->validate($this->getRules(), $this->getMessages());
+        $this->currentStep = 2;
+    }
+
+    public function secondStepSubmit()
+    {
+        // $this->validate($this->getRules(), $this->getMessages());
+        $this->currentStep = 3;
+    }
 
 
     /**
-     * submit
+     * Write code on Method
+     */
+    public function backStep($step)
+    {
+        $this->currentStep = $step;
+    }
+
+
+    /**
+     * Submit
      *
      * @return void
      */

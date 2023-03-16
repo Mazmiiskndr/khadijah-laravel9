@@ -1,5 +1,5 @@
 "use strict";
-var currentTab = 0; 
+var currentTab = 0;
 showTab(currentTab);
 function showTab(n) {
   var x = document.getElementsByClassName("tab");
@@ -9,10 +9,10 @@ function showTab(n) {
   } else {
     document.getElementById("prevBtn").style.display = "inline";
   }
-  if (n == (x.length - 1)) { 
+  if (n == (x.length - 1)) {
     document.getElementById("nextBtn").innerHTML = "Submit";
   } else {
-    document.getElementById("nextBtn").innerHTML = "Next";
+    document.getElementById("nextBtn").innerHTML = "Lanjut";
   }
   fixStepIndicator(n)
 }

@@ -118,9 +118,12 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="color">Warna</label>
-                                <input type="text" class="form-control @error('color') is-invalid @enderror"
-                                    placeholder="Masukan Warna.. " name="color" id="color" wire:model.defer="color"
-                                    autofocus>
+                                <select class="select2 col-sm-12 @error('color') is-invalid @enderror" id="color"
+                                    name="color" wire:model.defer="color" multiple data-placeholder="-- Pilih Warna --">
+                                    @foreach($colors as $color)
+                                    <option value="{{ $color->color_name }}">{{ $color->color_name }}</option>
+                                    @endforeach
+                                </select>
                                 @error('color') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6">
@@ -133,6 +136,7 @@
                                     <option value="XL">XL</option>
                                     <option value="XXL">XXL</option>
                                     <option value="XXXL">XXXL</option>
+                                    <option value="Super Jumbo">Super Jumbo</option>
                                     <option value="Semua Ukuran">Semua Ukuran</option>
                                 </select>
                                 @error('size') <small class="error text-danger">{{ $message }}</small> @enderror
@@ -189,15 +193,16 @@
                                 <small class="text-danger">Gambar Produk bisa lebih dari satu.</small>
                                 @endif
                                 <div class="">
-                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang upload...</small>
+                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang
+                                        upload...</small>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
-                            wire:click="closeModal" aria-label="batalCreate">Batal</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" wire:click="closeModal"
+                            aria-label="batalCreate">Batal</button>
                         <button class="btn btn-primary" type="submit">Tambah</button>
                         <div wire:loading wire:target="submit" class="text-success">Memproses...</div>
                     </div>
@@ -216,6 +221,9 @@
                 })
                 $('select[name="tag_id"]').on('change', function(){
                     @this.tag_id = $(this).val()
+                })
+                $('select[name="color"]').on('change', function(){
+                    @this.color = $(this).val()
                 })
                 $('select[name="size"]').on('change', function(){
                     @this.size = $(this).val()

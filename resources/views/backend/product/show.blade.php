@@ -41,7 +41,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-5 box-col-6 order-xxl-0 order-1">
+                <div class="col-xxl-6 box-col-6 order-xxl-0 order-1">
                     <div class="card">
                         <div class="card-body">
                             <div class="product-page-details">
@@ -115,13 +115,25 @@
                                         </tr>
                                         <tr>
                                             <td> <b>Warna &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b></td>
-                                            <td>{{ $product->color }}</td>
+                                            <td>
+                                                <div class="product-color">
+                                                    @php
+                                                    $colors = explode(', ', $product->color);
+                                                    @endphp
+                                                    @foreach ($colors as $color)
+                                                    <button class="btn btn-outline-dark btn-sm" type="button" style="display: inline-block" aria-label="color">{{
+                                                        $color }}</button>
+                                                    @endforeach
+                                                </div>
+                                            </td>
                                         </tr>
+
                                     </tbody>
                                 </table>
                             </div>
-                            <hr>
-                            <div class="row">
+                            {{-- *** TODO: RATING *** --}}
+                            {{-- <hr> --}}
+                            {{-- <div class="row">
                                 <div class="col-md-4">
                                     <h6 class="product-title">Rate Now</h6>
                                 </div>
@@ -136,7 +148,7 @@
                                         </select><span>(250 review)</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <hr>
 
                             <livewire:backend.product.detail.button :product="$product->product_id" />
@@ -144,7 +156,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxl-3 col-md-6 box-col-6">
+                <div class="col-xxl-2 col-md-6 box-col-6">
                     <div class="card">
                         <div class="card-body">
                             <!-- side-bar colleps block stat-->

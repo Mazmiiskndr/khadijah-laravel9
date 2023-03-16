@@ -32,18 +32,16 @@ class ProductFactory extends Factory
         // Save Image to Storage
         Storage::put('public/assets/images/products/' . $fileName, $imageData);
 
-        // Get a list of color names from the 'colors' table
-        $colorNames = Color::pluck('color_name')->toArray();
+        // *** TODO: COLOR!! ***
+        // // Get a list of color names from the 'colors' table
+        // $colorNames = Color::pluck('color_name')->toArray();
 
-        // Select random number of colors (1 or 3)
-        $numColors = rand(0, 1) * 2 + 1;
-        $randomColorNames = collect($colorNames)->random($numColors)->toArray();
+        // // Select random number of colors (1 or 3)
+        // $numColors = rand(0, 1) * 2 + 1;
+        // $randomColorNames = collect($colorNames)->random($numColors)->toArray();
 
-        // Combine color names into a string
-        $colors = implode(', ', $randomColorNames);
-
-        $price = $this->faker->numberBetween(10000, 1000000);
-        $discount = $this->faker->numberBetween(5000, $price - 1);
+        // // Combine color names into a string
+        // $colors = implode(', ', $randomColorNames);
 
         return [
             'category_id' => $categoryId,
@@ -51,19 +49,18 @@ class ProductFactory extends Factory
             'product_slug' => str()->slug($productName, '-'),
             'product_description' => $this->faker->paragraph(),
             'dimension' => $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2) . " x " . $this->faker->randomNumber(2),
-            'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']),
-            'price' => $price,
-            'discount' => $discount,
-            'color' => $colors,
-            'stock' => $this->faker->numberBetween(1, 100),
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL', 'Ukuran Jumbo']),
             'material' => $this->faker->word(),
             'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
             'weight' => $this->faker->randomFloat(2, 0.1, 10),
             'date_added' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'date_updated' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
-
+            'type' => $this->faker->randomElement(['Basic', 'Premium', 'Exclusive']),
+            // *** TODO: ***
+            // 'price' => $this->faker->numberBetween(10000, 1000000),
+            // 'discount' => $this->faker->numberBetween(5000, 200000),
+            // 'color' => $colors,
+            // 'stock' => $this->faker->numberBetween(1, 100),
+            // 'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL']),
         ];
-
     }
 }

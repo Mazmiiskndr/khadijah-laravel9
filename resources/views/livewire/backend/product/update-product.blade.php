@@ -17,7 +17,8 @@
                         <div class="row">
                             <div class="col-6">
                                 <label for="product_name_input">Nama Produk</label>
-                                <input type="hidden" class="form-control" name="product_id" id="product_id_input" wire:model="product_id">
+                                <input type="hidden" class="form-control" name="product_id" id="product_id_input"
+                                    wire:model="product_id">
                                 <input type="text" class="form-control @error('product_name') is-invalid @enderror"
                                     placeholder="Masukan Nama Produk.." name="product_name" id="product_name_input"
                                     wire:model.defer="product_name" autofocus>
@@ -47,13 +48,14 @@
                             </div>
                             <div class="col-6" wire:ignore>
                                 <label for="tag_id_input">Tag Produk</label>
-                                {{-- {{ dd($tag_id) }} --}}
-                                <select class="select2 col-sm-12 @error('tag_id') is-invalid @enderror" id="tag_id_input"
-                                    name="tag_id" wire:model.defer="tag_id" multiple data-placeholder="-- Pilih Tag --">
-                                        @foreach($tags as $tag)
-                                        <option value="{{ $tag->tag_id }}" @if(in_array($tag->tag_id, $tagsSelect)) selected @endif>{{ $tag->tag_name }}
-                                        </option>
-                                        @endforeach
+                                <select class="select2 col-sm-12 @error('tag_id') is-invalid @enderror"
+                                    id="tag_id_input" name="tag_id" wire:model.defer="tag_id" multiple
+                                    data-placeholder="-- Pilih Tag --">
+                                    @foreach($tags as $tag)
+                                    <option value="{{ $tag->tag_id }}" @if(in_array($tag->tag_id, $tagsSelect)) selected
+                                        @endif>{{ $tag->tag_name }}
+                                    </option>
+                                    @endforeach
                                 </select>
                                 @error('tag_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -67,8 +69,9 @@
                                     <div class="input-group-append">
                                         <span class="input-group-text">Rp.</span>
                                     </div>
-                                    <input type="number" class="form-control @error('price') is-invalid @enderror" placeholder="Masukan Harga.."
-                                        name="price" id="price_input" wire:model.defer="price" autofocus>
+                                    <input type="number" class="form-control @error('price') is-invalid @enderror"
+                                        placeholder="Masukan Harga.." name="price" id="price_input"
+                                        wire:model.defer="price" autofocus>
                                 </div>
                                 @error('price') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
@@ -79,7 +82,8 @@
                                         <span class="input-group-text">Rp.</span>
                                     </div>
                                     <input type="number" class="form-control @error('discount') is-invalid @enderror"
-                                        placeholder="Masukan Diskon.." name="discount" id="discount_input" wire:model.defer="discount" autofocus>
+                                        placeholder="Masukan Diskon.." name="discount" id="discount_input"
+                                        wire:model.defer="discount" autofocus>
                                 </div>
                                 @if($discount)
                                 @error('discount') <small class="error text-danger">{{ $message }}</small> @enderror
@@ -111,9 +115,15 @@
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="color_input">Warna</label>
-                                <input type="text" class="form-control @error('color') is-invalid @enderror"
-                                    placeholder="Masukan Warna.. " name="color" id="color_input" wire:model.defer="color"
-                                    autofocus>
+                                <select class="select2 col-sm-12 @error('color') is-invalid @enderror"
+                                    id="color_input" name="color" wire:model.defer="color" multiple
+                                    data-placeholder="-- Pilih Warna --">
+                                    @foreach($colors as $color)
+                                    <option value="{{ $color->color_name }}" @if(in_array($color->color_name, $colorsSelect)) selected
+                                        @endif>{{ $color->color_name }}
+                                    </option>
+                                    @endforeach
+                                </select>
                                 @error('color') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6">
@@ -124,21 +134,23 @@
                                     <option value="M">M</option>
                                     <option value="L">L</option>
                                     <option value="XL">XL</option>
-                                    <option value=
+                                    <option value="XXL">XXL</option>
                                     <option value="XXXL">XXXL</option>
+                                    <option value="Super Jumbo">Super Jumbo</option>
                                     <option value="Semua Ukuran">Semua Ukuran</option>
                                 </select>
                                 @error('size') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
 
+
                         {{-- Weight And Stock --}}
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="weight_input">Berat</label>
                                 <input type="text" class="form-control @error('weight') is-invalid @enderror"
-                                    placeholder="Contoh : 4.30 " name="weight" id="weight_input" wire:model.defer="weight"
-                                    autofocus>
+                                    placeholder="Contoh : 4.30 " name="weight" id="weight_input"
+                                    wire:model.defer="weight" autofocus>
                                 @error('weight') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-6">
@@ -186,15 +198,16 @@
                                 <small class="text-danger">Kosongkan jika tidak ingin diganti.</small>
                                 @endif
                                 <div class="">
-                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang upload...</small>
+                                    <small class="text-primary" wire:loading wire:target="productImages">Sedang
+                                        upload...</small>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"
-                            wire:click="closeModal" aria-label="batal">Batal</button>
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" wire:click="closeModal"
+                            aria-label="batal">Batal</button>
                         <button class="btn btn-primary" type="submit">Update</button>
                         <div wire:loading wire:target="update">Memproses...</div>
                     </div>
@@ -213,6 +226,9 @@
                 })
                 $('select[name="tag_id"]').on('change', function(){
                     @this.tag_id = $(this).val()
+                })
+                $('select[name="color"]').on('change', function(){
+                    @this.color = $(this).val()
                 })
                 $('select[name="size"]').on('change', function(){
                     @this.size = $(this).val()
