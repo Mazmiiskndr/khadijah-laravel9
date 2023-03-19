@@ -45,7 +45,7 @@ class CreateCustomer extends Component
         'name.required' => 'Nama harus diisi',
         'email.required' => 'Email harus diisi',
         'email.email' => 'Email harus valid',
-        'email.unique' => 'Email telah digunakan oleh customer lain',
+        'email.unique' => 'Email telah digunakan oleh pelanggan lain',
         'password.required' => 'Password harus diisi',
         'password.min' => 'Password harus memiliki setidaknya 6 karakter',
         'address.required' => 'Alamat harus diisi',
@@ -136,7 +136,7 @@ class CreateCustomer extends Component
                 'registration_date' => $this->registration_date,
             ]);
             // Set Flash Message
-            session()->flash('success', 'Customer Berhasil di Tambahkan!');
+            session()->flash('success', 'Pelanggan Berhasil di Tambahkan!');
 
             // Reset Form Fields After Creating Category
             $this->resetFields();
@@ -145,7 +145,7 @@ class CreateCustomer extends Component
             $this->dispatchBrowserEvent('close-modal');
         } catch (\Exception $e) {
             // Set Flash Message
-            session()->flash('error', 'Customer Gagal di Tambahkan!');
+            session()->flash('error', 'Pelanggan Gagal di Tambahkan!');
 
             // Reset Form Fields After Creating Category
             $this->resetFields();

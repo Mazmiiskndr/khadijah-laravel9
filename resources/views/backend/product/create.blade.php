@@ -22,59 +22,13 @@
         </div>
 
 
-        {{--
-        <!--begin::Repeater-->
-        <div id="kt_docs_repeater_basic">
-            <!--begin::Form group-->
-            <div class="form-group">
-                <div data-repeater-list="kt_docs_repeater_basic">
-                    <div data-repeater-item>
-                        <div class="form-group row mt-2">
-                            <div class="col-md-3">
-                                <label class="form-label">Name:</label>
-                                <input type="email" class="form-control mb-2 mb-md-0" placeholder="Enter full name" />
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label">Number:</label>
-                                <input type="email" class="form-control mb-2 mb-md-0"
-                                    placeholder="Enter contact number" />
-                            </div>
-                            <div class="col-md-4 mt-2">
-                                <a style="display:none; margin-top:20px;" href="javascript:;" id="delete-button"
-                                    data-repeater-delete class="btn btn-sm btn-danger">
-                                    <i class="fa fa-trash-o"></i> Delete
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--end::Form group-->
 
-            <!--begin::Form group-->
-            <div class="form-group mt-2">
-                <a href="javascript:;" data-repeater-create class="btn btn-primary">
-                    <i class="fa fa-plus"></i> Add
-                </a>
-            </div>
-            <!--end::Form group-->
-        </div>
-        <!--end::Repeater--> --}}
     </div>
 
     @push('scripts')
-    {{-- TODO: UPLOAD FILE --}}
-    {{-- <script src="{{ asset('assets/js/dropzone/dropzone.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/js/form-wizard/form-wizard.js') }}"></script> --}}
-    <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
-    {{-- <script src="{{ asset('assets/js/select2/select2-custom.js') }}"></script> --}}
+    {{-- <script src="{{ asset('assets/js/select2/select2.full.min.js') }}"></script>
 
-    {{-- *** TODO: *** --}}
-    {{-- START DATATABLE --}}
-    {{-- <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script> --}}
-    {{-- END DATATABLE --}}
-    {{-- <script>
+    <script>
         window.addEventListener('close-modal', event =>{
             $('#createPromoModal').modal('hide');
             $('#updatePromoModal').modal('hide');
@@ -95,11 +49,7 @@
                 }
             })
         });
-        $(document).ready(function() {
-            $('#datatables').DataTable();
-        });
     </script> --}}
-
     @endpush
 
 </x-backend.master>

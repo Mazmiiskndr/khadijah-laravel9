@@ -62,11 +62,12 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h4>10,000</h4><span class="f-light">Purchase</span>
+                                    <h4>{{ $totalProducts }}</h4><span class="f-light">Produk</span>
                                 </div>
                             </div>
-                            <div class="font-secondary f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+50%</span>
-                            </div>
+                            {{-- TODO: PERCENTAGE --}}
+                            {{-- <div class="font-secondary f-w-500"><i class="icon-arrow-up icon-rotate me-1"></i><span>+50%</span>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="col-xl-12">
@@ -84,7 +85,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h4>4,200</h4><span class="f-light">Sales</span>
+                                        <h4>4,200</h4><span class="f-light">Penjualan</span>
                                     </div>
                                 </div>
                                 <div class="font-primary f-w-500"><i

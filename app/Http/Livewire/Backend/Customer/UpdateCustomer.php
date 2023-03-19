@@ -68,7 +68,7 @@ class UpdateCustomer extends Component
             'name.required'         => 'Nama harus diisi',
             'email.required'        => 'Email harus diisi',
             'email.email'           => 'Email harus valid',
-            'email.unique'          => 'Email telah digunakan oleh customer lain',
+            'email.unique'          => 'Email telah digunakan oleh pelanggan lain',
             'password.min'          => 'Password harus memiliki setidaknya 6 karakter',
             'address.required'      => 'Alamat harus diisi',
             'city_id.required'      => 'Kota harus diisi',
@@ -182,7 +182,7 @@ class UpdateCustomer extends Component
             $customer->update($customerData);
             $this->updateModal = false;
             // Set Flash Message
-            session()->flash('success', 'Customer Berhasil di Update!');
+            session()->flash('success', 'Pelanggan Berhasil di Update!');
             $this->resetFields();
             // buatkan emit dengan flash message
             $this->emit('updatedCustomer', $customer);

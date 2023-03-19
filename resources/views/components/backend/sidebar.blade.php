@@ -201,6 +201,33 @@
                     </li>
                     {{-- END SIDEBAR SUBMENU LAPORAN --}}
 
+                    {{-- START SIDEBAR SUBMENU SETTING --}}
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="#">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                            </svg><span>Pengaturan</span>
+                            <label class="badge badge-light-primary">3</label>
+                        </a>
+                        <ul class="sidebar-submenu" style="display: block;">
+                            <li>
+                                <a href="{{ route('backend.contact.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-contact') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-contact') }}"></use>
+                                    </svg>
+                                    <span>Kontak</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{-- END SIDEBAR SUBMENU SETTING --}}
+
                     {{-- *** TODO: *** --}}
 
 

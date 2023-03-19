@@ -2,66 +2,65 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>{{ $title ?? config('app.name') }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mukena Khadijah">
+    <meta name="keywords" content="Mukan Khadijah | Mukena Murah">
+    <meta name="author" content="Moch Azmi Iskandar">
     {{-- Start Favicon --}}
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon_khadijah.png') }}" />
     {{-- End Favicon --}}
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open%20Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <title>{{ $title ?? config('app.name') }}</title>
+    @livewireStyles
+    <!--Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
 
     {{-- Start Css --}}
     <x-frontend.css />
-    {{-- End Css --}}
-
     @stack('styles')
-    @livewireStyles
+    {{-- End Css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+
+
+
+
 </head>
 
-<body class="has-smround-btns has-loader-bg equal-height">
+<body class="theme-color-1">
 
-    {{-- Start Header --}}
-    <x-frontend.header />
 
-    <div class="header-side-panel">
+    <!-- Start Loader -->
+    {{-- <x-frontend.loader/> --}}
+    <!-- End Loader -->
 
-        <!-- Start Mobile Menu -->
-        <x-frontend.header-mobile />
-        <!-- End Mobile Menu -->
+    <!-- Start Header -->
+    <x-frontend.header/>
+    <!-- End Header -->
 
-        <!-- Start Side Panel -->
-        <x-frontend.side-panel />
-        <!-- End Side Panel -->
-
-    </div>
-    {{-- End Header --}}
 
     {{-- Start Content --}}
     {{ $slot }}
     {{-- End Content --}}
 
-    {{-- Start Footer --}}
-    <x-frontend.footer />
-    {{-- End Footer --}}
-
-    {{-- Start Footer Sticky --}}
-    <x-frontend.footer-sticky />
-    {{-- End Footer Sticky --}}
-
+    <!-- Start Header -->
+    <x-frontend.footer/>
+    <!-- End Header -->
 
     {{-- Start Script --}}
     <x-frontend.script />
     {{-- End Script --}}
-    @livewireScripts
+
+    {{-- Start Stack Scripts --}}
     @stack('scripts')
+    {{-- End Stack Scripts --}}
+
+    {{-- Start Livewire Scripts --}}
+    @livewireScripts
+    {{-- End Livewire Scripts --}}
+
 </body>
 
 </html>

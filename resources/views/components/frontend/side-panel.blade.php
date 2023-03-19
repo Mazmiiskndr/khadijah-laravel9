@@ -1,21 +1,22 @@
 <div class="dropdn-content account-drop" id="dropdnAccount">
     <div class="dropdn-content-block">
-        <div class="dropdn-close"><span class="js-dropdn-close">Close</span></div>
+        <div class="dropdn-close"><span class="js-dropdn-close">Tutup</span></div>
         <ul>
-            <li><a href="{{ route('customer.login') }}"><span>Log In</span><i class="icon-login"></i></a></li>
-            <li><a href="account-create.html"><span>Register</span><i class="icon-user2"></i></a></li>
-            <li><a href="checkout.html"><span>Checkout</span><i class="icon-card"></i></a></li>
+            <li><a href="{{ route('customer.login') }}"><span>Masuk</span><i class="icon-login"></i></a></li>
+            <li><a href="{{ route('customer.register') }}"><span>Daftar</span><i class="icon-user2"></i></a></li>
+            {{-- TODO: --}}
+            {{-- <li><a href="checkout.html"><span>Checkout</span><i class="icon-card"></i></a></li> --}}
         </ul>
         <div class="dropdn-form-wrapper">
-            <h5>Quick Login</h5>
-            @livewire('customer-login')
+            <h5>Masuk</h5>
+            @livewire('frontend.customer.login')
         </div>
     </div>
     <div class="drop-overlay js-dropdn-close"></div>
 </div>
 <div class="dropdn-content minicart-drop" id="dropdnMinicart">
     <div class="dropdn-content-block">
-        <div class="dropdn-close"><span class="js-dropdn-close">Close</span></div>
+        <div class="dropdn-close"><span class="js-dropdn-close">Tutup</span></div>
         <div class="minicart-drop-content js-dropdn-content-scroll">
             <div class="minicart-prd row">
                 <div class="minicart-prd-image image-hover-scale-circle col">
