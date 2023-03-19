@@ -24,13 +24,13 @@ class CardProduct extends Component
     public $categoryFilters = [];
 
     protected $listeners = [
-        'productDeleted' => 'handleDeleted',
-        'searchProduct' => 'updateSearch',
-        'showingProduct' => 'updateShowing',
-        'categorySelected' => 'updateCategorySelected',
-        'deleteConfirmation' => 'destroy',
-        'productCreated' => 'handleStored',
-        'updatedProduct' => 'handleUpdated',
+        'productDeleted'        => 'handleDeleted',
+        'searchProduct'         => 'updateSearch',
+        'showingProduct'        => 'updateShowing',
+        'categorySelected'      => 'updateCategorySelected',
+        'deleteConfirmation'    => 'destroy',
+        'productCreated'        => 'handleStored',
+        'updatedProduct'        => 'handleUpdated',
     ];
 
     public function mount()

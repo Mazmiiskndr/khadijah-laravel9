@@ -1,0 +1,40 @@
+<div class="top-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="header-contact">
+                    <ul>
+                        <li>Selamat Datang di Khadijah Label</li>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6 text-end">
+                <ul class="header-dropdown">
+                    <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>
+                        Akun Saya
+
+
+                        <ul class="onhover-show-div">
+                            @if(Auth::guard('customer')->check())
+                            <form id="form-logout" method="POST" action="{{ route('customer.logout') }}">
+                                @csrf
+                                <li onclick="logoutButton();">
+
+                                    <a href="#"><i class="fas fa-door-open"></i> Keluar</a>
+                                </li>
+                            </form>
+                            @else
+                            <li><a href="{{ route('customer.login') }}"><i class="fas fa-sign-in-alt"></i> Masuk</a></li>
+                            <li><a href="{{ route('customer.register') }}"><i class="fas fa-user-plus"></i> Daftar</a></li>
+                            @endif
+                        </ul>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

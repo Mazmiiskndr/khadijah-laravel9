@@ -10,8 +10,11 @@ class DatatableProduct extends Component
 {
     public function render(ProductService $productService)
     {
-        return view('livewire.backend.product.datatable-product',
-        ['products' => Product::with('category')->get()
-    ]);
+        return view(
+            'livewire.backend.product.datatable-product',
+            [
+                'products' => Product::with('category')->get()
+            ]
+        );
     }
 }

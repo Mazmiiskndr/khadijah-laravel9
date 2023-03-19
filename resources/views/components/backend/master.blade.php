@@ -9,7 +9,7 @@
         content="Mukena Khadijah">
     <meta name="keywords"
         content="Mukan Khadijah | Mukena Murah">
-    <meta name="author" content="pixelstrap">
+    <meta name="author" content="Moch Azmi Iskandar">
 
     {{-- Start Favicon --}}
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/favicon_khadijah.png') }}" />

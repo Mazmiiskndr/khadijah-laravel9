@@ -73,7 +73,5 @@ class DatabaseSeeder extends Seeder
         });
         Customer::factory(100)->create();
 
-
-
     }
 }

@@ -104,11 +104,10 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
      * getLimitData
      *
      * @param  mixed $limit
-     * @return void
      */
     public function getLimitData($limit)
     {
-        return $this->model->orderBy('created_at', 'DESC')->limit($limit)->get();
+        return $this->model->with('images')->orderBy('created_at', 'DESC')->limit($limit)->get();
     }
 
 }
