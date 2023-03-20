@@ -35,7 +35,13 @@
                 <div class="dashboard-sidebar">
                     <div class="profile-top">
                         <div class="profile-image">
-                            <img src="{{ asset('assets/images/frontend/users/user-male.png') }}" alt="" class="img-fluid">
+                            @if ($customer->gender == null)
+                            <img src="{{ asset('assets/images/frontend/users/user-male-1.png') }}" alt="" class="img-fluid">
+                            @elseif ($customer->gender == "Perempuan")
+                            <img src="{{ asset('assets/images/frontend/users/user-female-1.png') }}" alt="" class="img-fluid">
+                            @else
+                            <img src="{{ asset('assets/images/frontend/users/user-male-1.png') }}" alt="" class="img-fluid">
+                            @endif
                         </div>
                         <div class="profile-detail">
                             <h5>{{ ucwords($customer->name) }}</h5>
@@ -44,20 +50,42 @@
                     </div>
                     <div class="faq-tab">
                         <ul class="nav nav-tabs" id="top-tab" role="tablist">
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#info"
-                                    class="nav-link active">Account Info</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#address"
-                                    class="nav-link">Address Book</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#orders" class="nav-link">My
-                                    Orders</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#wishlist" class="nav-link">My
-                                    Wishlist</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#payment"
-                                    class="nav-link">Saved Cards</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#profile"
-                                    class="nav-link">Profile</a></li>
-                            <li class="nav-item"><a data-bs-toggle="tab" data-bs-target="#security"
-                                    class="nav-link">Security</a> </li>
+                            <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#info" class="nav-link active">
+                                    Info Akun
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#address" class="nav-link">
+                                    Buku Alamat
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#orders" class="nav-link">
+                                    Transaksi
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#wishlist" class="nav-link">
+                                    Favorit
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#payment" class="nav-link">
+                                    Kartu / Rekening Bank
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#profile" class="nav-link">
+                                    Detail Akun
+                                </a>
+                            </li>
+                            {{-- *** TODO: SECURITY *** --}}
+                            {{-- <li class="nav-item">
+                                <a data-bs-toggle="tab" data-bs-target="#security" class="nav-link">
+                                    Security
+                                </a>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="" class="nav-link" onclick="logoutButton();">Keluar</a>
                             </li>
@@ -104,54 +132,55 @@
                                 </div>
                             </div>
                             <div class="box-account box-info">
+
                                 <div class="box-head">
-                                    <h4>Account Information</h4>
+                                    <h4>Informasi Akun</h4>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-12">
                                         <div class="box">
                                             <div class="box-title">
-                                                <h3>Contact Information</h3><a href="#">Edit</a>
+                                                <h3>Informasi Kontak</h3><a href="#">Edit</a>
                                             </div>
                                             <div class="box-content">
-                                                <h6>{{ ucwords($customer->name) }}</h6>
-                                                <h6>{{ $customer->email }}</h6>
-                                                <h6><a href="#">Change Password</a></h6>
+                                                <table class="table table-borderless">
+                                                    <tr>
+                                                        <th style="width:250px;">Nama</th>
+                                                        <th style="width:30px;" class="text-center">:</th>
+                                                        <td>{{ ucwords($customer->name) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Email</th>
+                                                        <th style="width:30px;" class="text-center">:</th>
+                                                        <td>{{ $customer->email }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>No. Telepon/WhatsApp</th>
+                                                        <th style="width:30px;" class="text-center">:</th>
+                                                        <td>{{ $customer->phone }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Jenis Kelamin</th>
+                                                        <th style="width:30px;" class="text-center">:</th>
+                                                        <td>{{ $customer->gender }}</td>
+                                                    </tr>
+                                                </table>
+                                                <hr>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="box">
-                                            <div class="box-title">
-                                                <h3>Newsletters</h3><a href="#">Edit</a>
-                                            </div>
-                                            <div class="box-content">
-                                                <p>You are currently not subscribed to any newsletter.</p>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <div class="box mt-3">
                                     <div class="box-title">
-                                        <h3>Address Book</h3><a href="#">Manage Addresses</a>
+                                        <h3>Alamat</h3><a href="#">Edit Alamat</a>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <h6>Default Billing Address</h6>
-                                            <address>You have not set a default billing address.<br><a href="#">Edit
-                                                    Address</a></address>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <h6>Default Shipping Address</h6>
-                                            @php
-                                                $addressCustomer = $customer->address;
-                                            @endphp
-                                            @if($addressCustomer)
-                                            <address>{{ $addressCustomer }}.<br><a href="#">Edit
-                                                    Address</a></address>
+                                        <div class="col-sm-12">
+                                            @if($addressCustomer != "-")
+                                            <address>{{ $provinceCustomer }}, {{ $cityCustomer }}, {{ $districtCustomer }}, {{ $addressCustomer }} </address>
                                             @else
-                                            <address class="text-warning">Anda belum mengatur alamat pengiriman.<br><a href="#">Edit
-                                                    Address</a></address>
+                                            <address class="text-warning">Anda belum mengatur alamat pengiriman.</address>
                                             @endif
                                         </div>
                                     </div>
@@ -656,7 +685,7 @@
                                     <div class="card-body">
                                         <div class="dashboard-box">
                                             <div class="dashboard-title">
-                                                <h4>profile</h4>
+                                                <h4>Detail Informasi Akun</h4>
                                                 <a class="edit-link" href="#">edit</a>
                                             </div>
                                             <div class="dashboard-detail">
@@ -664,97 +693,108 @@
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>company name</h6>
+                                                                <h6>Nama</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>Fashion Store</h6>
+                                                                <h6>{{ $customer->name }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>email address</h6>
+                                                                <h6>Email</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>mark.jecno@gmail.com</h6>
+                                                                <h6>{{ $customer->email }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>Country / Region</h6>
+                                                                <h6>No. Telepon / WhatsApp</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>Downers Grove, IL</h6>
+                                                                <h6>{{ $customer->phone }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>Year Established</h6>
+                                                                <h6>Jenis Kelamin</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>2018</h6>
+                                                                <h6>{{ $customer->gender }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>Total Employees</h6>
+                                                                <h6>Provinsi</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>101 - 200 People</h6>
+                                                                <h6>{{ $provinceCustomer ?? "-" }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>category</h6>
+                                                                <h6>Kota / Kabupaten</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>clothing</h6>
+                                                                <h6>{{ $cityCustomer ?? "-" }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>street address</h6>
+                                                                <h6>Kecamatan</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>549 Sulphur Springs Road</h6>
+                                                                <h6>{{ $districtCustomer ?? "-" }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>city/state</h6>
+                                                                <h6>Alamat</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>Downers Grove, IL</h6>
+                                                                <h6>{{ $customer->address ?? "-" }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>zip</h6>
+                                                                <h6>Kode Pos</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>60515</h6>
+                                                                <h6>{{ $customer->postal_cod ?? "-" }}</h6>
                                                             </div>
                                                         </div>
                                                     </li>
+                                                    <li>
+                                                        <div class="details">
+                                                            <div class="left">
+                                                                <h6>Tanggal Daftar</h6>
+                                                            </div>
+                                                            <div class="right">
+                                                                <h6>{{ date('d-M-Y',strtotime($customer->registration_date))  }}</h6>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
                                                 </ul>
                                             </div>
                                             <div class="dashboard-title mt-lg-5 mt-3">
-                                                <h4>login details</h4>
+                                                <h4>Akses Masuk</h4>
                                                 <a class="edit-link" href="#">edit</a>
                                             </div>
                                             <div class="dashboard-detail">
@@ -762,21 +802,11 @@
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>Email Address</h6>
+                                                                <h6>Email</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>mark.jecno@gmail.com <a class="edit-link"
-                                                                        href="#">edit</a></h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Phone No.</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>+01 4485 5454<a class="edit-link" href="#">Edit</a>
+                                                                <h6>{{ $customer->email }}
+
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -784,10 +814,34 @@
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>Password</h6>
+                                                                <h6>No. Telepon / WhatsApp</h6>
                                                             </div>
                                                             <div class="right">
-                                                                <h6>******* <a class="edit-link" href="#">Edit</a>
+                                                                <h6>{{ $customer->phone }}
+
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="details">
+                                                            <div class="left">
+                                                                <h6>Jenis Kelamin</h6>
+                                                            </div>
+                                                            <div class="right">
+                                                                <h6>{{ $customer->gender }}
+
+                                                                </h6>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="details">
+                                                            <div class="left">
+                                                                <h6>Kata Sandi</h6>
+                                                            </div>
+                                                            <div class="right">
+                                                                <h6>*******
                                                                 </h6>
                                                             </div>
                                                         </div>
@@ -800,7 +854,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="security">
+                    {{-- *** TODO: SECURITY *** --}}
+                    {{-- <div class="tab-pane fade" id="security">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-0">
@@ -922,7 +977,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
