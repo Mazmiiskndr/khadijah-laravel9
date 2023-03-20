@@ -70,6 +70,29 @@ class Grid extends Component
     }
 
     /**
+     * updateCategorySelected
+     *
+     * @param  mixed $categoryId
+     * @param  mixed $isChecked
+     * @return void
+     */
+    public function updateCategorySelected($categoryId, $isChecked)
+    {
+        if ($isChecked) {
+            if (!in_array($categoryId, $this->categoryFilters)) {
+                $this->categoryFilters[] = $categoryId;
+            }
+        } else {
+            $index = array_search($categoryId, $this->categoryFilters);
+            if ($index !== false) {
+                unset($this->categoryFilters[$index]);
+            }
+        }
+
+        $this->resetPage();
+    }
+
+    /**
      * updatingSearch
      *
      * @return void

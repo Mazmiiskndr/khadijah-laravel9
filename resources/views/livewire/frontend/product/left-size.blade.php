@@ -4,32 +4,32 @@
     <div class="collection-collapse-block-content">
         <div class="collection-brand-filter">
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="hundred">
-                <label class="form-check-label" for="hundred">S</label>
+                <input type="checkbox" class="form-check-input" id="size-s">
+                <label class="form-check-label" for="size-s">S</label>
             </div>
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="twohundred">
-                <label class="form-check-label" for="twohundred">M</label>
+                <input type="checkbox" class="form-check-input" id="size-m">
+                <label class="form-check-label" for="size-m">M</label>
             </div>
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="threehundred">
-                <label class="form-check-label" for="threehundred">L</label>
+                <input type="checkbox" class="form-check-input" id="size-l">
+                <label class="form-check-label" for="size-l">L</label>
             </div>
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="fourhundred">
-                <label class="form-check-label" for="fourhundred">XL</label>
+                <input type="checkbox" class="form-check-input" id="size-xl">
+                <label class="form-check-label" for="size-xl">XL</label>
             </div>
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="fourhundred">
-                <label class="form-check-label" for="fourhundred">XXL</label>
+                <input type="checkbox" class="form-check-input" id="size-xxl">
+                <label class="form-check-label" for="size-xxl">XXL</label>
             </div>
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="fourhundred">
-                <label class="form-check-label" for="fourhundred">XXXL</label>
+                <input type="checkbox" class="form-check-input" id="size-xxxl">
+                <label class="form-check-label" for="size-xxxl">XXXL</label>
             </div>
             <div class="form-check collection-filter-checkbox">
-                <input type="checkbox" class="form-check-input" id="fourhundred">
-                <label class="form-check-label" for="fourhundred">Super Jumbo</label>
+                <input type="checkbox" class="form-check-input" id="size-super-jumbo">
+                <label class="form-check-label" for="size-super-jumbo">Super Jumbo</label>
             </div>
         </div>
     </div>

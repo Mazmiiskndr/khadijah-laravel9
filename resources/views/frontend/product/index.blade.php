@@ -43,6 +43,7 @@
                             </span>
                         </div>
                         {{-- START CATEGORY PRODUCTS --}}
+                        {{-- *** TODO: --}}
                         @livewire('frontend.product.left-category')
                         {{-- END CATEGORY PRODUCTS --}}
 
@@ -66,6 +67,7 @@
                         </div> --}}
 
                         {{-- START SIZE PRODUCTS --}}
+                        {{-- *** TODO: --}}
                         @livewire('frontend.product.left-size')
                         {{-- END SIZE PRODUCTS --}}
 
@@ -73,6 +75,7 @@
                     <!-- silde-bar colleps block end here -->
 
                     {{-- START NEW PRODUCTS --}}
+                    {{-- *** TODO: --}}
                     @livewire('frontend.product.left-new-product')
                     {{-- END NEW PRODUCTS --}}
 
