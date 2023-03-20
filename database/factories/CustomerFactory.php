@@ -40,6 +40,7 @@ class CustomerFactory extends Factory
             'address' => $this->faker->address(),
             'postal_code' => $this->faker->postcode(),
             'phone' => $this->faker->phoneNumber(),
+            'gender' => $this->faker->randomElement(['Laki-laki', 'Perempuan']),
             'registration_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'remember_token' => str()->random(10),
         ];

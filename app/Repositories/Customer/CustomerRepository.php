@@ -13,4 +13,10 @@ interface CustomerRepository extends Repository{
      * @return void
      */
     public function getAllData();
+
+
+    /**
+     * findByUid
+     */
+    public function findByUid($uid);
 }

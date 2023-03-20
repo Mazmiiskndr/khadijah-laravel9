@@ -19,7 +19,7 @@ class Login extends Component
     protected $messages = [
         'email.required' => 'Email harus diisi!',
         'email.email' => 'Format harus email!',
-        'password.required' => 'Password harus diisi!',
+        'password.required' => 'Kata Sandi harus diisi!',
     ];
 
     public function updated($property)

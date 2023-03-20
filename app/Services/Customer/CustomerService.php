@@ -11,4 +11,10 @@ interface CustomerService extends BaseService{
      * @return void
      */
     public function getAllData();
+
+
+    /**
+     * findByUid
+     */
+    public function findByUid($uid);
 }

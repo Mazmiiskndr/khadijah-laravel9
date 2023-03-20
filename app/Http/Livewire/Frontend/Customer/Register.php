@@ -10,7 +10,7 @@ use Livewire\Component;
 class Register extends Component
 {
     // Declare variable
-    public $name, $email, $password, $phone, $registration_date;
+    public $name, $email, $password, $phone, $gender, $registration_date;
 
     // Listeners
     protected $listeners = [
@@ -23,6 +23,7 @@ class Register extends Component
         'email' => 'required|email|unique:customer,email',
         'password' => 'required|min:6',
         'phone' => 'required',
+        'gender' => 'required',
     ];
 
     // Make Validation message
@@ -31,9 +32,10 @@ class Register extends Component
         'email.required' => 'Email harus diisi',
         'email.email' => 'Email harus valid',
         'email.unique' => 'Email telah digunakan oleh pelanggan lain',
-        'password.required' => 'Password harus diisi',
-        'password.min' => 'Password harus memiliki setidaknya 6 karakter',
+        'password.required' => 'Kata Sandi harus diisi',
+        'password.min' => 'Kata Sandi harus memiliki setidaknya 6 karakter',
         'phone.required' => 'No. Telepon harus diisi',
+        'gender.required' => 'No. Telepon harus diisi',
     ];
 
     /**
@@ -83,6 +85,7 @@ class Register extends Component
                 'email' => $this->email,
                 'password' => Hash::make($this->password),
                 'phone' => $this->phone,
+                'gender' => $this->gender,
                 'registration_date' => $this->registration_date,
             ]);
 
@@ -110,5 +113,6 @@ class Register extends Component
         $this->email = '';
         $this->password = '';
         $this->phone = '';
+        $this->gender = '';
     }
 }

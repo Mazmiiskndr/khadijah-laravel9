@@ -26,12 +26,12 @@ class ContactSeeder extends Seeder
         // Memasukkan 50 data acak ke dalam tabel Contact
         for ($i = 0; $i < 1; $i++) {
             Contact::create([
-                'province_id' => $faker->randomElement($provinces),
-                'city_id' => $faker->randomElement($cities),
-                'district_id' => $faker->randomElement($districts),
+                'province_id' => 32,
+                'city_id' => 3278,
+                'district_id' => 3278050,
                 'shop_name' => "Khadijah Label",
                 'email' => "khadijah_label@gmail.com",
-                'address' => "Jl. HZ. Mustofa No.326, Tugujaya, Plaza Asia Kota Tasikmalaya",
+                'address' => "Jl. HZ. Mustofa No.326, Tugujaya, Plaza Asia",
                 'postal_code' => "46126",
                 'phone' => "+62 811-2116-897",
                 'tiktok' => "https://www.tiktok.com/@khadijahlabel/",

@@ -29,6 +29,7 @@
                                     <th width="5%">No.</th>
                                     <th>Nama Pelanggan</th>
                                     <th>Email</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>No. Telepon</th>
                                     <th>Tanggal Daftar</th>
                                     <th>Aksi</th>

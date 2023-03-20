@@ -9,9 +9,9 @@
         @error('email') <small class="error text-danger">{{ $message }}</small> @enderror
     </div>
     <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Kata Sandi</label>
         <input type="password" class="form-control @error('password') is-invalid @enderror"
-            placeholder="Masukan password.." name="password" id="password" wire:model.laxy="password">
+            placeholder="Masukan Kata Sandi.." name="password" id="password" wire:model.laxy="password">
         @error('password') <small class="error text-danger">{{ $message }}</small> @enderror
     </div>
 

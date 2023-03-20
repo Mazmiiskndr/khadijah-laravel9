@@ -901,7 +901,8 @@
 
 
 <!-- exit modal popup start-->
-<div class="modal fade bd-example-modal-lg theme-modal exit-modal" id="exit_popup" tabindex="-1" role="dialog"
+{{-- *** TODO: MODAL *** --}}
+{{-- <div class="modal fade bd-example-modal-lg theme-modal exit-modal" id="exit_popup" tabindex="-1" role="dialog"
     aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -934,5 +935,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 <!-- Add to cart modal popup end-->
