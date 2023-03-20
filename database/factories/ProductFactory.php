@@ -57,7 +57,7 @@ class ProductFactory extends Factory
             'discount' => $discount,
             'color' => $colors,
             'stock' => $this->faker->numberBetween(1, 100),
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL', 'Ukuran Jumbo']),
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL','XXXL', 'Super Jumbo']),
             'material' => $this->faker->word(),
             'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
             'weight' => $this->faker->randomFloat(2, 0.1, 10),

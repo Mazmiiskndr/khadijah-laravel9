@@ -43,13 +43,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($uid)
     {
 
-        // $product = Product::with('images')->find($id);
-        $product = $this->productService->getProductById($id);
-        $productTags = $product->tags;
-        $productImages = $product->images;
+        $product = Product::with('images', 'category', 'tags')->where('product_uid', $uid)->first();
+
+        // $product = $this->productService->getProductById($uid);
+        // dd($product);
         return view('backend.product.show', compact('product'));
     }
 

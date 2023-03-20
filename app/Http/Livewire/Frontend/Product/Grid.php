@@ -12,6 +12,7 @@ class Grid extends Component
     public $perPage = 16;
     public $paginationTheme = 'bootstrap';
     public $search = '';
+    public $sizes = [];
     public $showing = '';
     public $product_id;
     public $currentPage;
@@ -21,6 +22,7 @@ class Grid extends Component
         'searchProduct'         => 'updateSearch',
         'showingProduct'        => 'updateShowing',
         'categorySelected'      => 'updateCategorySelected',
+        'sizeSelected'          => 'updateSizeSelected',
         'deleteConfirmation'    => 'destroy',
         'productCreated'        => 'handleStored',
         'updatedProduct'        => 'handleUpdated',
@@ -34,6 +36,7 @@ class Grid extends Component
     public function mount()
     {
         $this->categoryFilters = request()->input('categoryFilters', []) ?? [];
+        $this->sizes = request()->input('sizes', []) ?? [];
     }
     public function updateShowing($showing)
     {
@@ -47,7 +50,7 @@ class Grid extends Component
      */
     public function render(ProductService $productService)
     {
-        $products = $productService->getPaginatedData($this->perPage, $this->search, $this->showing, $this->categoryFilters);
+        $products = $productService->getProductFrontend($this->perPage, $this->search, $this->showing, $this->categoryFilters, $this->sizes);
 
         if (is_object($products)) {
             $paginationData = [
@@ -67,6 +70,24 @@ class Grid extends Component
             'products' => $products,
             'paginationData' => $paginationData,
         ]);
+    }
+
+    // create function updateSizeSelected
+    public function updateSizeSelected($size, $isChecked)
+    {
+        // dd($size);
+        if ($isChecked) {
+            if (!in_array($size, $this->sizes)) {
+                $this->sizes[] = $size;
+            }
+        } else {
+            $index = array_search($size, $this->sizes);
+            if ($index !== false) {
+                unset($this->sizes[$index]);
+            }
+        }
+
+        $this->resetPage();
     }
 
     /**

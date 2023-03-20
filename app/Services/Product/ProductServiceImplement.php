@@ -56,6 +56,26 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+    /**
+     * getProductFrontend
+     *
+     * @param  mixed $perPage
+     * @param  mixed $search
+     * @param  mixed $showing
+     * @param  mixed $categoryFilters
+     * @param  mixed $sizes
+     * @return void
+     */
+    public function getProductFrontend($perPage, $search,$showing,$categoryFilters = [],$sizes = [])
+    {
+        try {
+            return $this->mainRepository->getProductFrontend($perPage, $search,$showing,$categoryFilters,$sizes);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+        }
+    }
+
     public function getGalleryProduct($perPage, $search)
     {
         try {
