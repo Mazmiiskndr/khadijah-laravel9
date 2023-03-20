@@ -13,7 +13,7 @@
                         @csrf
                         {{-- Name And Email --}}
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="name_input">Nama Customer</label>
                                 <input type="hidden" class="form-control" name="customer_id" id="customer_id"
                                     wire:model="customer_id">
@@ -22,12 +22,22 @@
                                     autofocus>
                                 @error('name') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
                                 <label for="email_input">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror"
                                     placeholder="Masukan Email.." name="email" id="email_input" wire:model="email"
                                     autofocus>
                                 @error('email') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                            <div class="col-4">
+                                <label for="gender">Jenis Kelamin</label>
+                                <select class="select2 col-sm-12 @error('gender') is-invalid @enderror" id="gender" name="gender"
+                                    wire:model="gender">
+                                    <option value="" selected>-- Pilih Jenis Kelamin --</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
+                                </select>
+                                @error('gender') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
                         {{-- Password and Number Phone --}}
@@ -131,6 +141,9 @@
                 $('.select2').select2()
                 $('select[name="province_id"]').on('change', function(){
                     @this.province_id = $(this).val()
+                })
+                $('select[name="gender"]').on('change', function(){
+                    @this.gender = $(this).val()
                 })
                 $('select[name="city_id"]').on('change', function(){
                     @this.city_id = $(this).val()

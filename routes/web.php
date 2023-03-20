@@ -16,7 +16,7 @@ use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Middleware\CountVisitor;
 use Illuminate\Support\Facades\Route;
 
@@ -43,11 +43,17 @@ Route::middleware(CountVisitor::class)->controller(ContactController::class)->gr
     Route::get('/contact','contact')->name('contact');
 });
 
+
 // Login For Customer
 Route::controller(CustomerLoginController::class)->name('customer.')->prefix('customer')->group(function () {
     Route::get('/login','create')->name('login');
     Route::get('/register','register')->name('register');
     Route::post('logout', 'destroy')->name('logout');
+});
+
+// Profile Page Customer
+Route::controller(ProfileController::class)->name('profile.')->prefix('profile')->group(function () {
+    Route::get('/detail/{uid}', 'show')->name('detail');
 });
 
 // Login For Admin

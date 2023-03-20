@@ -19,8 +19,22 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
         $this->model = $model;
     }
 
+    /**
+     * getAllData
+     *
+     * @return void
+     */
     public function getAllData()
     {
         return $this->model->latest('registration_date')->get();
+    }
+
+
+    /**
+     * findByUid
+     */
+    public function findByUid($uid)
+    {
+        return $this->model->where('customer_uid', $uid)->first();
     }
 }

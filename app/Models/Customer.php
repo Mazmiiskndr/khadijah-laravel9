@@ -23,6 +23,7 @@ class Customer extends Authenticatable
         'address',
         'postal_code',
         'phone',
+        'gender',
         'registration_date',
     ];
     protected $primaryKey = 'id';

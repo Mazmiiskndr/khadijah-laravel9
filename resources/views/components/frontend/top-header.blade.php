@@ -19,13 +19,17 @@
 
                         <ul class="onhover-show-div">
                             @if(Auth::guard('customer')->check())
-                            <form id="form-logout" method="POST" action="{{ route('customer.logout') }}">
-                                @csrf
-                                <li onclick="logoutButton();">
-
-                                    <a href="#"><i class="fas fa-door-open"></i> Keluar</a>
+                                <li>
+                                    <a href="{{ route('profile.detail', ['uid' => Auth::guard('customer')->user()->customer_uid ]) }}"><i
+                                            class="fas fa-user-gear"></i> Profil</a>
                                 </li>
-                            </form>
+                                <form id="form-logout" method="POST" action="{{ route('customer.logout') }}">
+                                    @csrf
+                                    <li onclick="logoutButton();">
+
+                                        <a href="#"><i class="fas fa-door-open"></i> Keluar</a>
+                                    </li>
+                                </form>
                             @else
                             <li><a href="{{ route('customer.login') }}"><i class="fas fa-sign-in-alt"></i> Masuk</a></li>
                             <li><a href="{{ route('customer.register') }}"><i class="fas fa-user-plus"></i> Daftar</a></li>

@@ -40,11 +40,13 @@ class DatabaseSeeder extends Seeder
         //     'registration_date' => now(),
         //     'remember_token' => str()->random(10)
         // ]);
-        $this->call(ColorSeeder::class);
-        $this->call(ContactSeeder::class);
+        // Region Seeder
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);
+
+        $this->call(ColorSeeder::class);
+        $this->call(ContactSeeder::class);
         User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@gmail.com',
@@ -55,8 +57,9 @@ class DatabaseSeeder extends Seeder
         Promo::factory(50)->create();
         Category::factory(50)->create();
         Tag::factory(50)->create();
+        Customer::factory(100)->create();
         // PRODUCT TAGS, PRODUCT IMAGES AND DETAIL PRODUCTS
-        Product::factory()->count(15)->create()->each(function ($product) {
+        Product::factory()->count(20)->create()->each(function ($product) {
             // Create For Detail Products
             // TODO:
             // $numDetailProducts = rand(1, 5);
@@ -72,7 +75,7 @@ class DatabaseSeeder extends Seeder
             $images = ProductImage::factory()->count($numImages)->make(['product_id' => $product->product_id]);
             $product->images()->createMany($images->toArray());
         });
-        Customer::factory(100)->create();
+
 
     }
 }

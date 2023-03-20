@@ -25,7 +25,8 @@ return new class extends Migration
             $table->unsignedBigInteger('district_id')->nullable();
             $table->string('address')->nullable();
             $table->string('postal_code')->nullable();
-            $table->string('phone');
+            $table->string('phone')->nullable();
+            $table->string('gender',100)->nullable();
             $table->timestamp('registration_date');
             $table->rememberToken();
             $table->timestamps();

@@ -20,10 +20,29 @@ class CustomerServiceImplement extends Service implements CustomerService
         $this->mainRepository = $mainRepository;
     }
 
+    /**
+     * getAllData
+     *
+     * @return void
+     */
     public function getAllData()
     {
         try {
             return $this->mainRepository->getAllData();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
+    /**
+     * findByUid
+     */
+    public function findByUid($uid)
+    {
+        try {
+            return $this->mainRepository->findByUid($uid);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return [];

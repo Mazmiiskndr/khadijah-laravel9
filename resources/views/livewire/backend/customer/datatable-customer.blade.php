@@ -7,6 +7,7 @@
         <td>{{ $loop->iteration }}</td>
         <td>{{ $customer->name }}</td>
         <td>{{ $customer->email }}</td>
+        <td>{{ $customer->gender }}</td>
         <td>{{ $customer->phone }}</td>
         <td>{{ $registrationDate }}</td>
         <td>
