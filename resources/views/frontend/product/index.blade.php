@@ -32,6 +32,12 @@
             <div class="row">
                 <div class="col-sm-3 collection-filter">
                     <!-- side-bar colleps block stat -->
+                    {{-- START NEW PRODUCTS --}}
+                    {{-- *** TODO: --}}
+                    <div class="mb-3">
+                        @livewire('frontend.product.left-new-product')
+                    </div>
+                    {{-- END NEW PRODUCTS --}}
                     <div class="collection-filter-block">
                         <!-- brand filter start -->
                         <div class="collection-mobile-back">
@@ -43,6 +49,7 @@
                             </span>
                         </div>
                         {{-- START CATEGORY PRODUCTS --}}
+                        {{-- *** TODO: --}}
                         @livewire('frontend.product.left-category')
                         {{-- END CATEGORY PRODUCTS --}}
 
@@ -66,15 +73,14 @@
                         </div> --}}
 
                         {{-- START SIZE PRODUCTS --}}
+                        {{-- *** TODO: --}}
                         @livewire('frontend.product.left-size')
                         {{-- END SIZE PRODUCTS --}}
 
                     </div>
                     <!-- silde-bar colleps block end here -->
 
-                    {{-- START NEW PRODUCTS --}}
-                    @livewire('frontend.product.left-new-product')
-                    {{-- END NEW PRODUCTS --}}
+
 
                     <!-- side-bar single product slider end -->
                     <!-- side-bar banner start here -->

@@ -29,7 +29,7 @@ class ContactSeeder extends Seeder
                 'province_id' => $faker->randomElement($provinces),
                 'city_id' => $faker->randomElement($cities),
                 'district_id' => $faker->randomElement($districts),
-                'shope_name' => "Khadijah Label",
+                'shop_name' => "Khadijah Label",
                 'email' => "khadijah_label@gmail.com",
                 'address' => "Jl. HZ. Mustofa No.326, Tugujaya, Plaza Asia Kota Tasikmalaya",
                 'postal_code' => "46126",

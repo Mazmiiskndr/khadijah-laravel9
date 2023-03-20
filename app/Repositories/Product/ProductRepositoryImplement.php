@@ -74,6 +74,53 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
     }
 
     /**
+     * getProductFrontend
+     *
+     * @param  mixed $perPage
+     * @param  mixed $search
+     * @param  mixed $showing
+     * @param  mixed $categoryFilters
+     * @param  mixed $sizes
+     * @return void
+     */
+    public function getProductFrontend($perPage, $search, $showing, $categoryFilters,$sizes)
+    {
+        $query = $this->model->join('category', 'category.category_id', '=', 'product.category_id')
+        ->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('category_name', 'LIKE', '%' . $search . '%');
+        });
+
+        if (!empty($categoryFilters)) {
+            $query->whereHas('category', function ($query) use ($categoryFilters) {
+                $query->whereIn('category_id', $categoryFilters);
+            });
+        }
+        if (!empty($sizes)) {
+            $query->whereIn('size', $sizes);
+        }
+
+        switch ($showing) {
+            case 'featured':
+                $query->orderBy('created_at', 'DESC');
+                break;
+            case 'lowest_price':
+                $query->orderByRaw('price - IFNULL(discount, 0) ASC');
+                break;
+            case 'highest_price':
+                $query->orderByRaw('price - IFNULL(discount, 0) DESC');
+                break;
+            default:
+                $query->orderBy('created_at', 'DESC');
+                break;
+        }
+
+        $query = $query->select('product.*')->paginate($perPage);
+
+        return $query;
+    }
+
+    /**
      * getGalleryProduct
      *
      * @param  mixed $perPage

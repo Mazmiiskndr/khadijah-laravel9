@@ -25,7 +25,7 @@
                             <li wire:click="deleteConfirmation({{ $product->product_id }})">
                                 <button class="btn" type="button" aria-label="deleteProduct"><i class="fa fa-trash"></i></button>
                             </li>
-                            <li onclick="detailProduct({{ $product->product_id }})">
+                            <li onclick="detailProduct('{{ $product->product_uid }}')">
                                 <button class="btn" type="button" aria-label="detailLinkProduct"><i class="fa fa-link"></i></button>
                             </li>
                         </ul>
@@ -148,10 +148,10 @@
     @endif
     @push('scripts')
     <script>
-        function detailProduct(id) {
-            window.location.href = "{{ route('backend.product.show', ['product' => ':id']) }}".replace(':id', id);
+        function detailProduct(uid) {
+            window.location.href = "{{ route('backend.product.show', ['product' => ':uid']) }}".replace(':uid', uid);
         }
-    </script>
-    @endpush
+</script>
+@endpush
 
 </div>

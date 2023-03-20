@@ -17,7 +17,7 @@
         <td>{{ $product->size }}</td>
         <td>{{ $dateAdded }}</td>
         <td>
-            <button onclick="detailProduct({{ $product->product_id }})" class="btn btn-pill btn-info">
+            <button onclick="detailProduct('{{ $product->product_uid }}')" class="btn btn-pill btn-info">
                 <i class="fa fa-eye"></i>
             </button>
         </td>
@@ -25,8 +25,8 @@
     @endforeach
     @push('scripts')
     <script>
-        function detailProduct(id) {
-            window.location.href = "{{ route('backend.product.show', ['product' => ':id']) }}".replace(':id', id);
+        function detailProduct(uid) {
+            window.location.href = "{{ route('backend.product.show', ['product' => ':uid']) }}".replace(':uid', uid);
         }
     </script>
     @endpush

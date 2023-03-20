@@ -16,6 +16,15 @@ class Tag extends Model
         'tag_description',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->tag_uid = str()->uuid();
+        });
+    }
+
     public function products()
     {
         return $this->belongsToMany(Product::class, 'product_tags', 'tag_id', 'product_id');

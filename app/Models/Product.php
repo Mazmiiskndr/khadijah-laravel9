@@ -11,6 +11,7 @@ class Product extends Model
     protected $table = 'product';
     protected $primaryKey = 'product_id';
     protected $fillable = [
+        'product_uid',
         'category_id',
         'product_name',
         'product_slug',
@@ -28,6 +29,15 @@ class Product extends Model
         'date_added',
         'date_updated',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->product_uid = str()->uuid();
+        });
+    }
 
     // TODO: DETAIL PRODUCTS
     // public function detailProducts()

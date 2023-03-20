@@ -46,6 +46,7 @@ class ProductFactory extends Factory
         $discount = $this->faker->numberBetween(5000, $price - 1);
 
         return [
+            'product_uid' => str()->uuid(),
             'category_id' => $categoryId,
             'product_name' => $productName,
             'product_slug' => str()->slug($productName, '-'),
@@ -56,7 +57,7 @@ class ProductFactory extends Factory
             'discount' => $discount,
             'color' => $colors,
             'stock' => $this->faker->numberBetween(1, 100),
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL', 'Ukuran Jumbo']),
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL','XXXL', 'Super Jumbo']),
             'material' => $this->faker->word(),
             'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
             'weight' => $this->faker->randomFloat(2, 0.1, 10),

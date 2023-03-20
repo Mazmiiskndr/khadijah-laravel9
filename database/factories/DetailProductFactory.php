@@ -29,7 +29,7 @@ class DetailProductFactory extends Factory
 
         return [
             'color' => $colors,
-            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL', 'Ukuran Jumbo']),
+            'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL', 'Super Jumbo']),
             'price' => $price,
             'discount' => $discount,
             'stock' => $this->faker->numberBetween(1, 100),

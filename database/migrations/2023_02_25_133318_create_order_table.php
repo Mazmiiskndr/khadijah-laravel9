@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id('order_id');
+            $table->uuid('order_uid')->unique(); // Added uid column
             $table->unsignedBigInteger('customer_id');
             $table->dateTime('order_date');
             $table->dateTime('payment_date')->nullable();
