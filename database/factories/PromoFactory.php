@@ -24,6 +24,7 @@ class PromoFactory extends Factory
         $discount_value = $discount_type == 'Persen' ? $this->faker->numberBetween(5, 50) : $this->faker->numberBetween(5000, 50000);
         $promoName = ucwords(trim(preg_replace('/\s+/', ' ', strtolower($this->faker->word()))));
         return [
+            'promo_uid' => str()->uuid(),
             'promo_name' => $promoName,
             'promo_code' => $this->faker->unique()->bothify('PRM-########'),
             'promo_description' => $this->faker->paragraph(),

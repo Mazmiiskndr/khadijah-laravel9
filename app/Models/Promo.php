@@ -22,6 +22,15 @@ class Promo extends Model
         'end_date',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->promo_uid = str()->uuid();
+        });
+    }
+
     public function orderPromo()
     {
         return $this->hasMany(OrderPromo::class, 'promo_id', 'promo_id');

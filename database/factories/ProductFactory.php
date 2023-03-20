@@ -46,6 +46,7 @@ class ProductFactory extends Factory
         $discount = $this->faker->numberBetween(5000, $price - 1);
 
         return [
+            'product_uid' => str()->uuid(),
             'category_id' => $categoryId,
             'product_name' => $productName,
             'product_slug' => str()->slug($productName, '-'),

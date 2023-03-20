@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->bigIncrements('tag_id');
+            $table->uuid('tag_uid')->unique(); // Added uid column
             $table->string('tag_name', 200);
             $table->text('tag_description')->nullable();
             $table->timestamps();

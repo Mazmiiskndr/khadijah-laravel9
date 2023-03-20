@@ -20,6 +20,7 @@ class TagFactory extends Factory
     public function definition()
     {
         return [
+            'tag_uid' => str()->uuid(),
             'tag_name' => ucwords($this->faker->word),
             'tag_description' => $this->faker->sentence,
         ];

@@ -19,6 +19,7 @@ class CategoryFactory extends Factory
         $categoryName = ucwords(trim(preg_replace('/\s+/', ' ', strtolower($this->faker->word()))));
 
         return [
+            'category_uid' => str()->uuid(),
             'category_name' => $categoryName,
             'category_description' => $this->faker->paragraph(),
         ];

@@ -18,6 +18,15 @@ class Category extends Model
 
     protected $primaryKey = 'category_id';
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->category_uid = str()->uuid();
+        });
+    }
+
     public function products()
     {
         return $this->hasMany(Product::class);

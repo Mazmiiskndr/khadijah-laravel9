@@ -29,6 +29,7 @@ class CustomerFactory extends Factory
         $district = District::where('regency_id', $city->id)->inRandomOrder()->first();
 
         return [
+            'customer_uid' => str()->uuid(),
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),

@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
         //     'remember_token' => str()->random(10)
         // ]);
         $this->call(ColorSeeder::class);
+        $this->call(ContactSeeder::class);
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
         $this->call(IndoRegionDistrictSeeder::class);

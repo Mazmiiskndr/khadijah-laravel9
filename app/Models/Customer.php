@@ -32,6 +32,15 @@ class Customer extends Authenticatable
         'remember_token',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->customer_uid = str()->uuid();
+        });
+    }
+
     public function province()
     {
         return $this->belongsTo(Province::class);
