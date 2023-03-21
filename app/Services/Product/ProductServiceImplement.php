@@ -102,6 +102,17 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+
+    public function getProductByUid($uid)
+    {
+        try {
+            return $this->mainRepository->getProductByUid($uid);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return null;
+        }
+    }
+
     /**
      * getLimitData
      *

@@ -21,6 +21,14 @@ interface ProductService extends BaseService{
     public function getProductById($id);
 
     /**
+     * Get a product by UID from the repository.
+     *
+     * @param int $uid
+     * @return mixed
+     */
+    public function getProductByUid($uid);
+
+    /**
      * getPaginatedData
      *
      * @param  mixed $perPage

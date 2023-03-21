@@ -75,7 +75,7 @@ class Grid extends Component
     // create function updateSizeSelected
     public function updateSizeSelected($size, $isChecked)
     {
-        // dd($size);
+
         if ($isChecked) {
             if (!in_array($size, $this->sizes)) {
                 $this->sizes[] = $size;

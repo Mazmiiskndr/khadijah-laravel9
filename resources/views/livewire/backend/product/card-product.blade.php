@@ -108,7 +108,7 @@
                 <div class="product-details">
                     <div class="rating"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
                             class="fa fa-star"></i><i class="fa fa-star"></i>
-                    </div><a href="{{ route('backend.product.show', ['product' => $product->product_id]) }}">
+                    </div><a href="{{ route('backend.product.show', ['product' => $product->product_uid]) }}">
                         <h4>{{ $product->product_name }}</h4>
                     </a>
                     @if($product->product_description)
