@@ -103,10 +103,32 @@ class ProductServiceImplement extends Service implements ProductService
     }
 
 
+    /**
+     * getProductByUid
+     *
+     * @param  mixed $uid
+     * @return void
+     */
     public function getProductByUid($uid)
     {
         try {
             return $this->mainRepository->getProductByUid($uid);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * getProductBySlug
+     *
+     * @param  mixed $slug
+     * @return void
+     */
+    public function getProductBySlug($slug)
+    {
+        try {
+            return $this->mainRepository->getProductBySlug($slug);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return null;

@@ -128,10 +128,17 @@ class CreateProduct extends Component
             // Implode Array Size
             $size = implode(', ', $this->size);
             $color = implode(', ', $this->color);
+
+            // Create Unique Slug
+            $slug = str()->slug($this->product_name);
+            $count = Product::where('product_slug', $slug)->count();
+            if ($count > 0) {
+                $slug = $slug . '-' . ($count + 1);
+            }
             // Insert data and Del
             $product = Product::create([
                 'product_name'          => $this->product_name,
-                'product_slug'          => str()->slug($this->product_name),
+                'product_slug'          => $slug,
                 'category_id'           => $this->category_id,
                 'price'                 => $this->price,
                 'size'                  => $size,

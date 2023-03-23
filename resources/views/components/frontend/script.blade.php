@@ -1,6 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- facebook chat section start -->
-<!-- <div id="fb-root"></div>
+ <div id="fb-root"></div>
     <script>
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
@@ -11,7 +11,7 @@
                 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-    </script> -->
+    </script>
 <!-- Your customer chat code -->
 <!-- <div class="fb-customerchat" attribution=setup_tool page_id="2123438804574660" theme_color="#0084ff"
         logged_in_greeting="Hi! Welcome to PixelStrap Themes  How can we help you?"
@@ -26,6 +26,14 @@
         <i class="fa fa-angle-double-up"></i>
     </div>
 </div>
+<!-- tap to top end -->
+{{-- *** TODO: LOGO WHATSAPP *** --}}
+<!-- tap to top -->
+{{-- <div class="tap-top-1 top-cls-1">
+    <div>
+        <i class="fa-brands fa-whatsapp"></i>
+    </div>
+</div> --}}
 <!-- tap to top end -->
 
 

@@ -147,12 +147,12 @@
                                     @foreach ($newProducts1 as $newProduct1)
 
                                     <div class="media">
-                                        <a href="{{ route('product.show', ['product' => $newProduct1->product_uid]) }}"><img class="img-fluid blur-up lazyload" src="{{ asset('storage/'.$newProduct1->thumbnail) }}"
+                                        <a href="{{ route('product.show', ['product' => $newProduct1->product_slug]) }}"><img class="img-fluid blur-up lazyload" src="{{ asset('storage/'.$newProduct1->thumbnail) }}"
                                                 alt=""></a>
                                         <div class="media-body align-self-center">
                                             <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                            </div><a href="{{ route('product.show', ['product' => $newProduct1->product_uid]) }}">
+                                            </div><a href="{{ route('product.show', ['product' => $newProduct1->product_slug]) }}">
                                                 <h6>{{ $newProduct1->product_name }}</h6>
                                             </a>
                                             <h4>Rp. {{ number_format($newProduct1->price - $newProduct1->discount, 0, ',', '.') }}</h4>
@@ -165,12 +165,12 @@
                                     @foreach ($newProducts2 as $newProduct2)
 
                                     <div class="media">
-                                        <a href="{{ route('product.show', ['product' => $newProduct2->product_uid]) }}"><img class="img-fluid blur-up lazyload" src="{{ asset('storage/'.$newProduct2->thumbnail) }}"
+                                        <a href="{{ route('product.show', ['product' => $newProduct2->product_slug]) }}"><img class="img-fluid blur-up lazyload" src="{{ asset('storage/'.$newProduct2->thumbnail) }}"
                                                 alt=""></a>
                                         <div class="media-body align-self-center">
                                             <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i>
                                                 <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                            </div><a href="{{ route('product.show', ['product' => $newProduct2->product_uid]) }}">
+                                            </div><a href="{{ route('product.show', ['product' => $newProduct2->product_slug]) }}">
                                                 <h6>{{ $newProduct2->product_name }}</h6>
                                             </a>
                                             <h4>Rp. {{ number_format($newProduct2->price - $newProduct2->discount, 0, ',', '.') }}</h4>
@@ -382,9 +382,9 @@
                                                 <ul class="product-social">
                                                     <li><a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-square-facebook"></i></a></li>
                                                     <li><a href="https://tiktok.com/" target="_blank"><i class="fa-brands fa-tiktok"></i></a></li>
-                                                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-square-instagram"></i></li>
+                                                    <li><a href="https://www.instagram.com/" target="_blank"><i class="fa-brands fa-square-instagram"></i></a></li>
                                                     <li>
-                                                        <input style="display: none" type="text" value="{{ route('product.show',['product' => $product->product_uid]) }}" id="input-copy">
+                                                        <input style="display: none" type="text" value="{{ route('product.show',['product' => $product->product_slug]) }}" id="input-copy">
                                                         <a href="#" onclick="copyTextButton()">
                                                             <i class="fa-solid fa-link"></i>
                                                         </a>
@@ -559,12 +559,12 @@
                     <div class="product-box">
                         <div class="img-wrapper">
                             <div class="front">
-                                <a href="#"><img src="{{ asset('storage/'.$productLimit->thumbnail) }}"
+                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}"><img src="{{ asset('storage/'.$productLimit->thumbnail) }}"
                                         class="img-fluid blur-up lazyload bg-img"
                                         alt="{{ $productLimit->product_name }}"></a>
                             </div>
                             <div class="back">
-                                <a href="#">
+                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}">
                                     @if($productLimit->images->first()->image_name == null)
                                     <img src="{{ asset('storage/'.$productLimit->thumbnail) }}"
                                         class="img-fluid blur-up lazyload bg-img"
@@ -587,7 +587,7 @@
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View">
                                     <i class="ti-search" aria-hidden="true"></i>
                                 </a>
-                                <a href="{{ route('product.show', ['product' => $product->product_uid]) }}" title="Compare">
+                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}" title="Compare">
                                     <i class="ti-eye" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -598,7 +598,7 @@
                                         class="fa fa-star"></i>
                                     <i class="fa fa-star"></i> <i class="fa fa-star"></i>
                                 </div>
-                                <a href="{{ route('product.show', ['product' => $productLimit->product_uid]) }}">
+                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}">
                                     <h6>{{ $productLimit->product_name }}</h6>
                                 </a>
                                 <div class="d-flex">

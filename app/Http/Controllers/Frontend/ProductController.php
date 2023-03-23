@@ -33,15 +33,15 @@ class ProductController extends Controller
 
     /**
      * Show Detail Product
-     * @param  mixed $uid
+     * @param  mixed $slug
      */
-    public function show($uid)
+    public function show($slug)
     {
-        $product = $this->productService->getProductByUid($uid);
+        $product = $this->productService->getProductBySlug($slug);
         $newProducts1 = Product::with('images')->orderBy('created_at', 'DESC')->offset(1 - 1)->limit(3)->get();
         $newProducts2 = Product::with('images')->orderBy('created_at', 'DESC')->offset(4 - 1)->limit(3)->get();
         $productLimits = Product::with('images')->orderBy('created_at', 'DESC')->offset(9 - 1)->limit(6)->get();
-        // $product = Product::with('images', 'category', 'tags')->where('product_uid', $uid)->first();
+        // $product = Product::with('images', 'category', 'tags')->where('product_slug', $slug)->first();
         return view('frontend.product.show',[
             'product' => $product,
             'productLimits' => $productLimits,

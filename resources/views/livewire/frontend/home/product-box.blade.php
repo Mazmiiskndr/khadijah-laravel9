@@ -11,13 +11,13 @@
 
             @endif
             <div class="front">
-                <a href="{{ route('product.show', ['product' => $product->product_uid]) }}"><img
+                <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img
                         src="{{ asset('storage/'.$product->thumbnail) }}" class="img-fluid blur-up lazyload bg-img"
                         alt=""></a>
             </div>
             <div class="back">
 
-                <a href="{{ route('product.show', ['product' => $product->product_uid]) }}">
+                <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                     @if($product->images->first()->image_name == null)
                     <img src="{{ asset('storage/'.$product->thumbnail) }}" class="img-fluid blur-up lazyload bg-img"
                         alt="{{ $product->product_name }}">
@@ -36,7 +36,7 @@
                 <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View">
                     <i class="ti-search" aria-hidden="true"></i>
                 </a>
-                <a href="{{ route('product.show', ['product' => $product->product_uid]) }}" title="Compare">
+                <a href="{{ route('product.show', ['product' => $product->product_slug]) }}" title="Compare">
                     <i class="ti-eye" aria-hidden="true"></i>
                 </a>
             </div>
@@ -45,7 +45,7 @@
             <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
                     class="fa fa-star"></i> <i class="fa fa-star"></i>
             </div>
-            <a href="{{ route('product.show', ['product' => $product->product_uid]) }}">
+            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                 <h6>{{ $product->product_name }}</h6>
             </a>
             <div class="d-flex">

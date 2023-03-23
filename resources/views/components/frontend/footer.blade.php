@@ -7,21 +7,19 @@
                     <div class="col-lg-6">
                         <div class="subscribe">
                             <div>
-                                <h4>KNOW IT ALL FIRST!</h4>
-                                <p>Never Miss Anything From Multikart By Signing Up To Our Newsletter.</p>
+                                <h4>KETAHUI TENTANG PRODUK KAMI!</h4>
+                                <p>Jangan Pernah Melewatkan Apa Pun Dari Khadijah Label Dengan Mendaftar Ke Situs Kami.</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <form
-                            action="https://pixelstrap.us19.list-manage.com/subscribe/post?u=5a128856334b598b395f1fc9b&amp;id=082f74cbda"
-                            class="form-inline subscribe-form auth-form needs-validation" method="post"
-                            id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank">
+                        <form action="#"
+                            class="form-inline subscribe-form auth-form needs-validation" method="post">
                             <div class="form-group mx-sm-3">
-                                <input type="text" class="form-control" name="EMAIL" id="mce-EMAIL1"
-                                    placeholder="Enter your email" required="required">
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="Masukan Email.." required="required">
                             </div>
-                            <button type="submit" class="btn btn-solid" id="mc-submit1">subscribe</button>
+                            <button type="submit" class="btn btn-solid" id="mc-submit1">Langganan</button>
                         </form>
                     </div>
                 </div>
@@ -33,19 +31,33 @@
             <div class="row footer-theme partition-f">
                 <div class="col-lg-4 col-md-6">
                     <div class="footer-title footer-mobile-title">
-                        <h4>about</h4>
+                        <h4>Tentang Kami</h4>
                     </div>
                     <div class="footer-contant">
                         <div class="footer-logo"><img src="../assets/images/icon/logo.png" alt=""></div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua. Ut enim ad minim veniam,</p>
+                        <p>Mukena Khadijah Label adalah merek mukena yang berfokus pada desain eksklusif dan kualitas
+                            terbaik. Kami berkomitmen
+                            untuk memberikan pengalaman beribadah yang lebih nyaman dan anggun bagi para muslimah.
+                            Dengan bahan berkualitas dan
+                            desain yang menawan, kami selalu berusaha memberikan yang terbaik untuk para pelanggan kami.
+                        </p>
+                        {{-- *** TODO: SHARE SOCIAL MEDIA *** --}}
                         <div class="footer-social">
                             <ul>
-                                <li><a href="#"><i class="fa fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                <li>
+                                    <a href="https://www.facebook.com/" target="_blank">
+                                        <i class="fa-brands fa-square-facebook"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://tiktok.com/" target="_blank"><i class="fa-brands fa-tiktok"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <i class="fa-brands fa-square-instagram"></i>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -53,15 +65,14 @@
                 <div class="col offset-xl-1">
                     <div class="sub-title">
                         <div class="footer-title">
-                            <h4>my account</h4>
+                            <h4>Tentang Produk Kami</h4>
                         </div>
                         <div class="footer-contant">
                             <ul>
-                                <li><a href="#">mens</a></li>
-                                <li><a href="#">womens</a></li>
-                                <li><a href="#">clothing</a></li>
-                                <li><a href="#">accessories</a></li>
-                                <li><a href="#">featured</a></li>
+                                <li><a href="#">Kualitas Produk</a></li>
+                                <li><a href="#">Desain Eksklusif</a></li>
+                                <li><a href="#">Produk yang nyaman</a></li>
+                                <li><a href="#">Koleksi Terbaru</a></li>
                             </ul>
                         </div>
                     </div>
@@ -69,15 +80,15 @@
                 <div class="col">
                     <div class="sub-title">
                         <div class="footer-title">
-                            <h4>why we choose</h4>
+                            <h4>Mengapa Memilih Kami</h4>
                         </div>
                         <div class="footer-contant">
                             <ul>
-                                <li><a href="#">shipping & return</a></li>
-                                <li><a href="#">secure shopping</a></li>
-                                <li><a href="#">gallary</a></li>
-                                <li><a href="#">affiliates</a></li>
-                                <li><a href="#">contacts</a></li>
+                                <li><a href="#">Pengiriman & Pengembalian</a></li>
+                                <li><a href="#">Belanja Aman</a></li>
+                                <li><a href="#">Terpercaya</a></li>
+                                <li><a href="#">Produk Berkualitas</a></li>
+                                <li><a href="#">Harga Murah</a></li>
                             </ul>
                         </div>
                     </div>
@@ -85,15 +96,17 @@
                 <div class="col">
                     <div class="sub-title">
                         <div class="footer-title">
-                            <h4>store information</h4>
+                            <h4>Informasi Khadijah</h4>
                         </div>
                         <div class="footer-contant">
                             <ul class="contact-list">
-                                <li><i class="fa fa-map-marker"></i>Multikart Demo Store, Demo store India
-                                    345-659</li>
-                                <li><i class="fa fa-phone"></i>Call Us: 123-456-7898</li>
-                                <li><i class="fa fa-envelope"></i>Email Us: <a href="#">Support@Fiot.com</a></li>
-                                <li><i class="fa fa-fax"></i>Fax: 123456</li>
+                                <li><i class="fa fa-map-marker"></i>
+                                    {{ $contact->province->name }}, {{ $contact->city->name }}, {{
+                                    $contact->district->name }},
+                                    {{ $contact->address }},
+                                </li>
+                                <li><i class="fa fa-phone"></i>Hubungi Kami : {{ $contact->phone }}</li>
+                                <li><i class="fa fa-envelope"></i>Email: <a href="#">{{ $contact->email }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -104,33 +117,14 @@
     <div class="sub-footer">
         <div class="container">
             <div class="row">
-                <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="col-xl-12 col-md-12 col-sm-12">
                     <div class="footer-end">
-                        <p><i class="fa fa-copyright" aria-hidden="true"></i> 2017-18 themeforest powered by
-                            pixelstrap</p>
+                        <p class="text-center"><i class="fa fa-copyright" aria-hidden="true"></i> {{
+                            \Carbon\Carbon::now()->format('Y') }} Created By : <a
+                                href="https://github.com/Mazmiiskndr">Moch Azmi Iskandar</a></p>
                     </div>
                 </div>
-                <div class="col-xl-6 col-md-6 col-sm-12">
-                    <div class="payment-card-bottom">
-                        <ul>
-                            <li>
-                                <a href="#"><img src="../assets/images/icon/visa.png" alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="../assets/images/icon/mastercard.png" alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="../assets/images/icon/paypal.png" alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="../assets/images/icon/american-express.png" alt=""></a>
-                            </li>
-                            <li>
-                                <a href="#"><img src="../assets/images/icon/discover.png" alt=""></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -165,8 +159,9 @@
                                     <h2>newsletter</h2>
                                     <form
                                         action="https://pixelstrap.us19.list-manage.com/subscribe/post?u=5a128856334b598b395f1fc9b&amp;id=082f74cbda"
-                                        class="auth-form needs-validation" method="post" id="mc-embedded-subscribe-form1"
-                                        name="mc-embedded-subscribe-form" target="_blank">
+                                        class="auth-form needs-validation" method="post"
+                                        id="mc-embedded-subscribe-form1" name="mc-embedded-subscribe-form"
+                                        target="_blank">
                                         <div class="form-group mx-sm-3">
                                             <input type="email" class="form-control" name="EMAIL" id="mce-EMAIL"
                                                 placeholder="Enter your email" required="required">
@@ -254,7 +249,8 @@
 <!-- cart end -->
 
 
-{{-- <!-- theme setting -->
+{{--
+<!-- theme setting -->
 <div class="theme-settings">
     <ul>
         <li class="demo-li">

@@ -1166,13 +1166,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 p-0">
-                    <h2 class="title-borderless">#whowearwhat</h2>
+                    <h2 class="title-borderless">Instagram</h2>
                     <div class="slide-7 no-arrow slick-instagram">
                         <div>
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/2.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1180,7 +1180,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/3.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1188,7 +1188,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/4.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1196,7 +1196,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/9.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1204,7 +1204,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/6.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1212,7 +1212,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/7.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1220,7 +1220,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/8.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1228,7 +1228,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/9.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>
@@ -1236,7 +1236,7 @@
                             <a href="#">
                                 <div class="instagram-box"> <img src="../assets/images/slider/2.jpg" class="bg-img"
                                         alt="img">
-                                    <div class="overlay"><i class="fa fa-instagram"></i></div>
+                                    <div class="overlay"><i class="fa-brands fa-square-instagram"></i></div>
                                 </div>
                             </a>
                         </div>

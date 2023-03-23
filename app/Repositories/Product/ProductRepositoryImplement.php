@@ -166,6 +166,17 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
     }
 
     /**
+     * getProductBySlug
+     *
+     * @param  mixed $slug
+     * @return void
+     */
+    public function getProductBySlug($slug)
+    {
+        return $this->model->with('images', 'category', 'tags')->where('product_slug', $slug)->first();
+    }
+
+    /**
      * getLimitData
      *
      * @param  mixed $limit
