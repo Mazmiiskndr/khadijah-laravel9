@@ -621,6 +621,7 @@
                 </div>
                 @endforeach
             </div>
+        </div>
     </section>
     <!-- related products -->
     @push('scripts')

@@ -31,11 +31,6 @@
 
 <body class="theme-color-1">
 
-
-    <!-- Start Loader -->
-    {{-- <x-frontend.loader/> --}}
-    <!-- End Loader -->
-
     <!-- Start Header -->
     <x-frontend.header/>
     <!-- End Header -->
