@@ -50,11 +50,11 @@ class CreateProduct extends Component
         'stock'                 => 'required',
         'thumbnail'             => 'required|image|max:5120',
         'productImages.*'       => 'image|max:20480',
+        'weight'                => 'required',
         // Nullable
         'color'                 => 'nullable',
         'product_description'   => 'nullable',
         'type'                  => 'nullable',
-        'weight'                => 'nullable',
         'material'              => 'nullable',
         'dimension'             => 'nullable',
         'discount'              => 'nullable'
@@ -67,6 +67,7 @@ class CreateProduct extends Component
         'price.required'        => 'Harga harus diisi',
         'size.required'         => 'Ukuran harus diisi',
         'stock.required'        => 'Stok harus diisi',
+        'weight.required'       => 'Berat harus diisi',
         'thumbnail.required'    => 'Thumbnail harus diisi',
         'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
         'productImages.*.max'   => 'Ukuran gambar maksimal 20mb',
@@ -119,7 +120,7 @@ class CreateProduct extends Component
 
         // Make Validation
         $this->validate();
-
+        // dd($this->validate());
         // Gunakan Try Catch
         try {
             // Insert Thumbnail
@@ -142,7 +143,7 @@ class CreateProduct extends Component
                 'weight'                => $this->weight,
                 'material'              => $this->material,
                 'dimension'             => $this->dimension,
-                'discount'              => $this->discount,
+                'discount'              => $this->discount ? $this->discount : 0,
                 'date_added'            => Carbon::now()->format('Y-m-d h:i:s'),
             ]);
 

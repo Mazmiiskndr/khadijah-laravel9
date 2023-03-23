@@ -23,7 +23,7 @@ class ProductImageFactory extends Factory
     {
 
         // Image URL
-        $imageUrl = 'https://source.unsplash.com/random/500x700/?fashion';
+        $imageUrl = 'https://source.unsplash.com/random/1500x1500/?fashion';
 
         // Download Image
         $imageData = file_get_contents($imageUrl);
