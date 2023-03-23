@@ -1,5 +1,5 @@
 <!-- Icons -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/font-awesome.css') }}">
+{{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/font-awesome.css') }}"> --}}
 
 <!--Slick slider css-->
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick.css') }}">

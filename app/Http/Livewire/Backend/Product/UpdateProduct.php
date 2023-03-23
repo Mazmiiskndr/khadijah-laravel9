@@ -77,6 +77,7 @@ class UpdateProduct extends Component
             'price'                 => 'required',
             'size'                  => 'required',
             'stock'                 => 'required',
+            'weight'                => 'required',
         ];
 
         // Add thumbnail validation rule if it's uploaded
@@ -91,7 +92,6 @@ class UpdateProduct extends Component
             'color'                 => 'nullable',
             'type'                  => 'nullable',
             'product_description'   => 'nullable',
-            'weight'                => 'nullable',
             'material'              => 'nullable',
             'dimension'             => 'nullable',
             'discount'              => 'nullable',
@@ -109,6 +109,7 @@ class UpdateProduct extends Component
             'price.required'        => 'Harga harus diisi',
             'size.required'         => 'Ukuran harus diisi',
             'stock.required'        => 'Stok harus diisi',
+            'weight.required'       => 'Berat harus diisi',
         ];
 
         // Add thumbnail validation message if it's uploaded
@@ -230,7 +231,7 @@ class UpdateProduct extends Component
                 'weight'                => $this->weight,
                 'material'              => $this->material,
                 'dimension'             => $this->dimension,
-                'discount'              => $this->discount,
+                'discount'              => $this->discount ? $this->discount : 0 ,
                 'date_updated'          => $dateNow,
             ];
             // Update Product

@@ -168,9 +168,9 @@
                                 <label for="product_description_input">Deskripsi</label>
                                 <textarea name="product_description" id="product_description_input"
                                     wire:model.defer="product_description"
-                                    class="form-control @error('weight') is-invalid @enderror" rows="3"
+                                    class="form-control @error('product_description') is-invalid @enderror" rows="3"
                                     placeholder="Masukan Deskripsi.."></textarea>
-                                @error('weight') <small class="error text-danger">{{ $message }}</small> @enderror
+                                @error('product_description') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
 

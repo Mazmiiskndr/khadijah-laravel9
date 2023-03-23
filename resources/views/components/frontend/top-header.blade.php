@@ -5,7 +5,7 @@
                 <div class="header-contact">
                     <ul>
                         <li>Selamat Datang di Khadijah Label</li>
-                        <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: 123 - 456 - 7890</li>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i>Hubungi Kami: {{ $contact->phone }}</li>
                     </ul>
                 </div>
             </div>

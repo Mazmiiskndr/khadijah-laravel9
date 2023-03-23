@@ -29,8 +29,9 @@ Route::middleware(CountVisitor::class)->controller(HomeController::class)->group
 });
 
 // Frontend Product Page
-Route::middleware(CountVisitor::class)->controller(FrontendProductController::class)->name('product.')->group(function () {
-    Route::get('/product','index')->name('index');
+Route::middleware(CountVisitor::class)->group(function () {
+    // TODO:
+    Route::resource('product', FrontendProductController::class)->only(['index', 'show', 'create']);
 });
 
 // About Page

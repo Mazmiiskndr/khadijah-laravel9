@@ -13,11 +13,11 @@
                         @endif
 
                         <div class="front">
-                            <a href="#"><img src="{{ asset('storage/'.$product->thumbnail) }}"
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt=""></a>
                         </div>
                         <div class="back">
-                            <a href="#">
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                                 @if($product->images->first()->image_name == null)
                                 <img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt="{{ $product->product_name }}">
@@ -38,7 +38,7 @@
                             <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View">
                                 <i class="ti-search" aria-hidden="true"></i>
                             </a>
-                            <a href="compare.html" title="Compare">
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}" title="Compare">
                                 <i class="ti-eye" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -49,7 +49,7 @@
                                     class="fa fa-star"></i>
                                 <i class="fa fa-star"></i> <i class="fa fa-star"></i>
                             </div>
-                            <a href="product-page(no-sidebar).html">
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                                 <h6>{{ $product->product_name }}</h6>
                             </a>
                             <p>{{ $product->product_description }}</p>

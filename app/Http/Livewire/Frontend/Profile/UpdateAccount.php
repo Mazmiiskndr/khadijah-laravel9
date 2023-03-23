@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Backend\Customer;
+namespace App\Http\Livewire\Frontend\Profile;
 
 use App\Models\Customer;
 use App\Models\District;
@@ -9,7 +9,7 @@ use App\Models\Regency;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
-class UpdateCustomer extends Component
+class UpdateAccount extends Component
 {
     // UpdateModal
     public $updateModal = false;
@@ -44,7 +44,6 @@ class UpdateCustomer extends Component
         // (only `text` for now), validate it
         $this->validateOnly($property);
     }
-
     // Rules Validation
     protected function getRules()
     {
@@ -96,7 +95,7 @@ class UpdateCustomer extends Component
 
     public function render()
     {
-        return view('livewire.backend.customer.update-customer');
+        return view('livewire.frontend.profile.update-account');
     }
 
     /**

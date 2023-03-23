@@ -1,7 +1,7 @@
-@push('styles')
-
-@endpush
 <x-frontend.master title="Profil | Khadijah Label">
+    @push('styles')
+
+    @endpush
 <!-- breadcrumb start -->
 <div class="breadcrumb-section">
     <div class="container">
@@ -97,94 +97,19 @@
                 <div class="faq-content tab-content" id="top-tabContent">
                     <div class="tab-pane fade show active" id="info">
                         <div class="counter-section">
-                            <div class="welcome-msg">
-                                <h4>Halo, {{ ucwords($customer->name) }} !</h4>
-                                <p>Dari Halaman Akun Anda, Anda dapat melihat gambaran singkat aktivitas akun terbaru Anda dan memperbarui informasi akun
-                                Anda. Pilih tautan di bawah ini untuk melihat atau mengedit informasi Anda.</p>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="counter-box">
-                                        <img src="{{ asset('assets/assets/images/icon/dashboard/sale.png') }}" class="img-fluid">
-                                        <div>
-                                            <h3>25</h3>
-                                            <h5>Total Order</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="counter-box">
-                                        <img src="{{ asset('assets/assets/images/icon/dashboard/homework.png') }}" class="img-fluid">
-                                        <div>
-                                            <h3>5</h3>
-                                            <h5>Pending Orders</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="counter-box">
-                                        <img src="{{ asset('assets/assets/images/icon/dashboard/order.png') }}" class="img-fluid">
-                                        <div>
-                                            <h3>50</h3>
-                                            <h5>Wishlist</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {{-- Start Dashboard Account --}}
+                            @livewire('frontend.profile.dashboard-account', ['customer' => $customer])
+                            {{-- End Dashboard Account --}}
                             <div class="box-account box-info">
 
                                 <div class="box-head">
                                     <h4>Informasi Akun</h4>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <div class="box">
-                                            <div class="box-title">
-                                                <h3>Informasi Kontak</h3><a href="#">Edit</a>
-                                            </div>
-                                            <div class="box-content">
-                                                <table class="table table-borderless">
-                                                    <tr>
-                                                        <th style="width:250px;">Nama</th>
-                                                        <th style="width:30px;" class="text-center">:</th>
-                                                        <td>{{ ucwords($customer->name) }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Email</th>
-                                                        <th style="width:30px;" class="text-center">:</th>
-                                                        <td>{{ $customer->email }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>No. Telepon/WhatsApp</th>
-                                                        <th style="width:30px;" class="text-center">:</th>
-                                                        <td>{{ $customer->phone }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Jenis Kelamin</th>
-                                                        <th style="width:30px;" class="text-center">:</th>
-                                                        <td>{{ $customer->gender }}</td>
-                                                    </tr>
-                                                </table>
-                                                <hr>
-                                            </div>
-                                        </div>
-                                    </div>
+                                {{-- Start Information Account --}}
+                                @livewire('frontend.profile.information-account',['customer' => $customer])
+                                @livewire('frontend.profile.update-account')
+                                {{-- End Information Account --}}
 
-                                </div>
-                                <div class="box mt-3">
-                                    <div class="box-title">
-                                        <h3>Alamat</h3><a href="#">Edit Alamat</a>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            @if($addressCustomer != "-")
-                                            <address>{{ $provinceCustomer }}, {{ $cityCustomer }}, {{ $districtCustomer }}, {{ $addressCustomer }} </address>
-                                            @else
-                                            <address class="text-warning">Anda belum mengatur alamat pengiriman.</address>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -984,8 +909,12 @@
     </div>
 </section>
 <!--  dashboard section end -->
+@push('scripts')
+<script>
+    window.addEventListener('close-modal', event =>{
+        $('#updateCustomerModal').modal('hide');
+    });
+</script>
+@endpush
 </x-frontend.master>
 
-@push('scripts')
-
-@endpush

@@ -142,9 +142,38 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository{
     }
 
 
+    /**
+     * findById
+     *
+     * @param  mixed $id
+     * @return void
+     */
     public function findById($id)
     {
         return $this->model->with('images','category','tags')->findOrFail($id);
+    }
+
+
+    /**
+     * getProductByUid
+     *
+     * @param  mixed $uid
+     * @return void
+     */
+    public function getProductByUid($uid)
+    {
+        return $this->model->with('images', 'category', 'tags')->where('product_uid', $uid)->first();
+    }
+
+    /**
+     * getProductBySlug
+     *
+     * @param  mixed $slug
+     * @return void
+     */
+    public function getProductBySlug($slug)
+    {
+        return $this->model->with('images', 'category', 'tags')->where('product_slug', $slug)->first();
     }
 
     /**

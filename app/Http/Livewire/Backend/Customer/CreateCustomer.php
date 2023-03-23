@@ -182,5 +182,6 @@ class CreateCustomer extends Component
         $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
+        $this->gender = '';
     }
 }

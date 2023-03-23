@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Frontend\Customer;
 
+use App\Models\Customer;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -33,6 +34,7 @@ class Login extends Component
 
         $this->validate();
         if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
+            // login berhasil
             return redirect('');
         } else {
             // login gagal
