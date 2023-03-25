@@ -56,4 +56,10 @@ class Customer extends Authenticatable
     {
         return $this->belongsTo(District::class);
     }
+
+    public function rekening_customers()
+    {
+        return $this->hasMany(RekeningCustomer::class);
+    }
+
 }

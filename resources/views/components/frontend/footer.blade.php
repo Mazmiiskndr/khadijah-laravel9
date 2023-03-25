@@ -13,14 +13,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <form action="#"
-                            class="form-inline subscribe-form auth-form needs-validation" method="post">
-                            <div class="form-group mx-sm-3">
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Masukan Email.." required="required">
-                            </div>
-                            <button type="submit" class="btn btn-solid" id="mc-submit1">Langganan</button>
-                        </form>
+                        @livewire('frontend.footer.form-subscribe')
                     </div>
                 </div>
             </section>

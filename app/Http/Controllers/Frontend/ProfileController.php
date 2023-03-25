@@ -27,6 +27,7 @@ class ProfileController extends Controller
             return redirect()->route('customer.login');
         }else{
             $customer = $this->customerService->findByUid($uid);
+            // $rekeningCustomers = $customer->rekening_customers->count() > 0 ? $customer->rekening_customers : collect();
             $addressCustomer = $customer->address ? $customer->address : "-";
             $provinceCustomer = $customer->province ? ucwords(strtolower($customer->province->name)) : "-";
             $cityCustomer = $customer->city ? ucwords(strtolower($customer->city->name)) : "-";
@@ -37,6 +38,7 @@ class ProfileController extends Controller
                 'provinceCustomer' => $provinceCustomer,
                 'cityCustomer' => $cityCustomer,
                 'districtCustomer' => $districtCustomer,
+                // 'rekeningCustomers' => $rekeningCustomers,
             ]);
         }
     }

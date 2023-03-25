@@ -15,7 +15,7 @@
         @error('password') <small class="error text-danger">{{ $message }}</small> @enderror
     </div>
 
-    <button class="btn btn-solid" type="submit">Login</button>
+    <button class="btn btn-solid" type="submit">Masuk</button>
 
     @if (session()->has('error'))
     <script>

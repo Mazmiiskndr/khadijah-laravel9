@@ -18,8 +18,19 @@ return new class extends Migration
             $table->unsignedBigInteger('promo_id');
             $table->primary(['order_id', 'promo_id']);
 
-            $table->foreign('order_id')->references('order_id')->on('order');
-            $table->foreign('promo_id')->references('promo_id')->on('promo');
+
+
+
+            $table->foreign('order_id')
+                    ->references('order_id')
+                    ->on('order')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreign('promo_id')
+                    ->references('promo_id')
+                    ->on('promo')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
         });
     }
 

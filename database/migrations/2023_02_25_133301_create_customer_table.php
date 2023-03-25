@@ -33,9 +33,20 @@ return new class extends Migration
         });
 
         Schema::table('customer', function (Blueprint $table) {
-            $table->foreign('province_id')->references('id')->on('provinces');
-            $table->foreign('city_id')->references('id')->on('cities');
-            $table->foreign('district_id')->references('id')->on('districts');
+            $table->foreign('province_id')
+                    ->references('id')
+                    ->on('provinces')
+                    ->onDelete('set null');
+
+            $table->foreign('city_id')
+                    ->references('id')
+                    ->on('cities')
+                    ->onDelete('set null');
+
+            $table->foreign('district_id')
+                    ->references('id')
+                    ->on('districts')
+                    ->onDelete('set null');
         });
     }
 

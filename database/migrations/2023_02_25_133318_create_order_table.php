@@ -30,7 +30,11 @@ return new class extends Migration
             $table->string('receiver_phone', 20);
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('customer_id')->on('customer');
+            $table->foreign('customer_id')
+                    ->references('customer_id')
+                    ->on('customer')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
         });
     }
 

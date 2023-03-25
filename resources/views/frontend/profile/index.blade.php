@@ -75,11 +75,12 @@
                                     Kartu / Rekening Bank
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- *** TODO: DETAIL ACCOUNT *** --}}
+                            {{-- <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#profile" class="nav-link">
                                     Detail Akun
                                 </a>
-                            </li>
+                            </li> --}}
                             {{-- *** TODO: SECURITY *** --}}
                             {{-- <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#security" class="nav-link">
@@ -119,7 +120,7 @@
                                 <div class="card mt-0">
                                     <div class="card-body">
                                         <div class="top-sec">
-                                            <h3>Address Book</h3>
+                                            <h3>Buku Alamat</h3>
                                             <a href="#" class="btn btn-sm btn-solid">+ add new</a>
                                         </div>
                                         <div class="address-book-section">
@@ -535,75 +536,27 @@
                             <div class="col-12">
                                 <div class="card mt-0">
                                     <div class="card-body">
-                                        <div class="top-sec">
-                                            <h3>Saved Cards</h3>
-                                            <a href="#" class="btn btn-sm btn-solid">+ add new</a>
-                                        </div>
+
+                                        {{-- Start Create Rekening Customers --}}
+                                        @livewire('frontend.profile.create-cards')
+                                        {{-- End Create Rekening Customers --}}
+
+                                        {{-- Start Update Rekening Customers --}}
+                                        @livewire('frontend.profile.update-cards')
+                                        {{-- End Update Rekening Customers --}}
+
                                         <div class="address-book-section">
-                                            <div class="row g-4">
-                                                <div class="select-box active col-xl-4 col-md-6">
-                                                    <div class="address-box">
-                                                        <div class="bank-logo">
-                                                            <img src="../assets/images/bank-logo.png" class="bank-logo">
-                                                            <img src="../assets/images/visa.png" class="network-logo">
-                                                        </div>
-                                                        <div class="card-number">
-                                                            <h6>Card Number</h6>
-                                                            <h5>6262 6126 2112 1515</h5>
-                                                        </div>
-                                                        <div class="name-validity">
-                                                            <div class="left">
-                                                                <h6>name on card</h6>
-                                                                <h5>Mark Jecno</h5>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>validity</h6>
-                                                                <h5>XX/XX</h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="bottom">
-                                                            <a href="javascript:void(0)" data-bs-target="#edit-address"
-                                                                data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">remove</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="select-box col-xl-4 col-md-6">
-                                                    <div class="address-box">
-                                                        <div class="bank-logo">
-                                                            <img src="../assets/images/bank-logo1.png"
-                                                                class="bank-logo">
-                                                            <img src="../assets/images/visa.png" class="network-logo">
-                                                        </div>
-                                                        <div class="card-number">
-                                                            <h6>Card Number</h6>
-                                                            <h5>6262 6126 2112 1515</h5>
-                                                        </div>
-                                                        <div class="name-validity">
-                                                            <div class="left">
-                                                                <h6>name on card</h6>
-                                                                <h5>Mark Jecno</h5>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>validity</h6>
-                                                                <h5>XX/XX</h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="bottom">
-                                                            <a href="javascript:void(0)" data-bs-target="#edit-address"
-                                                                data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">remove</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            {{-- Start Grid Rekening Customers --}}
+                                            @livewire('frontend.profile.grid-cards')
+                                            {{-- End Grid Rekening Customers --}}
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile">
+                    {{-- <div class="tab-pane fade" id="profile">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-0">
@@ -778,7 +731,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- *** TODO: SECURITY *** --}}
                     {{-- <div class="tab-pane fade" id="security">
                         <div class="row">
@@ -910,9 +863,28 @@
 </section>
 <!--  dashboard section end -->
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     window.addEventListener('close-modal', event =>{
         $('#updateCustomerModal').modal('hide');
+        $('#createRekeningModal').modal('hide');
+        $('#updateRekeningModal').modal('hide');
+    });
+    window.addEventListener('delete-card-show-confirmation', event =>{
+        Swal.fire({
+                title: 'Apakah kamu yakin?',
+                text: "Anda tidak akan dapat mengembalikan data ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                Livewire.emit('deleteCard');
+            }
+        })
     });
 </script>
 @endpush

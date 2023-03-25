@@ -43,7 +43,7 @@
         </div>
 
         <div class="text-left mt-3">
-            <button class="btn btn-solid w-auto" type="submit">Register</button>
+            <button class="btn btn-solid w-auto" type="submit">Daftar</button>
         </div>
 
         @if (session()->has('error'))

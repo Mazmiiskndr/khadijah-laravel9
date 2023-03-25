@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('image_name', 200);
             $table->timestamps();
 
-            $table->foreign('product_id')->references('product_id')->on('product')->onDelete('cascade');
+            $table->foreign('product_id')
+            ->references('product_id')
+            ->on('product')
+            ->onDelete('cascade');
         });
     }
 

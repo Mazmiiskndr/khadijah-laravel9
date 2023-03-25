@@ -13,21 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id('cart_id');
-            $table->uuid('cart_uid')->unique(); // Added uid column
-            $table->unsignedBigInteger('product_id');
+        Schema::create('rekening_customers', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->integer('quantity');
+            $table->uuid('rekening_customer_uid')->unique(); // Added uid column
+            $table->string('provider');
+            $table->string('rekening_name');
+            $table->string('rekening_number');
             $table->timestamps();
-        });
 
-        Schema::table('carts', function (Blueprint $table) {
-            $table->foreign('product_id')
-                    ->references('product_id')
-                    ->on('product')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
             $table->foreign('customer_id')
                     ->references('id')
                     ->on('customer')
@@ -43,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('rekening_customers');
     }
 };
