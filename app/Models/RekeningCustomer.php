@@ -10,7 +10,7 @@ class RekeningCustomer extends Model
     use HasFactory;
 
     protected $table = 'rekening_customers';
-    protected $primaryKey = 'rekening_customer_id';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'customer_id',
         'rekening_customer_uid',
@@ -30,6 +30,6 @@ class RekeningCustomer extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id', 'id');
     }
 }

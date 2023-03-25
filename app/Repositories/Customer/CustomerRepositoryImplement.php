@@ -35,6 +35,6 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
      */
     public function findByUid($uid)
     {
-        return $this->model->with('province','city','district')->where('customer_uid', $uid)->first();
+        return $this->model->with('province','city','district', 'rekening_customers')->where('customer_uid', $uid)->first();
     }
 }
