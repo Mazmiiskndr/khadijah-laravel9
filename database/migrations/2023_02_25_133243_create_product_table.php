@@ -34,7 +34,12 @@ return new class extends Migration
             $table->dateTime('date_updated')->nullable();
             $table->timestamps();
 
-            $table->foreign('category_id')->references('category_id')->on('category');
+
+
+            $table->foreign('category_id')
+                    ->references('category_id')
+                    ->on('category')
+                    ->onDelete('set null');
         });
     }
 

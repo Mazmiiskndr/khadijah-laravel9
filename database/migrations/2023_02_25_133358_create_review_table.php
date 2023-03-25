@@ -22,8 +22,18 @@ return new class extends Migration
             $table->dateTime('review_date');
             $table->timestamps();
 
-            $table->foreign('product_id')->references('product_id')->on('product');
-            $table->foreign('customer_id')->references('customer_id')->on('customer');
+
+
+            $table->foreign('product_id')
+                    ->references('product_id')
+                    ->on('product')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
+            $table->foreign('customer_id')
+                    ->references('customer_id')
+                    ->on('customer')
+                    ->onDelete('cascade')
+                    ->onUpdate('cascade');
         });
     }
 

@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductTag;
 use App\Models\Promo;
+use App\Models\RekeningCustomer;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\Visitor;
@@ -57,7 +58,14 @@ class DatabaseSeeder extends Seeder
         Promo::factory(50)->create();
         Category::factory(50)->create();
         Tag::factory(50)->create();
-        Customer::factory(100)->create();
+        // Customer::factory(100)->create();
+
+        Customer::factory()->count(20)->create()->each(function ($customer) {
+            // For each Customer, generate 3-5 RekeningCustomer
+            $numRekening = rand(1, 3);
+            $rekenings = RekeningCustomer::factory()->count($numRekening)->make(['customer_id' => $customer->id]);
+            $customer->rekening_customers()->createMany($rekenings->toArray());
+        });
         // PRODUCT TAGS, PRODUCT IMAGES AND DETAIL PRODUCTS
         Product::factory()->count(20)->create()->each(function ($product) {
             // Create For Detail Products

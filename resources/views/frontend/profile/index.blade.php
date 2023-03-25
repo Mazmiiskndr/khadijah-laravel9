@@ -75,11 +75,12 @@
                                     Kartu / Rekening Bank
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            {{-- *** TODO: DETAIL ACCOUNT *** --}}
+                            {{-- <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#profile" class="nav-link">
                                     Detail Akun
                                 </a>
-                            </li>
+                            </li> --}}
                             {{-- *** TODO: SECURITY *** --}}
                             {{-- <li class="nav-item">
                                 <a data-bs-toggle="tab" data-bs-target="#security" class="nav-link">
@@ -536,7 +537,7 @@
                                 <div class="card mt-0">
                                     <div class="card-body">
                                         <div class="top-sec">
-                                            <h3>Saved Cards</h3>
+                                            <h3>Kartu / Rekening Bank</h3>
                                             <a href="#" class="btn btn-sm btn-solid">+ add new</a>
                                         </div>
                                         <div class="address-book-section">
@@ -603,7 +604,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile">
+                    {{-- <div class="tab-pane fade" id="profile">
                         <div class="row">
                             <div class="col-12">
                                 <div class="card mt-0">
@@ -778,7 +779,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- *** TODO: SECURITY *** --}}
                     {{-- <div class="tab-pane fade" id="security">
                         <div class="row">
