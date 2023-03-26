@@ -14,7 +14,7 @@ class UpdateAccount extends Component
     // UpdateModal
     public $updateModal = false;
     // Declare variable
-    public $customer_id, $name, $email, $password, $address, $postal_code, $phone, $gender, $registration_date;
+    public $customer_id, $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
     public $provinces, $cities, $districts;
@@ -57,7 +57,6 @@ class UpdateAccount extends Component
             'district_id'   => 'required',
             'postal_code'   => 'required',
             'phone'         => 'required',
-            'gender'         => 'required',
         ];
     }
 
@@ -76,7 +75,6 @@ class UpdateAccount extends Component
             'province_id.required'  => 'Provinsi harus diisi',
             'postal_code.required'  => 'Kode Pos harus diisi',
             'phone.required'        => 'No. Telepon harus diisi',
-            'gender.required'       => 'Jenis Kelamin harus diisi',
         ];
     }
 
@@ -153,7 +151,6 @@ class UpdateAccount extends Component
 
         $this->postal_code = $customer['postal_code'];
         $this->phone = $customer['phone'];
-        $this->gender = $customer['gender'];
     }
 
     /**
@@ -177,7 +174,6 @@ class UpdateAccount extends Component
                 'province_id' => $this->province_id,
                 'postal_code' => $this->postal_code,
                 'phone' => $this->phone,
-                'gender' => $this->gender,
             ];
             if (!empty($this->password)) {
                 $customerData['password'] = Hash::make($this->password);
@@ -221,6 +217,5 @@ class UpdateAccount extends Component
         $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
-        $this->gender = '';
     }
 }

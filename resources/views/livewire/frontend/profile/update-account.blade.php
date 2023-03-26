@@ -13,7 +13,7 @@
                         @csrf
                         {{-- Name And Email --}}
                         <div class="row">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="email_input">Email</label>
                                 <input type="hidden" class="form-control" name="customer_id" id="customer_id" wire:model="customer_id" readonly>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Masukan Email.."
@@ -21,23 +21,12 @@
                                 @error('email') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
 
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="name_input">Nama</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror"
                                     placeholder="Masukan Nama Pelanggan.." name="name" id="name_input" wire:model="name"
                                     autofocus>
                                 @error('name') <small class="error text-danger">{{ $message }}</small> @enderror
-                            </div>
-
-                            <div class="col-4">
-                                <label for="gender">Jenis Kelamin</label>
-                                <select class="form-select col-sm-12 @error('gender') is-invalid @enderror" id="gender"
-                                    name="gender" wire:model="gender">
-                                    <option value="" selected>-- Pilih Jenis Kelamin --</option>
-                                    <option value="Laki-laki">Laki-laki</option>
-                                    <option value="Perempuan">Perempuan</option>
-                                </select>
-                                @error('gender') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
                         {{-- Password and Number Phone --}}

@@ -30,11 +30,6 @@
                         <td>{{ $customer->phone }}</td>
                     </tr>
                     <tr>
-                        <th>Jenis Kelamin</th>
-                        <th style="width:30px;" class="text-center">:</th>
-                        <td>{{ $customer->gender }}</td>
-                    </tr>
-                    <tr>
                         <th>Alamat</th>
                         <th style="width:30px;" class="text-center">:</th>
                         <td>

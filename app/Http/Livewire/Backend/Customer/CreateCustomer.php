@@ -14,7 +14,7 @@ class CreateCustomer extends Component
 {
     // Declare variable
     public $createModal = false;
-    public $name, $email, $password, $address, $postal_code, $phone, $gender, $registration_date;
+    public $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
     public $provinces, $cities, $districts;
@@ -38,7 +38,6 @@ class CreateCustomer extends Component
         'district_id' => 'required',
         'postal_code' => 'required',
         'phone' => 'required',
-        'gender' => 'required',
     ];
 
     // Make Validation message
@@ -55,7 +54,6 @@ class CreateCustomer extends Component
         'province_id.required'  => 'Provinsi harus diisi',
         'postal_code.required'  => 'Kode Pos harus diisi',
         'phone.required'        => 'No. Telepon harus diisi',
-        'gender.required'       => 'Jenis Kelamin harus diisi',
     ];
 
     /**
@@ -135,7 +133,6 @@ class CreateCustomer extends Component
                 'province_id' => $this->province_id,
                 'postal_code' => $this->postal_code,
                 'phone' => $this->phone,
-                'gender' => $this->gender,
                 'registration_date' => $this->registration_date,
             ]);
             // Set Flash Message
@@ -182,6 +179,5 @@ class CreateCustomer extends Component
         $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
-        $this->gender = '';
     }
 }
