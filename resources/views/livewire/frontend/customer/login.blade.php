@@ -17,15 +17,37 @@
 
     <button class="btn btn-solid" type="submit">Masuk</button>
 
+    @push('scripts')
+    @if (session()->has('success'))
+    <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+    @endif
     @if (session()->has('error'))
     <script>
         Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '{{ session('error') }}',
-                })
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        })
     </script>
     @endif
+    @if (session()->has('notlogin'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('notlogin') }}',
+        });
+    </script>
+    @endif
+    @endpush
 
 </form>
 

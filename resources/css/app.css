@@ -1,12 +1,12 @@
 
-@import "../../public/assets/css/font-awesome.css";
-@import "../../public/assets/css/vendors/icofont.css";
-@import "../../public/assets/css/vendors/themify.css";
-@import "../../public/assets/css/vendors/flag-icon.css";
+@import "../../public/assets/css/font-awesome.min.css";
+@import "../../public/assets/css/vendors/icofont.min.css";
+@import "../../public/assets/css/vendors/themify.min.css";
+@import "../../public/assets/css/vendors/flag-icon.min.css";
 @import "../../public/assets/css/vendors/feather-icon.css";
 @import "../../public/assets/css/vendors/slick.css";
 @import "../../public/assets/css/vendors/slick-theme.css";
 @import "../../public/assets/css/vendors/scrollbar.css";
-@import "../../public/assets/css/vendors/bootstrap.css";
-@import "../../public/assets/css/style.css";
-@import "../../public/assets/css/responsive.css";
+@import "../../public/assets/css/vendors/bootstrap.min.css";
+@import "../../public/assets/css/style.min.css";
+@import "../../public/assets/css/responsive.min.css";

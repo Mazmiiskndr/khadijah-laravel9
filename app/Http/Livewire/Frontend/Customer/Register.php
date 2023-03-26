@@ -66,8 +66,6 @@ class Register extends Component
 
     /**
      * submit
-     *
-     * @return void
      */
     public function submit()
     {

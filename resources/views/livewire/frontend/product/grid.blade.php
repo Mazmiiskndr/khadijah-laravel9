@@ -13,11 +13,11 @@
                         @endif
 
                         <div class="front">
-                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img src="{{ asset('storage/'.$product->thumbnail) }}"
+                            <a href="javascript:void(0)"><img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt=""></a>
                         </div>
                         <div class="back">
-                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
+                            <a href="javascript:void(0)">
                                 @if($product->images->first()->image_name == null)
                                 <img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt="{{ $product->product_name }}">
@@ -29,16 +29,23 @@
                             </a>
                         </div>
                         <div class="cart-info cart-wrap">
+                            @if(Auth::guard('customer')->check())
                             <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                <i class="ti-shopping-cart"></i>
+                                <i class="ti-shopping-cart" wire:click="addToCart('{{ $product->product_uid }}')"></i>
                             </button>
+                            @else
+                            <a href="javascript:void(0)">
+                                <i class="ti-shopping-cart" wire:click="addToCart('{{ $product->product_uid }}')"></i>
+                            </a>
+                            @endif
                             <a href="javascript:void(0)" title="Add to Wishlist">
                                 <i class="ti-heart" aria-hidden="true"></i>
                             </a>
                             <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View">
                                 <i class="ti-search" aria-hidden="true"></i>
                             </a>
-                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}" title="Compare">
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"
+                                title="Compare">
                                 <i class="ti-eye" aria-hidden="true"></i>
                             </a>
                         </div>
@@ -56,7 +63,8 @@
                             <div class="d-flex">
                                 <h4>Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}</h4>
                                 @if ($product->discount > 0)
-                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
+                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.')
+                                    }}</del>
                                 @endif
                             </div>
                             {{-- <ul class="color-variant">

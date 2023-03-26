@@ -43,8 +43,6 @@ class Button extends Component
 
     /**
      * destroy
-     *
-     * @return void
      */
     public function destroy()
     {
