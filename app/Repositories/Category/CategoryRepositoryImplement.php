@@ -20,11 +20,22 @@ class CategoryRepositoryImplement extends Eloquent implements CategoryRepository
         $this->model = $model;
     }
 
+    /**
+     * getAllData
+     *
+     * @return void
+     */
     public function getAllData()
     {
         return $this->model->latest()->get();
     }
 
+    /**
+     * getLimitData
+     *
+     * @param  mixed $limit
+     * @return void
+     */
     public function getLimitData($limit)
     {
         return $this->model->orderBy('category_name','DESC')->limit($limit)->get();

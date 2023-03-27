@@ -40,12 +40,12 @@ class ProductBox extends Component
             $this->quantity = 1;
 
             // Create New Cart
-            Cart::create([
+            $cart = Cart::create([
                 'product_id' => $this->product_id,
                 'customer_id' => $this->customer_id,
                 'quantity' => $this->quantity,
             ]);
-
+            $this->emit('homeCartCreated', $cart);
             // Set Flash Message
             // session()->flash('success', 'Produk Berhasil di Tambahkan!');
             $this->dispatchBrowserEvent('success-cart');
