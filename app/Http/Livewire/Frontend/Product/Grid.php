@@ -2,13 +2,18 @@
 
 namespace App\Http\Livewire\Frontend\Product;
 
+use App\Models\Cart;
+use App\Models\Product;
 use App\Services\Product\ProductService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Grid extends Component
 {
     use WithPagination;
+    // Declare Variable For Add to Cart
+    public $customer_id,$quantity,$productIdCart;
     public $perPage = 16;
     public $paginationTheme = 'bootstrap';
     public $search = '';
@@ -132,6 +137,39 @@ class Grid extends Component
     public function updateSearch($keyword)
     {
         $this->search = $keyword;
+    }
+
+    /**
+     * addToCart
+     * @param  mixed $uid
+     */
+    public function addToCart($uid)
+    {
+
+        // Cek apakah user sudah login atau tidak jika sudah login maka redirect ke halaman login
+        if (!Auth::guard('customer')->check()) {
+            return redirect()->route('customer.login')->with('notlogin', 'Silahkan login terlebih dahulu!');
+        }
+        // Get product by uid
+        $product = Product::where('product_uid', $uid)->first();
+
+        // Check if product is not empty
+        if (!empty($product)) {
+            $this->customer_id = Auth::guard('customer')->user()->id;
+            $this->productIdCart = $product->product_id;
+            $this->quantity = 1;
+
+            // Create New Cart
+            Cart::create([
+                'product_id' => $this->productIdCart,
+                'customer_id' => $this->customer_id,
+                'quantity' => $this->quantity,
+            ]);
+
+            // Set Flash Message
+            // session()->flash('success', 'Produk Berhasil di Tambahkan!');
+            $this->dispatchBrowserEvent('success-cart');
+        }
     }
 
 

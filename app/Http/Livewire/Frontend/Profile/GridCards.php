@@ -56,7 +56,6 @@ class GridCards extends Component
      * @param  mixed $rekening_id
      * @return void
      */
-    // *** TODO: ***
     public function destroy()
     {
         $rekening = RekeningCustomer::find($this->rekening_id);

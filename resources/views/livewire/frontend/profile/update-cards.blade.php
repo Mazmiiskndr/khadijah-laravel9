@@ -16,9 +16,9 @@
                         {{-- METODE PEMBAYARAN --}}
                         <div class="row">
                             <div class="col-12">
-                                <label for="provider">Metode Pembayaran</label>
+                                <label for="provider_update">Metode Pembayaran</label>
                                 <input type="hidden" class="form-control" name="rekening_id" id="rekening_id" wire:model="rekening_id">
-                                <select name="provider" id="provider"
+                                <select name="provider" id="provider_update"
                                     class="form-select @error('provider') is-invalid @enderror" wire:model="provider">
                                     <option value="">-- Pilih Metode Pembayaran --</option>
                                     <option value="BCA">BCA</option>
@@ -38,9 +38,9 @@
                         {{-- NAMA REKENING --}}
                         <div class="row mt-3">
                             <div class="col-12">
-                                <label for="rekening_name">Nama Rekening</label>
+                                <label for="rekening_name_update">Nama Rekening</label>
                                 <input type="text" class="form-control @error('rekening_name') is-invalid @enderror"
-                                    placeholder="Masukan Nama Rekening.." name="rekening_name" id="rekening_name"
+                                    placeholder="Masukan Nama Rekening.." name="rekening_name" id="rekening_name_update"
                                     wire:model="rekening_name">
                                 @error('rekening_name') <small class="error text-danger">{{ $message }}</small>
                                 @enderror
@@ -50,9 +50,9 @@
                         {{-- NOMOR REKENING --}}
                         <div class="row mt-3">
                             <div class="col-12">
-                                <label for="rekening_number">Nomor Rekening</label>
+                                <label for="rekening_number_update">Nomor Rekening</label>
                                 <input type="number" class="form-control @error('rekening_number') is-invalid @enderror"
-                                    placeholder="Masukan Nomor Rekening.." name="rekening_number" id="rekening_number"
+                                    placeholder="Masukan Nomor Rekening.." name="rekening_number" id="rekening_number_update"
                                     wire:model="rekening_number">
                                 @error('rekening_number') <small class="error text-danger">{{ $message }}</small>
                                 @enderror

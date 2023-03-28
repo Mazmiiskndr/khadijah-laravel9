@@ -35,13 +35,7 @@
                 <div class="dashboard-sidebar">
                     <div class="profile-top">
                         <div class="profile-image">
-                            @if ($customer->gender == null)
-                            <img src="{{ asset('assets/images/frontend/users/user-male-1.png') }}" alt="" class="img-fluid">
-                            @elseif ($customer->gender == "Perempuan")
                             <img src="{{ asset('assets/images/frontend/users/user-female-1.png') }}" alt="" class="img-fluid">
-                            @else
-                            <img src="{{ asset('assets/images/frontend/users/user-male-1.png') }}" alt="" class="img-fluid">
-                            @endif
                         </div>
                         <div class="profile-detail">
                             <h5>{{ ucwords($customer->name) }}</h5>
@@ -601,16 +595,6 @@
                                                     <li>
                                                         <div class="details">
                                                             <div class="left">
-                                                                <h6>Jenis Kelamin</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>{{ $customer->gender }}</h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
                                                                 <h6>Provinsi</h6>
                                                             </div>
                                                             <div class="right">
@@ -696,18 +680,6 @@
                                                             </div>
                                                             <div class="right">
                                                                 <h6>{{ $customer->phone }}
-
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="details">
-                                                            <div class="left">
-                                                                <h6>Jenis Kelamin</h6>
-                                                            </div>
-                                                            <div class="right">
-                                                                <h6>{{ $customer->gender }}
 
                                                                 </h6>
                                                             </div>

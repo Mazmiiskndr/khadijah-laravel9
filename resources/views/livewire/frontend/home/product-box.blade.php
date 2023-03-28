@@ -11,13 +11,13 @@
 
             @endif
             <div class="front">
-                <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img
+                <a href="javascript:void(0)"><img
                         src="{{ asset('storage/'.$product->thumbnail) }}" class="img-fluid blur-up lazyload bg-img"
                         alt=""></a>
             </div>
             <div class="back">
 
-                <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
+                <a href="javascript:void(0)">
                     @if($product->images->first()->image_name == null)
                     <img src="{{ asset('storage/'.$product->thumbnail) }}" class="img-fluid blur-up lazyload bg-img"
                         alt="{{ $product->product_name }}">
@@ -27,9 +27,16 @@
                     @endif
             </div>
             <div class="cart-info cart-wrap">
-                <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                    <i class="ti-shopping-cart"></i>
-                </button>
+                @if(Auth::guard('customer')->check())
+                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
+                        <i class="ti-shopping-cart" wire:click="addToCart('{{ $product->product_uid }}')"></i>
+                    </button>
+                @else
+                    <a href="javascript:void(0)">
+                        <i class="ti-shopping-cart" wire:click="addToCart('{{ $product->product_uid }}')"></i>
+                    </a>
+                @endif
+
                 <a href="javascript:void(0)" title="Add to Wishlist">
                     <i class="ti-heart" aria-hidden="true"></i>
                 </a>
@@ -46,7 +53,7 @@
                     class="fa fa-star"></i> <i class="fa fa-star"></i>
             </div>
             <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
-                <h6>{{ $product->product_name }}</h6>
+                <h6>{{ $product->product_name }} </h6>
             </a>
             <div class="d-flex">
                 <h4>Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}</h4>
@@ -65,4 +72,6 @@
     </div>
 
     @endforeach
+
+
 </div>

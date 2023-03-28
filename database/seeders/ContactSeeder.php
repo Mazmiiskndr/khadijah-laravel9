@@ -23,7 +23,7 @@ class ContactSeeder extends Seeder
         $cities = DB::table('regencies')->pluck('id');
         $districts = DB::table('districts')->pluck('id');
 
-        // Memasukkan 50 data acak ke dalam tabel Contact
+        // Memasukkan 1 data acak ke dalam tabel Contact
         for ($i = 0; $i < 1; $i++) {
             Contact::create([
                 'province_id' => 32,
