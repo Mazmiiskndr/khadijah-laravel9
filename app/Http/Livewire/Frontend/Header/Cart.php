@@ -12,6 +12,7 @@ class Cart extends Component
     public $cart_uid,$cart_id;
     protected $listeners = [
         'homeCartCreated' => 'handleHomeCart',
+        'productCartCreated' => 'handleProductCart',
         'deleteCart' => 'destroy',
     ];
 
@@ -59,6 +60,14 @@ class Cart extends Component
      * handleHomeCart
      */
     public function handleHomeCart()
+    {
+        //
+    }
+
+    /**
+     * handleProductCart
+     */
+    public function handleProductCart()
     {
         //
     }
