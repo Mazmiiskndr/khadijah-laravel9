@@ -57,7 +57,7 @@
     });
 
 
-    /*=====================  
+    /*=====================
      02.Tap on Top
      ==========================*/
     $(window).on('scroll', function () {
@@ -214,7 +214,7 @@
         console.log("click");
         $('.top-panel-adv').addClass("hide");
     });
-    
+
 
     /*=========================
      09. left category slider height
@@ -1572,7 +1572,7 @@
     $('.left-arrow').click(function () {
         $('.custom-arrow-3').slick('slickPrev');
       })
-      
+
       $('.right-arrow').click(function () {
         $('.custom-arrow-3').slick('slickNext');
       })
@@ -2050,6 +2050,18 @@ $('.custom-variations li').on('click', function (e) {
 
 $('.size-box ul li').on('click', function (e) {
     $(".size-box ul li").removeClass("active");
+    $('#selectSize').removeClass('cartMove');
+    $(this).addClass("active");
+    $(this).parent().addClass('selected');
+});
+$('.color-box2 ul li a').on('click', function (e) {
+    $(".color-box2 ul li a").removeClass("active");
+    $('#selectSize').removeClass('cartMove');
+    $(this).addClass("active");
+    $(this).parent().addClass('selected');
+});
+$('.size-box2 ul li a').on('click', function (e) {
+    $(".size-box2 ul li a").removeClass("active");
     $('#selectSize').removeClass('cartMove');
     $(this).addClass("active");
     $(this).parent().addClass('selected');
