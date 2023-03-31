@@ -1,27 +1,30 @@
 <?php
 
-namespace App\Http\Livewire\Frontend\Header;
+namespace App\Http\Livewire\Frontend\Cart;
 
-use App\Models\Cart as ModelsCart;
+use App\Models\Cart;
 use App\Services\Cart\CartService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Cart extends Component
+class DataTable extends Component
 {
-    public $cart_uid,$cart_id;
+    public $cart_uid, $cart_id;
     protected $listeners = [
-        'homeCartCreated' => 'handleHomeCart',
-        'productCartCreated' => 'handleProductCart',
-        'detailCartDeleted' => 'handleCartDeleted',
+        // 'homeCartCreated' => 'handleHomeCart',
+        // 'productCartCreated' => 'handleProductCart',
         'deleteCart' => 'destroy',
     ];
 
+    /**
+     * render
+     * @param  mixed $cartService
+     */
     public function render(CartService $cartService)
     {
         $customer_id = Auth::guard('customer')->user()->id;
         // dd($carts);
-        return view('livewire.frontend.header.cart',[
+        return view('livewire.frontend.cart.data-table', [
             'carts' => $cartService->getAllDataByCustomer($customer_id),
         ]);
     }
@@ -36,8 +39,9 @@ class Cart extends Component
     {
         $this->cart_uid  = $uid;
         // dd($this->cart_uid);
-        $this->dispatchBrowserEvent('delete-cart-show-confirmation');
+        $this->dispatchBrowserEvent('delete-cart-detail-show-confirmation');
     }
+
 
     /**
      * destroy
@@ -47,36 +51,12 @@ class Cart extends Component
      */
     public function destroy()
     {
-        $cart = ModelsCart::where('cart_uid',$this->cart_uid)->first();
+        $cart = Cart::where('cart_uid', $this->cart_uid)->first();
         if ($cart) {
             $cart->delete();
+            $this->emit('detailCartDeleted', $cart);
             session()->flash('success', 'Keranjang Berhasil di Hapus!');
         }
     }
 
-
-
-    /**
-     * handleHomeCart
-     */
-    public function handleHomeCart()
-    {
-        //
-    }
-
-    /**
-     * handleProductCart
-     */
-    public function handleProductCart()
-    {
-        //
-    }
-
-    /**
-     * handleCartDeleted
-     */
-    public function handleCartDeleted()
-    {
-        //
-    }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Backend\Setting\ContactController as SettingContactCont
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
@@ -32,6 +33,7 @@ Route::middleware(CountVisitor::class)->controller(HomeController::class)->group
 Route::middleware(CountVisitor::class)->group(function () {
     // TODO:
     Route::resource('product', FrontendProductController::class)->only(['index', 'show', 'create']);
+    Route::get('/cart',[CartController::class,'index'])->name('cart.index');
 });
 
 // About Page

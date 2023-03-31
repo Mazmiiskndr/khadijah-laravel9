@@ -35,7 +35,7 @@
                 <div class="dashboard-sidebar">
                     <div class="profile-top">
                         <div class="profile-image">
-                            <img src="{{ asset('assets/images/frontend/users/user-female-1.png') }}" alt="" class="img-fluid">
+                            <img src="{{ asset('assets/images/frontend/users/user-female-2.png') }}" alt="" class="img-fluid">
                         </div>
                         <div class="profile-detail">
                             <h5>{{ ucwords($customer->name) }}</h5>
