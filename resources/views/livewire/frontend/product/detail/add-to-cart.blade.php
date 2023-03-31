@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="product-buttons">
-            <button type="submit" wire:click="addToCart('{{ $productUid }}')" class="btn btn-solid btn-animation">
+            <button id="addToCart" type="submit" wire:click="addToCart('{{ $productUid }}')" class="btn btn-solid btn-animation">
                 <i class="fa fa-shopping-cart me-1" aria-hidden="true"></i>
                 Tambah ke Keranjang
             </button>
@@ -53,8 +53,22 @@
                 Favorit
             </a>
         </div>
-    @push('scripts')
+
+    @if (session()->has('success'))
     <script>
+        Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+    </script>
+    @endif
+    @push('scripts')
+
+    <script>
+
         $(document).ready(function () {
             $(".quantity-right-plus").click(function (e) {
                 // Stop acting like a button

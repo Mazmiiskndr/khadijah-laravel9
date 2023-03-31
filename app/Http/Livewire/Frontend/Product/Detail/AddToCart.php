@@ -2,6 +2,10 @@
 
 namespace App\Http\Livewire\Frontend\Product\Detail;
 
+use App\Http\Livewire\Frontend\Header\Cart;
+use App\Models\Product;
+use App\Services\Cart\CartService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class AddToCart extends Component
@@ -56,7 +60,30 @@ class AddToCart extends Component
             'size' => $this->selectedSize,
             'quantity' => $this->quantity,
         ];
-        dd($data);
-        // TODO: Implement add to cart functionality
+        $customer = Auth::guard('customer')->user();
+        // Get product by uid
+        $product = Product::where('product_uid', $productUid)->first();
+
+        // Check if product is not empty
+        if (!empty($product)) {
+            $productId = $product->product_id;
+            $quantity = $this->quantity;
+            // Create new cart
+            // *** TODO: *** Add Cart Table Color and Size
+            dd('TODO: Add Cart Table Color and Size');
+            $cart = Cart::create([
+                'product_id' => $productId,
+                'customer_id' => $customer->id,
+                'quantity' => $quantity,
+                'product_uid' => $productUid,
+                'color' => $this->selectedColor,
+                'size' => $this->selectedSize,
+            ]);
+            // Success
+            $this->emit('productCartCreated', $cart);
+            session()->flash('success', 'Produk berhasil di tambahkan!');
+            $this->dispatchBrowserEvent('success-add-to-cart');
+
+        }
     }
 }
