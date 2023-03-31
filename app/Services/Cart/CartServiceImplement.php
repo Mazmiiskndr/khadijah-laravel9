@@ -34,4 +34,15 @@ class CartServiceImplement extends Service implements CartService
             //throw $th;
         }
     }
+
+    public function addProductToCart($uid, $customerId)
+    {
+        try {
+            return $this->mainRepository->addProductToCart($uid, $customerId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
 }

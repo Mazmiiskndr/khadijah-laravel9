@@ -1586,6 +1586,8 @@ button {
     color: #fff !important
 }
 
+
+
 .btn-outline:hover i,
 .btn-outline:focus i {
     color: #fff !important
@@ -21117,8 +21119,10 @@ header.stickycls {
     height: 100%
 }
 
-.product-right .size-box ul li.active {
-    background-color: #efefef
+
+.product-right .size-box ul li a.active {
+    background-color: #efefef;
+    color: white;
 }
 
 .product-right .product-icon {
