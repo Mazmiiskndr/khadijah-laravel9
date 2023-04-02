@@ -56,6 +56,11 @@
 
     @if (session()->has('success'))
     <script>
+        // disable selected state on size and color buttons
+        $('.size-box2 ul li').removeClass('selected');
+        $('.size-box2 ul li a').removeClass('active');
+        $('.color-box2 ul li').removeClass('selected');
+        $('.color-box2 ul li a').removeClass('active');
         Swal.fire({
             position: 'top-end',
             icon: 'success',

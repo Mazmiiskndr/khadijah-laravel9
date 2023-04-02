@@ -51,39 +51,31 @@ class AddToCart extends Component
         $this->selectedSize = $size;
     }
     // TODO:
-    public function addToCart($productUid)
+    public function addToCart(CartService $cartService,$productUid)
     {
+        $customer = Auth::guard('customer')->user();
+        if ($customer == null) {
+            return redirect()->route('customer.login')->with('error', 'Anda Belum Login. Silahkan Login!');
+        }
         $this->validate();
         $data = [
-            'product_uid' => $productUid,
-            'color' => $this->selectedColor,
             'size' => $this->selectedSize,
+            'color' => $this->selectedColor,
             'quantity' => $this->quantity,
         ];
-        $customer = Auth::guard('customer')->user();
-        // Get product by uid
-        $product = Product::where('product_uid', $productUid)->first();
-
-        // Check if product is not empty
-        if (!empty($product)) {
-            $productId = $product->product_id;
-            $quantity = $this->quantity;
-            // Create new cart
-            // *** TODO: *** Add Cart Table Color and Size
-            dd('TODO: Add Cart Table Color and Size');
-            $cart = Cart::create([
-                'product_id' => $productId,
-                'customer_id' => $customer->id,
-                'quantity' => $quantity,
-                'product_uid' => $productUid,
-                'color' => $this->selectedColor,
-                'size' => $this->selectedSize,
-            ]);
-            // Success
-            $this->emit('productCartCreated', $cart);
-            session()->flash('success', 'Produk berhasil di tambahkan!');
-            $this->dispatchBrowserEvent('success-add-to-cart');
-
+        $cart = $cartService->addProductToCart($productUid, $customer->id, $data);
+        if (!empty($cart)) {
+            session()->flash('success', 'Produk Berhasil di Tambahkan ke Keranjang!');
+            $this->resetVars();
+            $this->emit('detailCartCreated', $cart);
+            $this->dispatchBrowserEvent('success-cart');
         }
+    }
+
+    public function resetVars()
+    {
+        $this->selectedColor = '';
+        $this->selectedSize = '';
+        $this->quantity = 1;
     }
 }

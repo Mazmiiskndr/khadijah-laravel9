@@ -85,6 +85,9 @@ class DetailCart extends Component
         $this->thumbnail = '';
         $this->colors = [];
         $this->size = [];
+        $this->selectedColor = '';
+        $this->selectedSize = '';
+        $this->quantity = 1;
     }
 
     public function onProductSelectedColor($color)
@@ -113,6 +116,7 @@ class DetailCart extends Component
         $cart = $cartService->addProductToCart($uid, $customer->id,$data);
         if (!empty($cart)) {
             session()->flash('success', 'Produk Berhasil di Tambahkan ke Keranjang!');
+            $this->resetVars();
             $this->emit('productCartCreated', $cart);
             $this->dispatchBrowserEvent('success-cart');
             $this->dispatchBrowserEvent('close-modal-product');

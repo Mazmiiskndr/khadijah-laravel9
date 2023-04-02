@@ -251,8 +251,11 @@
                                             <h6>120 ratings</h6>
                                         </div>
                                         <div class="label-section">
-                                            <span class="badge badge-grey-color">#1 Best seller</span>
-                                            <span class="label-text">{{ $product->category->category_name }}</span>
+                                            <span class="badge badge-grey-color mb-1">#1 Best seller</span>
+                                            <br>
+                                            <span class="label-text">Kategori : {{ $product->category->category_name }}</span>
+                                            <br>
+                                            <span class="label-text">Stok : {{ $product->stock }}</span>
                                         </div>
                                         <h3 class="price-detail">
                                             Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}

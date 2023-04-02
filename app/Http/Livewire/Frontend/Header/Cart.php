@@ -14,6 +14,7 @@ class Cart extends Component
         'homeCartCreated' => 'handleHomeCart',
         'productCartCreated' => 'handleProductCart',
         'detailCartDeleted' => 'handleCartDeleted',
+        'detailCartCreated' => 'handleDetailCart',
         'deleteCart' => 'destroy',
     ];
 
@@ -68,6 +69,14 @@ class Cart extends Component
      * handleProductCart
      */
     public function handleProductCart()
+    {
+        //
+    }
+
+    /**
+     * handleDetailCart
+     */
+    public function handleDetailCart()
     {
         //
     }
