@@ -17,6 +17,7 @@
                             <a href="#">
                                 <h4>{{ $cart->product->product_name }}</h4>
                             </a>
+                            <p>Warna : {{ $cart->color }} &nbsp; Ukuran : {{ $cart->size }}</p>
                             <h4>
                                 <span>
                                     {{ $cart->quantity }} x
@@ -28,7 +29,6 @@
                                     @else
                                     Rp. {{ number_format($totalPerPrice, 0, ',', '.') }}
                                     @endif
-
                                 </span>
                             </h4>
                         </div>

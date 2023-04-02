@@ -15,6 +15,7 @@ class Grid extends Component
     use WithPagination;
     // Declare Variable For Add to Cart
     public $customer_id,$quantity,$productIdCart;
+    public $selectedProduct = [];
     public $perPage = 16;
     public $paginationTheme = 'bootstrap';
     public $search = '';
@@ -140,21 +141,14 @@ class Grid extends Component
         $this->search = $keyword;
     }
 
-    /**
-     * addToCart
-     *
-     * @param  mixed $cartService
-     * @param  mixed $uid
-     */
-    public function addToCart(CartService $cartService,$uid)
+
+    public function openModal(ProductService $productService,$productUid)
     {
-        $customer = Auth::guard('customer')->user();
-        $cart = $cartService->addProductToCart($uid, $customer->id);
-        if (!empty($cart)) {
-            $this->emit('productCartCreated', $cart);
-            $this->dispatchBrowserEvent('success-cart');
-        }
+        $product = $productService->getProductByUid($productUid);
+        $this->emit('openModalProduct', $product);
     }
+
+
 
 
 }

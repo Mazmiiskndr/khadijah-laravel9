@@ -18,7 +18,7 @@ interface CartRepository extends Repository{
      *
      * @param  mixed $uid
      * @param  mixed $customerId
-     * @return void
+     * @param  mixed $data
      */
-    public function addProductToCart($uid, $customerId);
+    public function addProductToCart($uid, $customerId,$data);
 }

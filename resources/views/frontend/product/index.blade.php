@@ -112,9 +112,14 @@
         </div>
     </div>
 </section>
+@livewire('frontend.product.detail-cart')
 <!-- section End -->
+@push('scripts')
+<script>
+    window.addEventListener('close-modal-product', event =>{
+        $('#quick-view').modal('hide');
+    });
+</script>
+@endpush
 </x-frontend.master>
 
-@push('scripts')
-
-@endpush

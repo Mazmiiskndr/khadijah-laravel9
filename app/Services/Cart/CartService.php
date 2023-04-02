@@ -15,9 +15,9 @@ interface CartService extends BaseService{
 
     /**
      * addProductToCart
-     *
      * @param  mixed $uid
      * @param  mixed $customerId
+     * @param  mixed $data
      */
-    public function addProductToCart($uid, $customerId);
+    public function addProductToCart($uid, $customerId, $data);
 }
