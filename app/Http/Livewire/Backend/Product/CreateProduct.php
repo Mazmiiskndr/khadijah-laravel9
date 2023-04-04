@@ -5,10 +5,8 @@ namespace App\Http\Livewire\Backend\Product;
 use App\Models\Category;
 use App\Models\Color;
 use App\Models\Product;
-use App\Models\ProductImage;
-use App\Models\ProductTag;
 use App\Models\Tag;
-use Carbon\Carbon;
+use App\Services\Product\ProductService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -115,80 +113,104 @@ class CreateProduct extends Component
      *
      * @return void
      */
-    public function submit()
+    public function submit(ProductService $productService)
     {
 
         // Make Validation
         $this->validate();
-        // dd($this->validate());
-        // Gunakan Try Catch
-        try {
-            // Insert Thumbnail
-            $fileName = $this->thumbnail->store('assets/images/products','public');
-            // Implode Array Size
-            $size = implode(', ', $this->size);
-            $color = implode(', ', $this->color);
-
-            // Create Unique Slug
-            $slug = str()->slug($this->product_name);
-            $count = Product::where('product_slug', $slug)->count();
-            if ($count > 0) {
-                $slug = $slug . '-' . ($count + 1);
-            }
-            // Insert data and Del
-            $product = Product::create([
-                'product_name'          => $this->product_name,
-                'product_slug'          => $slug,
-                'category_id'           => $this->category_id,
-                'price'                 => $this->price,
-                'size'                  => $size,
-                'stock'                 => $this->stock,
-                'thumbnail'             => $fileName,
-                'color'                 => $color,
-                'type'                  => $this->type,
-                'product_description'   => $this->product_description,
-                'weight'                => $this->weight,
-                'material'              => $this->material,
-                'dimension'             => $this->dimension,
-                'discount'              => $this->discount ? $this->discount : 0,
-                'date_added'            => Carbon::now()->format('Y-m-d h:i:s'),
-            ]);
-
-            $tags = $this->tag_id;
-            foreach ($tags as $tag) {
-                // Buat objek ProductTag baru
-                $productTag = new ProductTag();
-                $productTag->product_id = $product->product_id; // id produk yang sedang dibuat
-                $productTag->tag_id = $tag;
-                $productTag->save();
-            }
-
-            // Insert Images
-            foreach ($this->productImages as $productImage) {
-                // Simpan file gambar ke dalam direktori "product_images"
-                $fileProductImages = $productImage->store('assets/images/product_images','public');
-                // Buat objek ProductImage baru
-                $image = new ProductImage();
-                $image->product_id = $product->product_id; // id produk yang sedang dibuat
-                $image->image_name = $fileProductImages;
-                $image->save();
-            }
-
+        $createdProduct = $productService->createProduct($this);
+        if ($createdProduct instanceof Product) {
             // Set Flash Message
             session()->flash('success', 'Produk Berhasil di Tambahkan!');
 
             // Reset Form Fields After Creating Category
             $this->resetFields();
             // Emit event to reload datatable
-            $this->emit('productCreated', $product);
+            $this->emit('productCreated', $createdProduct);
             $this->dispatchBrowserEvent('close-modal');
-        } catch (\Throwable $th) {
+        } else {
             // Flash Message
-            session()->flash('error', $th->getMessage());
+            session()->flash('error', $createdProduct);
 
             // Reset Form Fields After Creating Category
             $this->resetFields();
         }
+        // try {
+        //     // Save Image Thumbnail to Server
+        //     $image = $this->thumbnail;
+        //     $ext = 'webp';
+        //     $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
+        //     $fileName = 'assets/images/products/' . uniqid(10) . '.' . $ext;
+        //     Storage::put('public/' . $fileName, $imageConvert);
+
+        //     // Implode Array Size
+        //     $size = implode(', ', $this->size);
+        //     $color = implode(', ', $this->color);
+
+        //     // Create Unique Slug
+        //     $slug = str()->slug($this->product_name);
+        //     $count = Product::where('product_slug', $slug)->count();
+        //     if ($count > 0) {
+        //         $slug = $slug . '-' . ($count + 1);
+        //     }
+        //     // Insert data and Del
+        //     $product = Product::create([
+        //         'product_name'          => $this->product_name,
+        //         'product_slug'          => $slug,
+        //         'category_id'           => $this->category_id,
+        //         'price'                 => $this->price,
+        //         'size'                  => $size,
+        //         'stock'                 => $this->stock,
+        //         'thumbnail'             => $fileName,
+        //         'color'                 => $color,
+        //         'type'                  => $this->type,
+        //         'product_description'   => $this->product_description,
+        //         'weight'                => $this->weight,
+        //         'material'              => $this->material,
+        //         'dimension'             => $this->dimension,
+        //         'discount'              => $this->discount ? $this->discount : 0,
+        //         'date_added'            => Carbon::now()->format('Y-m-d h:i:s'),
+        //     ]);
+
+        //     $tags = $this->tag_id;
+        //     foreach ($tags as $tag) {
+        //         // Create Object New ProductTag
+        //         $productTag = new ProductTag();
+        //         $productTag->product_id = $product->product_id; // id produk yang sedang dibuat
+        //         $productTag->tag_id = $tag;
+        //         $productTag->save();
+        //     }
+
+        //     // Insert Images
+        //     foreach ($this->productImages as $productImage) {
+        //         // Save file to server
+        //         $image = $productImage;
+        //         $ext = 'webp';
+        //         $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
+        //         $fileProductImages = 'assets/images/product_images/' . uniqid(10) . '.' . $ext;
+        //         Storage::put('public/' . $fileProductImages, $imageConvert);
+        //         // Create Object New ProductImage
+        //         $image = new ProductImage();
+        //         $image->product_id = $product->product_id; // id produk yang sedang dibuat
+        //         $image->image_name = $fileProductImages;
+        //         $image->save();
+        //     }
+
+        //     // Set Flash Message
+        //     session()->flash('success', 'Produk Berhasil di Tambahkan!');
+
+        //     // Reset Form Fields After Creating Category
+        //     $this->resetFields();
+        //     // Emit event to reload datatable
+        //     $this->emit('productCreated', $product);
+        //     $this->dispatchBrowserEvent('close-modal');
+        // } catch (\Throwable $th) {
+        //     // Flash Message
+        //     session()->flash('error', $th->getMessage());
+
+        //     // Reset Form Fields After Creating Category
+        //     $this->resetFields();
+        // }
     }
 
     /**

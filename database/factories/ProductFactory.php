@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Color;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
-
+use Intervention\Image\ImageManagerStatic as Image;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
@@ -26,11 +26,15 @@ class ProductFactory extends Factory
         // Download Image
         $imageData = file_get_contents($imageUrl);
 
+        // Convert Image to .webp
+        $ext = 'webp';
+        $imageConvert = Image::make($imageData)->encode($ext, 100);
+
         // Generate Unique File Name
-        $fileName = uniqid() . '.jpg';
+        $fileName = uniqid() . '.' . $ext;
 
         // Save Image to Storage
-        Storage::put('public/assets/images/products/' . $fileName, $imageData);
+        Storage::put('public/assets/images/products/' . $fileName, $imageConvert);
 
         // Get a list of color names from the 'colors' table
         $colorNames = Color::pluck('color_name')->toArray();

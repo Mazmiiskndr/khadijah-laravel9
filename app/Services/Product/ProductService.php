@@ -72,4 +72,18 @@ interface ProductService extends BaseService{
      * @return void
      */
     public function getLimitData($limit);
+
+    /**
+     * updateProduct
+     *
+     * @param  mixed $product_id
+     * @param  mixed $data
+     */
+    public function updateProduct($product_id, $data);
+
+    /**
+     * createProduct
+     * @param  mixed $data
+     */
+    public function createProduct($data);
 }
