@@ -74,4 +74,5 @@
         });
     </script>
     @endif
+
 </div>

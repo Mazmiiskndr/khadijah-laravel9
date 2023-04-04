@@ -1,13 +1,14 @@
-<div class="col-sm-12 table-responsive-xs">
+<div class="col-sm-12 table-responsive">
     <table class="table cart-table">
         <thead>
             <tr class="table-head">
-                <th scope="col">Gambar</th>
-                <th scope="col">Nama Produk</th>
-                <th scope="col">Harga</th>
-                <th scope="col">Kuantitas</th>
-                <th scope="col">Aksi</th>
-                <th scope="col">Total</th>
+                <th>Nama Produk</th>
+                <th style="width:10px;">Warna</th>
+                <th style="width:10px;">Ukuran</th>
+                <th>Harga</th>
+                <th>Kuantitas</th>
+                <th >Aksi</th>
+                <th >Total</th>
             </tr>
         </thead>
         @php
@@ -19,10 +20,7 @@
         @endphp
         <tbody>
             <tr>
-                <td>
-                    <a href="javascript:void(0)"><img src="{{ asset('storage/'.$cart->product->thumbnail) }}" alt=""></a>
-                </td>
-                <td><a href="{{ route('product.show', ['product' => $cart->product->product_slug]) }}">{{ $cart->product->product_name }}</a>
+                <td><a style="color:black" href="{{ route('product.show', ['product' => $cart->product->product_slug]) }}">{{ $cart->product->product_name }}</a>
                     <div class="mobile-cart-content row">
                         <div class="col">
                             <div class="qty-box">
@@ -42,6 +40,12 @@
                             </h2>
                         </div>
                     </div>
+                </td>
+                <td>
+                    <a href="javascript:void(0)" style="color:black">{{ $cart->color }}</a>
+                </td>
+                <td>
+                    <a href="javascript:void(0)" style="color:black">{{ $cart->size }}</a>
                 </td>
                 <td>
                     <h4 style="color:black"><b>Rp. {{ number_format($cart->product->price - $cart->product->discount, 0, ',', '.') }}</b></h4>
@@ -100,7 +104,7 @@
         @endforeach
 
     </table>
-    <div class="table-responsive-md">
+    <div class="table-responsive">
         <table class="table cart-table ">
             <tfoot>
                 <tr>

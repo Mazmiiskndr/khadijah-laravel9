@@ -1,18 +1,18 @@
-<!-- Icons -->
-{{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/font-awesome.css') }}"> --}}
-
-<!--Slick slider css-->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick.css') }}">
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick-theme.css') }}">
+{{-- <!--Slick slider css-->
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick-theme.min.css') }}">
 
 <!-- Animate icon -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/animate.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/animate.min.css') }}">
 
 <!-- Themify icon -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/themify-icons.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/themify-icons.min.css') }}">
 
 <!-- Bootstrap css -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/bootstrap.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/bootstrap.min.css') }}">
 
 <!-- Theme css -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/style.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/style.min.css') }}"> --}}
+
+
+@vite(['resources/css/frontend.css'])
