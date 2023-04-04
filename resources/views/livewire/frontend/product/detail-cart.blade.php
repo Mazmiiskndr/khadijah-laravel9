@@ -135,7 +135,6 @@
     @endif
     @push('scripts')
     <script src="{{ asset('assets/cart/add-to-cart.js') }}"></script>
-    <script src="{{ asset('assets/assets/notify/bootstrap-notify.js') }}"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var plusBtn = document.querySelector(".quantity-right-plus");
