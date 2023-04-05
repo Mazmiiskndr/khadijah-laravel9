@@ -33,8 +33,16 @@ class ProductFactory extends Factory
         // Generate Unique File Name
         $fileName = uniqid() . '.' . $ext;
 
-        // Save Image to Storage
-        Storage::put('public/assets/images/products/' . $fileName, $imageConvert);
+        // Calculate the compression level needed to reduce the file size to 200 KB
+        $compressionLevel = (200000 * 100) / strlen($imageConvert);
+
+        // Limit the compression level to 100 (maximum)
+        if ($compressionLevel > 100) {
+            $compressionLevel = 100;
+        }
+
+        // Resize image to reduce file size and save Image to Storage
+        $imageConvert->save(storage_path('app/public/assets/images/products/') . $fileName, $compressionLevel);
 
         // Get a list of color names from the 'colors' table
         $colorNames = Color::pluck('color_name')->toArray();

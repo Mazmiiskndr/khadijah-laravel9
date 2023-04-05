@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-xl-4">
                                         <a href="#" class="mega-menu-banner"><img
-                                                src="../assets/images/mega-menu/fashion.jpg" alt=""
+                                                src="" alt="Image"
                                                 class="img-fluid blur-up lazyload"></a>
                                     </div>
                                 </div>
@@ -173,6 +173,6 @@
         </div>
     </div>
     <div class="brand-logo">
-        <a href="index.html"><img src="../assets/images/icon/logo.png" class="img-fluid blur-up lazyload" alt=""></a>
+        <a href="index.html"><img src="{{ asset('assets/images/logo/khadijah-label.png') }}" class="img-fluid blur-up lazyload" alt="" width="150"></a>
     </div>
 </div>

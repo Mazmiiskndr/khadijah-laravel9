@@ -38,10 +38,12 @@
 
 
 <!-- latest jquery-->
-<script src="{{ asset('assets/assets/js/jquery-3.3.1.js') }}"></script>
+{{-- <script src="{{ asset('assets/assets/js/jquery-3.3.1.js') }}"></script> --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- fly cart ui jquery-->
-<script src="{{ asset('assets/assets/js/jquery-ui.js') }}"></script>
+{{-- <script src="{{ asset('assets/assets/js/jquery-ui.js') }}"></script> --}}
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
 <!-- exitintent jquery-->
 <script src="{{ asset('assets/assets/js/jquery.exitintent.js') }}"></script>

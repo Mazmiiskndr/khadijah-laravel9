@@ -27,7 +27,7 @@
                         <h4>Tentang Kami</h4>
                     </div>
                     <div class="footer-contant">
-                        <div class="footer-logo"><img src="../assets/images/icon/logo.png" alt=""></div>
+                        <div class="footer-logo"><img src="{{ asset('assets/images/logo/khadijah-label.png') }}" alt="" width="200"></div>
                         <p>Mukena Khadijah Label adalah merek mukena yang berfokus pada desain eksklusif dan kualitas
                             terbaik. Kami berkomitmen
                             untuk memberikan pengalaman beribadah yang lebih nyaman dan anggun bagi para muslimah.
@@ -218,7 +218,7 @@
             <div class="setting-body">
                 <div class="setting-title">
                     <div>
-                        <img src="../assets/images/icon/logo.png" class="img-fluid" alt="">
+                        <img src="{{ asset('assets/images/logo/khadijah-label.png') }}" class="img-fluid" alt="">
                         <h3>50+ <span>demos</span> <br> suit for any type of online store.</h3>
                     </div>
                 </div>
