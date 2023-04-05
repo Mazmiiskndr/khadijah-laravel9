@@ -36,13 +36,47 @@ class CustomerServiceImplement extends Service implements CustomerService
         }
     }
 
+
     /**
      * findByUid
+     * @param  mixed $uid
      */
     public function findByUid($uid)
     {
         try {
             return $this->mainRepository->findByUid($uid);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
+    /**
+     * createCustomer
+     * @param  mixed $data
+     */
+    public function createCustomer($data)
+    {
+        try {
+            return $this->mainRepository->createCustomer($data);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
+
+    /**
+     * updateCustomer
+     * @param  mixed $customer_id
+     * @param  mixed $data
+     */
+    public function updateCustomer($customer_id,$data)
+    {
+        try {
+            return $this->mainRepository->updateCustomer($customer_id, $data);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             return [];

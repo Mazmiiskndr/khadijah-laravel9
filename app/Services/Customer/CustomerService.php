@@ -17,4 +17,17 @@ interface CustomerService extends BaseService{
      * findByUid
      */
     public function findByUid($uid);
+
+    /**
+     * createCustomer
+     * @param  mixed $data
+     */
+    public function createCustomer($data);
+
+    /**
+     * updateCustomer
+     * @param  mixed $customer_id
+     * @param  mixed $data
+     */
+    public function updateCustomer($customer_id, $data);
 }

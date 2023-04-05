@@ -159,6 +159,7 @@ class UpdateProduct extends Component
 
     /**
      * update
+     * @param  mixed $productService
      */
     public function update(ProductService $productService)
     {
@@ -177,97 +178,6 @@ class UpdateProduct extends Component
                 $this->dispatchBrowserEvent('close-modal-update');
             }
         }
-        //     $product = Product::find($this->product_id);
-        //     $productData = [];
-        //     // Check if thumbnail is uploaded
-        //     if ($this->thumbnail) {
-        //         // Update Thumbnail
-        //         // Convert and store the new thumbnail in .webp format
-        //         $image = $this->thumbnail;
-        //         $ext = 'webp';
-        //         $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
-        //         $fileName = 'assets/images/products/' . uniqid(10) . '.' . $ext;
-        //         Storage::put('public/' . $fileName, $imageConvert);
-        //         // Delete previous thumbnail if exists
-        //         if ($product->thumbnail) {
-        //             Storage::delete('public/' . $product->thumbnail);
-        //         }
-        //         $productData = [
-        //             'thumbnail' => $fileName,
-        //         ];
-        //     }
-
-        //     // Check if product images are uploaded
-        //     if (count($this->productImages)) {
-        //         // Delete previous product images if exists
-        //         $productImages = $product->images;
-        //         foreach ($productImages as $productImage) {
-        //             // Delete existing image file from storage
-        //             Storage::delete('public/' . $productImage->image_name);
-        //         }
-        //         // Delete product image records from the database
-        //         $product->images()->delete();
-
-        //         // Upload new product images
-        //         foreach ($this->productImages as $newProductImage) {
-        //             // Convert and store new product image in .webp format
-        //             $image = $newProductImage;
-        //             $ext = 'webp';
-        //             $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
-        //             $fileProductImages = 'assets/images/product_images/' . uniqid(10) . '.' . $ext;
-        //             Storage::put('public/' . $fileProductImages, $imageConvert);
-
-        //             // Create new product image record in the database
-        //             $product->images()->create([
-        //                 'image_name' => $fileProductImages,
-        //             ]);
-        //         }
-        //     }
-
-        //     /// Remove existing tags
-        //     $product->tags()->detach();
-
-        //     // Add new tags
-        //     $tags = $this->tag_id;
-        //     // dd($tags);
-        //     foreach ($tags as $tag) {
-        //         $product->tags()->attach($tag);
-        //     }
-
-        //     // Update other product fields
-        //     // Implode Array Size
-        //     $size = implode(', ', $this->size);
-        //     // Implode Array Color
-        //     $color = implode(', ', $this->color);
-        //     // DateNow for Updated
-        //     $dateNow = Carbon::now()->format('Y-m-d h:i:s');
-        //     // Declare Product Data
-        //     $productData += [
-        //         'product_name'          => $this->product_name,
-        //         'product_slug'          => str()->slug($this->product_name),
-        //         'category_id'           => $this->category_id,
-        //         'price'                 => $this->price,
-        //         'size'                  => $size,
-        //         'color'                 => $color,
-        //         'stock'                 => $this->stock,
-        //         'type'                  => $this->type,
-        //         'product_description'   => $this->product_description,
-        //         'weight'                => $this->weight,
-        //         'material'              => $this->material,
-        //         'dimension'             => $this->dimension,
-        //         'discount'              => $this->discount ? $this->discount : 0 ,
-        //         'date_updated'          => $dateNow,
-        //     ];
-        //     // Update Product
-        //     $product->update($productData);
-        //     $this->updateModal = false;
-        //     // Set Flash Message
-        //     session()->flash('success', 'Produk Berhasil di Update!');
-        //     $this->resetFields();
-        //     // buatkan emit dengan flash message
-        //     $this->emit('updatedProduct', $product);
-        //     $this->dispatchBrowserEvent('close-modal-update');
-        // }
     }
 
     /**

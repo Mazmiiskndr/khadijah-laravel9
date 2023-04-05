@@ -365,4 +365,31 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
         }
         return null;
     }
+
+    /**
+     * deleteProduct
+     * @param  mixed $product_id
+     * @param  mixed $data
+     */
+    public function deleteProduct($product_id, $data)
+    {
+        $product = Product::find($data->product_id);
+        if ($product) {
+            $productTag = ProductTag::where('product_id', $data->product_id)->delete();
+
+            // Menghapus product images
+            $productImages = ProductImage::where('product_id', $data->product_id)->get();
+            foreach ($productImages as $productImage) {
+                // Delete Image from Storage
+                Storage::delete('public/' . $productImage->image_name);
+                // Hapus record product image dari database
+                $productImage->delete();
+            }
+            // Delete Thumbnail from Storage
+            Storage::delete('public/' . $product->thumbnail);
+            $product->delete();
+            return $product;
+        }
+        return null;
+    }
 }
