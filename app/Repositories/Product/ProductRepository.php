@@ -99,4 +99,5 @@ interface ProductRepository extends Repository{
      * @param  mixed $data
      */
     public function deleteProduct($product_id, $data);
+
 }

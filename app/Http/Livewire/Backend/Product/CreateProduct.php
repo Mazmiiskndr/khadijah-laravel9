@@ -115,7 +115,6 @@ class CreateProduct extends Component
      */
     public function submit(ProductService $productService)
     {
-
         // Make Validation
         $this->validate();
         $createdProduct = $productService->createProduct($this);
@@ -123,7 +122,7 @@ class CreateProduct extends Component
             // Set Flash Message
             session()->flash('success', 'Produk Berhasil di Tambahkan!');
 
-            // Reset Form Fields After Creating Category
+            // Reset Form Fields After Creating Product
             $this->resetFields();
             // Emit event to reload datatable
             $this->emit('productCreated', $createdProduct);
@@ -132,7 +131,7 @@ class CreateProduct extends Component
             // Flash Message
             session()->flash('error', $createdProduct);
 
-            // Reset Form Fields After Creating Category
+            // Reset Form Fields After Creating Product
             $this->resetFields();
         }
 
@@ -156,7 +155,7 @@ class CreateProduct extends Component
      */
     public function resetFields()
     {
-        $this->tag_id             = [];
+        $this->tag_id               = [];
         $this->product_name         = '';
         $this->productImages        = [];
         $this->category_id          = '';

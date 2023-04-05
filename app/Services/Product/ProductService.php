@@ -93,4 +93,6 @@ interface ProductService extends BaseService{
      * @param  mixed $data
      */
     public function deleteProduct($product_id, $data);
+
+
 }
