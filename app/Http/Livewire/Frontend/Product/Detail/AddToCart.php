@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class AddToCart extends Component
 {
-    public $productColors, $productSize, $selectedColor, $selectedSize, $quantity = 1, $productUid;
+    public $productColors, $productSize, $selectedColor, $selectedSize, $quantity = 1, $productUid, $stock;
 
     protected $listeners = [
         'productSelectedColor' => 'onProductSelectedColor',
@@ -38,6 +38,7 @@ class AddToCart extends Component
             'selectedColor' => $this->selectedColor,
             'selectedSize' => $this->selectedSize,
             'quantity' => $this->quantity,
+            'stock' => $this->stock,
         ]);
     }
 

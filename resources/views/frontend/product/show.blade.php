@@ -57,8 +57,8 @@
                                         <use xlink:href="{{ asset('assets/assets/svg/icons.svg#returnable') }}"></use>
                                     </svg>
                                     <div class="media-body">
-                                        <h4>10 days returnable</h4>
-                                        <p>easy returnable policies</p>
+                                        <h4>Pengembalian Cepat</h4>
+                                        <p>Kebijakan Pengembalian Mudah</p>
                                     </div>
                                 </div>
                                 <div class="media">
@@ -86,8 +86,8 @@
                                         </g>
                                     </svg>
                                     <div class="media-body">
-                                        <h4>24 X 7 service</h4>
-                                        <p>easy and fast services</p>
+                                        <h4>Layanan 24 X 7</h4>
+                                        <p>Layanan Cepat dan Mudah</p>
                                     </div>
                                 </div>
                                 <div class="media">
@@ -95,8 +95,8 @@
                                         <use xlink:href="{{ asset('assets/assets/svg/icons.svg#warranty') }}"></use>
                                     </svg>
                                     <div class="media-body">
-                                        <h4>1 Year Warranty</h4>
-                                        <p>from the date of purchase</p>
+                                        <h4>Garansi</h4>
+                                        <p>Sejak Tanggal Pembelian</p>
                                     </div>
                                 </div>
                                 <div class="media border-0 m-0">
@@ -133,8 +133,8 @@
                                         </g>
                                     </svg>
                                     <div class="media-body">
-                                        <h4>online payment</h4>
-                                        <p>Contrary to popular belief.</p>
+                                        <h4>Pembayaran Online</h4>
+                                        <p>Berlawanan dengan Kepercayaan Populer.</p>
                                     </div>
                                 </div>
                             </div>
@@ -228,16 +228,14 @@
                                         <div class="product-count">
                                             <ul>
                                                 <li>
-                                                    <img src="{{ asset('assets/assets/images/fire.gif') }}"
-                                                        class="img-fluid" alt="image">
+                                                    <i class="fa-solid fa-bag-shopping"></i>
                                                     <span class="p-counter">37</span>
-                                                    <span class="lang">orders in last 24 hours</span>
+                                                    <span class="lang"> Produk Terjual</span>
                                                 </li>
                                                 <li>
-                                                    <img src="{{ asset('assets/assets/images/person.gif') }}"
-                                                        class="img-fluid user_img" alt="image">
+                                                    <i class="fa-solid fa-face-grin-stars"></i>
                                                     <span class="p-counter">44</span>
-                                                    <span class="lang">active view this</span>
+                                                    <span class="lang"> Ulasan</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -276,6 +274,7 @@
                                             'productColors' => $product->color,
                                             'productSize' => $product->size,
                                             'productUid' => $product->product_uid,
+                                            'stock' => $product->stock,
                                         ])
                                         {{-- End Add To Cart Detail Product --}}
 
@@ -285,27 +284,27 @@
                                                 <li>
                                                     <img src="{{ asset('assets/assets/images/icon/truck.png') }}"
                                                         class="img-fluid" alt="image">
-                                                    <span class="lang">Free shipping for orders above $500 USD</span>
+                                                    <span class="lang">Pengiriman Gratis and Cepat</span>
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div class="border-product">
+                                        {{-- <div class="border-product">
                                             <h6 class="product-title">Sales Ends In</h6>
                                             <div class="timer">
                                                 <p id="demo"></p>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="border-product">
                                             <h6 class="product-title">shipping info</h6>
                                             <ul class="shipping-info">
-                                                <li>100% Original Products</li>
-                                                <li>Free Delivery on order above Rs. 799</li>
-                                                <li>Pay on delivery is available</li>
-                                                <li>Easy 30 days returns and exchanges</li>
+                                                <li>100% Produk Asli dan Berkualitas</li>
+                                                <li>Pengiriman Gratis</li>
+                                                <li>Tersedia Pembayaran di Tempat / COD</li>
+                                                <li>Pengembalian dan Penukaran Mudah</li>
                                             </ul>
                                         </div>
                                         <div class="border-product">
-                                            <h6 class="product-title">share it</h6>
+                                            <h6 class="product-title">Bagikan</h6>
                                             <div class="product-icon">
                                                 {{-- *** TODO: *** --}}
                                                 <ul class="product-social">
@@ -341,23 +340,24 @@
                                             <a class="nav-link" id="profile-top-tab" data-bs-toggle="tab" href="#top-profile" role="tab"
                                                 aria-selected="false">
                                                 <i class="icofont icofont-man-in-glasses"></i>
-                                                Specification
+                                                Detail Produk
                                             </a>
                                             <div class="material-border"></div>
                                         </li>
-                                        <li class="nav-item">
+                                        {{-- TODO: VIDEOS --}}
+                                        {{-- <li class="nav-item">
                                             <a class="nav-link" id="contact-top-tab" data-bs-toggle="tab" href="#top-contact" role="tab"
                                                 aria-selected="false">
                                                 <i class="icofont icofont-contacts"></i>
                                                 Video
                                             </a>
                                             <div class="material-border"></div>
-                                        </li>
+                                        </li> --}}
                                         <li class="nav-item">
                                             <a class="nav-link" id="review-top-tab" data-bs-toggle="tab" href="#top-review" role="tab"
                                                 aria-selected="false">
                                                 <i class="icofont icofont-contacts"></i>
-                                                WriteReview
+                                                Beri Ulasan
                                             </a>
                                             <div class="material-border"></div>
                                         </li>
@@ -373,67 +373,60 @@
                                         </div>
                                         <div class="tab-pane fade" id="top-profile" role="tabpanel"
                                             aria-labelledby="profile-top-tab">
-                                            <p>The Model is wearing a white blouse from our stylist's collection, see
+                                            {{-- TODO: --}}
+                                            {{-- <p>The Model is wearing a white blouse from our stylist's collection, see
                                                 the image for a mock-up of what the actual blouse would look like.it has
                                                 text written on it in a black cursive language which looks great on a
-                                                white color.</p>
+                                                white color.</p> --}}
                                             <div class="single-product-tables">
                                                 <table>
                                                     <tbody>
+
                                                         <tr>
-                                                            <td>Sleeve Length</td>
-                                                            <td>Sleevless</td>
+                                                            <td>Dimensi</td>
+                                                            <td>{{ $product->dimension }} cm</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Neck</td>
-                                                            <td>Round Neck</td>
+                                                            <td>Bahan</td>
+                                                            <td>{{ $product->material }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Occasion</td>
-                                                            <td>Sports</td>
+                                                            <td>Stok</td>
+                                                            <td>{{ $product->stock }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                                 <table>
                                                     <tbody>
                                                         <tr>
-                                                            <td>Fabric</td>
-                                                            <td>Polyester</td>
+                                                            <td>Kategori</td>
+                                                            <td>{{ $product->category->category_name }}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Fit</td>
-                                                            <td>Regular Fit</td>
+                                                            <td>Type</td>
+                                                            <td>{{ $product->type }}</td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="top-contact" role="tabpanel"
+                                        {{-- TODO: VIDEOS --}}
+                                        {{-- <div class="tab-pane fade" id="top-contact" role="tabpanel"
                                             aria-labelledby="contact-top-tab">
                                             <div class="">
                                                 <iframe width="560" height="315"
                                                     src="https://www.youtube.com/embed/BUWzX78Ye_8"
                                                     allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="tab-pane fade" id="top-review" role="tabpanel"
                                             aria-labelledby="review-top-tab">
                                             <form class="theme-form">
                                                 <div class="form-row row">
-                                                    <div class="col-md-12">
-                                                        <div class="media">
-                                                            <label>Rating</label>
-                                                            <div class="media-body ms-3">
-                                                                <div class="rating three-star"><i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i>
-                                                                    <i class="fa fa-star"></i> <i
-                                                                        class="fa fa-star"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    {{-- START RATING --}}
+                                                    @livewire('frontend.product.detail.start-rating')
+                                                    {{-- END RATING --}}
+
                                                     <div class="col-md-6">
                                                         <label for="name">Name</label>
                                                         <input type="text" class="form-control" id="name"
@@ -482,82 +475,21 @@
                     <h2>Produk Terkait</h2>
                 </div>
             </div>
-            <div class="row search-product">
-                @foreach ($productLimits as $productLimit)
-                <div class="col-xl-2 col-md-4 col-6">
-                    <div class="product-box">
-                        <div class="img-wrapper">
-                            <div class="front">
-                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}"><img src="{{ asset('storage/'.$productLimit->thumbnail) }}"
-                                        class="img-fluid blur-up lazyload bg-img"
-                                        alt="{{ $productLimit->product_name }}"></a>
-                            </div>
-                            <div class="back">
-                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}">
-                                    @if($productLimit->images->first()->image_name == null)
-                                    <img src="{{ asset('storage/'.$productLimit->thumbnail) }}"
-                                        class="img-fluid blur-up lazyload bg-img"
-                                        alt="{{ $productLimit->product_name }}">
-                                    @else
-                                    <img src="{{ asset('storage/'.$productLimit->images->first()->image_name) }}"
-                                        class="img-fluid blur-up lazyload bg-img"
-                                        alt="{{ $productLimit->product_name }}">
-                                    @endif
-
-                                </a>
-                            </div>
-                            <div class="cart-info cart-wrap">
-                                <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                                    <i class="ti-shopping-cart"></i>
-                                </button>
-                                <a href="javascript:void(0)" title="Add to Wishlist">
-                                    <i class="ti-heart" aria-hidden="true"></i>
-                                </a>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View">
-                                    <i class="ti-search" aria-hidden="true"></i>
-                                </a>
-                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}" title="Compare">
-                                    <i class="ti-eye" aria-hidden="true"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="product-detail">
-                            <div>
-                                <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                        class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                </div>
-                                <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}">
-                                    <h6>{{ $productLimit->product_name }}</h6>
-                                </a>
-                                <div class="d-flex">
-                                    <h4>Rp. {{ number_format($productLimit->price - $productLimit->discount, 0, ',',
-                                        '.') }}</h4>
-                                    @if ($productLimit->discount > 0)
-                                    <del style="margin-left: 10px;"> Rp. {{ number_format($productLimit->price, 0, ',',
-                                        '.') }}</del>
-                                    @endif
-                                </div>
-                                {{-- <ul class="color-variant">
-                                    <li class="bg-light0"></li>
-                                    <li class="bg-light1"></li>
-                                    <li class="bg-light2"></li>
-                                </ul> --}}
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                @endforeach
-            </div>
+            {{-- START PRODUCT LIMITS --}}
+            @livewire('frontend.product.detail.product-limits')
+            {{-- END PRODUCT LIMITS --}}
         </div>
     </section>
+
+    {{-- Add to Cart Product Limits --}}
+    @livewire('frontend.product.detail.product-limit-detail-cart')
+    {{-- Add to Cart Product Limits --}}
     <!-- related products -->
     @push('scripts')
     <!-- Zoom js-->
     <script src="{{ asset('assets/assets/js/jquery.elevatezoom.js') }}"></script>
     <!-- timer js-->
-    <script src="{{ asset('assets/assets/js/timer.js') }}"></script>
+    {{-- <script src="{{ asset('assets/assets/js/timer.js') }}"></script> --}}
     <!-- sticky cart bottom js-->
     <script src="{{ asset('assets/assets/js/sticky-cart-bottom.js') }}"></script>
     <script>

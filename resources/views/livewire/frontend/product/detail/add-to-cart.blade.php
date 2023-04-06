@@ -26,21 +26,24 @@
                 @error('selectedSize') <small class="error text-danger">{{ $message }}</small> @enderror
             </div>
             <h6 class="product-title">Kuantitas</h6>
-            <div class="qty-box">
-                <div class="input-group" >
-                    <span class="input-group-prepend">
-                        <button type="button" class="btn quantity-left-minus" data-type="minus" data-field="">
-                            <i class="ti-angle-left"></i>
-                        </button>
-                    </span>
-                    <input type="text" name="quantity" class="form-control input-number" value="{{ $quantity }}"
-                        wire:model="quantity">
-                    <span class="input-group-prepend">
-                        <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
-                            <i class="ti-angle-right"></i>
-                        </button>
-                    </span>
+            <div class="d-flex">
+                <div class="qty-box">
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <button type="button" class="btn quantity-left-minus" data-type="minus" data-field="">
+                                <i class="ti-angle-left"></i>
+                            </button>
+                        </span>
+                        <input type="text" name="quantity" class="form-control input-number" value="{{ $quantity }}"
+                            wire:model="quantity">
+                        <span class="input-group-prepend">
+                            <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
+                                <i class="ti-angle-right"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
+                <p style="margin-left: 15px;margin-top:15px;">Tersisa {{ $stock }} buah</p>
             </div>
         </div>
         <div class="product-buttons">

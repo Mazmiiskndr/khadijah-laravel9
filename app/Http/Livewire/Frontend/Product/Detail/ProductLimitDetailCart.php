@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Livewire\Frontend\Product;
+namespace App\Http\Livewire\Frontend\Product\Detail;
 
 use App\Services\Cart\CartService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class DetailCart extends Component
+class ProductLimitDetailCart extends Component
 {
     // ShowModal
     public $showModal = false;
     // Declare variable
     public   $product_name, $product_id, $product_slug,
-            $price, $discount,
-            $color,$stock,
-            $product_description,
-            $thumbnail;
+        $price, $discount,
+        $color, $stock,
+        $product_description,
+        $thumbnail;
     public $tag_id = [];
     public $colors = [];
     public $size = [];
@@ -24,7 +24,7 @@ class DetailCart extends Component
     public $categories, $tags = [], $tagsSelect = [], $colorsSelect = [];
     public $productColors, $productSize, $selectedColor, $selectedSize, $quantity = 1, $productUid;
     protected $listeners = [
-        'openModalProduct'          => 'show',
+        'openModalProductDetail'    => 'showDetail',
         'productSelectedColor'      => 'onProductSelectedColor',
         'productSelectedSize'       => 'onProductSelectedSize',
         'productSelectedQuantity'   => 'onProductSelectedQuantity',
@@ -39,19 +39,18 @@ class DetailCart extends Component
         'selectedColor.required' => 'Ukuran harus dipilih!',
     ];
 
-
     public function render()
     {
-        return view('livewire.frontend.product.detail-cart');
+        return view('livewire.frontend.product.detail.product-limit-detail-cart');
     }
 
     /**
-     * show
+     * showDetail
      *
      * @param  mixed $product
      * @return void
      */
-    public function show($product)
+    public function showDetail($product)
     {
         // Update Modal True
         $this->showModal          = true;
@@ -77,7 +76,6 @@ class DetailCart extends Component
         $this->stock              = $product['stock'];
         $this->product_description  = $product['product_description'];
     }
-
 
     public function resetVars()
     {
@@ -110,7 +108,8 @@ class DetailCart extends Component
     public function addToCart(CartService $cartService, $uid)
     {
         $customer = Auth::guard('customer')->user();
-        if ($customer == null) {
+        if ($customer == null
+        ) {
             return redirect()->route('customer.login')->with('error', 'Anda Belum Login. Silahkan Login!');
         }
         $this->validate();
@@ -120,7 +119,7 @@ class DetailCart extends Component
             'quantity' => $this->quantity,
         ];
         // dd($data);
-        $cart = $cartService->addProductToCart($uid, $customer->id,$data);
+        $cart = $cartService->addProductToCart($uid, $customer->id, $data);
         if (!empty($cart)) {
             session()->flash('success', 'Produk Berhasil di Tambahkan ke Keranjang!');
             $this->resetVars();

@@ -59,5 +59,6 @@
         });
     </script>
     @endif
+
     @endpush
 </x-frontend.master>
