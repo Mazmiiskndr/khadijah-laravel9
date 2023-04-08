@@ -419,42 +419,10 @@
                                                     allow="autoplay; encrypted-media" allowfullscreen></iframe>
                                             </div>
                                         </div> --}}
-                                        <div class="tab-pane fade" id="top-review" role="tabpanel"
-                                            aria-labelledby="review-top-tab">
-                                            <form class="theme-form">
-                                                <div class="form-row row">
-                                                    {{-- START RATING --}}
-                                                    @livewire('frontend.product.detail.start-rating')
-                                                    {{-- END RATING --}}
-
-                                                    <div class="col-md-6">
-                                                        <label for="name">Name</label>
-                                                        <input type="text" class="form-control" id="name"
-                                                            placeholder="Enter Your name" required>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="email">Email</label>
-                                                        <input type="text" class="form-control" id="email"
-                                                            placeholder="Email" required>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label for="review">Review Title</label>
-                                                        <input type="text" class="form-control" id="review"
-                                                            placeholder="Enter your Review Subjects" required>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <label for="review">Review Title</label>
-                                                        <textarea class="form-control"
-                                                            placeholder="Wrire Your Testimonial Here"
-                                                            id="exampleFormControlTextarea1" rows="6"></textarea>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <button class="btn btn-solid" type="submit">Submit YOur
-                                                            Review</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
+                                        {{-- TODO: REVIEW --}}
+                                        {{-- START REVIEW --}}
+                                        @livewire('frontend.product.detail.review-product')
+                                        {{-- END REVIEW --}}
                                     </div>
                                 </div>
                             </div>

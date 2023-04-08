@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Frontend\Product\Detail;
 
 use Livewire\Component;
 
-class StartRating extends Component
+class ReviewProduct extends Component
 {
     public $rating = 0;
 
@@ -16,8 +16,9 @@ class StartRating extends Component
         // Contoh: Anda mungkin perlu menyimpan rating ke model Review atau tabel terkait
         // Review::create(['rating' => $this->rating, ...]);
     }
+
     public function render()
     {
-        return view('livewire.frontend.product.detail.start-rating');
+        return view('livewire.frontend.product.detail.review-product');
     }
 }

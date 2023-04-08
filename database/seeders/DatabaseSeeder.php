@@ -7,6 +7,8 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\DetailProduct;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductTag;
@@ -68,10 +70,6 @@ class DatabaseSeeder extends Seeder
         });
         // PRODUCT TAGS, PRODUCT IMAGES AND DETAIL PRODUCTS
         Product::factory()->count(20)->create()->each(function ($product) {
-            // Create For Detail Products
-            // TODO:
-            // $numDetailProducts = rand(1, 5);
-            // DetailProduct::factory()->count($numDetailProducts)->create(['product_id' => $product->product_id]);
 
             // For each product, generate 3-5 product tags
             $numTags = rand(3, 5);
@@ -83,6 +81,9 @@ class DatabaseSeeder extends Seeder
             $images = ProductImage::factory()->count($numImages)->make(['product_id' => $product->product_id]);
             $product->images()->createMany($images->toArray());
         });
+
+        $this->call(OrdersAndOrderDetailsSeeder::class);
+
 
 
     }
