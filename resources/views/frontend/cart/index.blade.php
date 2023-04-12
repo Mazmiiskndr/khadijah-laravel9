@@ -32,7 +32,7 @@
                         <div class="countdownholder">
                             Your cart will be expired in<span id="timer"></span> minutes!
                         </div>
-                        <a href="checkout.html" class="cart_checkout btn btn-solid btn-xs">check out</a>
+                        <a href="checkout.html" class="cart_checkout btn btn-solid btn-xs">pembayaran</a>
                     </div>
                 </div> --}}
 
@@ -43,7 +43,7 @@
             </div>
             <div class="row cart-buttons">
                 <div class="col-6"><a href="{{ route('product.index') }}" class="btn btn-solid">Lanjut Belanja</a></div>
-                <div class="col-6"><a href="#" class="btn btn-solid">Check Out</a></div>
+                <div class="col-6"><a href="{{ route('checkout.index') }}" class="btn btn-solid">Pembayaran</a></div>
             </div>
         </div>
     </section>

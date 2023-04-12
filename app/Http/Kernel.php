@@ -55,6 +55,8 @@ class Kernel extends HttpKernel
      * @var array<string, class-string|string>
      */
     protected $routeMiddleware = [
+        // customer auth middleware
+        'customer.auth' => \App\Http\Middleware\CustomerAuthMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'countvisitor' => \App\Http\Middleware\CountVisitor::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

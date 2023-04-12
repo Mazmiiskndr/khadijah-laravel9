@@ -55,7 +55,7 @@
                 <li>
                     <div class="buttons">
                         <a href="{{ route('cart.index') }}" class="view-cart">Keranjang</a>
-                        <a href="#" class="checkout">Checkout</a>
+                        <a href="{{ route('checkout.index') }}" class="checkout">Pembayaran</a>
                     </div>
                 </li>
             </ul>
