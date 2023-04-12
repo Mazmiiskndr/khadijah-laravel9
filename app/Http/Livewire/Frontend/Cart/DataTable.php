@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class DataTable extends Component
 {
-    public $cart_uid, $cart_id;
+    public $cart_uid, $cart_id,$quantity = 1;
     protected $listeners = [
         // 'homeCartCreated' => 'handleHomeCart',
         // 'productCartCreated' => 'handleProductCart',
@@ -30,6 +30,22 @@ class DataTable extends Component
     }
 
     /**
+     * updateQuantity
+     *
+     * @param  mixed $id
+     * @param  mixed $quantity
+     * @return void
+     */
+    public function updateQuantity($id, $quantity)
+    {
+        $cart = Cart::find($id);
+        if ($cart) {
+            $cart->update(['quantity' => $quantity]);
+        }
+    }
+
+
+    /**
      * deleteCart
      *
      * @param  mixed $uid
@@ -38,7 +54,6 @@ class DataTable extends Component
     public function deleteCart($uid)
     {
         $this->cart_uid  = $uid;
-        // dd($this->cart_uid);
         $this->dispatchBrowserEvent('delete-cart-detail-show-confirmation');
     }
 

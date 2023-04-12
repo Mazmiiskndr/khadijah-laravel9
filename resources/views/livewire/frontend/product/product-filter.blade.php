@@ -32,7 +32,7 @@
                     </ul>
                 </div>
                 <div class="product-page-filter">
-                    <select wire:model="selectedShowing">
+                    <select wire:model="selectedShowing" class="form-select">
                         <option value="featured">Mengurutkan</option>
                         <option value="lowest_price">Harga Terendah</option>
                         <option value="highest_price">Harga Tertinggi</option>

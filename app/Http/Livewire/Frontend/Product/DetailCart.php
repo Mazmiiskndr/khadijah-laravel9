@@ -40,6 +40,9 @@ class DetailCart extends Component
     ];
 
 
+    /**
+     * render
+     */
     public function render()
     {
         return view('livewire.frontend.product.detail-cart');
@@ -55,6 +58,7 @@ class DetailCart extends Component
     {
         // Update Modal True
         $this->showModal          = true;
+
         // Explode Size to Array []
         $sizes                      = explode(', ', $product['size']);
         $this->size                 = $sizes;
@@ -62,9 +66,6 @@ class DetailCart extends Component
         // Explode Colors to Array []
         $colors                      = explode(', ', $product['color']);
         $this->colors                 = $colors;
-
-        // Set value for Tag dropdown
-        // $this->tag_id               = array_column($product['tags'], 'tag_id');
 
         // Declare Variable
         $this->product_id           = $product['product_id'];
@@ -79,6 +80,11 @@ class DetailCart extends Component
     }
 
 
+    /**
+     * resetVars
+     *
+     * @return void
+     */
     public function resetVars()
     {
         $this->showModal = false;
@@ -97,36 +103,68 @@ class DetailCart extends Component
         $this->quantity = 1;
     }
 
+    /**
+     * onProductSelectedColor
+     *
+     * @param  mixed $color
+     * @return void
+     */
     public function onProductSelectedColor($color)
     {
         $this->selectedColor = $color;
     }
 
+    /**
+     * onProductSelectedSize
+     *
+     * @param  mixed $size
+     * @return void
+     */
     public function onProductSelectedSize($size)
     {
         $this->selectedSize = $size;
     }
 
+    /**
+     * addToCart
+     *
+     * @param  mixed $cartService
+     * @param  mixed $uid
+     * @return void
+     */
     public function addToCart(CartService $cartService, $uid)
     {
+        // Getting the authenticated customer
         $customer = Auth::guard('customer')->user();
+        // Checking if the customer is not logged in
         if ($customer == null) {
+            // Redirecting to the login page with an error message
             return redirect()->route('customer.login')->with('error', 'Anda Belum Login. Silahkan Login!');
         }
+        // Validating the form data
         $this->validate();
+        // Preparing the data to be added to the cart
         $data = [
             'size' => $this->selectedSize,
             'color' => $this->selectedColor,
             'quantity' => $this->quantity,
         ];
-        // dd($data);
-        $cart = $cartService->addProductToCart($uid, $customer->id,$data);
+
+        // Adding the product to the cart using the CartService
+        $cart = $cartService->addProductToCart($uid, $customer->id, $data);
+        // Checking if the product was added to the cart
         if (!empty($cart)) {
+            // Displaying a success message
             session()->flash('success', 'Produk Berhasil di Tambahkan ke Keranjang!');
+            // Resetting the component variables
             $this->resetVars();
+            // Emitting an event to update the cart count
             $this->emit('productCartCreated', $cart);
+            // Dispatching a browser event to display the success message
             $this->dispatchBrowserEvent('success-cart');
+            // Dispatching a browser event to close the product modal
             $this->dispatchBrowserEvent('close-modal-product');
         }
     }
+
 }
