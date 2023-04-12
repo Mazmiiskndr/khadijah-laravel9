@@ -11,9 +11,8 @@
 
             @endif
             <div class="front">
-                <a href="javascript:void(0)"><img
-                        src="{{ asset('storage/'.$product->thumbnail) }}" class="img-fluid blur-up lazyload bg-img"
-                        alt=""></a>
+                <a href="javascript:void(0)"><img src="{{ asset('storage/'.$product->thumbnail) }}"
+                        class="img-fluid blur-up lazyload bg-img" alt=""></a>
             </div>
             <div class="back">
 
@@ -28,23 +27,22 @@
             </div>
             <div class="cart-info cart-wrap">
                 @if(Auth::guard('customer')->check())
-                    <button data-bs-toggle="modal" data-bs-target="#addtocart" title="Add to cart">
-                        <i class="ti-shopping-cart" wire:click="addToCart('{{ $product->product_uid }}')"></i>
-                    </button>
-                @else
-                    <a href="javascript:void(0)">
-                        <i class="ti-shopping-cart" wire:click="addToCart('{{ $product->product_uid }}')"></i>
-                    </a>
-                @endif
-
-                <a href="javascript:void(0)" title="Add to Wishlist">
-                    <i class="ti-heart" aria-hidden="true"></i>
+                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View"
+                    wire:click="openModal('{{ $product->product_uid }}')">
+                    <i class="fas fa fa-cart-shopping"></i>
+                    {{-- wire:click="addToCart('{{ $product->product_uid }}')" --}}
                 </a>
-                <a href="#" data-bs-toggle="modal" data-bs-target="#quick-view" title="Quick View">
-                    <i class="ti-search" aria-hidden="true"></i>
+                @else
+                <a href="javascript:void(0)">
+                    <i class="fas fa fa-cart-shopping" data-bs-toggle="modal" data-bs-target="#quick-view"
+                        wire:click="openModal('{{ $product->product_uid }}')"></i>
+                </a>
+                @endif
+                <a href="javascript:void(0)" title="Add to Wishlist">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
                 </a>
                 <a href="{{ route('product.show', ['product' => $product->product_slug]) }}" title="Compare">
-                    <i class="ti-eye" aria-hidden="true"></i>
+                    <i class="fas fa-eye" aria-hidden="true"></i>
                 </a>
             </div>
         </div>

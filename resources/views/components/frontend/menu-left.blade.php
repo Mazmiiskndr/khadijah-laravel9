@@ -8,11 +8,11 @@
             <a href="javascript:void(0)" class="sidebar-overlay" onclick="closeNav()"></a>
             <nav>
                 <div onclick="closeNav()">
-                    <div class="sidebar-back text-start"><i class="fa fa-angle-left pe-2" aria-hidden="true"></i> Back
+                    <div class="sidebar-back text-start"><i class="fa fa-angle-left pe-2" aria-hidden="true"></i> Kembali
                     </div>
                 </div>
                 <ul id="sub-menu" class="sm pixelstrap sm-vertical">
-                    <li> <a href="#">clothing</a>
+                    {{-- <li> <a href="#">clothing</a>
                         <ul class="mega-menu clothing-menu">
                             <li>
                                 <div class="row m-0">
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-xl-4">
                                         <a href="#" class="mega-menu-banner"><img
-                                                src="../assets/images/mega-menu/fashion.jpg" alt=""
+                                                src="" alt="Image"
                                                 class="img-fluid blur-up lazyload"></a>
                                     </div>
                                 </div>
@@ -165,14 +165,14 @@
                                 </ul>
                             </li>
                         </ul>
-                    </li>
-                    <li><a href="#">home & decor</a></li>
-                    <li><a href="#">kitchen</a></li>
+                    </li> --}}
+                    <li><a href="{{ route('index') }}">Beranda</a></li>
+                    <li><a href="{{ route('product.index') }}">Produk</a></li>
                 </ul>
             </nav>
         </div>
     </div>
     <div class="brand-logo">
-        <a href="index.html"><img src="../assets/images/icon/logo.png" class="img-fluid blur-up lazyload" alt=""></a>
+        <a href="index.html"><img src="{{ asset('assets/images/logo/khadijah-label.png') }}" class="img-fluid blur-up lazyload" alt="" width="150"></a>
     </div>
 </div>

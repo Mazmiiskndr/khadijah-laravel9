@@ -31,16 +31,26 @@ class Login extends Component
     }
     public function submit()
     {
-
         $this->validate();
-        if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
-            // login berhasil
-            return redirect('');
+
+        // Search Customer By Email
+        $customer = Customer::where('email', $this->email)->first();
+
+        // If the customer is found, try authentication
+        if ($customer) {
+            if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
+                // Login Success
+                return redirect('');
+            } else {
+                // login failed
+                session()->flash('error', 'Alamat Email atau Password Anda salah!.');
+            }
         } else {
-            // login gagal
-            session()->flash('error', 'Alamat Email atau Password Anda salah!.');
+            // Customer not registered
+            session()->flash('error', 'Anda belum terdaftar, silahkan daftar terlebih dahulu.');
         }
     }
+
 
     public function render()
     {

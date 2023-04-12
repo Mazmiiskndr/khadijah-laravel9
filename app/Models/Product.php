@@ -59,4 +59,22 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
     }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
+    }
+
+    // QUERY BEST SELLING PRODUCTS
+
+    // $bestSellingProducts = Product::select('product.*')
+    // ->withCount(['orderDetails as total_sold' => function ($query) {
+    //     $query->join('order', 'order_detail.order_id', '=', 'order.order_id')
+    //         ->where('order.order_status', 'Pesanan Selesai'); // atau status yang sesuai untuk pesanan yang berhasil
+    // }])
+    // ->join('order_detail', 'product.product_id', '=', 'order_detail.product_id')
+    // ->groupBy('product.product_id')
+    // ->orderBy('total_sold', 'desc')
+    // ->take(10) // Jumlah produk terlaris yang ingin diambil (misalnya, 10 produk terlaris)
+    // ->get();
 }

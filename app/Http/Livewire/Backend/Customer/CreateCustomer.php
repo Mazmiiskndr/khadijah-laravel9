@@ -6,8 +6,7 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
+use App\Services\Customer\CustomerService;
 use Livewire\Component;
 
 class CreateCustomer extends Component
@@ -109,41 +108,26 @@ class CreateCustomer extends Component
         $this->validateOnly($property);
     }
 
-
     /**
      * store
-     *
-     * @return void
+     * @param  mixed $customerService
      */
-    public function store()
+    public function store(CustomerService $customerService)
     {
-        // Validate Form Request
+
+        // Make Validation
         $this->validate();
-        $regisDate = Carbon::now()->format('Y-m-d h:i:s');
-        $this->registration_date = $regisDate;
-        try {
-            // Create New Customer
-            $customer = Customer::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'password' => Hash::make($this->password),
-                'address' => $this->address,
-                'city_id' => $this->city_id,
-                'district_id' => $this->district_id,
-                'province_id' => $this->province_id,
-                'postal_code' => $this->postal_code,
-                'phone' => $this->phone,
-                'registration_date' => $this->registration_date,
-            ]);
+        $createdCustomer = $customerService->createCustomer($this);
+        if ($createdCustomer instanceof Customer) {
             // Set Flash Message
             session()->flash('success', 'Pelanggan Berhasil di Tambahkan!');
 
             // Reset Form Fields After Creating Category
             $this->resetFields();
             // Emit event to reload datatable
-            $this->emit('customerCreated', $customer);
+            $this->emit('customerCreated', $createdCustomer);
             $this->dispatchBrowserEvent('close-modal');
-        } catch (\Exception $e) {
+        } else {
             // Set Flash Message
             session()->flash('error', 'Pelanggan Gagal di Tambahkan!');
 

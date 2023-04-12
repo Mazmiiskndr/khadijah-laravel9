@@ -1,8 +1,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- facebook chat section start -->
- <div id="fb-root"></div>
-    <script>
-        (function (d, s, id) {
+<div id="fb-root"></div>
+<script>
+    (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) return;
             js = d.createElement(s);
@@ -11,7 +11,7 @@
                 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js#xfbml=1&version=v2.12&autoLogAppEvents=1';
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-    </script>
+</script>
 <!-- Your customer chat code -->
 <!-- <div class="fb-customerchat" attribution=setup_tool page_id="2123438804574660" theme_color="#0084ff"
         logged_in_greeting="Hi! Welcome to PixelStrap Themes  How can we help you?"
@@ -38,10 +38,12 @@
 
 
 <!-- latest jquery-->
-<script src="{{ asset('assets/assets/js/jquery-3.3.1.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/assets/js/jquery-3.3.1.js') }}"></script> --}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- fly cart ui jquery-->
-<script src="{{ asset('assets/assets/js/jquery-ui.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/assets/js/jquery-ui.js') }}"></script> --}}
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
 <!-- exitintent jquery-->
 <script src="{{ asset('assets/assets/js/jquery.exitintent.js') }}"></script>
@@ -54,13 +56,13 @@
 <script src="{{ asset('assets/assets/js/menu.js') }}"></script>
 
 <!-- lazyload js-->
-<script src="{{ asset('assets/assets/js/lazysizes.min.js') }}"></script>
+<script src="{{ asset('assets/assets/js/lazysizes.js') }}"></script>
 
 <!-- Bootstrap js-->
-<script src="{{ asset('assets/assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('assets/assets/js/bootstrap.bundle.js') }}"></script>
 
 <!-- Bootstrap Notification js-->
-<script src="{{ asset('assets/assets/js/bootstrap-notify.min.js') }}"></script>
+<script src="{{ asset('assets/assets/js/bootstrap-notify.js') }}"></script>
 
 <!-- Fly cart js-->
 <script src="{{ asset('assets/assets/js/fly-cart.js') }}"></script>
@@ -68,8 +70,7 @@
 <!-- Theme js-->
 <script src="{{ asset('assets/assets/js/theme-setting.js') }}"></script>
 <script src="{{ asset('assets/assets/js/script.js') }}"></script>
-
-<script>
+{{-- <script>
     $(window).on('load', function () {
             setTimeout(function () {
                 $('#exampleModal').modal('show');
@@ -83,4 +84,4 @@
         function closeSearch() {
             document.getElementById("search-overlay").style.display = "none";
         }
-</script>
+</script> --}}

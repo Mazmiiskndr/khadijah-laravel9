@@ -2,11 +2,15 @@
 
 namespace App\Http\Livewire\Frontend\Product\Detail;
 
+use App\Http\Livewire\Frontend\Header\Cart;
+use App\Models\Product;
+use App\Services\Cart\CartService;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class AddToCart extends Component
 {
-    public $productColors, $productSize, $selectedColor, $selectedSize, $quantity = 1, $productUid;
+    public $productColors, $productSize, $selectedColor, $selectedSize, $quantity = 1, $productUid, $stock;
 
     protected $listeners = [
         'productSelectedColor' => 'onProductSelectedColor',
@@ -34,6 +38,7 @@ class AddToCart extends Component
             'selectedColor' => $this->selectedColor,
             'selectedSize' => $this->selectedSize,
             'quantity' => $this->quantity,
+            'stock' => $this->stock,
         ]);
     }
 
@@ -47,16 +52,31 @@ class AddToCart extends Component
         $this->selectedSize = $size;
     }
     // TODO:
-    public function addToCart($productUid)
+    public function addToCart(CartService $cartService,$productUid)
     {
+        $customer = Auth::guard('customer')->user();
+        if ($customer == null) {
+            return redirect()->route('customer.login')->with('error', 'Anda Belum Login. Silahkan Login!');
+        }
         $this->validate();
         $data = [
-            'product_uid' => $productUid,
-            'color' => $this->selectedColor,
             'size' => $this->selectedSize,
+            'color' => $this->selectedColor,
             'quantity' => $this->quantity,
         ];
-        dd($data);
-        // TODO: Implement add to cart functionality
+        $cart = $cartService->addProductToCart($productUid, $customer->id, $data);
+        if (!empty($cart)) {
+            session()->flash('success', 'Produk Berhasil di Tambahkan ke Keranjang!');
+            $this->resetVars();
+            $this->emit('detailCartCreated', $cart);
+            $this->dispatchBrowserEvent('success-cart');
+        }
+    }
+
+    public function resetVars()
+    {
+        $this->selectedColor = '';
+        $this->selectedSize = '';
+        $this->quantity = 1;
     }
 }

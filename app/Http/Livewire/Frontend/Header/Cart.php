@@ -13,13 +13,14 @@ class Cart extends Component
     protected $listeners = [
         'homeCartCreated' => 'handleHomeCart',
         'productCartCreated' => 'handleProductCart',
+        'detailCartDeleted' => 'handleCartDeleted',
+        'detailCartCreated' => 'handleDetailCart',
         'deleteCart' => 'destroy',
     ];
 
     public function render(CartService $cartService)
     {
         $customer_id = Auth::guard('customer')->user()->id;
-        $carts = $cartService->getAllDataByCustomer($customer_id);
         // dd($carts);
         return view('livewire.frontend.header.cart',[
             'carts' => $cartService->getAllDataByCustomer($customer_id),
@@ -68,6 +69,22 @@ class Cart extends Component
      * handleProductCart
      */
     public function handleProductCart()
+    {
+        //
+    }
+
+    /**
+     * handleDetailCart
+     */
+    public function handleDetailCart()
+    {
+        //
+    }
+
+    /**
+     * handleCartDeleted
+     */
+    public function handleCartDeleted()
     {
         //
     }

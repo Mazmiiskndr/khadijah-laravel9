@@ -12,11 +12,12 @@
                 @foreach ($carts as $cart)
                 <li>
                     <div class="media">
-                        <a href="#"><img alt="" class="me-3" src="../assets/images/fashion/product/1.jpg"></a>
+                        <a href="#"><img alt="" class="me-3" src="{{ asset('storage/'.$cart->product->thumbnail) }}"></a>
                         <div class="media-body">
                             <a href="#">
                                 <h4>{{ $cart->product->product_name }}</h4>
                             </a>
+                            <p>Warna : {{ $cart->color }} &nbsp; Ukuran : {{ $cart->size }}</p>
                             <h4>
                                 <span>
                                     {{ $cart->quantity }} x
@@ -28,21 +29,21 @@
                                     @else
                                     Rp. {{ number_format($totalPerPrice, 0, ',', '.') }}
                                     @endif
-
                                 </span>
                             </h4>
                         </div>
                     </div>
                     <div class="close-circle"><a href="javascript:void(0)" wire:click="deleteCart('{{ $cart->cart_uid }}')"><i class="fa fa-times" aria-hidden="true"></i></a></div>
                 </li>
+                {{-- Count Sub Total --}}
                 @php
-
                 if ($cart->product->discount > 0){
                 $subtotal += $totalPerPrice - $cart->product->discount;
                 }else{
                 $subtotal += $totalPerPrice;
                 }
                 @endphp
+
                 @endforeach
                 {{-- End Cart Customer --}}
 
@@ -52,8 +53,10 @@
                     </div>
                 </li>
                 <li>
-                    <div class="buttons"><a href="cart.html" class="view-cart">view
-                            cart</a> <a href="#" class="checkout">checkout</a></div>
+                    <div class="buttons">
+                        <a href="{{ route('cart.index') }}" class="view-cart">Keranjang</a>
+                        <a href="{{ route('checkout.index') }}" class="checkout">Pembayaran</a>
+                    </div>
                 </li>
             </ul>
         </li>
@@ -71,4 +74,5 @@
         });
     </script>
     @endif
+
 </div>

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->uuid('cart_uid')->unique(); // Added uid column
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
+            $table->string('color',50);
+            $table->string('size',50);
             $table->integer('quantity');
             $table->timestamps();
         });

@@ -10,7 +10,8 @@
         <div class="col-12">
             <div class="product-filter-content">
                 <div class="search-count">
-                    <h5>Menampilkan Produk 1-24 dari 10</h5>
+                    <h5>Menampilkan Produk {{ $paginationData['firstItem'] }}-{{ $paginationData['lastItem'] }}
+                    dari {{ $paginationData['total'] }}</h5>
                 </div>
                 <div class="collection-view">
                     <ul>
@@ -31,7 +32,7 @@
                     </ul>
                 </div>
                 <div class="product-page-filter">
-                    <select wire:model="selectedShowing">
+                    <select wire:model="selectedShowing" class="form-select">
                         <option value="featured">Mengurutkan</option>
                         <option value="lowest_price">Harga Terendah</option>
                         <option value="highest_price">Harga Tertinggi</option>

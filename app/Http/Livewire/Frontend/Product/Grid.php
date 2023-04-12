@@ -15,6 +15,7 @@ class Grid extends Component
     use WithPagination;
     // Declare Variable For Add to Cart
     public $customer_id,$quantity,$productIdCart;
+    public $selectedProduct = [];
     public $perPage = 16;
     public $paginationTheme = 'bootstrap';
     public $search = '';
@@ -56,43 +57,41 @@ class Grid extends Component
      */
     public function render(ProductService $productService)
     {
+        // Retrieving the products based on the provided filters
         $products = $productService->getProductFrontend($this->perPage, $this->search, $this->showing, $this->categoryFilters, $this->sizes);
 
-        if (is_object($products)) {
-            $paginationData = [
-                'firstItem' => $products->firstItem(),
-                'lastItem' => $products->lastItem(),
-                'total' => $products->total()
-            ];
-        } else {
-            $paginationData = [
-                'firstItem' => 0,
-                'lastItem' => 0,
-                'total' => 0
-            ];
-        }
+        // Preparing the pagination data or default values when no products are found
+        $paginationData = is_object($products) ? [
+            'firstItem' => $products->firstItem(),
+            'lastItem' => $products->lastItem(),
+            'total' => $products->total()
+        ] : [
+            'firstItem' => 0,
+            'lastItem' => 0,
+            'total' => 0
+        ];
 
-        return view('livewire.frontend.product.grid', [
-            'products' => $products,
-            'paginationData' => $paginationData,
-        ]);
+        // Returning the view with the products and pagination data
+        return view('livewire.frontend.product.grid', compact('products', 'paginationData'));
     }
 
-    // create function updateSizeSelected
+    /**
+     * updateSizeSelected
+     *
+     * @param  mixed $size
+     * @param  mixed $isChecked
+     * @return void
+     */
     public function updateSizeSelected($size, $isChecked)
     {
-
         if ($isChecked) {
-            if (!in_array($size, $this->sizes)) {
-                $this->sizes[] = $size;
-            }
+            // If the size is not already in the sizes array, add it
+            $this->sizes = array_unique(array_merge($this->sizes, [$size]));
         } else {
-            $index = array_search($size, $this->sizes);
-            if ($index !== false) {
-                unset($this->sizes[$index]);
-            }
+            // If the size checkbox is unchecked, remove it from the sizes array
+            $this->sizes = array_values(array_diff($this->sizes, [$size]));
         }
-
+        // Reset the page number when the filter is updated
         $this->resetPage();
     }
 
@@ -105,19 +104,19 @@ class Grid extends Component
      */
     public function updateCategorySelected($categoryId, $isChecked)
     {
+        // Add or remove categoryId from filters based on the value of $isChecked
         if ($isChecked) {
-            if (!in_array($categoryId, $this->categoryFilters)) {
-                $this->categoryFilters[] = $categoryId;
-            }
+            // Add categoryId to filters if it's not already there
+            $this->categoryFilters = array_unique(array_merge($this->categoryFilters, [$categoryId]));
         } else {
-            $index = array_search($categoryId, $this->categoryFilters);
-            if ($index !== false) {
-                unset($this->categoryFilters[$index]);
-            }
+            // Remove categoryId from filters if it's present
+            $this->categoryFilters = array_values(array_diff($this->categoryFilters, [$categoryId]));
         }
 
+        // Reset the page number when filters are updated
         $this->resetPage();
     }
+
 
     /**
      * updatingSearch
@@ -140,21 +139,14 @@ class Grid extends Component
         $this->search = $keyword;
     }
 
-    /**
-     * addToCart
-     *
-     * @param  mixed $cartService
-     * @param  mixed $uid
-     */
-    public function addToCart(CartService $cartService,$uid)
+
+    public function openModal(ProductService $productService,$productUid)
     {
-        $customer = Auth::guard('customer')->user();
-        $cart = $cartService->addProductToCart($uid, $customer->id);
-        if (!empty($cart)) {
-            $this->emit('productCartCreated', $cart);
-            $this->dispatchBrowserEvent('success-cart');
-        }
+        $product = $productService->getProductByUid($productUid);
+        $this->emit('openModalProduct', $product);
     }
+
+
 
 
 }

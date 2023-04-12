@@ -5,7 +5,7 @@ namespace Database\Factories;
 use App\Models\Color;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Storage;
-
+use Intervention\Image\ImageManagerStatic as Image;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
  */
@@ -26,11 +26,23 @@ class ProductFactory extends Factory
         // Download Image
         $imageData = file_get_contents($imageUrl);
 
-        // Generate Unique File Name
-        $fileName = uniqid() . '.jpg';
+        // Convert Image to .webp
+        $ext = 'webp';
+        $imageConvert = Image::make($imageData)->encode($ext, 100);
 
-        // Save Image to Storage
-        Storage::put('public/assets/images/products/' . $fileName, $imageData);
+        // Generate Unique File Name
+        $fileName = uniqid() . '.' . $ext;
+
+        // Calculate the compression level needed to reduce the file size to 200 KB
+        $compressionLevel = (200000 * 100) / strlen($imageConvert);
+
+        // Limit the compression level to 100 (maximum)
+        if ($compressionLevel > 100) {
+            $compressionLevel = 100;
+        }
+
+        // Resize image to reduce file size and save Image to Storage
+        $imageConvert->save(storage_path('app/public/assets/images/products/') . $fileName, $compressionLevel);
 
         // Get a list of color names from the 'colors' table
         $colorNames = Color::pluck('color_name')->toArray();

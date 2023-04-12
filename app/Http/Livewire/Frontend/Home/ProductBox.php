@@ -11,7 +11,7 @@ use Livewire\Component;
 
 class ProductBox extends Component
 {
-    public $cart_uid, $product_uid,$customer_id,$product_id,$quantity;
+    public $cart_uid, $product_uid, $customer_id, $product_id, $quantity;
     public function render(ProductService $productService)
     {
         return view('livewire.frontend.home.product-box', [
@@ -20,19 +20,10 @@ class ProductBox extends Component
     }
 
 
-    /**
-     * addToCart
-     *
-     * @param  mixed $cartService
-     * @param  mixed $uid
-     */
-    public function addToCart(CartService $cartService, $uid)
+    public function openModal(ProductService $productService, $productUid)
     {
-        $customer = Auth::guard('customer')->user();
-        $cart = $cartService->addProductToCart($uid, $customer->id);
-        if (!empty($cart)) {
-            $this->emit('homeCartCreated', $cart);
-            $this->dispatchBrowserEvent('success-cart');
-        }
+        $product = $productService->getProductByUid($productUid);
+        $this->emit('openModalProduct', $product);
     }
+
 }

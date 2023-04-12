@@ -13,6 +13,8 @@ use App\Http\Controllers\Backend\Setting\ContactController as SettingContactCont
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
@@ -32,7 +34,14 @@ Route::middleware(CountVisitor::class)->controller(HomeController::class)->group
 Route::middleware(CountVisitor::class)->group(function () {
     // TODO:
     Route::resource('product', FrontendProductController::class)->only(['index', 'show', 'create']);
+
+    // Wrap the cart route with the 'customer.auth' middleware to require customer login
+    Route::middleware(['customer.auth'])->group(function () {
+        Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+        Route::resource('checkout', CheckoutController::class)->only(['index', 'show', 'create']);
+    });
 });
+
 
 // About Page
 Route::middleware(CountVisitor::class)->controller(AboutController::class)->group(function () {
@@ -53,14 +62,14 @@ Route::controller(CustomerLoginController::class)->name('customer.')->prefix('cu
 });
 
 // Profile Page Customer
-Route::controller(ProfileController::class)->name('profile.')->prefix('profile')->group(function () {
+Route::middleware(['customer.auth'])->controller(ProfileController::class)->name('profile.')->prefix('profile')->group(function () {
     Route::get('/detail/{uid}', 'show')->name('detail');
 });
 
 // Login For Admin
 Route::controller(LoginController::class)->name('admin.')->prefix('admin')->group(function () {
     Route::get('/login','index')->name('login');
-    // Route::post('/logout', 'logout')->name('logout');
+
 });
 
 

@@ -4,11 +4,8 @@ namespace App\Http\Livewire\Backend\Product;
 
 use App\Models\Category;
 use App\Models\Color;
-use App\Models\Product;
-use App\Models\ProductTag;
 use App\Models\Tag;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
+use App\Services\Product\ProductService;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -162,87 +159,24 @@ class UpdateProduct extends Component
 
     /**
      * update
-     *
-     * @return void
+     * @param  mixed $productService
      */
-    public function update()
+    public function update(ProductService $productService)
     {
         // Create Validate
         $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->product_id) {
-            $product = Product::find($this->product_id);
-            $productData = [];
-            // Check if thumbnail is uploaded
-            if ($this->thumbnail) {
-                // Update Thumbnail
-                $fileName = $this->thumbnail->store('assets/images/products', 'public');
-                // Delete previous thumbnail if exists
-                if ($product->thumbnail) {
-                    Storage::delete('public/' . $product->thumbnail);
-                }
-                $productData = [
-                    'thumbnail' => $fileName,
-                ];
+            $updatedProduct = $productService->updateProduct($this->product_id, $this);
+            if ($updatedProduct) {
+                $this->updateModal = false;
+                // Set Flash Message
+                session()->flash('success', 'Produk Berhasil di Update!');
+                $this->resetFields();
+                // make emit with flash message
+                $this->emit('updatedProduct', $updatedProduct);
+                $this->dispatchBrowserEvent('close-modal-update');
             }
-
-            // Check if product images are uploaded
-            if (count($this->productImages)) {
-                // Delete previous product images if exists
-                $product->images()->delete();
-                foreach ($this->productImages as $productImage) {
-                    // Store new product image
-                    $fileName = $productImage->store('assets/images/product_images', 'public');
-                    // Create new product image record in database
-                    $product->images()->create([
-                        'image_name' => $fileName,
-                    ]);
-                }
-            }
-
-            /// Remove existing tags
-            $product->tags()->detach();
-
-            // Add new tags
-            $tags = $this->tag_id;
-            // dd($tags);
-            foreach ($tags as $tag) {
-                $product->tags()->attach($tag);
-            }
-
-            // Update other product fields
-            // Implode Array Size
-            $size = implode(', ', $this->size);
-            // Implode Array Color
-            $color = implode(', ', $this->color);
-            // DateNow for Updated
-            $dateNow = Carbon::now()->format('Y-m-d h:i:s');
-            // Declare Product Data
-            $productData += [
-                'product_name'          => $this->product_name,
-                'product_slug'          => str()->slug($this->product_name),
-                'category_id'           => $this->category_id,
-                'price'                 => $this->price,
-                'size'                  => $size,
-                'color'                 => $color,
-                'stock'                 => $this->stock,
-                'type'                  => $this->type,
-                'product_description'   => $this->product_description,
-                'weight'                => $this->weight,
-                'material'              => $this->material,
-                'dimension'             => $this->dimension,
-                'discount'              => $this->discount ? $this->discount : 0 ,
-                'date_updated'          => $dateNow,
-            ];
-            // Update Product
-            $product->update($productData);
-            $this->updateModal = false;
-            // Set Flash Message
-            session()->flash('success', 'Produk Berhasil di Update!');
-            $this->resetFields();
-            // buatkan emit dengan flash message
-            $this->emit('updatedProduct', $product);
-            $this->dispatchBrowserEvent('close-modal-update');
         }
     }
 

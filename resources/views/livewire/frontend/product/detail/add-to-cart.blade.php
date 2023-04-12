@@ -26,25 +26,28 @@
                 @error('selectedSize') <small class="error text-danger">{{ $message }}</small> @enderror
             </div>
             <h6 class="product-title">Kuantitas</h6>
-            <div class="qty-box">
-                <div class="input-group" >
-                    <span class="input-group-prepend">
-                        <button type="button" class="btn quantity-left-minus" data-type="minus" data-field="">
-                            <i class="ti-angle-left"></i>
-                        </button>
-                    </span>
-                    <input type="text" name="quantity" class="form-control input-number" value="{{ $quantity }}"
-                        wire:model="quantity">
-                    <span class="input-group-prepend">
-                        <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
-                            <i class="ti-angle-right"></i>
-                        </button>
-                    </span>
+            <div class="d-flex">
+                <div class="qty-box">
+                    <div class="input-group">
+                        <span class="input-group-prepend">
+                            <button type="button" class="btn quantity-left-minus" data-type="minus" data-field="">
+                                <i class="ti-angle-left"></i>
+                            </button>
+                        </span>
+                        <input type="text" name="quantity" class="form-control input-number" value="{{ $quantity }}"
+                            wire:model="quantity">
+                        <span class="input-group-prepend">
+                            <button type="button" class="btn quantity-right-plus" data-type="plus" data-field="">
+                                <i class="ti-angle-right"></i>
+                            </button>
+                        </span>
+                    </div>
                 </div>
+                <p style="margin-left: 15px;margin-top:15px;">Tersisa {{ $stock }} buah</p>
             </div>
         </div>
         <div class="product-buttons">
-            <button type="submit" wire:click="addToCart('{{ $productUid }}')" class="btn btn-solid btn-animation">
+            <button id="addToCart" type="submit" wire:click="addToCart('{{ $productUid }}')" class="btn btn-solid btn-animation">
                 <i class="fa fa-shopping-cart me-1" aria-hidden="true"></i>
                 Tambah ke Keranjang
             </button>
@@ -53,7 +56,25 @@
                 Favorit
             </a>
         </div>
+
+    @if (session()->has('success'))
+    <script>
+        // disable selected state on size and color buttons
+        $('.size-box2 ul li').removeClass('selected');
+        $('.size-box2 ul li a').removeClass('active');
+        $('.color-box2 ul li').removeClass('selected');
+        $('.color-box2 ul li a').removeClass('active');
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+    @endif
     @push('scripts')
+
     <script>
         $(document).ready(function () {
             $(".quantity-right-plus").click(function (e) {

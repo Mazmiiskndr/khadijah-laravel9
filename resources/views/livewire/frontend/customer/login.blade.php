@@ -17,7 +17,6 @@
 
     <button class="btn btn-solid" type="submit">Masuk</button>
 
-    @push('scripts')
     @if (session()->has('success'))
     <script>
         Swal.fire({
@@ -47,7 +46,6 @@
         });
     </script>
     @endif
-    @endpush
 
 </form>
 

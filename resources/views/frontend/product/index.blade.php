@@ -82,7 +82,7 @@
                                     <a href="#"><img src="{{ asset('assets/images/frontend/banner/banner-product-1.jpg') }}"
                                             class="img-fluid blur-up lazyload" alt=""></a>
                                     <div class="top-banner-content small-section">
-                                        <h4>PROMO TERBESAR UNTUK MEREK-MEREK TERBAIK</h4>
+                                        <h4>PROMO TERBESAR UNTUK PRODUK TERBAIK</h4>
                                         <p>Untuk tampil anggun dan syari saat beribadah, pilihlah mukena terbaik yang sesuai dengan selera dan kebutuhanmu.
                                         Khadijah menyediakan beragam pilihan mukena berkualitas dengan berbagai model dan warna yang menarik. Dapatkan
                                         keuntungan berbelanja di Khadijah, seperti pengiriman cepat, opsi pembayaran yang fleksibel, dan layanan pengembalian
@@ -112,9 +112,14 @@
         </div>
     </div>
 </section>
+@livewire('frontend.product.detail-cart')
 <!-- section End -->
+@push('scripts')
+<script>
+    window.addEventListener('close-modal-product', event =>{
+        $('#quick-view').modal('hide');
+    });
+</script>
+@endpush
 </x-frontend.master>
 
-@push('scripts')
-
-@endpush

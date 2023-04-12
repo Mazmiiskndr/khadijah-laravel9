@@ -1121,9 +1121,13 @@
         {{-- End Logo Content --}}
     </x-frontend.home.logo-section>
     {{-- End Logo Section --}}
-
-</x-frontend.master>
-
+@livewire('frontend.product.detail-cart')
+<!-- section End -->
 @push('scripts')
-
+<script>
+    window.addEventListener('close-modal-product', event =>{
+        $('#quick-view').modal('hide');
+    });
+</script>
 @endpush
+</x-frontend.master>

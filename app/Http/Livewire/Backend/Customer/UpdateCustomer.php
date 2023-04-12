@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
+use App\Services\Customer\CustomerService;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
@@ -156,39 +157,63 @@ class UpdateCustomer extends Component
 
     /**
      * update
-     *
-     * @return void
+     * @param  mixed $customerService
      */
-    public function update()
+    public function update(CustomerService $customerService)
     {
         // Create Validate
         $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->customer_id) {
-            $customer = Customer::find($this->customer_id);
-            $customerData = [
-                'name' => $this->name,
-                'email' => $this->email,
-                'address' => $this->address,
-                'city_id' => $this->city_id,
-                'district_id' => $this->district_id,
-                'province_id' => $this->province_id,
-                'postal_code' => $this->postal_code,
-                'phone' => $this->phone,
-            ];
-            if (!empty($this->password)) {
-                $customerData['password'] = Hash::make($this->password);
+            $updatedCustomer = $customerService->updateCustomer($this->customer_id, $this);
+            // dd($updatedCustomer);
+            if ($updatedCustomer) {
+                $this->updateModal = false;
+                // Set Flash Message
+                session()->flash('success', 'Pelanggan Berhasil di Update!');
+                $this->resetFields();
+                // make emit with flash message
+                $this->emit('updatedCustomer', $updatedCustomer);
+                $this->dispatchBrowserEvent('close-modal');
             }
-            $customer->update($customerData);
-            $this->updateModal = false;
-            // Set Flash Message
-            session()->flash('success', 'Pelanggan Berhasil di Update!');
-            $this->resetFields();
-            // buatkan emit dengan flash message
-            $this->emit('updatedCustomer', $customer);
-            $this->dispatchBrowserEvent('close-modal');
         }
     }
+
+    /**
+     * update
+     *
+     * @return void
+     */
+    // public function update()
+    // {
+    //     // Create Validate
+    //     $this->validate($this->getRules(), $this->getMessages());
+
+    //     if ($this->customer_id) {
+    //         $customer = Customer::find($this->customer_id);
+    //         $customerData = [
+    //             'name' => $this->name,
+    //             'email' => $this->email,
+    //             'address' => $this->address,
+    //             'city_id' => $this->city_id,
+    //             'district_id' => $this->district_id,
+    //             'province_id' => $this->province_id,
+    //             'postal_code' => $this->postal_code,
+    //             'phone' => $this->phone,
+    //         ];
+    //         if (!empty($this->password)) {
+    //             $customerData['password'] = Hash::make($this->password);
+    //         }
+    //         $customer->update($customerData);
+    //         $this->updateModal = false;
+    //         // Set Flash Message
+    //         session()->flash('success', 'Pelanggan Berhasil di Update!');
+    //         $this->resetFields();
+    //         // buatkan emit dengan flash message
+    //         $this->emit('updatedCustomer', $customer);
+    //         $this->dispatchBrowserEvent('close-modal');
+    //     }
+    // }
 
 
     /**

@@ -24,7 +24,6 @@
             title: 'Oops...',
             text: '{{ session('error') }}',
         })
-
     </script>
     @endif
     @if (session()->has('success'))

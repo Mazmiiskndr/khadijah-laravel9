@@ -152,4 +152,52 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+
+    /**
+     * updateProduct
+     * @param  mixed $product_id
+     * @param  mixed $data
+     */
+    public function updateProduct($product_id,$data)
+    {
+        try {
+            return $this->mainRepository->updateProduct($product_id, $data);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
+    /**
+     * createProduct
+     * @param  mixed $data
+     */
+    public function createProduct($data)
+    {
+        try {
+            return $this->mainRepository->createProduct( $data);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
+    /**
+     * deleteProduct
+     * @param  mixed $product_id
+     * @param  mixed $data
+     */
+    public function deleteProduct($product_id, $data)
+    {
+        try {
+            return $this->mainRepository->deleteProduct($product_id, $data);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            return [];
+            //throw $th;
+        }
+    }
+
 }
