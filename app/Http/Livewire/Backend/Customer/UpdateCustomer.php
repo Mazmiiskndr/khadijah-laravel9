@@ -180,43 +180,6 @@ class UpdateCustomer extends Component
     }
 
     /**
-     * update
-     *
-     * @return void
-     */
-    // public function update()
-    // {
-    //     // Create Validate
-    //     $this->validate($this->getRules(), $this->getMessages());
-
-    //     if ($this->customer_id) {
-    //         $customer = Customer::find($this->customer_id);
-    //         $customerData = [
-    //             'name' => $this->name,
-    //             'email' => $this->email,
-    //             'address' => $this->address,
-    //             'city_id' => $this->city_id,
-    //             'district_id' => $this->district_id,
-    //             'province_id' => $this->province_id,
-    //             'postal_code' => $this->postal_code,
-    //             'phone' => $this->phone,
-    //         ];
-    //         if (!empty($this->password)) {
-    //             $customerData['password'] = Hash::make($this->password);
-    //         }
-    //         $customer->update($customerData);
-    //         $this->updateModal = false;
-    //         // Set Flash Message
-    //         session()->flash('success', 'Pelanggan Berhasil di Update!');
-    //         $this->resetFields();
-    //         // buatkan emit dengan flash message
-    //         $this->emit('updatedCustomer', $customer);
-    //         $this->dispatchBrowserEvent('close-modal');
-    //     }
-    // }
-
-
-    /**
      * closeModal
      *
      * @return void

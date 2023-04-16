@@ -1,7 +1,7 @@
 @push('styles')
 
 @endpush
-<x-frontend.master title="Detail Produk | Khadijah Label">
+<x-frontend.master title="Detail Produk">
     <!-- breadcrumb start -->
     <div class="breadcrumb-section">
         <div class="container">
