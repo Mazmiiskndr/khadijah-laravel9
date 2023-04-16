@@ -1,4 +1,4 @@
-<x-frontend.master title="Profil | Khadijah Label">
+<x-frontend.master title="Profil">
     @push('styles')
 
     @endpush

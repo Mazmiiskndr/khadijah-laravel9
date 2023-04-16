@@ -1,7 +1,7 @@
 @push('styles')
 
 @endpush
-<x-frontend.master title="Produk | Khadijah Label">
+<x-frontend.master title="Produk">
 
     {{-- Start Breadcrumb --}}
     <x-frontend.product.breadcrumb />

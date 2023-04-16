@@ -1,4 +1,4 @@
-<x-frontend.master>
+<x-frontend.master title="Keranjang">
 
     <!-- breadcrumb start -->
     <div class="breadcrumb-section">

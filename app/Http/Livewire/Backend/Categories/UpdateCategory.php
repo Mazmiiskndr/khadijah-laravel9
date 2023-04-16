@@ -46,7 +46,7 @@ class UpdateCategory extends Component
      */
     public function update()
     {
-        // buatkan validate dengan message error harus diisi
+        // Validate
         $this->validate();
         if($this->category_id){
             $category = Category::find($this->category_id);
@@ -58,8 +58,8 @@ class UpdateCategory extends Component
             // Set Flash Message
             session()->flash('success', 'Kategori Berhasil di Update!');
             $this->resetFields();
-            // $this->emit('updatedCategory');
-            // buatkan emit dengan flash message
+
+            // Emit with flash message
             $this->emit('updatedCategory', $category);
             $this->dispatchBrowserEvent('close-modal');
         }

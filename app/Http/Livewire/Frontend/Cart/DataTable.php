@@ -11,8 +11,6 @@ class DataTable extends Component
 {
     public $cart_uid, $cart_id,$quantity = 1;
     protected $listeners = [
-        // 'homeCartCreated' => 'handleHomeCart',
-        // 'productCartCreated' => 'handleProductCart',
         'deleteCart' => 'destroy',
     ];
 
@@ -23,7 +21,6 @@ class DataTable extends Component
     public function render(CartService $cartService)
     {
         $customer_id = Auth::guard('customer')->user()->id;
-        // dd($carts);
         return view('livewire.frontend.cart.data-table', [
             'carts' => $cartService->getAllDataByCustomer($customer_id),
         ]);
