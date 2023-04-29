@@ -112,9 +112,9 @@
             <div class="row">
                 <div class="col-xl-12 col-md-12 col-sm-12">
                     <div class="footer-end">
-                        <p class="text-center"><i class="fa fa-copyright" aria-hidden="true"></i> {{
-                            \Carbon\Carbon::now()->format('Y') }} Created By : <a
-                                href="https://github.com/Mazmiiskndr">Moch Azmi Iskandar</a></p>
+                        <p class="text-center"><i class="fa fa-copyright" aria-hidden="true"></i>
+                        {{ \Carbon\Carbon::now()->format('Y') }} Copyright : Khadijah Label
+                        </p>
                     </div>
                 </div>
 

@@ -168,6 +168,10 @@
                     </li> --}}
                     <li><a href="{{ route('index') }}">Beranda</a></li>
                     <li><a href="{{ route('product.index') }}">Produk</a></li>
+                    <li><a href="{{ route('gallery.index') }}">Galeri</a></li>
+                    <li><a href="{{ route('about.index') }}">Tentang</a></li>
+                    <li><a href="{{ route('contact.index') }}">Kontak</a></li>
+                    <li><a href="{{ route('faq.index') }}">FAQ</a></li>
                 </ul>
             </nav>
         </div>
