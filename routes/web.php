@@ -16,6 +16,8 @@ use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\FaqController;
+use App\Http\Controllers\Frontend\GalleryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\ProfileController;
@@ -33,7 +35,15 @@ Route::middleware(CountVisitor::class)->controller(HomeController::class)->group
 // Frontend Product Page
 Route::middleware(CountVisitor::class)->group(function () {
     // TODO:
-    Route::resource('product', FrontendProductController::class)->only(['index', 'show', 'create']);
+    Route::resource('product', FrontendProductController::class)->only(['index', 'show']);
+    // About Page
+    Route::get('/about', [AboutController::class, 'index'])->name('about.index');
+    // Contact Page
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    // Gallery Page
+    Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery.index');
+    // FAQ Page
+    Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
     // Wrap the cart route with the 'customer.auth' middleware to require customer login
     Route::middleware(['customer.auth'])->group(function () {
@@ -41,18 +51,6 @@ Route::middleware(CountVisitor::class)->group(function () {
         Route::resource('checkout', CheckoutController::class)->only(['index', 'show', 'create']);
     });
 });
-
-
-// About Page
-Route::middleware(CountVisitor::class)->controller(AboutController::class)->group(function () {
-    Route::get('/about','about')->name('about');
-});
-
-// Contact Page
-Route::middleware(CountVisitor::class)->controller(ContactController::class)->group(function () {
-    Route::get('/contact','contact')->name('contact');
-});
-
 
 // Login For Customer
 Route::controller(CustomerLoginController::class)->name('customer.')->prefix('customer')->group(function () {

@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ContactController extends Controller
+class GalleryController extends Controller
 {
     public function index()
     {
-        return "Contact Page";
+        return "Gallery Page";
     }
 }
