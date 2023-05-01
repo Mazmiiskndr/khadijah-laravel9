@@ -35,7 +35,7 @@
                         <td>
                             @if($addressCustomer != "-")
                             <address>{{ $provinceCustomer }}, {{ $cityCustomer }}, {{ $districtCustomer }}, {{
-                                $addressCustomer }} </address>
+                                $addressCustomer }}, {{ $customer->postal_code }} </address>
                             @else
                             <address class="text-warning">Anda belum mengatur alamat pengiriman.</address>
                             @endif

@@ -103,72 +103,18 @@
                                 {{-- Start Information Account --}}
                                 @livewire('frontend.profile.information-account',['customer' => $customer])
                                 @livewire('frontend.profile.update-account')
+
                                 {{-- End Information Account --}}
 
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="address">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card mt-0">
-                                    <div class="card-body">
-                                        <div class="top-sec">
-                                            <h3>Buku Alamat</h3>
-                                            <a href="#" class="btn btn-sm btn-solid">+ add new</a>
-                                        </div>
-                                        <div class="address-book-section">
-                                            <div class="row g-4">
-                                                <div class="select-box active col-xl-4 col-md-6">
-                                                    <div class="address-box">
-                                                        <div class="top">
-                                                            <h6>mark jecno <span>home</span></h6>
-                                                        </div>
-                                                        <div class="middle">
-                                                            <div class="address">
-                                                                <p>549 Sulphur Springs Road</p>
-                                                                <p>Downers Grove, IL</p>
-                                                                <p>60515</p>
-                                                            </div>
-                                                            <div class="number">
-                                                                <p>mobile: <span>+91 123 - 456 - 7890</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="bottom">
-                                                            <a href="javascript:void(0)" data-bs-target="#edit-address"
-                                                                data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">remove</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="select-box col-xl-4 col-md-6">
-                                                    <div class="address-box">
-                                                        <div class="top">
-                                                            <h6>mark jecno <span>office</span></h6>
-                                                        </div>
-                                                        <div class="middle">
-                                                            <div class="address">
-                                                                <p>549 Sulphur Springs Road</p>
-                                                                <p>Downers Grove, IL</p>
-                                                                <p>60515</p>
-                                                            </div>
-                                                            <div class="number">
-                                                                <p>mobile: <span>+91 123 - 456 - 7890</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="bottom">
-                                                            <a href="javascript:void(0)" data-bs-target="#edit-address"
-                                                                data-bs-toggle="modal" class="bottom_btn">edit</a>
-                                                            <a href="#" class="bottom_btn">remove</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {{-- *** TODO: EDIT ADDRESS *** --}}
+                        {{-- Start Address --}}
+                        @livewire('frontend.profile.address',['customer' => $customer])
+                        @livewire('frontend.profile.update-address-account')
+                        {{-- End Address --}}
                     </div>
                     <div class="tab-pane fade" id="orders">
                         <div class="row">
@@ -841,6 +787,7 @@
         $('#updateCustomerModal').modal('hide');
         $('#createRekeningModal').modal('hide');
         $('#updateRekeningModal').modal('hide');
+        $('#updateCustomerAddressModal').modal('hide');
     });
     window.addEventListener('delete-card-show-confirmation', event =>{
         Swal.fire({

@@ -5,40 +5,30 @@ namespace App\Http\Livewire\Frontend\Profile;
 use App\Models\Customer;
 use Livewire\Component;
 
-class InformationAccount extends Component
+class Address extends Component
 {
     public $customer;
+
     protected $listeners = [
-        'updatedCustomer' => 'handleUpdated',
         'updatedCustomerAddress' => 'handleAddressUpdated',
+        'updatedCustomer' => 'handleUpdated',
     ];
 
     public function render()
     {
-        return view('livewire.frontend.profile.information-account');
+        return view('livewire.frontend.profile.address');
     }
 
     /**
-     * getCustomer
+     * getCustomerAdress
      *
      * @param  mixed $customer_id
      * @return void
      */
-    public function getCustomer($customer_id)
+    public function getCustomerAdress($customer_id)
     {
         $customer = Customer::with('province', 'city', 'district')->find($customer_id);
-        $this->emit('getCustomer', $customer);
-    }
-
-
-    /**
-     * handleUpdated
-     *
-     * @return void
-     */
-    public function handleUpdated()
-    {
-        // code..
+        $this->emit('getCustomerAddress', $customer);
     }
 
     /**
@@ -50,4 +40,15 @@ class InformationAccount extends Component
     {
         // code..
     }
+
+    /**
+     * handleUpdated
+     *
+     * @return void
+     */
+    public function handleUpdated()
+    {
+        // code..
+    }
+
 }
