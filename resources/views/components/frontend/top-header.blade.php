@@ -10,34 +10,36 @@
                 </div>
             </div>
             <div class="col-lg-6 text-end">
+
                 <ul class="header-dropdown">
                     <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>
-                        Akun Saya
-
-
+                        Akun
                         <ul class="onhover-show-div">
                             @if(Auth::guard('customer')->check())
-                                <li>
-                                    <a href="{{ route('profile.detail', ['uid' => Auth::guard('customer')->user()->customer_uid ]) }}"><i
-                                            class="fas fa-user-gear"></i> Profil</a>
-                                </li>
-                                <form id="form-logout" method="POST" action="{{ route('customer.logout') }}">
-                                    @csrf
-                                    <li onclick="logoutButton();">
+                            <li>
+                                <a
+                                    href="{{ route('profile.detail', ['uid' => Auth::guard('customer')->user()->customer_uid ]) }}"><i
+                                        class="fas fa-user-gear"></i> Profil</a>
+                            </li>
+                            <form id="form-logout" method="POST" action="{{ route('customer.logout') }}">
+                                @csrf
+                                <li onclick="logoutButton();">
 
-                                        <a href="#"><i class="fas fa-door-open"></i> Keluar</a>
-                                    </li>
-                                </form>
+                                    <a href="#"><i class="fas fa-door-open"></i> Keluar</a>
+                                </li>
+                            </form>
                             @else
-                            <li><a href="{{ route('customer.login') }}"><i class="fas fa-sign-in-alt"></i> Masuk</a></li>
-                            <li><a href="{{ route('customer.register') }}"><i class="fas fa-user-plus"></i> Daftar</a></li>
+                            <li><a href="{{ route('customer.login') }}"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+                            </li>
+                            <li><a href="{{ route('customer.register') }}"><i class="fas fa-user-plus"></i> Daftar</a>
+                            </li>
                             @endif
                         </ul>
-
                     </li>
                 </ul>
+
             </div>
         </div>
     </div>
