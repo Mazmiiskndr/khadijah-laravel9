@@ -1,7 +1,7 @@
-@push('styles')
-
-@endpush
 <x-frontend.master title="Produk">
+    @push('styles')
+
+    @endpush
 
     {{-- Start Breadcrumb --}}
     <x-frontend.product.breadcrumb />
