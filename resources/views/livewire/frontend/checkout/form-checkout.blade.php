@@ -55,7 +55,7 @@
         <div class="checkout-details">
             <div class="order-box">
                 <div class="title-box">
-                    <div>Product <span>Total</span></div>
+                    <div>Produk <span>Total</span></div>
                 </div>
                 <ul class="qty">
                     @php
