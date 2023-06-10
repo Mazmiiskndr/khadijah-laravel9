@@ -31,8 +31,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getAllData();
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -52,7 +51,6 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getPaginatedData($perPage, $search,$showing,$categoryFilters);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
         }
     }
 
@@ -72,7 +70,6 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getProductFrontend($perPage, $search,$showing,$categoryFilters,$sizes);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
         }
     }
 
@@ -82,7 +79,6 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getGalleryProduct($perPage, $search);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
         }
     }
 
@@ -98,7 +94,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->findById($id);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return null;
+            throw $th;
         }
     }
 
@@ -115,7 +111,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getProductByUid($uid);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return null;
+            throw $th;
         }
     }
 
@@ -131,7 +127,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getProductBySlug($slug);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return null;
+            throw $th;
         }
     }
 
@@ -147,8 +143,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->getLimitData($limit);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -164,8 +159,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->updateProduct($product_id, $data);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -179,8 +173,7 @@ class ProductServiceImplement extends Service implements ProductService
             return $this->mainRepository->createProduct( $data);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -189,14 +182,13 @@ class ProductServiceImplement extends Service implements ProductService
      * @param  mixed $product_id
      * @param  mixed $data
      */
-    public function deleteProduct($product_id, $data)
+    public function deleteProduct($product_id)
     {
         try {
-            return $this->mainRepository->deleteProduct($product_id, $data);
+            return $this->mainRepository->deleteProduct($product_id);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 

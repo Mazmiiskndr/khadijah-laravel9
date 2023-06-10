@@ -27,39 +27,39 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
-     * getAllData
-     *
-     * @return void
+     * Retrieve all data.
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getAllData()
     {
         return $this->model->latest()->get();
     }
 
-
     /**
-     * getPaginatedData
-     *
-     * @param  mixed $perPage
-     * @param  mixed $search
-     * @param  mixed $showing
-     * @param  mixed $categoryFilters
-     * @return void
+     * Retrieve paginated data with search, filters, and sorting options.
+     * @param int $perPage - Number of items per page
+     * @param string $search - Search keyword
+     * @param string $showing - Sorting option
+     * @param array $categoryFilters - Array of category filters
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getPaginatedData($perPage, $search, $showing, $categoryFilters)
     {
+        // Join the product and category tables and apply search filters
         $query = $this->model->join('category', 'category.category_id', '=', 'product.category_id')
-            ->where(function ($query) use ($search) {
-                $query->where('product_name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('category_name', 'LIKE', '%' . $search . '%');
-            });
+        ->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('category_name', 'LIKE', '%' . $search . '%');
+        });
 
+        // Apply category filters if available
         if (!empty($categoryFilters)) {
             $query->whereHas('category', function ($query) use ($categoryFilters) {
                 $query->whereIn('category_id', $categoryFilters);
             });
         }
 
+        // Apply sorting options
         switch ($showing) {
             case 'featured':
                 $query->orderBy('created_at', 'DESC');
@@ -75,38 +75,40 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
                 break;
         }
 
-        $query = $query->select('product.*')->paginate($perPage);
-
-        return $query;
+        // Perform pagination and return the results
+        return $query->select('product.*')->paginate($perPage);
     }
-
     /**
-     * getProductFrontend
-     *
-     * @param  mixed $perPage
-     * @param  mixed $search
-     * @param  mixed $showing
-     * @param  mixed $categoryFilters
-     * @param  mixed $sizes
-     * @return void
+     * Retrieve paginated data for frontend with search, filters, and sorting options.
+     * @param int $perPage - Number of items per page
+     * @param string $search - Search keyword
+     * @param string $showing - Sorting option
+     * @param array $categoryFilters - Array of category filters
+     * @param array $sizes - Array of sizes to filter
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getProductFrontend($perPage, $search, $showing, $categoryFilters, $sizes)
     {
+        // Join the product and category tables and apply search filters
         $query = $this->model->join('category', 'category.category_id', '=', 'product.category_id')
-            ->where(function ($query) use ($search) {
-                $query->where('product_name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('category_name', 'LIKE', '%' . $search . '%');
-            });
+        ->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('category_name', 'LIKE', '%' . $search . '%');
+        });
 
+        // Apply category filters if available
         if (!empty($categoryFilters)) {
             $query->whereHas('category', function ($query) use ($categoryFilters) {
                 $query->whereIn('category_id', $categoryFilters);
             });
         }
+
+        // Apply size filters if available
         if (!empty($sizes)) {
             $query->whereIn('size', $sizes);
         }
 
+        // Apply sorting options
         switch ($showing) {
             case 'featured':
                 $query->orderBy('created_at', 'DESC');
@@ -122,50 +124,47 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
                 break;
         }
 
-        $query = $query->select('product.*')->paginate($perPage);
-
-        return $query;
+        // Perform pagination and return the results
+        return $query->select('product.*')->paginate($perPage);
     }
 
     /**
-     * getGalleryProduct
-     *
-     * @param  mixed $perPage
-     * @param  mixed $search
-     * @return void
+     * Retrieve gallery products with search option.
+     * @param int $perPage - Number of items per page
+     * @param string $search - Search keyword
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getGalleryProduct($perPage, $search)
     {
+        // Join the product and category tables and apply search filters
         $query = $this->model->join('category', 'category.category_id', '=', 'product.category_id')
-            ->where(function ($query) use ($search) {
-                $query->where('product_name', 'LIKE', '%' . $search . '%')
-                    ->orWhere('category_name', 'LIKE', '%' . $search . '%');
-            });
+        ->where(function ($query) use ($search) {
+            $query->where('product_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('category_name', 'LIKE', '%' . $search . '%');
+        });
+
+        // Order the results by creation date in descending order
         $query->orderBy('created_at', 'DESC');
 
-        $query = $query->select('product.*')->paginate($perPage);
-
-        return $query;
+        // Perform pagination and return the results
+        return $query->select('product.*')->paginate($perPage);
     }
 
-
     /**
-     * findById
-     *
-     * @param  mixed $id
-     * @return void
+     * Retrieve a product by its ID.
+     * @param int $id - Product ID
+     * @return \App\Models\Product
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function findById($id)
     {
         return $this->model->with('images', 'category', 'tags')->findOrFail($id);
     }
 
-
     /**
-     * getProductByUid
-     *
-     * @param  mixed $uid
-     * @return void
+     * Retrieve a product by its UID.
+     * @param string $uid - Product UID
+     * @return \App\Models\Product|null
      */
     public function getProductByUid($uid)
     {
@@ -173,9 +172,9 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
-     * getProductBySlug
-     * @param  mixed $slug
-     * @return void
+     * Retrieve a product by its slug.
+     * @param string $slug - Product slug
+     * @return \App\Models\Product|null
      */
     public function getProductBySlug($slug)
     {
@@ -183,59 +182,50 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
-     *
-     * @param  mixed $limit
+     * Retrieve a limited number of products.
+     * @param int $limit - Limit of products to retrieve
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function getLimitData($limit)
     {
         return $this->model->with('images')->orderBy('created_at', 'DESC')->limit($limit)->get();
     }
 
+    /**
+     * Create a new product in the database.
+     * @param object $data - The data to create the product with
+     * @return \App\Models\Product
+     * @throws \Exception
+     */
     public function createProduct($data)
     {
         try {
-            // Handle thumbnail creation
+            // Handle the product thumbnail image upload, storing the filename
             $fileName = $this->handleThumbnail($data->thumbnail);
 
-            // Prepare data for product creation
+            // Prepare the raw product data for creation
             $productData = $this->prepareProductData($data);
 
-            // Include thumbnail in product data
+            // Update the prepared product data with the filename of the uploaded thumbnail
             $productData['thumbnail'] = $fileName;
+
+            // Add the current date and time as the date added for the product
             $productData['date_added'] = Carbon::now()->format('Y-m-d h:i:s');
 
-            // Insert data
+            // Create the product in the database using the model and the prepared data
             $product = $this->model->create($productData);
 
-            $tags = $data->tag_id;
-            foreach ($tags as $tag) {
-                // Create Object New ProductTag
-                $productTag = new ProductTag();
-                $productTag->product_id = $product->product_id; // id produk yang sedang dibuat
-                $productTag->tag_id = $tag;
-                $productTag->save();
-            }
+            // Handle the product tags for the new product
+            $this->handleProductTags($product, $data);
 
-            // Insert Images
-            foreach ($data->productImages as $productImage) {
-                // Save file to server
-                $image = $productImage;
-                $ext = 'webp';
-                $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
-                $fileProductImages = 'assets/images/product_images/' . uniqid(10) . '.' . $ext;
-                Storage::put('public/' . $fileProductImages, $imageConvert);
-                // Create Object New ProductImage
-                $image = new ProductImage();
-                $image->product_id = $product->product_id; // id produk yang sedang dibuat
-                $image->image_name = $fileProductImages;
-                $image->save();
-            }
+            // Handle the product images for the new product
+            $this->handleProductImages($product, $data);
 
-            // Return the created product
+            // Return the newly created product
             return $product;
         } catch (\Throwable $th) {
-            // Return the error message
-            return $th->getMessage();
+            // Throw an exception if there was an error creating the product
+            throw new \Exception('Error creating product: ' . $th->getMessage());
         }
     }
 
@@ -243,54 +233,83 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
      * Update existing product in the database.
      * @param int $product_id - The id of the product to update
      * @param object $data - The data to update the product with
-     * @return \App\Models\Product - The updated product
-     * @throws \Exception - If an error occurs during the update process or product does not exist
+     * @return \App\Models\Product
+     * @throws \Exception
      */
     public function updateProduct($product_id, $data)
     {
         try {
-            // Find the product by its id
+            // Find the existing product in the database
             $product = $this->model->find($product_id);
 
-            // // Check if the product exists
-            if (!$product) {
-                // If the product does not exist, throw an error
-                throw new \Exception('Product not found');
-            }
+            // Throw an exception if the product could not be found
+            if (!$product) throw new \Exception('Product not found');
 
+            // If a new thumbnail is provided, handle the thumbnail update
             if ($data->thumbnail) {
                 $fileName = $this->handleThumbnail($data->thumbnail, $product->thumbnail);
-                // If a new thumbnail is provided, handle it and include it in the product data
                 $data->thumbnail = $fileName;
             }
 
-            // Prepare data for product update
-            $productData = $this->prepareProductData($data);
-            // Check if thumbnail exists
-            if (!empty($data->thumbnail)) {
+            // Prepare the raw product data for update
+            $productData = $this->prepareProductData($data, $product->id);
+
+            // If a new thumbnail is provided, update the product data with the new thumbnail filename
+            if ($data->thumbnail) {
                 $productData['thumbnail'] = $fileName;
             }
+
+            // Update the 'date_updated' field to the current date and time
             $productData['date_updated'] = Carbon::now()->format('Y-m-d h:i:s');
-            // Update the product in the database
+
+            // Update the product in the database with the new data
             $product->update($productData);
 
-            // Handle product images. This method will add, remove, or update the product images as necessary based on the provided data
+            // Handle any new product images
             $this->handleProductImages($product, $data);
 
-            // Handle product tags. This method will add, remove, or update the product tags as necessary based on the provided data
+            // Handle any new product tags
             $this->handleProductTags($product, $data);
 
             // Return the updated product
             return $product;
         } catch (\Exception $e) {
-            // Log the error for debugging purposes
+            // Log the error and rethrow the exception
             Log::error('Error updating product: ' . $e->getMessage());
-
-            // Rethrow the error to be handled by the global exception handler
             throw $e;
         }
     }
 
+    /**
+     * Delete existing product in the database.
+     * @param mixed $product_id
+     */
+    public function deleteProduct($product_id)
+    {
+        // Find the product by its id
+        $product = Product::find($product_id);
+
+        // Check if the product exists
+        if ($product) {
+            // Delete associated product tags
+            ProductTag::where('product_id', $product_id)->delete();
+
+            // Delete associated product images
+            $productImages = ProductImage::where('product_id', $product_id)->get();
+            foreach ($productImages as $productImage) {
+                // Delete the image file from storage
+                Storage::delete('public/' . $productImage->image_name);
+                // Delete the product image record from the database
+                $productImage->delete();
+            }
+
+            // Delete the product's thumbnail image from storage
+            Storage::delete('public/' . $product->thumbnail);
+
+            // Delete the product itself from the database
+            $product->delete();
+        }
+    }
 
     /**
      * Prepare product data for creation or update.
@@ -300,69 +319,35 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
      */
     private function prepareProductData($data, $modelId = null)
     {
-        // Implode Array Size and Color
-        $size = implode(', ', $data->size);
-        $color = implode(', ', $data->color);
-
-        // Create Unique Slug
+        // Generate a slug from the product name
         $slug = str()->slug($data->product_name);
+
+        // Check if the slug already exists in the database and generate a unique slug if necessary
         $count = $modelId
             ? $this->model->where('product_slug', $slug)->where('id', '!=', $modelId)->count()
             : $this->model->where('product_slug', $slug)->count();
 
-        if ($count > 0) {
-            $slug = $slug . '-' . ($count + 1);
-        }
+        $slug = $count > 0 ? $slug . '-' . ($count + 1) : $slug;
 
-        // Merge Data Length, Width and Height
+        // Concatenate the dimensions (length, width, height) into a single string
         $dimension = $data->length . ' x ' . $data->width . ' x ' . $data->height;
 
-        // Prepare data for product creation or update
-        $productData = [
+        // Prepare the product data array with the required fields
+        return [
             'product_name'          => $data->product_name,
             'product_slug'          => $slug,
             'category_id'           => $data->category_id,
             'price'                 => $data->price,
-            'size'                  => $size,
-            'color'                 => $color,
+            'size'                  => implode(', ', $data->size),
+            'color'                 => implode(', ', $data->color),
             'stock'                 => $data->stock,
             'type'                  => $data->type,
             'product_description'   => $data->product_description,
             'weight'                => $data->weight,
             'material'              => $data->material,
             'dimension'             => $dimension,
-            'discount'              => $data->discount ? $data->discount : 0,
+            'discount'              => $data->discount ?? 0,
         ];
-
-        return $productData;
-    }
-
-
-    /**
-     * deleteProduct
-     * @param  mixed $product_id
-     * @param  mixed $data
-     */
-    public function deleteProduct($product_id, $data)
-    {
-        $product = Product::find($data->product_id);
-        if ($product) {
-            $productTag = ProductTag::where('product_id', $data->product_id)->delete();
-
-            // Menghapus product images
-            $productImages = ProductImage::where('product_id', $data->product_id)->get();
-            foreach ($productImages as $productImage) {
-                // Delete Image from Storage
-                Storage::delete('public/' . $productImage->image_name);
-                // Hapus record product image dari database
-                $productImage->delete();
-            }
-            // Delete Thumbnail from Storage
-            Storage::delete('public/' . $product->thumbnail);
-            $product->delete();
-            return $product;
-        }
-        return null;
     }
 
     /**
@@ -374,18 +359,20 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
      */
     private function handleThumbnail($newThumbnail, $oldThumbnail = null)
     {
-        // Check if new thumbnail exists
+        // Check if a new thumbnail is provided
         if ($newThumbnail) {
-            // Generate unique file name with uniqid()
+            // Generate a unique file name for the new thumbnail
             $fileName = 'assets/images/products/' . str()->random(10) . '.' . $newThumbnail->getClientOriginalExtension();
-            // Store the new thumbnail
+
+            // Store the new thumbnail in the storage
             $newThumbnail->storeAs('public', $fileName);
 
-            // Delete previous thumbnail if it exists
+            // Delete the old thumbnail if it exists
             if ($oldThumbnail) {
                 Storage::delete('public/' . $oldThumbnail);
             }
 
+            // Return the file path of the new thumbnail
             return $fileName;
         }
 
@@ -394,37 +381,39 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
             throw new \Exception('No thumbnail provided for the product and no existing thumbnail found.');
         }
 
-        // In case of no new thumbnail, return old thumbnail
+        // If no new thumbnail is provided, return the file path of the old thumbnail
         return $oldThumbnail;
     }
 
     /**
-     * handleProductImages
-     * @param  mixed $product
-     * @param  mixed $data
+     * Handle product images.
+     * @param Product $product - The product object
+     * @param object $data - The data object containing product images
      */
-    private function handleProductImages($product, $data)
+    private function handleProductImages(Product $product, object $data)
     {
+        // Check if there are new product images
         if (count($data->productImages)) {
-            // Delete previous product images if exists
+            // Get the existing product images
             $productImages = $product->images;
+
+            // Delete the existing product images from storage
             foreach ($productImages as $productImage) {
-                // Delete existing image file from storage
                 Storage::delete('public/' . $productImage->image_name);
             }
-            // Delete product image records from the database
+
+            // Delete the existing product image records from the database
             $product->images()->delete();
 
-            // Upload new product images
+            // Upload and create new product image records
             foreach ($data->productImages as $newProductImage) {
-                // Convert and store new product image
-
+                // Generate a unique file name for the new product image
                 $fileName = 'assets/images/product_images/' . str()->random(10) . '.' . $newProductImage->getClientOriginalExtension();
 
-                // Store the new thumbnail
+                // Store the new product image in the storage
                 $newProductImage->storeAs('public', $fileName);
 
-                // Create new product image record in the database
+                // Create a new product image record in the database
                 $product->images()->create([
                     'image_name' => $fileName,
                 ]);
@@ -433,16 +422,19 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
-     * handleProductTags
-     * @param  mixed $product
-     * @param  mixed $data
+     * Handle product tags.
+     * @param Product $product - The product object
+     * @param object $data - The data object containing product tags
      */
-    private function handleProductTags($product, $data)
+    private function handleProductTags(Product $product, object $data)
     {
+        // Detach existing product tags
         $product->tags()->detach();
-        $tags = $data->tag_id;
-        foreach ($tags as $tag) {
+
+        // Attach the new product tags
+        foreach ($data->tag_id as $tag) {
             $product->tags()->attach($tag);
         }
     }
+
 }
