@@ -17,7 +17,7 @@
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
                         wire:click="closeModal"></button>
                 </div>
-                <form wire:submit.prevent="submit" enctype="multipart/form-data">
+                <form wire:submit.prevent="submit" enctype="multipart/form-data" method="POST">
                     <div class="modal-body">
                         @csrf
                         {{-- Product Name And Category --}}
@@ -96,21 +96,50 @@
                             </div>
                         </div>
 
-                        {{-- Dimension And Type --}}
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <label for="dimension">Dimensi</label>
-                                <input type="text" class="form-control @error('dimension') is-invalid @enderror"
-                                    placeholder="Contoh : 100 x 110 " name="dimension" id="dimension"
-                                    wire:model.defer="dimension" autofocus>
-                                @error('dimension') <small class="error text-danger">{{ $message }}</small> @enderror
+                        {{-- Length, Width and Height --}}
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <label for="length">Panjang</label>
+                                <input type="number" class="form-control @error('length') is-invalid @enderror"
+                                    placeholder="Panjang" name="length" id="length"
+                                    wire:model.defer="length" autofocus>
+                                @error('length') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
-                            <div class="col-6">
+                            <div class="col-4">
+                                <label for="width">Lebar</label>
+                                <input type="number" class="form-control @error('width') is-invalid @enderror"
+                                    placeholder="Lebar" name="width" id="width"
+                                    wire:model.defer="width" autofocus>
+                                @error('width') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                            <div class="col-4">
+                                <label for="height">Tinggi</label>
+                                <input type="number" class="form-control @error('height') is-invalid @enderror"
+                                    placeholder="Tinggi" name="height" id="height"
+                                    wire:model.defer="height" autofocus>
+                                @error('height') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                        </div>
+
+                        {{-- Type, Weight and Stock --}}
+                        <div class="row mt-3">
+                            <div class="col-4">
                                 <label for="type">Type</label>
-                                <input type="text" class="form-control @error('type') is-invalid @enderror"
-                                    placeholder="Masukan Type.." name="type" id="type" wire:model.defer="type"
-                                    autofocus>
+                                <input type="text" class="form-control @error('type') is-invalid @enderror" placeholder="Masukan Type.." name="type"
+                                    id="type" wire:model.defer="type" autofocus>
                                 @error('type') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                            <div class="col-4">
+                                <label for="weight">Berat</label>
+                                <input type="number" class="form-control @error('weight') is-invalid @enderror" placeholder="Berat"
+                                    name="weight" id="weight" wire:model.defer="weight" autofocus>
+                                @error('weight') <small class="error text-danger">{{ $message }}</small> @enderror
+                            </div>
+                            <div class="col-4">
+                                <label for="stock">Stok</label>
+                                <input type="number" class="form-control @error('stock') is-invalid @enderror" placeholder="Masukan Stok.."
+                                    name="stock" id="stock" wire:model.defer="stock" autofocus>
+                                @error('stock') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
 
@@ -140,24 +169,6 @@
                                     <option value="Semua Ukuran">Semua Ukuran</option>
                                 </select>
                                 @error('size') <small class="error text-danger">{{ $message }}</small> @enderror
-                            </div>
-                        </div>
-
-                        {{-- Weight And Stock --}}
-                        <div class="row mt-3">
-                            <div class="col-6">
-                                <label for="weight">Berat</label>
-                                <input type="text" class="form-control @error('weight') is-invalid @enderror"
-                                    placeholder="Contoh : 4.30 " name="weight" id="weight" wire:model.defer="weight"
-                                    autofocus>
-                                @error('weight') <small class="error text-danger">{{ $message }}</small> @enderror
-                            </div>
-                            <div class="col-6">
-                                <label for="stock">Stok</label>
-                                <input type="number" class="form-control @error('stock') is-invalid @enderror"
-                                    placeholder="Masukan Stok.." name="stock" id="stock" wire:model.defer="stock"
-                                    autofocus>
-                                @error('stock') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
 

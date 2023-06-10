@@ -13,134 +13,128 @@ use Livewire\WithFileUploads;
 class CreateProduct extends Component
 {
     use WithFileUploads;
-    // Declare variable
-    public   $product_name, $material, $product_slug,
-            $category_id,
-            $price, $discount,
-            $dimension, $type,
-            $color,
-            $weight, $stock,
-            $product_description,
-            $thumbnail, $productImages = [];
-    public $tag_id = [];
-    public $colors = [];
-    public $size = [];
+    // Declare variables
+    public $product_name, $material, $category_id, $price, $discount, $color, $type, $weight, $stock, $product_description, $thumbnail;
+    public $productImages = [], $tag_id = [], $colors = [], $size = [], $length, $width, $height;
+    public $categories = [], $tags = [];
 
-    // Declare Categories and Tags
-    public $categories, $tags = [];
-
-    // Modal
+    // Modal state
     public $createModal = false;
 
     // Listeners
-    protected $listeners = [
-        'productCreated' => '$refresh',
-        'tagIdSelected' => 'tagSelected',
-    ];
+    protected $listeners = ['productCreated' => '$refresh', 'tagIdSelected' => 'tagSelected'];
 
-    // Rules Validation
+    // Validation rules
     protected $rules = [
-        // Required
-        'product_name'          => 'required',
-        'category_id'           => 'required',
-        'price'                 => 'required',
-        'size'                  => 'required',
-        'stock'                 => 'required',
-        'thumbnail'             => 'required|image|max:5120',
-        'productImages.*'       => 'image|max:20480',
-        'weight'                => 'required',
-        // Nullable
-        'color'                 => 'nullable',
-        'product_description'   => 'nullable',
-        'type'                  => 'nullable',
-        'material'              => 'nullable',
-        'dimension'             => 'nullable',
-        'discount'              => 'nullable'
+        'product_name' => 'required',
+        'category_id' => 'required',
+        'price' => 'required',
+        'size' => 'required',
+        'stock' => 'required',
+        'thumbnail' => 'required|image|max:5120',
+        'productImages.*' => 'image|max:20480',
+        'weight' => 'required',
+        'color' => 'nullable',
+        'product_description' => 'nullable',
+        'type' => 'nullable',
+        'material' => 'nullable',
+        'length' => 'nullable',
+        'width' => 'nullable',
+        'height' => 'nullable',
+        'discount' => 'nullable'
     ];
 
-    // Make Validation message
+    // Validation messages
     protected $messages = [
         'product_name.required' => 'Nama Produk harus diisi',
-        'category_id.required'  => 'Kategori harus diisi',
-        'price.required'        => 'Harga harus diisi',
-        'size.required'         => 'Ukuran harus diisi',
-        'stock.required'        => 'Stok harus diisi',
-        'weight.required'       => 'Berat harus diisi',
-        'thumbnail.required'    => 'Thumbnail harus diisi',
-        'thumbnail.max'         => 'Ukuran gambar maksimal 5mb',
-        'productImages.*.max'   => 'Ukuran gambar maksimal 20mb',
-        'thumbnail.image'       => 'Format harus berupa gambar',
+        'category_id.required' => 'Kategori harus diisi',
+        'price.required' => 'Harga harus diisi',
+        'size.required' => 'Ukuran harus diisi',
+        'stock.required' => 'Stok harus diisi',
+        'weight.required' => 'Berat harus diisi',
+        'thumbnail.required' => 'Thumbnail harus diisi',
+        'thumbnail.max' => 'Ukuran gambar maksimal 5mb',
+        'productImages.*.max' => 'Ukuran gambar maksimal 20mb',
+        'thumbnail.image' => 'Format harus berupa gambar',
         'productImages.*.image' => 'Format harus berupa gambar',
     ];
 
     /**
-     * updated
-     *
-     * @param  mixed $property
-     * @return void
+     * Run every time a property changes and validate the changed property.
+     * @param string $property
      */
     public function updated($property)
     {
-        // Every time a property changes
-        // (only `text` for now), validate it
         $this->validateOnly($property);
     }
 
-
     /**
-     *
-     * mount
-     *
-     * @return void
+     * Run when component is first added to the DOM.
      */
     public function mount()
     {
+        // Reset fields
         $this->resetFields();
-        $this->categories   = Category::orderBy('created_at', 'DESC')->get();
-        $this->tags         = Tag::orderBy('created_at', 'DESC')->get();
-        $this->colors       = Color::orderBy('color_name', 'ASC')->get();
+        // Get all categories and tags
+        $this->categories = Category::orderBy('created_at', 'DESC')->get();
+        $this->tags = Tag::orderBy('created_at', 'DESC')->get();
+        $this->colors = Color::orderBy('color_name', 'ASC')->get();
     }
 
+    /**
+     * Render the view for the component.
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.backend.product.create-product');
     }
 
-
-
     /**
-     * submit
-     *
-     * @return void
+     * Handle product submission.
+     * @param ProductService $productService
      */
     public function submit(ProductService $productService)
     {
-        // Make Validation
-        $this->validate();
-        $createdProduct = $productService->createProduct($this);
-        if ($createdProduct instanceof Product) {
-            // Set Flash Message
-            session()->flash('success', 'Produk Berhasil di Tambahkan!');
+        try {
+            // Perform validation based on the defined rules
+            $this->validate();
 
-            // Reset Form Fields After Creating Product
-            $this->resetFields();
-            // Emit event to reload datatable
-            $this->emit('productCreated', $createdProduct);
-            $this->dispatchBrowserEvent('close-modal');
-        } else {
-            // Flash Message
-            session()->flash('error', $createdProduct);
+            // Create the product using ProductService
+            $createdProduct = $productService->createProduct($this);
 
-            // Reset Form Fields After Creating Product
+            // Check if the created product is an instance of Product
+            if ($createdProduct instanceof Product) {
+                // Set flash message indicating successful creation
+                session()->flash('success', 'Produk Berhasil di Tambahkan!');
+
+                // Reset the input fields
+                $this->resetFields();
+
+                // Emit 'productCreated' event with the created product
+                $this->emit('productCreated', $createdProduct);
+
+                // Dispatch browser event to close the modal
+                $this->dispatchBrowserEvent('close-modal');
+            } else {
+                // Set flash message indicating an error occurred
+                session()->flash('error', $createdProduct);
+
+                // Reset the input fields
+                $this->resetFields();
+            }
+        } catch (\Throwable $th) {
+            // Handle the exception and display error message
+            session()->flash('error', 'Terjadi kesalahan saat menambahkan produk: ' . $th->getMessage());
+
+            // Reset the input fields
             $this->resetFields();
         }
 
     }
 
     /**
-     * closeModal
-     *
-     * @return void
+     * Close the modal.
      */
     public function closeModal()
     {
@@ -149,26 +143,26 @@ class CreateProduct extends Component
     }
 
     /**
-     * resetFields
-     *
-     * @return void
+     * Reset form fields.
      */
     public function resetFields()
     {
-        $this->tag_id               = [];
-        $this->product_name         = '';
-        $this->productImages        = [];
-        $this->category_id          = '';
-        $this->price                = '';
-        $this->size                 = '';
-        $this->stock                = '';
-        $this->thumbnail            = null;
-        $this->color                = '';
-        $this->type                 = '';
-        $this->product_description  = '';
-        $this->weight               = '';
-        $this->material             = '';
-        $this->dimension            = '';
-        $this->discount             = '';
+        $this->tag_id = [];
+        $this->product_name = '';
+        $this->productImages = [];
+        $this->category_id = '';
+        $this->price = '';
+        $this->size = '';
+        $this->stock = '';
+        $this->thumbnail = null;
+        $this->color = '';
+        $this->type = '';
+        $this->product_description = '';
+        $this->weight = '';
+        $this->material = '';
+        $this->length = '';
+        $this->width = '';
+        $this->height = '';
+        $this->discount = '';
     }
 }

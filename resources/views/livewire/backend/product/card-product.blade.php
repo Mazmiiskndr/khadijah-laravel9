@@ -43,7 +43,7 @@
                                     </div>
 
                                     <div class="product-details col-lg-6 text-start">
-                                        <h4>{{ $product->product_name }} </h4>
+                                        <h4>{{ $product->product_name }}  </h4>
 
                                         <div class="product-price">Rp. {{ number_format($product->price -
                                             $product->discount, 0, ',', '.') }}
