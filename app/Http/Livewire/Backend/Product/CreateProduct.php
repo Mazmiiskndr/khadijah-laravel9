@@ -96,19 +96,41 @@ class CreateProduct extends Component
      */
     public function submit(ProductService $productService)
     {
-        // Validate inputs
-        $this->validate();
+        try {
+            // Perform validation based on the defined rules
+            $this->validate();
 
-        $createdProduct = $productService->createProduct($this);
-        if ($createdProduct instanceof Product) {
-            session()->flash('success', 'Produk Berhasil di Tambahkan!');
-            $this->resetFields();
-            $this->emit('productCreated', $createdProduct);
-            $this->dispatchBrowserEvent('close-modal');
-        } else {
-            session()->flash('error', $createdProduct);
+            // Create the product using ProductService
+            $createdProduct = $productService->createProduct($this);
+
+            // Check if the created product is an instance of Product
+            if ($createdProduct instanceof Product) {
+                // Set flash message indicating successful creation
+                session()->flash('success', 'Produk Berhasil di Tambahkan!');
+
+                // Reset the input fields
+                $this->resetFields();
+
+                // Emit 'productCreated' event with the created product
+                $this->emit('productCreated', $createdProduct);
+
+                // Dispatch browser event to close the modal
+                $this->dispatchBrowserEvent('close-modal');
+            } else {
+                // Set flash message indicating an error occurred
+                session()->flash('error', $createdProduct);
+
+                // Reset the input fields
+                $this->resetFields();
+            }
+        } catch (\Throwable $th) {
+            // Handle the exception and display error message
+            session()->flash('error', 'Terjadi kesalahan saat menambahkan produk: ' . $th->getMessage());
+
+            // Reset the input fields
             $this->resetFields();
         }
+
     }
 
     /**

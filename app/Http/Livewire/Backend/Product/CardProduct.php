@@ -10,8 +10,10 @@ use Livewire\WithPagination;
 
 class CardProduct extends Component
 {
+    // Use Pagination
     use WithPagination;
 
+    // Define public variable
     public $perPage = 6;
     public $paginationTheme = 'bootstrap';
     public $search = '';
@@ -19,6 +21,10 @@ class CardProduct extends Component
     public $product_id;
     public $categoryFilters = [];
 
+    /**
+     * The event listener mappings for the component.
+     * @var array
+     */
     protected $listeners = [
         'productDeleted'        => 'handleDeleted',
         'searchProduct'         => 'updateSearch',
@@ -29,12 +35,21 @@ class CardProduct extends Component
         'updatedProduct'        => 'handleUpdated',
     ];
 
+    /**
+     * Mount the component.
+     * @return void
+     */
     public function mount()
     {
         $this->categoryFilters = request()->input('categoryFilters', []) ?? [];
     }
 
-
+    /**
+     * Update the selected category filters.
+     * @param int $categoryId - The ID of the category
+     * @param bool $isChecked - Indicates whether the category is checked or not
+     * @return void
+     */
     public function updateCategorySelected($categoryId, $isChecked)
     {
         if ($isChecked) {
@@ -51,58 +66,78 @@ class CardProduct extends Component
         $this->resetPage();
     }
 
+    /**
+     * Handle updating the search keyword.
+     * @return void
+     */
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
+    /**
+     * Update the search keyword.
+     * @param string $keyword - The search keyword
+     * @return void
+     */
     public function updateSearch($keyword)
     {
         $this->search = $keyword;
     }
+
+    /**
+     * Update the showing option.
+     * @param string $showing - The showing option
+     * @return void
+     */
     public function updateShowing($showing)
     {
         $this->showing = $showing;
     }
 
+    /**
+     * Render the component.
+     * @param ProductService $productService - The product service
+     * @return \Illuminate\Contracts\View\View
+     */
     public function render(ProductService $productService)
     {
+        // Retrieve paginated data based on search, showing, and category filters
         $products = $productService->getPaginatedData($this->perPage, $this->search, $this->showing, $this->categoryFilters);
 
-        if (is_object($products)) {
-            $paginationData = [
-                'firstItem' => $products->firstItem(),
-                'lastItem' => $products->lastItem(),
-                'total' => $products->total()
-            ];
-        } else {
-            $paginationData = [
-                'firstItem' => 0,
-                'lastItem' => 0,
-                'total' => 0
-            ];
-        }
+        // Prepare pagination data
+        $paginationData = is_object($products) ? [
+            'firstItem' => $products->firstItem(),
+            'lastItem' => $products->lastItem(),
+            'total' => $products->total()
+        ] : [
+            'firstItem' => 0,
+            'lastItem' => 0,
+            'total' => 0
+        ];
 
+        // Emit pagination data event
         $this->emit('paginationData', $paginationData);
+
+        // Render the view with the retrieved products
         return view('livewire.backend.product.card-product', ['products' => $products]);
+
     }
 
     /**
-     * getProduct
-     *
-     * @param  mixed $product_id
+     * Get the product by ID.
+     * @param int $product_id - The ID of the product
      * @return void
      */
     public function getProduct($product_id)
     {
-        $product = Product::with('images','category','tags')->findOrFail($product_id);
+        $product = Product::with('images', 'category', 'tags')->findOrFail($product_id);
         $this->emit('getProduct', $product);
     }
 
     /**
-     * deleteConfirmation
-     *
-     * @param  mixed $product_id
+     * Show the delete confirmation modal.
+     * @param int $product_id - The ID of the product to delete
      * @return void
      */
     public function deleteConfirmation($product_id)
@@ -112,26 +147,31 @@ class CardProduct extends Component
     }
 
     /**
-     * destroy
-     * @param  mixed $productService
+     * Delete the product.
+     * @param ProductService $productService - The product service
+     * @return void
      */
     public function destroy(ProductService $productService)
     {
+        // Check if a product ID is set
         if ($this->product_id) {
+            // Delete the product using ProductService
             $deletedProduct = $productService->deleteProduct($this->product_id, $this);
+
+            // Check if the product deletion was successful
             if ($deletedProduct) {
-                // Set Flash Message
-                // Emit event to reload datatable
+                // Emit 'productDeleted' event with the deleted product
                 $this->emit('productDeleted', $deletedProduct);
-                // Set Flash Message
+
+                // Set flash message indicating successful deletion
                 session()->flash('success', 'Produk Berhasil di Hapus!');
             }
         }
+
     }
 
     /**
-     * handleStored
-     *
+     * Handle the product stored event.
      * @return void
      */
     public function handleStored()
@@ -140,8 +180,7 @@ class CardProduct extends Component
     }
 
     /**
-     * handleDeleted
-     *
+     * Handle the product deleted event.
      * @return void
      */
     public function handleDeleted()
@@ -150,13 +189,13 @@ class CardProduct extends Component
     }
 
     /**
-     * handleUpdated
-     *
+     * Handle the product updated event.
      * @return void
      */
     public function handleUpdated()
     {
         //
     }
+
 
 }

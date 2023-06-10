@@ -8,7 +8,11 @@ use Livewire\Component;
 
 class DatatableProduct extends Component
 {
-    public function render(ProductService $productService)
+    /**
+     * Render the component.
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function render()
     {
         return view(
             'livewire.backend.product.datatable-product',
