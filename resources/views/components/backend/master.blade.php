@@ -22,8 +22,8 @@
         rel="stylesheet"> --}}
     {{-- @include('backend.css') --}}
     @stack('styles')
-    @livewireStyles
     <x-backend.css />
+    @livewireStyles
 
     {{--
     <x-backend.css /> --}}

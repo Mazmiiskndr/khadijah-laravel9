@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductTag;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 
@@ -173,7 +174,6 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
 
     /**
      * getProductBySlug
-     *
      * @param  mixed $slug
      * @return void
      */
@@ -183,7 +183,6 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
-     * getLimitData
      *
      * @param  mixed $limit
      */
@@ -195,42 +194,18 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     public function createProduct($data)
     {
         try {
-            // Save Image Thumbnail to Server
-            $image = $data->thumbnail;
-            $ext = 'webp';
-            $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
-            $fileName = 'assets/images/products/' . uniqid(10) . '.' . $ext;
-            Storage::put('public/' . $fileName, $imageConvert);
+            // Handle thumbnail creation
+            $fileName = $this->handleThumbnail($data->thumbnail);
 
-            // Implode Array Size
-            $size = implode(', ', $data->size);
-            $color = implode(', ', $data->color);
+            // Prepare data for product creation
+            $productData = $this->prepareProductData($data);
 
-            // Create Unique Slug
-            $slug = str()->slug($data->product_name);
-            $count = $this->model->where('product_slug', $slug)->count();
-            if ($count > 0) {
-                $slug = $slug . '-' . ($count + 1);
-            }
+            // Include thumbnail in product data
+            $productData['thumbnail'] = $fileName;
+            $productData['date_added'] = Carbon::now()->format('Y-m-d h:i:s');
 
-            // Insert data and Del
-            $product = $this->model->create([
-                'product_name'          => $data->product_name,
-                'product_slug'          => $slug,
-                'category_id'           => $data->category_id,
-                'price'                 => $data->price,
-                'size'                  => $size,
-                'stock'                 => $data->stock,
-                'thumbnail'             => $fileName,
-                'color'                 => $color,
-                'type'                  => $data->type,
-                'product_description'   => $data->product_description,
-                'weight'                => $data->weight,
-                'material'              => $data->material,
-                'dimension'             => $data->dimension,
-                'discount'              => $data->discount ? $data->discount : 0,
-                'date_added'            => Carbon::now()->format('Y-m-d h:i:s'),
-            ]);
+            // Insert data
+            $product = $this->model->create($productData);
 
             $tags = $data->tag_id;
             foreach ($tags as $tag) {
@@ -264,30 +239,104 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
         }
     }
 
+    /**
+     * Update existing product in the database.
+     * @param int $product_id - The id of the product to update
+     * @param object $data - The data to update the product with
+     * @return \App\Models\Product - The updated product
+     * @throws \Exception - If an error occurs during the update process or product does not exist
+     */
     public function updateProduct($product_id, $data)
     {
-        $product = $this->model->find($product_id);
-        if ($product) {
-            // Update Thumbnail
-            $productData = $this->handleThumbnail($product, $data);
+        try {
+            // Find the product by its id
+            $product = $this->model->find($product_id);
 
-            // Handle product images
-            $this->handleProductImages($product, $data);
+            // // Check if the product exists
+            if (!$product) {
+                // If the product does not exist, throw an error
+                throw new \Exception('Product not found');
+            }
 
-            // Handle product tags
-            $this->handleProductTags($product, $data);
+            if ($data->thumbnail) {
+                $fileName = $this->handleThumbnail($data->thumbnail, $product->thumbnail);
+                // If a new thumbnail is provided, handle it and include it in the product data
+                $data->thumbnail = $fileName;
+            }
 
-            // Update other product fields
-            $productData += $this->prepareProductData($data);
-
-            // Update Product
+            // Prepare data for product update
+            $productData = $this->prepareProductData($data);
+            // Check if thumbnail exists
+            if (!empty($data->thumbnail)) {
+                $productData['thumbnail'] = $fileName;
+            }
+            $productData['date_updated'] = Carbon::now()->format('Y-m-d h:i:s');
+            // Update the product in the database
             $product->update($productData);
 
-            // Return updated product
+            // Handle product images. This method will add, remove, or update the product images as necessary based on the provided data
+            $this->handleProductImages($product, $data);
+
+            // Handle product tags. This method will add, remove, or update the product tags as necessary based on the provided data
+            $this->handleProductTags($product, $data);
+
+            // Return the updated product
             return $product;
+        } catch (\Exception $e) {
+            // Log the error for debugging purposes
+            Log::error('Error updating product: ' . $e->getMessage());
+
+            // Rethrow the error to be handled by the global exception handler
+            throw $e;
         }
-        return null;
     }
+
+
+    /**
+     * Prepare product data for creation or update.
+     * @param object $data - The raw product data
+     * @param int|null $modelId - The id of the product model. Needed for slug uniqueness. Defaults to null for product creation
+     * @return array - The prepared product data
+     */
+    private function prepareProductData($data, $modelId = null)
+    {
+        // Implode Array Size and Color
+        $size = implode(', ', $data->size);
+        $color = implode(', ', $data->color);
+
+        // Create Unique Slug
+        $slug = str()->slug($data->product_name);
+        $count = $modelId
+            ? $this->model->where('product_slug', $slug)->where('id', '!=', $modelId)->count()
+            : $this->model->where('product_slug', $slug)->count();
+
+        if ($count > 0) {
+            $slug = $slug . '-' . ($count + 1);
+        }
+
+        // Merge Data Length, Width and Height
+        $dimension = $data->length . ' x ' . $data->width . ' x ' . $data->height;
+
+        // Prepare data for product creation or update
+        $productData = [
+            'product_name'          => $data->product_name,
+            'product_slug'          => $slug,
+            'category_id'           => $data->category_id,
+            'price'                 => $data->price,
+            'size'                  => $size,
+            'color'                 => $color,
+            'stock'                 => $data->stock,
+            'type'                  => $data->type,
+            'product_description'   => $data->product_description,
+            'weight'                => $data->weight,
+            'material'              => $data->material,
+            'dimension'             => $dimension,
+            'discount'              => $data->discount ? $data->discount : 0,
+        ];
+
+        return $productData;
+    }
+
 
     /**
      * deleteProduct
@@ -317,33 +366,36 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
-     * handleThumbnail
-     * @param  mixed $product
-     * @param  mixed $data
+     * Handle thumbnail upload and replacement.
+     * @param UploadedFile|null $newThumbnail - The new thumbnail to be uploaded
+     * @param string|null $oldThumbnail - The existing thumbnail to be replaced
+     * @return string - The file path of the handled thumbnail
+     * @throws \Exception - If both new and old thumbnail are not available
      */
-    private function handleThumbnail($product, $data)
+    private function handleThumbnail($newThumbnail, $oldThumbnail = null)
     {
-        $productData = [];
+        // Check if new thumbnail exists
+        if ($newThumbnail) {
+            // Generate unique file name with uniqid()
+            $fileName = 'assets/images/products/' . str()->random(10) . '.' . $newThumbnail->getClientOriginalExtension();
+            // Store the new thumbnail
+            $newThumbnail->storeAs('public', $fileName);
 
-        if ($data->thumbnail) {
-            // Convert and store the new thumbnail in .webp format
-            $image = $data->thumbnail;
-            $ext = 'webp';
-            $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
-            $fileName = 'assets/images/products/' . uniqid(10) . '.' . $ext;
-            Storage::put('public/' . $fileName, $imageConvert);
-
-            // Delete previous thumbnail if exists
-            if ($product->thumbnail) {
-                Storage::delete('public/' . $product->thumbnail);
+            // Delete previous thumbnail if it exists
+            if ($oldThumbnail) {
+                Storage::delete('public/' . $oldThumbnail);
             }
 
-            $productData = [
-                'thumbnail' => $fileName,
-            ];
+            return $fileName;
         }
 
-        return $productData;
+        // If no new thumbnail is provided and there's no old thumbnail, throw an exception
+        if (!$oldThumbnail) {
+            throw new \Exception('No thumbnail provided for the product and no existing thumbnail found.');
+        }
+
+        // In case of no new thumbnail, return old thumbnail
+        return $oldThumbnail;
     }
 
     /**
@@ -365,16 +417,16 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
 
             // Upload new product images
             foreach ($data->productImages as $newProductImage) {
-                // Convert and store new product image in .webp format
-                $image = $newProductImage;
-                $ext = 'webp';
-                $imageConvert = Image::make($image->getRealPath())->encode($ext, 100);
-                $fileProductImages = 'assets/images/product_images/' . uniqid(10) . '.' . $ext;
-                Storage::put('public/' . $fileProductImages, $imageConvert);
+                // Convert and store new product image
+
+                $fileName = 'assets/images/product_images/' . str()->random(10) . '.' . $newProductImage->getClientOriginalExtension();
+
+                // Store the new thumbnail
+                $newProductImage->storeAs('public', $fileName);
 
                 // Create new product image record in the database
                 $product->images()->create([
-                    'image_name' => $fileProductImages,
+                    'image_name' => $fileName,
                 ]);
             }
         }
@@ -393,33 +445,4 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
             $product->tags()->attach($tag);
         }
     }
-
-    /**
-     * prepareProductData
-     * @param  mixed $data
-     */
-    private function prepareProductData($data)
-    {
-        $size = implode(', ', $data->size);
-        $color = implode(', ', $data->color);
-        $dateNow = Carbon::now()->format('Y-m-d h:i:s');
-
-        return [
-            'product_name'          => $data->product_name,
-            'product_slug'          => str()->slug($data->product_name),
-            'category_id'           => $data->category_id,
-            'price'                 => $data->price,
-            'size'                  => $size,
-            'color'                 => $color,
-            'stock'                 => $data->stock,
-            'type'                  => $data->type,
-            'product_description'   => $data->product_description,
-            'weight'                => $data->weight,
-            'material'              => $data->material,
-            'dimension'             => $data->dimension,
-            'discount'              => $data->discount ? $data->discount : 0,
-            'date_updated'          => $dateNow,
-        ];
-    }
-
 }
