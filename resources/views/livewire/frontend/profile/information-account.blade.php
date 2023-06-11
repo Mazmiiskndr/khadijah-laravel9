@@ -2,17 +2,12 @@
     <div class="col-sm-12">
         <div class="box">
             <div class="box-title">
-                <h3>Detail Informasi</h3>
-                <a href="#" wire:click="getCustomer({{ $customer->id }})" data-bs-toggle="modal"
+                <h3>Detail Informasi </h3>
+                <a href="#" wire:click="getCustomer('{{ $customer->customer_uid }}')" data-bs-toggle="modal"
                     data-bs-target="#updateCustomerModal">Edit</a>
             </div>
             <div class="box-content">
-                @php
-                $addressCustomer = $customer->address ? $customer->address : "-";
-                $provinceCustomer = $customer->province ? ucwords(strtolower($customer->province->name)) : "-";
-                $cityCustomer = $customer->city ? ucwords(strtolower($customer->city->name)) : "-";
-                $districtCustomer = $customer->district ? ucwords(strtolower($customer->district->name)) : "-";
-                @endphp
+
                 <table class="table table-borderless">
                     <tr>
                         <th style="width:250px;">Nama</th>
@@ -34,7 +29,7 @@
                         <th style="width:30px;" class="text-center">:</th>
                         <td>
                             @if($addressCustomer != "-")
-                            <address>{{ $provinceCustomer }}, {{ $cityCustomer }}, {{ $districtCustomer }}, {{
+                            <address>{{ $provinceCustomer }}, {{ $typeRegency }} {{ $cityCustomer }}, {{
                                 $addressCustomer }}, {{ $customer->postal_code }} </address>
                             @else
                             <address class="text-warning">Anda belum mengatur alamat pengiriman.</address>

@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
+use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Customer\CustomerService;
 use Livewire\Component;
 
@@ -16,10 +17,10 @@ class CreateCustomer extends Component
     public $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
-    public $provinces, $cities, $districts;
+    public $provinces, $cities;
 
     // Declare Region ID
-    public $province_id, $city_id, $district_id;
+    public $province_id, $city_id;
 
     // Listeners
     protected $listeners = [
@@ -34,7 +35,6 @@ class CreateCustomer extends Component
         'address' => 'required',
         'city_id' => 'required',
         'province_id' => 'required',
-        'district_id' => 'required',
         'postal_code' => 'required',
         'phone' => 'required',
     ];
@@ -49,107 +49,127 @@ class CreateCustomer extends Component
         'password.min'          => 'Password harus memiliki setidaknya 6 karakter',
         'address.required'      => 'Alamat harus diisi',
         'city_id.required'      => 'Kota harus diisi',
-        'district_id.required'  => 'Kecamatan harus diisi',
         'province_id.required'  => 'Provinsi harus diisi',
         'postal_code.required'  => 'Kode Pos harus diisi',
         'phone.required'        => 'No. Telepon harus diisi',
     ];
 
+
     /**
-     * mount
-     *
-     * @return void
+     * This function mounts the ApiRajaOngkirService and fetches a list of provinces.
+     * @param ApiRajaOngkirService $apiRajaOngkirService An instance of the service class for RajaOngkir API interactions.
      */
-    public function mount()
+    public function mount(ApiRajaOngkirService $apiRajaOngkirService)
     {
+        // Reset form fields to their default values
         $this->resetFields();
-        $this->provinces = Province::all();
+
+        // Fetch a list of provinces
+        $this->provinces = $apiRajaOngkirService->getProvinces();
     }
 
+    /**
+     * Renders the 'livewire.backend.customer.create-customer' view.
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.backend.customer.create-customer');
     }
 
     /**
-     * updatedProvinceId
-     *
-     * @param  mixed $value
+     * Updates the cities list when the selected province changes.
+     * @param  mixed $value The ID of the selected province.
      * @return void
      */
     public function updatedProvinceId($value)
     {
-        $this->cities = Regency::where('province_id', $value)->get();
-        $this->reset(['city_id', 'district_id']);
+        // Resolve the API service from the service container
+        $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+
+        // Fetch the cities belonging to the selected province
+        $this->cities = $apiRajaOngkirService->getCities($value);
+
+        // Reset the selected city
+        $this->reset(['city_id']);
     }
 
     /**
-     * updatedCityId
+     * Triggers form validation when a property changes.
      *
-     * @param  mixed $value
-     * @return void
-     */
-    public function updatedCityId($value)
-    {
-        $this->districts = District::where('regency_id', $value)->get();
-        $this->reset('district_id');
-    }
-
-    /**
-     * updated
-     *
-     * @param  mixed $property
+     * @param  mixed $property The name of the property that has been updated.
      * @return void
      */
     public function updated($property)
     {
-        // Every time a property changes
-        // (only `text` for now), validate it
         $this->validateOnly($property);
     }
 
     /**
-     * store
-     * @param  mixed $customerService
+     * Stores a new customer.
+     * @param  CustomerService $customerService The service instance for customer interactions.
+     * @return void
      */
     public function store(CustomerService $customerService)
     {
-
-        // Make Validation
+        // First, validate the form fields
         $this->validate();
-        $createdCustomer = $customerService->createCustomer($this);
-        if ($createdCustomer instanceof Customer) {
-            // Set Flash Message
-            session()->flash('success', 'Pelanggan Berhasil di Tambahkan!');
 
-            // Reset Form Fields After Creating Category
-            $this->resetFields();
-            // Emit event to reload datatable
-            $this->emit('customerCreated', $createdCustomer);
-            $this->dispatchBrowserEvent('close-modal');
-        } else {
-            // Set Flash Message
-            session()->flash('error', 'Pelanggan Gagal di Tambahkan!');
+        try {
+            // Create an associative array with the data
+            $data = [
+                'name' => $this->name,
+                'email' => $this->email,
+                'address' => $this->address,
+                'city_id' => $this->city_id,
+                'province_id' => $this->province_id,
+                'postal_code' => $this->postal_code,
+                'phone' => $this->phone,
+                'password' => $this->password,
+            ];
+            // Attempt to create a new customer with the provided data
+            $createdCustomer = $customerService->createCustomer($data);
 
-            // Reset Form Fields After Creating Category
-            $this->resetFields();
+            // Check if the returned object is an instance of the Customer class
+            if ($createdCustomer instanceof Customer
+            ) {
+                // If the customer was created successfully, flash a success message
+                session()->flash('success', 'Pelanggan Berhasil di Tambahkan!');
+
+                // Emit an event to reload the data table
+                $this->emit('customerCreated', $createdCustomer);
+
+                // Dispatch a browser event to close the modal
+                $this->dispatchBrowserEvent('close-modal');
+            } else {
+                // If the returned object is not a Customer instance, flash an error message
+                session()->flash('error', 'Pelanggan Gagal di Tambahkan!');
+            }
+        } catch (\Exception $e) {
+            // If an exception occurs during the customer creation process, flash an error message
+            session()->flash('error', 'Pelanggan Gagal di Tambahkan! Error: ' . $e->getMessage());
         }
+
+        // Regardless of the outcome, reset the form fields to their default values
+        $this->resetFields();
     }
 
+
     /**
-     * closeModal
-     *
+     * Closes the create modal.
      * @return void
      */
     public function closeModal()
     {
+        // Close the create modal
         $this->createModal = false;
+
+        // Reset the form fields
         $this->resetFields();
     }
 
     /**
-     * resetFields
-     *
+     * Resets all the form fields to their default values.
      * @return void
      */
     public function resetFields()
@@ -160,8 +180,8 @@ class CreateCustomer extends Component
         $this->address = '';
         $this->city_id = '';
         $this->province_id = '';
-        $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
     }
+
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('password');
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
-            $table->unsignedBigInteger('district_id')->nullable();
+            // $table->unsignedBigInteger('district_id')->nullable();
             $table->string('address')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('phone')->nullable();
@@ -31,22 +31,22 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('customer', function (Blueprint $table) {
-            $table->foreign('province_id')
-                    ->references('id')
-                    ->on('provinces')
-                    ->onDelete('set null');
+        // Schema::table('customer', function (Blueprint $table) {
+        //     $table->foreign('province_id')
+        //             ->references('id')
+        //             ->on('provinces')
+        //             ->onDelete('set null');
 
-            $table->foreign('city_id')
-                    ->references('id')
-                    ->on('cities')
-                    ->onDelete('set null');
+        //     $table->foreign('city_id')
+        //             ->references('id')
+        //             ->on('cities')
+        //             ->onDelete('set null');
 
-            $table->foreign('district_id')
-                    ->references('id')
-                    ->on('districts')
-                    ->onDelete('set null');
-        });
+        //     $table->foreign('district_id')
+        //             ->references('id')
+        //             ->on('districts')
+        //             ->onDelete('set null');
+        // });
     }
 
     /**

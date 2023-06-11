@@ -145,17 +145,17 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <span class="mt-0">#125021</span>
+                                                            <span class="mt-0">#125367</span>
                                                         </td>
                                                         <td>
-                                                            <span class="fs-6">Purple polo tshirt</span>
+                                                            <span class="fs-6">Incidunt Eum Dolorem 22</span>
                                                         </td>
                                                         <td>
                                                             <span
-                                                                class="badge rounded-pill bg-success custom-badge">Shipped</span>
+                                                                class="badge rounded-pill bg-success custom-badge">Selesai</span>
                                                         </td>
                                                         <td>
-                                                            <span class="theme-color fs-6">$49.54</span>
+                                                            <span class="theme-color fs-6">Rp. 80.000</span>
                                                         </td>
                                                         <td>
                                                             <a href="javascript:void(0)">
@@ -164,7 +164,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <tr>
+                                                    {{-- <tr>
                                                         <td>
                                                             <a href="javascript:void(0)">
                                                                 <img src="../assets/images/pro3/2.jpg"
@@ -297,7 +297,7 @@
                                                                 <i class="fa fa-eye text-theme"></i>
                                                             </a>
                                                         </td>
-                                                    </tr>
+                                                    </tr> --}}
                                                 </tbody>
                                             </table>
                                         </div>

@@ -8,40 +8,60 @@ use Livewire\Component;
 
 class Login extends Component
 {
+    // Variables to store user inputs
     public $password;
     public $email;
 
+    // Rules for form validation
     protected $rules = [
-        'email' => 'required|email',
-        'password' => 'required',
+        'email' => 'required|email',  // Email must be filled and valid
+        'password' => 'required',     // Password must be filled
     ];
 
+    // Custom messages for form validation errors
     protected $messages = [
-        'email.required' => 'Email harus diisi!',
-        'email.email' => 'Format harus email!',
-        'password.required' => 'Password harus diisi!',
-        // 'password.min' => 'Password harus memiliki setidaknya 6 karakter',
+        'email.required' => 'Email tidak boleh kosong!',
+        'email.email' => 'Email harus valid!',
+        'password.required' => 'Kata Sandi harus diisi!',
     ];
 
+    /**
+     * Event listener for live-validation of form fields.
+     * @param  string $property Name of the property that got updated
+     * @return void
+     */
     public function updated($property)
     {
-        // Every time a property changes
-        // (only `text` for now), validate it
+        // Validate only the property that has been updated
         $this->validateOnly($property);
     }
+
+    /**
+     * Handle the form submission for admin login.
+     * @return void
+     */
     public function loginAdmin()
     {
-        $this->validate();
-        if (Auth::guard('web')->attempt(['email' => $this->email, 'password' => $this->password])) {
-            // login berhasil untuk User
+        // Validate the form fields
+        $credentials = $this->validate();
+
+        // Attempt to login the user
+        if (Auth::guard('web')->attempt($credentials)) {
+            // Successful login, redirect user to intended page
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {
-            // login gagal
-            session()->flash('error', 'Alamat Email atau Password Anda salah!.');
+            // Failed login, flash error message
+            session()->flash('error', 'Alamat Email atau Kata Sandi Anda salah.');
         }
     }
+
+    /**
+     * Render the component.
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function render()
     {
+        // Render the login view
         return view('livewire.admin.login');
     }
 }

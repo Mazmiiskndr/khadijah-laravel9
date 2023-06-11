@@ -18,7 +18,6 @@ class Customer extends Authenticatable
         'password',
         'province_id',
         'city_id',
-        'district_id',
         'address',
         'postal_code',
         'phone',
@@ -48,11 +47,6 @@ class Customer extends Authenticatable
     public function city()
     {
         return $this->belongsTo(Regency::class);
-    }
-
-    public function district()
-    {
-        return $this->belongsTo(District::class);
     }
 
     public function rekening_customers()

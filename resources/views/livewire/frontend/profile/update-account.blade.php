@@ -52,43 +52,30 @@
                         </div>
 
                         {{-- Province, City and District--}}
-                        <div class="row mt-3">
-                            <div class="col-4">
+                        <div class="row mt-1">
+                            <div class="col-6">
                                 <label for="province_id_input">Provinsi</label>
                                 <select class="form-select col-sm-12 @error('province_id') is-invalid @enderror"
                                     id="province_id_input" name="province_id" wire:model="province_id">
                                     <option value="">-- Pilih Provinsi --</option>
                                     @foreach($provinces as $province)
-                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                    <option value="{{ $province['province_id'] }}">{{ strtoupper($province['province']) }}</option>
                                     @endforeach
                                 </select>
                                 @error('province_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label for="city_id_input">Kota / Kabupaten</label>
                                 <select class="form-select col-sm-12 @error('city_id') is-invalid @enderror"
                                     id="city_id_input" name="city_id" wire:model="city_id">
                                     <option value="" selected>-- Pilih Kota / Kabupaten --</option>
                                     @if(!is_null($cities))
                                     @foreach($cities as $city)
-                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    <option value="{{ $city['city_id'] }}">{{ strtoupper($city['type']) }} {{ strtoupper($city['city_name']) }}</option>
                                     @endforeach
                                     @endif
                                 </select>
                                 @error('city_id') <small class="error text-danger">{{ $message }}</small> @enderror
-                            </div>
-                            <div class="col-4">
-                                <label for="district_id_input">Kecamatan</label>
-                                <select class="form-select col-sm-12 @error('district_id') is-invalid @enderror"
-                                    id="district_id_input" name="district_id" wire:model="district_id">
-                                    <option value="" selected>-- Pilih Kecamatan --</option>
-                                    @if(!is_null($districts))
-                                    @foreach($districts as $district)
-                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
-                                    @endforeach
-                                    @endif
-                                </select>
-                                @error('district_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>
 

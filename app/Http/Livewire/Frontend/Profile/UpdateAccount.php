@@ -2,11 +2,8 @@
 
 namespace App\Http\Livewire\Frontend\Profile;
 
-use App\Models\Customer;
-use App\Models\District;
-use App\Models\Province;
-use App\Models\Regency;
-use Illuminate\Support\Facades\Hash;
+use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
+use App\Services\Customer\CustomerService;
 use Livewire\Component;
 
 class UpdateAccount extends Component
@@ -17,10 +14,10 @@ class UpdateAccount extends Component
     public $customer_id, $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
-    public $provinces, $cities, $districts;
+    public $provinces, $cities;
 
     // Declare Region ID
-    public $province_id, $city_id, $district_id;
+    public $province_id, $city_id;
 
     public $selectedProvince = null;
     public $selectedCity = null;
@@ -33,10 +30,7 @@ class UpdateAccount extends Component
     ];
 
     /**
-     * updated
-     *
-     * @param  mixed $property
-     * @return void
+     * This function validates a specific property every time it changes.
      */
     public function updated($property)
     {
@@ -54,7 +48,6 @@ class UpdateAccount extends Component
             'address'       => 'required',
             'city_id'       => 'required',
             'province_id'   => 'required',
-            'district_id'   => 'required',
             'postal_code'   => 'required',
             'phone'         => 'required',
         ];
@@ -71,7 +64,6 @@ class UpdateAccount extends Component
             'password.min'          => 'Password harus memiliki setidaknya 6 karakter',
             'address.required'      => 'Alamat harus diisi',
             'city_id.required'      => 'Kota harus diisi',
-            'district_id.required'  => 'Kecamatan harus diisi',
             'province_id.required'  => 'Provinsi harus diisi',
             'postal_code.required'  => 'Kode Pos harus diisi',
             'phone.required'        => 'No. Telepon harus diisi',
@@ -79,120 +71,108 @@ class UpdateAccount extends Component
     }
 
     /**
-     * mount
-     *
-     * @return void
+     * This function mounts the ApiRajaOngkirService and fetches a list of provinces.
+     * @param ApiRajaOngkirService $apiRajaOngkirService An instance of the service class for RajaOngkir API interactions.
      */
-    public function mount()
+    public function mount(ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->resetFields();
-        $this->provinces = Province::all();
+        $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
-        $this->districts = collect();
     }
 
+    /**
+     * Renders the 'livewire.frontend.profile.update-account' view.
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.frontend.profile.update-account');
     }
 
     /**
-     * updatedProvinceId
-     *
-     * @param  mixed $value
+     * Updates the cities list when the selected province changes.
+     * @param  mixed $value The ID of the selected province.
      * @return void
      */
     public function updatedProvinceId($value)
     {
-        $this->cities = Regency::where('province_id', $value)->get();
-        $this->reset(['city_id', 'district_id']);
-        // $this->selectedCity = null;
+        // Resolve the API service from the service container
+        $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+
+        // Fetch the cities belonging to the selected province
+        $this->cities = $apiRajaOngkirService->getCities($value);
+
+        // Reset the selected city
+        $this->reset(['city_id']);
     }
 
     /**
-     * updatedCityId
-     *
-     * @param  mixed $value
-     * @return void
-     */
-    public function updatedCityId($value)
-    {
-        $this->districts = District::where('regency_id', $value)->get();
-        $this->reset('district_id');
-    }
-
-
-    /**
-     * show
-     *
-     * @param  mixed $customer
+     * Populates the form fields with the data of the customer to be updated.
+     * @param  mixed $customer The customer data.
      * @return void
      */
     public function show($customer)
     {
+        // Open the update modal
         $this->updateModal = true;
+
+        // Populate the form fields with the customer data
         $this->customer_id = $customer['id'];
         $this->name = $customer['name'];
         $this->email = $customer['email'];
         $this->address = $customer['address'];
         $this->province_id = $customer['province_id'];
 
-        // set value for city dropdown
+        // If a city is selected, populate the city field and fetch the cities belonging to the selected province
         if (!is_null($customer['city_id'])) {
             $this->city_id = $customer['city_id'];
-            $this->cities = Regency::where('province_id', $customer['province_id'])->get(); // trigger method to load city options
-            $this->districts = District::where('regency_id', $customer['city_id'])->get(); // set selected value for city dropdown
+
+            $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+            $this->cities = $apiRajaOngkirService->getCities($customer['province_id']);
         }
 
-        // set value for district dropdown
-        if (!is_null($customer['district_id'])) {
-            $this->district_id = $customer['district_id'];
-        }
-
+        // Continue populating the form fields
         $this->postal_code = $customer['postal_code'];
         $this->phone = $customer['phone'];
     }
 
     /**
-     * update
-     *
+     * Updates an existing customer.
+     * @param  CustomerService $customerService The service instance for customer interactions.
      * @return void
      */
-    public function update()
+    public function update(CustomerService $customerService)
     {
         // Create Validate
         $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->customer_id) {
-            $customer = Customer::find($this->customer_id);
-            $customerData = [
+            // Create an associative array with the data
+            $data = [
                 'name' => $this->name,
                 'email' => $this->email,
                 'address' => $this->address,
                 'city_id' => $this->city_id,
-                'district_id' => $this->district_id,
                 'province_id' => $this->province_id,
                 'postal_code' => $this->postal_code,
                 'phone' => $this->phone,
+                'password' => $this->password,
             ];
-            if (!empty($this->password)) {
-                $customerData['password'] = Hash::make($this->password);
-            }
-            $customer->update($customerData);
+            // Attempt to update the customer with the provided data
+            $updatedCustomer = $customerService->updateCustomer($this->customer_id, $data);
             $this->updateModal = false;
             // Set Flash Message
             session()->flash('success', 'Data Profil Berhasil di Update!');
             $this->resetFields();
             // buatkan emit dengan flash message
-            $this->emit('updatedCustomer', $customer);
+            $this->emit('updatedCustomer', $updatedCustomer);
             $this->dispatchBrowserEvent('close-modal');
         }
     }
 
-
     /**
-     * closeModal
-     *
+     * Closes the update modal.
      * @return void
      */
     public function closeModal()
@@ -202,8 +182,7 @@ class UpdateAccount extends Component
     }
 
     /**
-     * resetFields
-     *
+     * Resets all the form fields to their default values.
      * @return void
      */
     public function resetFields()
@@ -214,7 +193,6 @@ class UpdateAccount extends Component
         $this->address = '';
         $this->city_id = '';
         $this->province_id = '';
-        $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
     }
