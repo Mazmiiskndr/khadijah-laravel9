@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
+use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Customer\CustomerService;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
@@ -18,10 +19,10 @@ class UpdateCustomer extends Component
     public $customer_id, $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
-    public $provinces, $cities, $districts;
+    public $provinces, $cities;
 
     // Declare Region ID
-    public $province_id, $city_id, $district_id;
+    public $province_id, $city_id;
 
     public $selectedProvince = null;
     public $selectedCity = null;
@@ -56,7 +57,6 @@ class UpdateCustomer extends Component
             'address'       => 'required',
             'city_id'       => 'required',
             'province_id'   => 'required',
-            'district_id'   => 'required',
             'postal_code'   => 'required',
             'phone'         => 'required',
         ];
@@ -73,7 +73,6 @@ class UpdateCustomer extends Component
             'password.min'          => 'Password harus memiliki setidaknya 6 karakter',
             'address.required'      => 'Alamat harus diisi',
             'city_id.required'      => 'Kota harus diisi',
-            'district_id.required'  => 'Kecamatan harus diisi',
             'province_id.required'  => 'Provinsi harus diisi',
             'postal_code.required'  => 'Kode Pos harus diisi',
             'phone.required'        => 'No. Telepon harus diisi',
@@ -81,16 +80,14 @@ class UpdateCustomer extends Component
     }
 
     /**
-     * mount
-     *
-     * @return void
+     * This function mounts the ApiRajaOngkirService and fetches a list of provinces.
+     * @param ApiRajaOngkirService $apiRajaOngkirService An instance of the service class for RajaOngkir API interactions.
      */
-    public function mount()
+    public function mount(ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->resetFields();
-        $this->provinces = Province::all();
+        $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
-        $this->districts = collect();
     }
 
     public function render()
@@ -106,21 +103,10 @@ class UpdateCustomer extends Component
      */
     public function updatedProvinceId($value)
     {
-        $this->cities = Regency::where('province_id', $value)->get();
-        $this->reset(['city_id', 'district_id']);
+        $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+        $this->cities = $apiRajaOngkirService->getCities($value);
+        $this->reset(['city_id']);
         // $this->selectedCity = null;
-    }
-
-    /**
-     * updatedCityId
-     *
-     * @param  mixed $value
-     * @return void
-     */
-    public function updatedCityId($value)
-    {
-        $this->districts = District::where('regency_id', $value)->get();
-        $this->reset('district_id');
     }
 
 
@@ -142,13 +128,8 @@ class UpdateCustomer extends Component
         // set value for city dropdown
         if (!is_null($customer['city_id'])) {
             $this->city_id = $customer['city_id'];
-            $this->cities = Regency::where('province_id', $customer['province_id'])->get(); // trigger method to load city options
-            $this->districts = District::where('regency_id', $customer['city_id'])->get(); // set selected value for city dropdown
-        }
-
-        // set value for district dropdown
-        if (!is_null($customer['district_id'])) {
-            $this->district_id = $customer['district_id'];
+            $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+            $this->cities = $apiRajaOngkirService->getCities($customer['province_id']);
         }
 
         $this->postal_code = $customer['postal_code'];
@@ -203,7 +184,6 @@ class UpdateCustomer extends Component
         $this->address = '';
         $this->city_id = '';
         $this->province_id = '';
-        $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
     }

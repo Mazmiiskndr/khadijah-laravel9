@@ -109,7 +109,6 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
         $response = curl_exec($curl);
         // Retrieve the error string of the last cURL operation
         $err = curl_error($curl);
-        dd($response);
         // Close the cURL session and free all resources. The cURL handle, curl, is also deleted
         curl_close($curl);
 

@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
+use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Customer\CustomerService;
 use Livewire\Component;
 
@@ -16,10 +17,10 @@ class CreateCustomer extends Component
     public $name, $email, $password, $address, $postal_code, $phone, $registration_date;
 
     // Declare Region
-    public $provinces, $cities, $districts;
+    public $provinces, $cities;
 
     // Declare Region ID
-    public $province_id, $city_id, $district_id;
+    public $province_id, $city_id;
 
     // Listeners
     protected $listeners = [
@@ -34,7 +35,6 @@ class CreateCustomer extends Component
         'address' => 'required',
         'city_id' => 'required',
         'province_id' => 'required',
-        'district_id' => 'required',
         'postal_code' => 'required',
         'phone' => 'required',
     ];
@@ -49,21 +49,20 @@ class CreateCustomer extends Component
         'password.min'          => 'Password harus memiliki setidaknya 6 karakter',
         'address.required'      => 'Alamat harus diisi',
         'city_id.required'      => 'Kota harus diisi',
-        'district_id.required'  => 'Kecamatan harus diisi',
         'province_id.required'  => 'Provinsi harus diisi',
         'postal_code.required'  => 'Kode Pos harus diisi',
         'phone.required'        => 'No. Telepon harus diisi',
     ];
 
+
     /**
-     * mount
-     *
-     * @return void
+     * This function mounts the ApiRajaOngkirService and fetches a list of provinces.
+     * @param ApiRajaOngkirService $apiRajaOngkirService An instance of the service class for RajaOngkir API interactions.
      */
-    public function mount()
+    public function mount(ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->resetFields();
-        $this->provinces = Province::all();
+        $this->provinces = $apiRajaOngkirService->getProvinces();
     }
 
     public function render()
@@ -73,26 +72,14 @@ class CreateCustomer extends Component
 
     /**
      * updatedProvinceId
-     *
      * @param  mixed $value
      * @return void
      */
     public function updatedProvinceId($value)
     {
-        $this->cities = Regency::where('province_id', $value)->get();
-        $this->reset(['city_id', 'district_id']);
-    }
-
-    /**
-     * updatedCityId
-     *
-     * @param  mixed $value
-     * @return void
-     */
-    public function updatedCityId($value)
-    {
-        $this->districts = District::where('regency_id', $value)->get();
-        $this->reset('district_id');
+        $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+        $this->cities = $apiRajaOngkirService->getCities($value);
+        $this->reset(['city_id']);
     }
 
     /**
@@ -160,7 +147,6 @@ class CreateCustomer extends Component
         $this->address = '';
         $this->city_id = '';
         $this->province_id = '';
-        $this->district_id = '';
         $this->postal_code = '';
         $this->phone = '';
     }
