@@ -8,13 +8,14 @@ use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
-class CustomerRepositoryImplement extends Eloquent implements CustomerRepository{
+class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
+{
 
     /**
-    * Model class to be used in this repository for the common methods inside Eloquent
-    * Don't remove or change $this->model variable name
-    * @property Model|mixed $model;
-    */
+     * Model class to be used in this repository for the common methods inside Eloquent
+     * Don't remove or change $this->model variable name
+     * @property Model|mixed $model;
+     */
     protected $model;
     protected $apiRajaOngkirService;
 
@@ -93,9 +94,9 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
     {
         try {
             // Check if a customer ID is provided.
-            if ($data->customer_id) {
+            if ($customer_id) {
                 // Find the customer with the provided ID.
-                $customer = $this->model->find($data->customer_id);
+                $customer = $this->model->find($customer_id);
                 // Update the customer data.
                 $this->updateCustomerData($customer, $data);
                 // Return the updated customer.
@@ -113,25 +114,24 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
     /**
      * Updates an existing customer's address.
      * @param mixed $customer_id The ID of the customer whose address to update.
-     * @param object $data The data to use when updating the customer's address.
+     * @param array $data The data to use when updating the customer's address.
      * @return Model|null The updated customer, or null on failure.
      */
     public function updateCustomerAddress($customer_id, $data)
     {
         try {
-            // Check if a customer ID is provided.
-            if ($data->customer_id) {
-                // Find the customer with the provided ID.
-                $customer = $this->model->find($data->customer_id);
 
+            // Check if a customer ID is provided.
+            if ($customer_id) {
+                // Find the customer with the provided ID.
+                $customer = $this->model->find($customer_id);
                 // Define the data to update.
                 $customerData = [
-                    'address' => $data->address,
-                    'city_id' => $data->city_id,
-                    'province_id' => $data->province_id,
-                    'postal_code' => $data->postal_code,
+                    'address' => $data['address'],
+                    'city_id' => $data['city_id'],
+                    'province_id' => $data['province_id'],
+                    'postal_code' => $data['postal_code'],
                 ];
-
                 // Update the customer with the defined data.
                 $customer->update($customerData);
 
@@ -150,29 +150,28 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
     /**
      * Updates the customer data with the given data.
      * @param Model $customer The customer to update.
-     * @param object $data The data to update the customer with.
+     * @param array $data The data to update the customer with.
      * @return void
      */
     private function updateCustomerData($customer, $data)
     {
         // Define the data to update.
         $customerData = [
-            'name' => $data->name,
-            'email' => $data->email,
-            'address' => $data->address,
-            'city_id' => $data->city_id,
-            'province_id' => $data->province_id,
-            'postal_code' => $data->postal_code,
-            'phone' => $data->phone,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'address' => $data['address'],
+            'city_id' => $data['city_id'],
+            'province_id' => $data['province_id'],
+            'postal_code' => $data['postal_code'],
+            'phone' => $data['phone'],
         ];
 
         // If a password is provided, hash it and add it to the data to update.
-        if (!empty($data->password)) {
-            $customerData['password'] = Hash::make($data->password);
+        if (!empty($data['password'])) {
+            $customerData['password'] = Hash::make($data['password']);
         }
 
         // Update the customer with the defined data.
         $customer->update($customerData);
     }
-
 }

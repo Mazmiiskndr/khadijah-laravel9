@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class InformationAccount extends Component
 {
-    public $customer, $addressCustomer, $provinceCustomer, $cityCustomer;
+    public $customer, $addressCustomer, $provinceCustomer, $cityCustomer, $typeRegency;
     protected $listeners = [
         'updatedCustomer' => 'handleUpdated',
         'updatedCustomerAddress' => 'handleAddressUpdated',
@@ -23,6 +23,7 @@ class InformationAccount extends Component
         $this->addressCustomer = $this->customer->address ? $this->customer->address : "-";
         $this->provinceCustomer = $this->customer->province_id ? ucwords(strtolower($this->customer->provinceAndCity['province'])) : "-";
         $this->cityCustomer = $this->customer->city_id ? ucwords(strtolower($this->customer->provinceAndCity['city_name'])) : "-";
+        $this->typeRegency = $this->customer->city_id ? ucwords(strtolower($this->customer->provinceAndCity['type'])) : "-";
     }
 
     /**
@@ -55,9 +56,17 @@ class InformationAccount extends Component
 
     /**
      * Handler function for the 'updatedCustomerAddress' event.
+     * @param Customer $updatedCustomer The updated customer object
      */
-    public function handleAddressUpdated()
+    public function handleAddressUpdated($updatedCustomer)
     {
-        // Implement what should happen when the customer address is updated
+        $customerService = app(\App\Services\Customer\CustomerService::class);
+        $customerData = $customerService->findByUid($updatedCustomer['customer_uid']);
+        // We could, for example, update the local state of the component with the new customer data
+        $this->addressCustomer = $customerData->address;
+        $this->provinceCustomer = ucwords(strtolower($customerData->provinceAndCity['province']));
+        $this->cityCustomer = ucwords(strtolower($customerData->provinceAndCity['city_name']));
+        $this->typeRegency = ucwords(strtolower($customerData->provinceAndCity['type']));
     }
+
 }

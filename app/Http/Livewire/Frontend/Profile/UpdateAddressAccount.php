@@ -24,7 +24,7 @@ class UpdateAddressAccount extends Component
 
     // Listeners
     protected $listeners = [
-        'customerAddressUpdated' => '$refresh',
+        'updatedCustomerAddress' => '$refresh',
         'getCustomerAddress' => 'show'
     ];
 

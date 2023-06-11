@@ -29,7 +29,7 @@
                         <th style="width:30px;" class="text-center">:</th>
                         <td>
                             @if($addressCustomer != "-")
-                            <address>{{ $provinceCustomer }}, {{ $cityCustomer }}, {{
+                            <address>{{ $provinceCustomer }}, {{ $typeRegency }} {{ $cityCustomer }}, {{
                                 $addressCustomer }}, {{ $customer->postal_code }} </address>
                             @else
                             <address class="text-warning">Anda belum mengatur alamat pengiriman.</address>
