@@ -3,15 +3,23 @@
 namespace App\Http\Livewire\Frontend\Profile;
 
 use App\Models\Customer;
+use App\Services\Customer\CustomerService;
 use Livewire\Component;
 
 class InformationAccount extends Component
 {
-    public $customer;
+    public $customer, $addressCustomer, $provinceCustomer, $cityCustomer;
     protected $listeners = [
         'updatedCustomer' => 'handleUpdated',
         'updatedCustomerAddress' => 'handleAddressUpdated',
     ];
+
+    public function mount()
+    {
+        $this->addressCustomer = $this->customer->address ? $this->customer->address : "-";
+        $this->provinceCustomer = $this->customer->province_id ? ucwords(strtolower($this->customer->provinceAndCity['province'])) : "-";
+        $this->cityCustomer = $this->customer->city_id ? ucwords(strtolower($this->customer->provinceAndCity['city_name'])) : "-";
+    }
 
     public function render()
     {
@@ -21,15 +29,15 @@ class InformationAccount extends Component
     /**
      * getCustomer
      *
-     * @param  mixed $customer_id
+     * @param  mixed $customer_uid
      * @return void
      */
-    public function getCustomer($customer_id)
+    public function getCustomer($customer_uid)
     {
-        $customer = Customer::with('province', 'city', 'district')->find($customer_id);
-        $this->emit('getCustomer', $customer);
+        $customerService = app(\App\Services\Customer\CustomerService::class);
+        $customerData = $customerService->findByUid($customer_uid);
+        $this->emit('getCustomer', $customerData);
     }
-
 
     /**
      * handleUpdated

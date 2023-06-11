@@ -48,4 +48,20 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
             throw $th;
         }
     }
+
+    /**
+     * Retrieve provinceById and cityId data from RajaOngkir API.
+     * @param mixed $provinceId
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getProvinceById($provinceId, $cityId)
+    {
+        try {
+            return $this->mainRepository->getProvinceById($provinceId, $cityId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
 }

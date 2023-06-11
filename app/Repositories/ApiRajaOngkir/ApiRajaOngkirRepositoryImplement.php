@@ -26,50 +26,8 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getProvinces()
     {
-        // Initialize a new cURL session/resource
-        $curl = curl_init();
-
-        // Set various options for a cURL transfer via an associative array
-        curl_setopt_array($curl, array(
-            // The URL to fetch. This can also be set when initializing a session with curl_init()
-            CURLOPT_URL => "http://api.rajaongkir.com/starter/province",
-            // TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it directly
-            CURLOPT_RETURNTRANSFER => true,
-            // An empty string ('') means no encoding
-            CURLOPT_ENCODING => "",
-            // The maximum amount of HTTP redirections to follow. Use this option alongside CURLOPT_FOLLOWLOCATION
-            CURLOPT_MAXREDIRS => 10,
-            // The maximum number of seconds to allow cURL functions to execute
-            CURLOPT_TIMEOUT => 30,
-            // Forces cURL to use HTTP version 1.1
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            // Specifies the custom request method to be used instead of GET when a HTTP request is made
-            CURLOPT_CUSTOMREQUEST => "GET",
-            // Sets the HTTP headers to be used in the request
-            CURLOPT_HTTPHEADER => array(
-                // RajaOngkir API key, retrieved from Laravel's environment variables
-                "key: " . env('API_KEY_RAJA_ONGKIR')
-            ),
-        ));
-
-        // Execute the given cURL session
-        $response = curl_exec($curl);
-        // Retrieve the error string of the last cURL operation
-        $err = curl_error($curl);
-
-        // Close the cURL session and free all resources. The cURL handle, curl, is also deleted
-        curl_close($curl);
-
-        // Check if there's an error
-        if ($err) {
-            // Return the error message if there is one
-            return "cURL Error #:" . $err;
-        } else {
-            // Decode the response and store it in a variable
-            $provinces = json_decode($response, true);
-            // If there's no error, return the response
-            return $provinces['rajaongkir']['results'];
-        }
+        $url = "http://api.rajaongkir.com/starter/province";
+        return $this->executeCurl($url);
     }
 
     /**
@@ -79,36 +37,53 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCities($provinceId)
     {
+        $url = "http://api.rajaongkir.com/starter/city?province=" . $provinceId;
+        return $this->executeCurl($url);
+    }
+
+    /**
+     * Retrieve provinceById and cityId data from RajaOngkir API.
+     * @param mixed $provinceId
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getProvinceById($provinceId, $cityId)
+    {
+        $url = "http://api.rajaongkir.com/starter/city?province=" . $provinceId . "&id=" . $cityId;
+        return $this->executeCurl($url);
+    }
+
+    /**
+     * Execute a cURL request to the RajaOngkir API.
+     * @param string $url
+     * @return mixed
+     */
+    private function executeCurl($url)
+    {
         // Initialize a new cURL session/resource
         $curl = curl_init();
 
         // Set various options for a cURL transfer via an associative array
-        curl_setopt_array($curl, array(
-            // The URL to fetch. This can also be set when initializing a session with curl_init()
-            CURLOPT_URL => "http://api.rajaongkir.com/starter/city?province=" . $provinceId,
-            // TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it directly
-            CURLOPT_RETURNTRANSFER => true,
-            // An empty string ('') means no encoding
-            CURLOPT_ENCODING => "",
-            // The maximum amount of HTTP redirections to follow. Use this option alongside CURLOPT_FOLLOWLOCATION
-            CURLOPT_MAXREDIRS => 10,
-            // The maximum number of seconds to allow cURL functions to execute
-            CURLOPT_TIMEOUT => 30,
-            // Forces cURL to use HTTP version 1.1
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            // Specifies the custom request method to be used instead of GET when a HTTP request is made
-            CURLOPT_CUSTOMREQUEST => "GET",
-            // Sets the HTTP headers to be used in the request
-            CURLOPT_HTTPHEADER => array(
-                // RajaOngkir API key, retrieved from Laravel's environment variables
-                "key: " . env('API_KEY_RAJA_ONGKIR')
-            ),
-        ));
+        curl_setopt_array($curl,
+            array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "GET",
+                CURLOPT_HTTPHEADER => array(
+                    "key: " . env('API_KEY_RAJA_ONGKIR'),
+                ),
+            )
+        );
 
         // Execute the given cURL session
         $response = curl_exec($curl);
         // Retrieve the error string of the last cURL operation
         $err = curl_error($curl);
+
         // Close the cURL session and free all resources. The cURL handle, curl, is also deleted
         curl_close($curl);
 
@@ -118,11 +93,11 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
             return "cURL Error #:" . $err;
         } else {
             // Decode the response and store it in a variable
-            $provinces = json_decode($response, true);
+            $responseDecoded = json_decode($response, true);
             // If there's no error, return the response
-
-            return $provinces['rajaongkir']['results'];
+            return $responseDecoded['rajaongkir']['results'];
         }
     }
+
 
 }

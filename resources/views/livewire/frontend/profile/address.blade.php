@@ -9,12 +9,6 @@
                 </div>
                 <div class="address-book-section">
                     <div class="row g-4">
-                        @php
-                        $addressCustomer = $customer->address ? $customer->address : "-";
-                        $provinceCustomer = $customer->province ? ucwords(strtolower($customer->province->name)) : "-";
-                        $cityCustomer = $customer->city ? ucwords(strtolower($customer->city->name)) : "-";
-                        $districtCustomer = $customer->district ? ucwords(strtolower($customer->district->name)) : "-";
-                        @endphp
                         @if($addressCustomer != "-")
                         <div class="select-box active col-xl-12 col-md-12">
                             <div class="address-box">
@@ -23,7 +17,7 @@
                                 </div>
                                 <div class="middle">
                                     <div class="address">
-                                        <p>{{ $provinceCustomer }}, {{ $cityCustomer }} , {{ $districtCustomer }} </p>
+                                        <p>{{ $provinceCustomer }}, {{ $cityCustomer }} </p>
                                         <p>{{ $addressCustomer }}</p>
                                         <p>{{ $customer->postal_code }}</p>
                                     </div>

@@ -4,6 +4,7 @@ namespace App\Repositories\Customer;
 
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Customer;
+use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,10 +16,12 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
     * @property Model|mixed $model;
     */
     protected $model;
+    protected $apiRajaOngkirService;
 
-    public function __construct(Customer $model)
+    public function __construct(Customer $model, ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->model = $model;
+        $this->apiRajaOngkirService = $apiRajaOngkirService;
     }
 
     /**
@@ -37,7 +40,15 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
      */
     public function findByUid($uid)
     {
-        return $this->model->with('province','city','district', 'rekening_customers')->where('customer_uid', $uid)->first();
+        $customer = $this->model->with('rekening_customers')->where('customer_uid', $uid)->first();
+
+        if ($customer) {
+            // Fetch provinceById data from API.
+            $customer->provinceAndCity = $this->apiRajaOngkirService->getProvinceById($customer->province_id, $customer->city_id);
+            // Add more requests for other endpoints as needed.
+        }
+
+        return $customer;
     }
 
 

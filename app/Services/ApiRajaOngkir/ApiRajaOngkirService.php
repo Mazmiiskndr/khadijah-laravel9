@@ -18,4 +18,12 @@ interface ApiRajaOngkirService extends BaseService{
      * @return mixed
      */
     public function getCities($provinceId);
+
+    /**
+     * Retrieve provinceById and cityId data from RajaOngkir API.
+     * @param mixed $provinceId
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getProvinceById($provinceId, $cityId);
 }
