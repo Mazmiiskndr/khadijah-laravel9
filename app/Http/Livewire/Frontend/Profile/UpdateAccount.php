@@ -35,10 +35,7 @@ class UpdateAccount extends Component
     ];
 
     /**
-     * updated
-     *
-     * @param  mixed $property
-     * @return void
+     * This function validates a specific property every time it changes.
      */
     public function updated($property)
     {
@@ -88,7 +85,10 @@ class UpdateAccount extends Component
         $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
     }
-
+    /**
+     * Renders the 'livewire.frontend.profile.update-account' view.
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.frontend.profile.update-account');

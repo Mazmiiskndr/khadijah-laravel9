@@ -35,10 +35,7 @@ class UpdateCustomer extends Component
     ];
 
     /**
-     * updated
-     *
-     * @param  mixed $property
-     * @return void
+     * This function validates a specific property every time it changes.
      */
     public function updated($property)
     {
