@@ -31,8 +31,7 @@ class CustomerServiceImplement extends Service implements CustomerService
             return $this->mainRepository->getAllData();
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -47,8 +46,7 @@ class CustomerServiceImplement extends Service implements CustomerService
             return $this->mainRepository->findByUid($uid);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -62,8 +60,7 @@ class CustomerServiceImplement extends Service implements CustomerService
             return $this->mainRepository->createCustomer($data);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
         }
     }
 
@@ -79,8 +76,22 @@ class CustomerServiceImplement extends Service implements CustomerService
             return $this->mainRepository->updateCustomer($customer_id, $data);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
-            return [];
-            //throw $th;
+            throw $th;
+        }
+    }
+
+    /**
+     * updateCustomerAddress
+     * @param  mixed $customer_id
+     * @param  mixed $data
+     */
+    public function updateCustomerAddress($customer_id,$data)
+    {
+        try {
+            return $this->mainRepository->updateCustomerAddress($customer_id, $data);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
         }
     }
 }

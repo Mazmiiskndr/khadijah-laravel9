@@ -116,8 +116,19 @@ class CreateCustomer extends Component
         $this->validate();
 
         try {
+            // Create an associative array with the data
+            $data = [
+                'name' => $this->name,
+                'email' => $this->email,
+                'address' => $this->address,
+                'city_id' => $this->city_id,
+                'province_id' => $this->province_id,
+                'postal_code' => $this->postal_code,
+                'phone' => $this->phone,
+                'password' => $this->password,
+            ];
             // Attempt to create a new customer with the provided data
-            $createdCustomer = $customerService->createCustomer($this);
+            $createdCustomer = $customerService->createCustomer($data);
 
             // Check if the returned object is an instance of the Customer class
             if ($createdCustomer instanceof Customer

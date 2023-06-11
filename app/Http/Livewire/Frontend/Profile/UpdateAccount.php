@@ -2,13 +2,8 @@
 
 namespace App\Http\Livewire\Frontend\Profile;
 
-use App\Models\Customer;
-use App\Models\District;
-use App\Models\Province;
-use App\Models\Regency;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Customer\CustomerService;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class UpdateAccount extends Component
@@ -85,6 +80,7 @@ class UpdateAccount extends Component
         $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
     }
+
     /**
      * Renders the 'livewire.frontend.profile.update-account' view.
      * @return \Illuminate\View\View
@@ -152,8 +148,19 @@ class UpdateAccount extends Component
         $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->customer_id) {
+            // Create an associative array with the data
+            $data = [
+                'name' => $this->name,
+                'email' => $this->email,
+                'address' => $this->address,
+                'city_id' => $this->city_id,
+                'province_id' => $this->province_id,
+                'postal_code' => $this->postal_code,
+                'phone' => $this->phone,
+                'password' => $this->password,
+            ];
             // Attempt to update the customer with the provided data
-            $updatedCustomer = $customerService->updateCustomer($this->customer_id, $this);
+            $updatedCustomer = $customerService->updateCustomer($this->customer_id, $data);
             $this->updateModal = false;
             // Set Flash Message
             session()->flash('success', 'Data Profil Berhasil di Update!');

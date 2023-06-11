@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Frontend\Profile;
 
-use App\Models\Customer;
 use Livewire\Component;
 
 class Address extends Component
@@ -28,13 +27,14 @@ class Address extends Component
 
     /**
      * getCustomerAdress
-     * @param  mixed $customer_id
+     * @param  mixed $customer_uid
      * @return void
      */
-    public function getCustomerAdress($customer_id)
+    public function getCustomerAdress($customer_uid)
     {
-        $customer = Customer::with('province', 'city', 'district')->find($customer_id);
-        $this->emit('getCustomerAddress', $customer);
+        $customerService = app(\App\Services\Customer\CustomerService::class);
+        $customerData = $customerService->findByUid($customer_uid);
+        $this->emit('getCustomerAddress', $customerData);
     }
 
     /**

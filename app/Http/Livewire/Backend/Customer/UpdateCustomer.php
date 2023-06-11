@@ -156,8 +156,19 @@ class UpdateCustomer extends Component
         try {
             // Check if a customer ID is provided
             if ($this->customer_id) {
+                // Create an associative array with the data
+                $data = [
+                    'name' => $this->name,
+                    'email' => $this->email,
+                    'address' => $this->address,
+                    'city_id' => $this->city_id,
+                    'province_id' => $this->province_id,
+                    'postal_code' => $this->postal_code,
+                    'phone' => $this->phone,
+                    'password' => $this->password,
+                ];
                 // Attempt to update the customer with the provided data
-                $updatedCustomer = $customerService->updateCustomer($this->customer_id, $this);
+                $updatedCustomer = $customerService->updateCustomer($this->customer_id, $data);
 
                 // If the customer is updated successfully
                 if ($updatedCustomer) {

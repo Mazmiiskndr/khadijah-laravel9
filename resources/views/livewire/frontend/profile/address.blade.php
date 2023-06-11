@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="top-sec">
                     <h3>Buku Alamat</h3>
-                    <a href="#" class="btn btn-sm btn-solid" wire:click="getCustomerAdress({{ $customer->id }})"
+                    <a href="#" class="btn btn-sm btn-solid" wire:click="getCustomerAdress('{{ $customer->customer_uid }}')"
                         data-bs-toggle="modal" data-bs-target="#updateCustomerAddressModal">Edit</a>
                 </div>
                 <div class="address-book-section">

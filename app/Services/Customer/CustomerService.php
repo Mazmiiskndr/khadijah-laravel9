@@ -30,4 +30,12 @@ interface CustomerService extends BaseService{
      * @param  mixed $data
      */
     public function updateCustomer($customer_id, $data);
+
+    /**
+     * updateCustomerAddress
+     * @param  mixed $customer_id
+     * @param  mixed $data
+     */
+    public function updateCustomerAddress($customer_id, $data);
+
 }
