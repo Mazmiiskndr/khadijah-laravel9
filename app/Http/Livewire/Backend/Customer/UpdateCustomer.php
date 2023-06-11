@@ -90,79 +90,105 @@ class UpdateCustomer extends Component
         $this->cities = collect();
     }
 
+    /**
+     * Renders the 'livewire.backend.customer.update-customer' view.
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.backend.customer.update-customer');
     }
 
     /**
-     * updatedProvinceId
-     *
-     * @param  mixed $value
+     * Updates the cities list when the selected province changes.
+     * @param  mixed $value The ID of the selected province.
      * @return void
      */
     public function updatedProvinceId($value)
     {
+        // Resolve the API service from the service container
         $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+
+        // Fetch the cities belonging to the selected province
         $this->cities = $apiRajaOngkirService->getCities($value);
+
+        // Reset the selected city
         $this->reset(['city_id']);
-        // $this->selectedCity = null;
     }
 
-
     /**
-     * show
-     *
-     * @param  mixed $customer
+     * Populates the form fields with the data of the customer to be updated.
+     * @param  mixed $customer The customer data.
      * @return void
      */
     public function show($customer)
     {
+        // Open the update modal
         $this->updateModal = true;
+
+        // Populate the form fields with the customer data
         $this->customer_id = $customer['id'];
         $this->name = $customer['name'];
         $this->email = $customer['email'];
         $this->address = $customer['address'];
         $this->province_id = $customer['province_id'];
 
-        // set value for city dropdown
+        // If a city is selected, populate the city field and fetch the cities belonging to the selected province
         if (!is_null($customer['city_id'])) {
             $this->city_id = $customer['city_id'];
+
             $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
             $this->cities = $apiRajaOngkirService->getCities($customer['province_id']);
         }
 
+        // Continue populating the form fields
         $this->postal_code = $customer['postal_code'];
         $this->phone = $customer['phone'];
     }
 
     /**
-     * update
-     * @param  mixed $customerService
+     * Updates an existing customer.
+     * @param  CustomerService $customerService The service instance for customer interactions.
+     * @return void
      */
     public function update(CustomerService $customerService)
     {
-        // Create Validate
+        // First, validate the form fields
         $this->validate($this->getRules(), $this->getMessages());
 
-        if ($this->customer_id) {
-            $updatedCustomer = $customerService->updateCustomer($this->customer_id, $this);
-            // dd($updatedCustomer);
-            if ($updatedCustomer) {
-                $this->updateModal = false;
-                // Set Flash Message
-                session()->flash('success', 'Pelanggan Berhasil di Update!');
-                $this->resetFields();
-                // make emit with flash message
-                $this->emit('updatedCustomer', $updatedCustomer);
-                $this->dispatchBrowserEvent('close-modal');
+        try {
+            // Check if a customer ID is provided
+            if ($this->customer_id) {
+                // Attempt to update the customer with the provided data
+                $updatedCustomer = $customerService->updateCustomer($this->customer_id, $this);
+
+                // If the customer is updated successfully
+                if ($updatedCustomer) {
+                    // Close the update modal
+                    $this->updateModal = false;
+
+                    // Flash a success message
+                    session()->flash('success', 'Pelanggan Berhasil di Update!');
+
+                    // Reset the form fields
+                    $this->resetFields();
+
+                    // Emit an event to notify of the updated customer
+                    $this->emit('updatedCustomer', $updatedCustomer);
+
+                    // Dispatch a browser event to close the modal
+                    $this->dispatchBrowserEvent('close-modal');
+                }
             }
+        } catch (\Exception $e) {
+            // If an exception occurs during the customer update process, flash an error message
+            session()->flash('error', 'Pelanggan Gagal di Update! Error: ' . $e->getMessage());
         }
     }
 
+
     /**
-     * closeModal
-     *
+     * Closes the update modal.
      * @return void
      */
     public function closeModal()
@@ -172,8 +198,7 @@ class UpdateCustomer extends Component
     }
 
     /**
-     * resetFields
-     *
+     * Resets all the form fields to their default values.
      * @return void
      */
     public function resetFields()

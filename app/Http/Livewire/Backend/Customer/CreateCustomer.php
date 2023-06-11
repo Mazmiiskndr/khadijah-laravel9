@@ -61,82 +61,104 @@ class CreateCustomer extends Component
      */
     public function mount(ApiRajaOngkirService $apiRajaOngkirService)
     {
+        // Reset form fields to their default values
         $this->resetFields();
+
+        // Fetch a list of provinces
         $this->provinces = $apiRajaOngkirService->getProvinces();
     }
 
+    /**
+     * Renders the 'livewire.backend.customer.create-customer' view.
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.backend.customer.create-customer');
     }
 
     /**
-     * updatedProvinceId
-     * @param  mixed $value
+     * Updates the cities list when the selected province changes.
+     * @param  mixed $value The ID of the selected province.
      * @return void
      */
     public function updatedProvinceId($value)
     {
+        // Resolve the API service from the service container
         $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+
+        // Fetch the cities belonging to the selected province
         $this->cities = $apiRajaOngkirService->getCities($value);
+
+        // Reset the selected city
         $this->reset(['city_id']);
     }
 
     /**
-     * updated
+     * Triggers form validation when a property changes.
      *
-     * @param  mixed $property
+     * @param  mixed $property The name of the property that has been updated.
      * @return void
      */
     public function updated($property)
     {
-        // Every time a property changes
-        // (only `text` for now), validate it
         $this->validateOnly($property);
     }
 
     /**
-     * store
-     * @param  mixed $customerService
+     * Stores a new customer.
+     * @param  CustomerService $customerService The service instance for customer interactions.
+     * @return void
      */
     public function store(CustomerService $customerService)
     {
-
-        // Make Validation
+        // First, validate the form fields
         $this->validate();
-        $createdCustomer = $customerService->createCustomer($this);
-        if ($createdCustomer instanceof Customer) {
-            // Set Flash Message
-            session()->flash('success', 'Pelanggan Berhasil di Tambahkan!');
 
-            // Reset Form Fields After Creating Category
-            $this->resetFields();
-            // Emit event to reload datatable
-            $this->emit('customerCreated', $createdCustomer);
-            $this->dispatchBrowserEvent('close-modal');
-        } else {
-            // Set Flash Message
-            session()->flash('error', 'Pelanggan Gagal di Tambahkan!');
+        try {
+            // Attempt to create a new customer with the provided data
+            $createdCustomer = $customerService->createCustomer($this);
 
-            // Reset Form Fields After Creating Category
-            $this->resetFields();
+            // Check if the returned object is an instance of the Customer class
+            if ($createdCustomer instanceof Customer
+            ) {
+                // If the customer was created successfully, flash a success message
+                session()->flash('success', 'Pelanggan Berhasil di Tambahkan!');
+
+                // Emit an event to reload the data table
+                $this->emit('customerCreated', $createdCustomer);
+
+                // Dispatch a browser event to close the modal
+                $this->dispatchBrowserEvent('close-modal');
+            } else {
+                // If the returned object is not a Customer instance, flash an error message
+                session()->flash('error', 'Pelanggan Gagal di Tambahkan!');
+            }
+        } catch (\Exception $e) {
+            // If an exception occurs during the customer creation process, flash an error message
+            session()->flash('error', 'Pelanggan Gagal di Tambahkan! Error: ' . $e->getMessage());
         }
+
+        // Regardless of the outcome, reset the form fields to their default values
+        $this->resetFields();
     }
 
+
     /**
-     * closeModal
-     *
+     * Closes the create modal.
      * @return void
      */
     public function closeModal()
     {
+        // Close the create modal
         $this->createModal = false;
+
+        // Reset the form fields
         $this->resetFields();
     }
 
     /**
-     * resetFields
-     *
+     * Resets all the form fields to their default values.
      * @return void
      */
     public function resetFields()
@@ -150,4 +172,5 @@ class CreateCustomer extends Component
         $this->postal_code = '';
         $this->phone = '';
     }
+
 }
