@@ -10,10 +10,10 @@
         <td>{{ $customer->phone }}</td>
         <td>{{ $registrationDate }}</td>
         <td>
-            <button wire:click="getCustomer({{ $customer->id }})" class="btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#updateCustomerModal">
+            <button wire:click="getCustomer('{{ $customer->customer_uid }}')" class="btn btn-pill btn-primary" data-bs-toggle="modal" data-bs-target="#updateCustomerModal">
                 <i class="fa fa-edit"></i>
             </button>
-            <button wire:click="deleteConfirmation({{ $customer->id }})" class="btn btn-pill btn-danger">
+            <button wire:click="deleteConfirmation('{{ $customer->customer_uid }}')" class="btn btn-pill btn-danger">
                 <i class="fa fa-trash"></i>
             </button>
         </td>

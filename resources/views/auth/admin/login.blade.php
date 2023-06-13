@@ -1,6 +1,6 @@
 <x-auth.admin.master title="Halaman Login">
         <div class="row m-0">
-            <div class="col-12 p-0">
+            <div class="col-12 p-0" >
                 <div class="login-card login-dark">
                     <div>
                         <div>

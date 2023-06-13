@@ -8,6 +8,7 @@ export default defineConfig({
                 "resources/js/app.js",
                 "resources/js/frontend.js",
                 "resources/css/app.css",
+                "resources/css/backend.css",
                 "resources/css/frontend.css",
             ],
             output: "public", // folder output

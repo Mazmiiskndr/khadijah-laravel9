@@ -3,9 +3,6 @@
 namespace App\Http\Livewire\Backend\Customer;
 
 use App\Models\Customer;
-use App\Models\District;
-use App\Models\Province;
-use App\Models\Regency;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Customer\CustomerService;
 use Livewire\Component;
