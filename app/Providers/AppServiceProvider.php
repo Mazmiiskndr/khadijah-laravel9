@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
         if (!is_null($contact->city_id)) {
             $contact->city_id = $contact->city_id;
             // Assuming $cityId is provided
-            $contact['city'] = $apiRajaOngkirService->getCityById($contact->city_id);
+            $contact['addressDetail'] = $apiRajaOngkirService->getCityById($contact->city_id);
         }
 
         // Using the retrieved contact data, we pass it to the views
