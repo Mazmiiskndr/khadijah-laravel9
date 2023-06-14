@@ -54,14 +54,41 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
     }
 
     /**
+     * Retrieve shipping cost data from RajaOngkir API.
+     * @param string $origin
+     * @param string $destination
+     * @param string $weight
+     * @param string $courier
+     * @return mixed
+     */
+    public function getCost($origin, $destination, $weight, $courier)
+    {
+        $url = "http://api.rajaongkir.com/starter/cost";
+        $postData = [
+            "origin" => $origin,
+            "destination" => $destination,
+            "weight" => $weight,
+            "courier" => $courier,
+        ];
+        return $this->executeCurl($url, "POST", $postData);
+    }
+
+
+    /**
      * Execute a cURL request to the RajaOngkir API.
      * @param string $url
      * @return mixed
      */
-    private function executeCurl($url)
+    private function executeCurl($url, $method = "GET", $postData = null)
     {
         // Initialize a new cURL session/resource
         $curl = curl_init();
+
+        // If postData is provided, format it as a string
+        $postFields = "";
+        if ($postData) {
+            $postFields = http_build_query($postData);
+        }
 
         // Set various options for a cURL transfer via an associative array
         curl_setopt_array($curl,
@@ -72,8 +99,10 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
                 CURLOPT_MAXREDIRS => 10,
                 CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "GET",
+                CURLOPT_CUSTOMREQUEST => $method,
+                CURLOPT_POSTFIELDS => $postFields,
                 CURLOPT_HTTPHEADER => array(
+                    "content-type: application/x-www-form-urlencoded",
                     "key: " . env('API_KEY_RAJA_ONGKIR'),
                 ),
             )

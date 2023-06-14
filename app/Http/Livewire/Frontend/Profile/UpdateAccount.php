@@ -21,7 +21,6 @@ class UpdateAccount extends Component
 
     public $selectedProvince = null;
     public $selectedCity = null;
-    public $selectedDistrict = null;
 
     // Listeners
     protected $listeners = [

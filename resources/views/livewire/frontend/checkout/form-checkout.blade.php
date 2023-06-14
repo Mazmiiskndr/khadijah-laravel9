@@ -1,6 +1,6 @@
 <form wire:submit.prevent="storeCheckout" method="POST">
     <div class="row">
-        <div class="col-lg-6 col-sm-12 col-xs-12">
+        <div class="col-lg-7 col-sm-12 col-xs-12">
             <div class="checkout-title">
                 <h3>Detail Penagihan</h3>
             </div>
@@ -26,43 +26,42 @@
                         <option value="">-- Pilih Provinsi --</option>
 
                         @foreach($provinces as $province)
-                        <option value="{{ $province['province_id'] }}" {{ $province['selected']==true ? 'selected' : ''
-                            }}>
-                            {{ $province['province'] }}
-                        </option>
+                        <option value="{{ $province['province_id'] }}">{{ strtoupper($province['province']) }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Kota / Kabupaten</div>
-                    <select name="province_id" id="" class="form-select">
+                    <select name="city_id" id="city_id" wire:model="city_id" class="form-select">
                         <option value="">-- Pilih Kota / Kabupaten --</option>
+                        @if(!is_null($cities))
+                        @foreach($cities as $city)
+                        <option value="{{ $city['city_id'] }}">{{ strtoupper($city['type']) }} {{ strtoupper($city['city_name']) }}</option>
+                        @endforeach
+                        @endif
                     </select>
                 </div>
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                    <div class="field-label">Kecamatan</div>
-                    <select name="province_id" id="" class="form-select">
-                        <option value="">-- Pilih Kecamatan --</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
                     <div class="field-label">Kode Pos</div>
-                    <input type="text" name="postal_code" placeholder="Masukan Email" wire:model="postal_code" readonly>
+                    <input type="text" name="postal_code" placeholder="Masukan Email" wire:model="postal_code">
                 </div>
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
                     <div class="field-label">Ekspedisi</div>
-                    <select name="expedition" id="" class="form-select">
+                    <select name="expedition" id="expedition" wire:model="expedition" class="form-select">
                         <option value="">-- Pilih Ekspedisi --</option>
+                        <option value="JNE">JNE</option>
+                        <option value="POS INDONESIA">POS INDONESIA</option>
+                        <option value="TIKI">TIKI</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group col-md-4 col-sm-6 col-xs-12">
                     <div class="field-label">Paket</div>
-                    <select name="parcel" id="" class="form-select">
+                    <select name="parcel" id="parcel" wire:model="parcel" class="form-select">
                         <option value="">-- Pilih Paket --</option>
                     </select>
                 </div>
 
-                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group col-md-12 col-sm-6 col-xs-12">
                     <div class="field-label">Alamat</div>
                     <input type="text" name="address" placeholder="Masukan Alamat" wire:model="address">
                     @if (!$address)
@@ -71,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 col-sm-12 col-xs-12">
+        <div class="col-lg-5 col-sm-12 col-xs-12">
             <div class="checkout-details">
                 <div class="order-box">
                     <div class="title-box">
