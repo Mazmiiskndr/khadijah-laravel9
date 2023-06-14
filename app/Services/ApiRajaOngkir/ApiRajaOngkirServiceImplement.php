@@ -66,6 +66,21 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
     }
 
     /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getCityById($cityId)
+    {
+        try {
+            return $this->mainRepository->getCityById($cityId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
      * Retrieve shipping cost data from RajaOngkir API.
      * @param string $origin
      * @param string $destination
@@ -82,4 +97,5 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
             throw $th;
         }
     }
+
 }

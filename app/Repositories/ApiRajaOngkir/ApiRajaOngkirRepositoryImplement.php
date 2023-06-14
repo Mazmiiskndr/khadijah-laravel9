@@ -54,6 +54,18 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
     }
 
     /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getCityById($cityId)
+    {
+        $url = "http://api.rajaongkir.com/starter/city?id=" . $cityId;
+        return $this->executeCurl($url);
+    }
+
+
+    /**
      * Retrieve shipping cost data from RajaOngkir API.
      * @param string $origin
      * @param string $destination

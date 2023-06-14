@@ -28,6 +28,13 @@ interface ApiRajaOngkirRepository extends Repository{
     public function getProvinceById($provinceId, $cityId);
 
     /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getCityById($cityId);
+
+    /**
      * Retrieve shipping cost data from RajaOngkir API.
      * @param string $origin
      * @param string $destination

@@ -16,7 +16,6 @@ class Contact extends Model
     protected $fillable = [
         'province_id',
         'city_id',
-        'district_id',
         'shop_name',
         'email',
         'address',
@@ -28,19 +27,4 @@ class Contact extends Model
         'shopee',
         'tokped',
     ];
-
-    public function province()
-    {
-        return $this->belongsTo(Province::class);
-    }
-
-    public function city()
-    {
-        return $this->belongsTo(Regency::class);
-    }
-
-    public function district()
-    {
-        return $this->belongsTo(District::class);
-    }
 }

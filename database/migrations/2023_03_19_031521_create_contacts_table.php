@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id('contact_id');
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
-            $table->unsignedBigInteger('district_id')->nullable();
+            // $table->unsignedBigInteger('district_id')->nullable();
             $table->string('shop_name')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();
@@ -34,9 +34,9 @@ return new class extends Migration
             // $table->string('blibli')->nullable();
             $table->timestamps();
 
-            $table->foreign('province_id')->references('id')->on('provinces')->onDelete('set null');
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
-            $table->foreign('district_id')->references('id')->on('districts')->onDelete('set null');
+            // $table->foreign('province_id')->references('id')->on('provinces')->onDelete('set null');
+            // $table->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
+            // $table->foreign('district_id')->references('id')->on('districts')->onDelete('set null');
         });
     }
 
