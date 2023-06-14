@@ -16,6 +16,8 @@ class Contact extends Model
     protected $fillable = [
         'province_id',
         'city_id',
+        'province',
+        'city',
         'shop_name',
         'email',
         'address',

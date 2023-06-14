@@ -30,14 +30,6 @@ class AppServiceProvider extends ServiceProvider
         // Retrieve contact data with its associated province, city, and district
         $contact = Contact::first();
 
-        // If a city is selected, populate the city field and fetch the cities belonging to the selected province
-        // $contact['city_id'] need to be set to actual city_id
-        if (!is_null($contact->city_id)) {
-            $contact->city_id = $contact->city_id;
-            // Assuming $cityId is provided
-            $contact['addressDetail'] = $apiRajaOngkirService->getCityById($contact->city_id);
-        }
-
         // Using the retrieved contact data, we pass it to the views
         View::composer(['components.frontend.footer', 'components.frontend.top-header'], function ($view) use ($contact) {
             $view->with('contact', $contact);

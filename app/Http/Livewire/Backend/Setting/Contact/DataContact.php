@@ -85,18 +85,23 @@ class DataContact extends Component
     /**
      * The update function is responsible for validating the request and updating the contact.
      */
-    public function update()
+    public function update(ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->validate();
 
         // Update the contact
         $contact = Contact::find($this->contact_id);
+        $dataCity = $apiRajaOngkirService->getCityById($this->city_id);
+        $cityName = $dataCity['type'] . " " . $dataCity['city_name'];
+        $provinceName =  $dataCity['province'];
         $contact->update([
             'shop_name'     => $this->shop_name,
             'email'         => $this->email,
             'address'       => $this->address,
-            'city_id'       => $this->city_id,
             'province_id'   => $this->province_id,
+            'city_id'       => $this->city_id,
+            'province'      => $provinceName,
+            'city'          => $cityName,
             'postal_code'   => $this->postal_code,
             'phone'         => $this->phone,
             'tiktok'        => $this->tiktok,

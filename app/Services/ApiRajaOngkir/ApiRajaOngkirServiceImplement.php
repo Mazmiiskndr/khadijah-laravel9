@@ -98,4 +98,23 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
         }
     }
 
+    /**
+     * Retrieve shipping cost for a parcel from RajaOngkir API.
+     * @param object $contactData
+     * @param string $city_id
+     * @param int $weight
+     * @param string $courier
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCostParcel($contactData, $city_id, $weight, $courier)
+    {
+        try {
+            return $this->mainRepository->getCostParcel($contactData, $city_id, $weight, $courier);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
 }

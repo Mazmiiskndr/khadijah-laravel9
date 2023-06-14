@@ -36,32 +36,43 @@
                         <option value="">-- Pilih Kota / Kabupaten --</option>
                         @if(!is_null($cities))
                         @foreach($cities as $city)
-                        <option value="{{ $city['city_id'] }}">{{ strtoupper($city['type']) }} {{ strtoupper($city['city_name']) }}</option>
+                        <option value="{{ $city['city_id'] }}">{{ strtoupper($city['type']) }} {{
+                            strtoupper($city['city_name']) }}</option>
                         @endforeach
                         @endif
                     </select>
                 </div>
-                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Kode Pos</div>
                     <input type="text" name="postal_code" placeholder="Masukan Email" wire:model="postal_code">
                 </div>
-                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Ekspedisi</div>
                     <select name="expedition" id="expedition" wire:model="expedition" class="form-select">
                         <option value="">-- Pilih Ekspedisi --</option>
-                        <option value="JNE">JNE</option>
-                        <option value="POS INDONESIA">POS INDONESIA</option>
-                        <option value="TIKI">TIKI</option>
+                        <option value="jne">JNE</option>
+                        <option value="pos">POS INDONESIA</option>
+                        <option value="tiki">TIKI</option>
                     </select>
                 </div>
-                <div class="form-group col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Paket</div>
                     <select name="parcel" id="parcel" wire:model="parcel" class="form-select">
                         <option value="">-- Pilih Paket --</option>
+                        @if(!is_null($parcels))
+                        @foreach($parcels as $parcel)
+                        <option value="{{ $parcel['service'] }}" ongkir="{{ $parcel['cost'][0]['value'] }}"
+                            estimasi="{{ ucwords($parcel['cost'][0]['etd']) . " Hari" }}">
+                            {{ $parcel['service'] . " - Rp. " . number_format($parcel['cost'][0]['value'],0,',','.') . "
+                            - Estimasi " .
+                            ucwords($parcel['cost'][0]['etd']) . " Hari" }}
+                        </option>
+                        @endforeach
+                        @endif
                     </select>
                 </div>
 
-                <div class="form-group col-md-12 col-sm-6 col-xs-12">
+                <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Alamat</div>
                     <input type="text" name="address" placeholder="Masukan Alamat" wire:model="address">
                     @if (!$address)
@@ -104,31 +115,22 @@
                         @endforeach
                     </ul>
                     <ul class="sub-total">
-                        <li>SubTotal <span class="count">Rp. {{ number_format($subtotal,0, ',', '.') }}</span></li>
-
-                        {{-- *** TODO: SHIPPING *** --}}
-                        {{-- <li>Shipping
-                            <div class="shipping">
-                                <div class="shopping-option">
-                                    <input type="checkbox" name="free-shipping" id="free-shipping">
-                                    <label for="free-shipping">Free Shipping</label>
-                                </div>
-                                <div class="shopping-option">
-                                    <input type="checkbox" name="local-pickup" id="local-pickup">
-                                    <label for="local-pickup">Local Pickup</label>
-                                </div>
-                            </div>
-                        </li> --}}
+                        <li>SubTotal <span class="count">Rp. {{ number_format($subTotal,0, ',', '.') }}</span></li>
+                        @if($deliveryCost > 0)
+                        <li>Ongkos Kirim <span class="count">Rp. {{ number_format($deliveryCost,0, ',', '.') }}</span>
+                        </li>
+                        @endif
                     </ul>
                     <ul class="total">
-                        <li>Total <span class="count">Rp. {{ number_format($subtotal,0, ',', '.') }}</span></li>
+                        <li>Total <span class="count">Rp. {{ number_format($total,0, ',', '.') }}</span></li>
                     </ul>
                 </div>
                 <div class="payment-box">
                     <div class="upper-box">
                         <div class="payment-options">
                             <ul>
-                                <li>
+                                {{-- TODO: --}}
+                                {{-- <li>
                                     <div class="radio-option">
                                         <input type="radio" name="payment-group" id="payment-1" checked="checked">
                                         <label for="payment-1">Check Payments<span class="small-text">Please send a
@@ -137,21 +139,17 @@
                                                 Name, Store Street, Store Town, Store State /
                                                 County, Store Postcode.</span></label>
                                     </div>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <div class="radio-option">
                                         <input type="radio" name="payment-group" id="payment-2">
-                                        <label for="payment-2">Cash On Delivery<span class="small-text">Please send a
-                                                check to
-                                                Store
-                                                Name, Store Street, Store Town, Store State /
-                                                County, Store Postcode.</span></label>
+                                        <label for="payment-2">(COD) / Bayar di Tempat</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="radio-option paypal">
                                         <input type="radio" name="payment-group" id="payment-3">
-                                        <label for="payment-3">PayPal<span class="image"><img
+                                        <label for="payment-3">Pembayaran Melalui Bank<span class="image"><img
                                                     src="../assets/images/paypal.png" alt=""></span></label>
                                     </div>
                                 </li>

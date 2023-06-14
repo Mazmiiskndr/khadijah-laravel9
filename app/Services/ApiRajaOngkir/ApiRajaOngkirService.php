@@ -43,4 +43,15 @@ interface ApiRajaOngkirService extends BaseService{
      * @return mixed
      */
     public function getCost($origin, $destination, $weight, $courier);
+
+    /**
+     * Retrieve shipping cost for a parcel from RajaOngkir API.
+     * @param object $contactData
+     * @param string $city_id
+     * @param int $weight
+     * @param string $courier
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCostParcel($contactData, $city_id, $weight, $courier);
 }

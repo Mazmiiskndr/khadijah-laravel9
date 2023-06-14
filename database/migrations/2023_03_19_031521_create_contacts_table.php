@@ -18,6 +18,8 @@ return new class extends Migration
             $table->unsignedBigInteger('province_id')->nullable();
             $table->unsignedBigInteger('city_id')->nullable();
             // $table->unsignedBigInteger('district_id')->nullable();
+            $table->string('province')->nullable();
+            $table->string('city')->nullable();
             $table->string('shop_name')->nullable();
             $table->string('email')->nullable();
             $table->string('address')->nullable();

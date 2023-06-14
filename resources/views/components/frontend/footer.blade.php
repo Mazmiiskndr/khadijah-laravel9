@@ -94,9 +94,10 @@
                         <div class="footer-contant">
                             <ul class="contact-list">
                                 <li><i class="fa fa-map-marker"></i>
-                                    {{-- {{ dd($contact->addressDetail['province']) }} --}}
-                                    {{ $contact->addressDetail['province'] }}, {{ $contact->addressDetail['type'] }} {{ $contact->addressDetail['city_name'] }},
-                                    {{ $contact->address }},
+                                    @if($contact)
+                                    {{ $contact->province ?? "" }}, {{ $contact->city ?? "" }},
+                                    {{ $contact->address ?? "" }},
+                                    @endif
                                 </li>
                                 <li><i class="fa fa-phone"></i>Hubungi Kami : {{ $contact->phone }}</li>
                                 <li><i class="fa fa-envelope"></i>Email: <a href="#">{{ $contact->email }}</a></li>

@@ -15,8 +15,12 @@ class FormCheckout extends Component
     public $provinces, $cities, $districts;
     public $province_id, $city_id;
     // FOR API
-    public $expedition,$parcel;
+    public $expedition,$parcel, $deliveryCost = 0;
 
+    // FOR TRANSACTION
+    public $subTotal, $total;
+    // ShippingCost Parcels
+    public $parcels = [];
     public $selectedProvince = null;
     public $selectedCity = null;
 
@@ -29,18 +33,23 @@ class FormCheckout extends Component
         'city_id' => 'required',
         'address' => 'required',
         'postal_code' => 'required',
+        'expedition' => 'required',
+        'parcel' => 'required',
     ];
 
     // Validation error messages
+    // Validation error messages
     protected $messages = [
         'name.required' => 'Nama wajib diisi.',
-        'phone.required' => 'Telepon wajib diisi.',
+        'phone.required' => 'Nomor telepon wajib diisi.',
         'email.required' => 'Email wajib diisi.',
         'email.email' => 'Format Email tidak valid.',
         'province_id.required' => 'Provinsi wajib diisi.',
-        'city_id.required' => 'Kota Wajib diisi.',
+        'city_id.required' => 'Kota wajib diisi.',
         'address.required' => 'Alamat wajib diisi.',
         'postal_code.required' => 'Kode pos wajib diisi.',
+        'expedition.required' => 'Ekspedisi wajib dipilih.',
+        'parcel.required' => 'Paket wajib dipilih.',
     ];
 
     /**
@@ -50,16 +59,13 @@ class FormCheckout extends Component
      */
     public function mount(CustomerService $customerService, ApiRajaOngkirService $apiRajaOngkirService)
     {
-        // TODO: GET COST PARCEL
-        // $contact = app('contactData');
-        // dd($contact);
-
         // Set the customer_uid by retrieving the customer ID of the logged-in customer using Auth
         $this->customer_uid = Auth::guard('customer')->user()->customer_uid;
         // Show customer data by calling the showCustomer function
         $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
         $this->showCustomer($customerService, $apiRajaOngkirService, $this->customer_uid);
+
     }
 
     /**
@@ -108,6 +114,33 @@ class FormCheckout extends Component
     }
 
     /**
+     * Handle expedition updates.
+     * @param mixed $value
+     */
+    public function updatedExpedition($value)
+    {
+        // Fetch the parcels for the selected expedition
+        $contactData = app('contactData');
+        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->city_id, 300, $value);
+
+        // Reset parcel selection
+        $this->parcel = null;
+    }
+
+    /**
+     * Handle parcel updates.
+     * @param mixed $value
+     */
+    public function updatedParcel($value)
+    {
+        // Fetch the selected parcel
+        $selectedParcel = collect($this->parcels)->firstWhere('service', $value);
+
+        // Update the delivery cost
+        $this->deliveryCost = $selectedParcel['cost'][0]['value'] ?? 0;
+    }
+
+    /**
      * Store the checkout data.
      */
     public function storeCheckout()
@@ -144,7 +177,26 @@ class FormCheckout extends Component
      */
     private function getCustomerCartData(CartService $cartService)
     {
-        return $cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
+        $carts = $cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
+        /** @var iterable|object $carts */
+
+        // Initialize the subtotal
+        $this->subTotal = 0;
+        // Calculate the subtotal
+        foreach ($carts as $cart) {
+            $totalPerPrice = $cart->quantity * $cart->product->price;
+            if ($cart->product->discount > 0
+            ) {
+                // Apply discount if available
+                $this->subTotal += $totalPerPrice - $cart->product->discount;
+            } else {
+                $this->subTotal += $totalPerPrice;
+            }
+        }
+
+        // Calculate the total by adding the subtotal and delivery cost
+        $this->total = $this->subTotal + $this->deliveryCost;
+        return $carts;
     }
 
     /**
@@ -167,5 +219,7 @@ class FormCheckout extends Component
             $this->city_id = $customer->city_id;
             $this->cities = $apiRajaOngkirService->getCities($customer->province_id);
         }
+
+
     }
 }

@@ -30,7 +30,6 @@ class CartRepositoryImplement extends Eloquent implements CartRepository
         return $this->model->with('product')->where('customer_id', $customer_id)->get();
     }
 
-
     /**
      * addProductToCart
      * @param  mixed $uid
