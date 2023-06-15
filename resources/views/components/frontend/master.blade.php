@@ -52,9 +52,11 @@
     @stack('scripts')
     {{-- End Stack Scripts --}}
 
+
     {{-- Start Livewire Scripts --}}
     @livewireScripts
     {{-- End Livewire Scripts --}}
+
 
 </body>
 
