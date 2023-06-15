@@ -15,8 +15,6 @@
 <!-- Plugins JS start-->
 <script id="menu" src="{{asset('assets/js/sidebar-menu.js')}}"></script>
 <script src="{{ asset('assets/js/slick/slick.min.js') }}"></script>
-<script src="{{ asset('assets/js/slick/slick.js') }}"></script>
 <script src="{{ asset('assets/js/header-slick.js') }}"></script>
 <!-- Theme js-->
 <script src="{{asset('assets/js/script.js')}}"></script>
-{{-- <script src="{{asset('assets/js/theme-customizer/customizer.js')}}"></script> --}}

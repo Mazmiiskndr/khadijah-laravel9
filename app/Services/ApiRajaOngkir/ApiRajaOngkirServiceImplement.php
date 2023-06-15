@@ -64,4 +64,57 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
             throw $th;
         }
     }
+
+    /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getCityById($cityId)
+    {
+        try {
+            return $this->mainRepository->getCityById($cityId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
+     * Retrieve shipping cost data from RajaOngkir API.
+     * @param string $origin
+     * @param string $destination
+     * @param string $weight
+     * @param string $courier
+     * @return mixed
+     */
+    public function getCost($origin, $destination, $weight, $courier)
+    {
+        try {
+            return $this->mainRepository->getCost($origin, $destination, $weight, $courier);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
+     * Retrieve shipping cost for a parcel from RajaOngkir API.
+     * @param object $contactData
+     * @param string $city_id
+     * @param int $weight
+     * @param string $courier
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCostParcel($contactData, $city_id, $weight, $courier)
+    {
+        try {
+            return $this->mainRepository->getCostParcel($contactData, $city_id, $weight, $courier);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
 }

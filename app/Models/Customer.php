@@ -44,11 +44,6 @@ class Customer extends Authenticatable
         return $this->belongsTo(Province::class);
     }
 
-    public function city()
-    {
-        return $this->belongsTo(Regency::class);
-    }
-
     public function rekening_customers()
     {
         return $this->hasMany(RekeningCustomer::class);

@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class DatatableCustomer extends Component
 {
-    public $customer_id, $customer;
+    public $customer_uid, $customer;
     protected $listeners = [
         'customerCreated' => 'handleStored',
         'updatedCustomer' => 'handleUpdated',
@@ -23,38 +23,37 @@ class DatatableCustomer extends Component
     }
 
     /**
-     * getCustomer
-     *
-     * @param  mixed $customer_id
-     * @return void
+     * Fetches a customer's data based on their UID and emits an event with this data.
+     * @param  string $customer_uid The UID of the customer to fetch data for.
      */
-    public function getCustomer($customer_id)
+    public function getCustomer($customer_uid)
     {
-        $customer = Customer::with('province', 'city', 'district')->find($customer_id);
-        $this->emit('getCustomer', $customer);
+        $customerService = app(\App\Services\Customer\CustomerService::class);
+        $customerData = $customerService->findByUid($customer_uid);
+        $this->emit('getCustomer', $customerData);
     }
 
     /**
      * deleteConfirmation
      *
-     * @param  mixed $customer_id
+     * @param  mixed $customer_uid
      * @return void
      */
-    public function deleteConfirmation($customer_id)
+    public function deleteConfirmation($customer_uid)
     {
-        $this->customer_id  = $customer_id;
+        $this->customer_uid  = $customer_uid;
         $this->dispatchBrowserEvent('delete-show-confirmation');
     }
 
     /**
      * destroy
      *
-     * @param  mixed $customer_id
+     * @param  mixed $customer_uid
      * @return void
      */
     public function destroy()
     {
-        $customer = Customer::find($this->customer_id);
+        $customer = Customer::where('customer_uid', $this->customer_uid)->firstOrFail();
         $customer->delete();
         // Set Flash Message
         session()->flash('success', 'Customer Berhasil di Hapus!');

@@ -2,13 +2,8 @@
 
 namespace App\Http\Livewire\Backend\Customer;
 
-use App\Models\Customer;
-use App\Models\District;
-use App\Models\Province;
-use App\Models\Regency;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Customer\CustomerService;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class UpdateCustomer extends Component
@@ -26,7 +21,6 @@ class UpdateCustomer extends Component
 
     public $selectedProvince = null;
     public $selectedCity = null;
-    public $selectedDistrict = null;
 
     // Listeners
     protected $listeners = [

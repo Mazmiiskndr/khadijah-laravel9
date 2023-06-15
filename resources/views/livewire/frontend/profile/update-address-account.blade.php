@@ -11,7 +11,7 @@
                 <form wire:submit.prevent="update">
                     <div class="modal-body">
                         @csrf
-                        {{-- Province, City and District--}}
+                        {{-- Province City--}}
                         <div class="row">
                             <div class="col-6">
                                 <label for="province_id_input_address">Provinsi</label>

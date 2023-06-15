@@ -2,26 +2,28 @@
 
 namespace App\Http\Livewire\Frontend\Checkout;
 
-use App\Models\Customer;
-use App\Models\District;
-use App\Models\Province;
-use App\Models\Regency;
+use App\Models\Order;
+use App\Models\OrderDetail;
+use App\Models\ShippingDetail;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Cart\CartService;
 use App\Services\Customer\CustomerService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Termwind\Components\Dd;
 
 class FormCheckout extends Component
 {
     // Define public properties
     public $customer_uid, $name, $email, $address, $postal_code, $phone;
     public $provinces, $cities, $districts;
-    public $province_id, $city_id, $district_id;
-    public $selectedProvince = null;
-    public $selectedCity = null;
-    public $selectedDistrict = null;
+    public $province_id, $city_id;
+    // FOR API
+    public $expedition,$parcel, $deliveryCost = 0;
+    // FOR TRANSACTION
+    public $product_id, $quantity, $price, $subTotal, $total, $paymentMethod;
+    // ShippingCost Parcels
+    public $parcels = [];
 
     // Validation rules
     protected $rules = [
@@ -30,24 +32,28 @@ class FormCheckout extends Component
         'email' => 'required|email',
         'province_id' => 'required',
         'city_id' => 'required',
-        'district_id' => 'required',
         'address' => 'required',
         'postal_code' => 'required',
+        'expedition' => 'required',
+        'parcel' => 'required',
+        'paymentMethod' => 'required',
     ];
 
     // Validation error messages
+    // Validation error messages
     protected $messages = [
         'name.required' => 'Nama wajib diisi.',
-        'phone.required' => 'Telepon wajib diisi.',
+        'phone.required' => 'Nomor telepon wajib diisi.',
         'email.required' => 'Email wajib diisi.',
         'email.email' => 'Format Email tidak valid.',
         'province_id.required' => 'Provinsi wajib diisi.',
-        'city_id.required' => 'Kota Wajib diisi.',
-        'district_id.required' => 'Kecamatan wajib diisi.',
+        'city_id.required' => 'Kota wajib diisi.',
         'address.required' => 'Alamat wajib diisi.',
         'postal_code.required' => 'Kode pos wajib diisi.',
+        'expedition.required' => 'Ekspedisi wajib dipilih.',
+        'parcel.required' => 'Paket wajib dipilih.',
+        'paymentMethod.required' => 'Jenis Transaksi wajib dipilih.',
     ];
-
 
     /**
      * Mount the component.
@@ -58,16 +64,11 @@ class FormCheckout extends Component
     {
         // Set the customer_uid by retrieving the customer ID of the logged-in customer using Auth
         $this->customer_uid = Auth::guard('customer')->user()->customer_uid;
-
         // Show customer data by calling the showCustomer function
+        $this->provinces = $apiRajaOngkirService->getProvinces();
+        $this->cities = collect();
         $this->showCustomer($customerService, $apiRajaOngkirService, $this->customer_uid);
 
-        // Get all provinces
-        $this->provinces = Province::all();
-
-        // Initialize cities and districts as empty collections
-        $this->cities = collect();
-        $this->districts = collect();
     }
 
     /**
@@ -81,164 +82,243 @@ class FormCheckout extends Component
     }
 
     /**
-     * Get customer details.
-     * @param CustomerService $customerService
-     * @return mixed
-     */
-    private function getCustomerDetails(CustomerService $customerService)
-    {
-        return $customerService->findByUid($this->customer_uid);
-    }
-
-    /**
-     * Get customer province name.
-     * @param mixed $detailCustomer
-     * @return mixed|null
-     */
-    private function getCustomerProvinceName($detailCustomer)
-    {
-        return $detailCustomer->province ? strtoupper($detailCustomer->province->name) : null;
-    }
-
-    /**
-     * Get customer cart data.
-     * @param CartService $cartService
-     * @return mixed
-     */
-    private function getCustomerCartData(CartService $cartService)
-    {
-        $customer_id = Auth::guard('customer')->user()->id;
-        return $cartService->getAllDataByCustomer($customer_id);
-    }
-
-    /**
      * Render the component.
      * @param CartService $cartService
-     * @param ApiRajaOngkirService $apiRajaOngkirService
-     * @param CustomerService $customerService
      * @return \Illuminate\Contracts\View\View
      */
-    public function render(CartService $cartService, ApiRajaOngkirService $apiRajaOngkirService, CustomerService $customerService)
+    public function render(CartService $cartService)
     {
-        // Get customer details and province name
-        $detailCustomer = $this->getCustomerDetails($customerService);
-        $provinceName = $this->getCustomerProvinceName($detailCustomer);
-
-        // Get provinces data using the getProvincesData function
-        $this->provinces = $this->getProvincesData($apiRajaOngkirService, $provinceName);
-
-        // Get customer cart data
-        $carts = $this->getCustomerCartData($cartService);
-
-        // Return the view with cart data
-        return view('livewire.frontend.checkout.form-checkout', compact('carts'));
+        return view('livewire.frontend.checkout.form-checkout', ['carts' => $this->getCustomerCartData($cartService)]);
     }
 
     /**
      * Show customer data.
      * @param CustomerService $customerService
      * @param ApiRajaOngkirService $apiRajaOngkirService
-     * @param mixed $customer_uid
+     * @param string $customer_uid
      */
     public function showCustomer(CustomerService $customerService, ApiRajaOngkirService $apiRajaOngkirService, $customer_uid)
     {
-        // Find the customer by UID
         $customer = $customerService->findByUid($customer_uid);
-
-        // Set customer data
-        $this->customer_uid = $customer->customer_uid;
-        $this->name = $customer->name;
-        $this->email = $customer->email;
-
-        // Get provinces data from API
-        $provincesData = $apiRajaOngkirService->getProvinces();
-
-        // Find the matching province and set the province_id
-        foreach ($provincesData as $province) {
-            if (strtoupper($province['province']) === strtoupper($customer->province->name)) {
-                $this->province_id = $province['province_id'];
-                break;
-            }
-        }
-
-        // Set other customer data
-        $this->city_id = $customer->city_id;
-        $this->district_id = $customer->district_id;
-        $this->address = $customer->address;
-        $this->postal_code = $customer->postal_code;
-        $this->phone = $customer->phone;
+        $this->populateFormFields($customer, $apiRajaOngkirService);
     }
 
     /**
-     * Handle updated ProvinceId property.
+     * Handle province_id updates.
      * @param mixed $value
      */
     public function updatedProvinceId($value)
     {
-        // TODO: MASIH ERROR and FIXME: MASIH ERROR
-        // Get cities based on the selected province_id
-        $this->cities = Regency::where('province_id', $value)->get();
+        // Fetch the cities in the selected province
+        $this->cities = app(ApiRajaOngkirService::class)->getCities($value);
 
-        // Reset city_id and district_id
-        $this->reset(['city_id', 'district_id']);
+        // Reset the selected city
+        $this->reset(['city_id']);
     }
 
     /**
-     * Handle updated CityId property.
+     * Handle expedition updates.
      * @param mixed $value
      */
-    public function updatedCityId($value)
+    public function updatedExpedition($value)
     {
-        // Get districts based on the selected city_id
-        $this->districts = District::where('regency_id', $value)->get();
+        // Fetch the parcels for the selected expedition
+        $contactData = app('contactData');
+        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->city_id, 300, $value);
 
-        // Reset district_id
-        $this->reset('district_id');
+        // Reset parcel selection
+        $this->parcel = null;
     }
 
     /**
-     * Get provinces data.
-     * @param ApiRajaOngkirService $apiRajaOngkirService
-     * @param mixed|null $provinceName
-     * @return array
+     * Handle parcel updates.
+     * @param mixed $value
      */
-    private function getProvincesData(ApiRajaOngkirService $apiRajaOngkirService, $provinceName = null)
+    public function updatedParcel($value)
     {
-        // Get provinces data from the API
-        $provincesData = $apiRajaOngkirService->getProvinces();
+        // Fetch the selected parcel
+        $selectedParcel = collect($this->parcels)->firstWhere('service', $value);
 
-        // Modify provinces data by converting province names to uppercase and adding 'selected' flag
-        foreach ($provincesData as &$province) {
-            $province['province'] = strtoupper($province['province']);
-            $province['selected'] = $provinceName && strtoupper($provinceName) === $province['province'];
-        }
-
-        return $provincesData;
+        // Update the delivery cost
+        $this->deliveryCost = $selectedParcel['cost'][0]['value'] ?? 0;
     }
 
-    public function storeCheckout()
-    {
-        // Validate the form data
-        $this->validate();
-        // code...
-    }
-
-    // *** TODO: ***
     /**
-     * resetFields
-     *
+     * Store the order and its details.
+     */
+    // TODO:
+    public function storeCheckout(CartService $cartService)
+    {
+        // Validate the data before storing it
+        $this->validate();
+        dd("TODO:");
+
+        try {
+            $order = $this->createOrder();
+            $this->createShippingDetail($order);
+            $cartData = $this->getCustomerCartData($cartService);
+
+            foreach ($cartData as $cart) {
+                $this->createOrderDetail($order, $cart);
+                // After creating the OrderDetail, remove the item from the cart
+                $this->removeFromCart($cart);
+            }
+
+            return "sucess";
+
+        } catch (Exception $e) {
+
+            // You might want to return or display the error message here
+            // For example: return back()->withErrors(['msg', $e->getMessage()]);
+        }
+    }
+
+    /**
+     * Create a new shipping detail instance.
+     * @param Order $order The order instance that the shipping detail is associated with.
      * @return void
      */
-    // public function resetFields()
-    // {
-    //     $this->name = '';
-    //     $this->email = '';
-    //     $this->password = '';
-    //     $this->address = '';
-    //     $this->city_id = '';
-    //     $this->province_id = '';
-    //     $this->district_id = '';
-    //     $this->postal_code = '';
-    //     $this->phone = '';
-    // }
+    // TODO:
+    private function createShippingDetail(Order $order)
+    {
+        $shippingDetail = new ShippingDetail();
+        $shippingDetail->order_id = $order->order_id;
+        $shippingDetail->expedition = $this->expedition;
+        $shippingDetail->parcel = $this->parcel;
+        $shippingDetail->delivery_cost = $this->deliveryCost;
+        $shippingDetail->weight = array_sum($this->parcels); // Assuming $this->parcels contains the weight of each parcel
+        $shippingDetail->save();
+    }
+
+    /**
+     * Remove an item from the cart.
+     * @param $cart
+     */
+    private function removeFromCart($cart)
+    {
+        $cart->delete();
+    }
+
+
+    /**
+     * Fetch customer cart data.
+     * @param CartService $cartService
+     * @return mixed
+     */
+    private function getCustomerCartData(CartService $cartService)
+    {
+        $carts = $cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
+        /** @var iterable|object $carts */
+
+        // Initialize the subtotal
+        $this->subTotal = 0;
+        // Calculate the subtotal
+        foreach ($carts as $cart) {
+            $totalPerPrice = $cart->quantity * $cart->product->price;
+            if ($cart->product->discount > 0
+            ) {
+                // Apply discount if available
+                $this->subTotal += $totalPerPrice - $cart->product->discount;
+            } else {
+                $this->subTotal += $totalPerPrice;
+            }
+        }
+
+        // Calculate the total by adding the subtotal and delivery cost
+        $this->total = $this->subTotal + $this->deliveryCost;
+        return $carts;
+    }
+
+    /**
+     * Populate the form fields with customer data.
+     * @param mixed $customer
+     * @param ApiRajaOngkirService $apiRajaOngkirService
+     */
+    private function populateFormFields($customer, ApiRajaOngkirService $apiRajaOngkirService)
+    {
+        $this->customer_uid = $customer->customer_uid;
+        $this->name = $customer->name;
+        $this->email = $customer->email;
+        $this->address = $customer->address;
+        $this->province_id = $customer->province_id;
+        $this->postal_code = $customer->postal_code;
+        $this->phone = $customer->phone;
+
+        // If city_id is not null, fetch the cities in the selected province
+        if (!is_null($customer->city_id)) {
+            $this->city_id = $customer->city_id;
+            $this->cities = $apiRajaOngkirService->getCities($customer->province_id);
+        }
+    }
+
+    /**
+     * Create a new order instance.
+     *
+     * @return Order
+     */
+    private function createOrder()
+    {
+        $order = new Order;
+        $order->customer_id = 1; // You need to set this according to your application
+        $order->order_date = now();
+        $order->order_status = 'Pending';
+        $order->total_price = $this->total;
+        $order->receiver_name = $this->name;
+        $order->shipping_address = $this->address;
+        $order->shipping_city = $this->city_id;
+        $order->shipping_province = $this->province_id;
+        $order->shipping_postal_code = $this->postal_code;
+        $order->receiver_phone = $this->phone;
+        $order->save();
+
+        return $order;
+    }
+
+    /**
+     * Create a new order detail instance.
+     * @param Order $order
+     * @param $cart
+     */
+    private function createOrderDetail(Order $order, $cart)
+    {
+        $orderDetail = new OrderDetail();
+        $orderDetail->order_id = $order->order_id;
+        $orderDetail->product_id = $cart->product_id;
+        $orderDetail->price = $cart->product->price;
+        $orderDetail->quantity = $cart->quantity;
+        $orderDetail->save();
+    }
+
+    /**
+     * Reset all form fields.
+     */
+    public function resetFields()
+    {
+        $this->customer_uid = null;
+        $this->name = '';
+        $this->email = '';
+        $this->address = '';
+        $this->postal_code = '';
+        $this->phone = '';
+        $this->provinces = [];
+        $this->cities = [];
+        $this->districts = [];
+        $this->province_id = null;
+        $this->city_id = null;
+        $this->expedition = null;
+        $this->parcel = null;
+        $this->deliveryCost = 0;
+        $this->product_id = null;
+        $this->quantity = null;
+        $this->price = null;
+        $this->subTotal = null;
+        $this->total = null;
+        $this->paymentMethod = null;
+        $this->parcels = [];
+    }
+
+
 }
+
+
+

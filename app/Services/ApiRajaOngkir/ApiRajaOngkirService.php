@@ -26,4 +26,32 @@ interface ApiRajaOngkirService extends BaseService{
      * @return mixed
      */
     public function getProvinceById($provinceId, $cityId);
+
+    /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getCityById($cityId);
+
+    /**
+     * Retrieve shipping cost data from RajaOngkir API.
+     * @param string $origin
+     * @param string $destination
+     * @param string $weight
+     * @param string $courier
+     * @return mixed
+     */
+    public function getCost($origin, $destination, $weight, $courier);
+
+    /**
+     * Retrieve shipping cost for a parcel from RajaOngkir API.
+     * @param object $contactData
+     * @param string $city_id
+     * @param int $weight
+     * @param string $courier
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCostParcel($contactData, $city_id, $weight, $courier);
 }

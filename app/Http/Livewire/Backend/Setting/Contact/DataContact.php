@@ -6,115 +6,102 @@ use App\Models\Contact;
 use App\Models\District;
 use App\Models\Province;
 use App\Models\Regency;
+use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use Livewire\Component;
 
 class DataContact extends Component
 {
-    // Declare Variable
-    public $contact_id, $shop_name, $email, $address,
-            $postal_code, $phone, $tiktok,
-            $instagram, $facebook, $shopee,
-            $tokped;
+    // All the variables associated with a contact
+    public $contact_id, $shop_name, $email, $address, $postal_code, $phone, $tiktok, $instagram, $facebook, $shopee, $tokped;
 
-    // Declare Region
-    public $provinces, $cities, $districts;
+    // Variables associated with the region of a contact
+    public $provinces, $cities;
+    public $province_id, $city_id;
 
-    // Declare Region ID
-    public $province_id, $city_id, $district_id;
-
-    public $selectedProvince = null;
-    public $selectedCity = null;
-    public $selectedDistrict = null;
-
-    // Make rules for updated
+    // Validation rules for updating a contact
     protected $rules = [
         'shop_name'     => 'required',
         'email'         => 'required|email',
         'address'       => 'required',
-        // 'city_id'       => 'nullable',
-        // 'province_id'   => 'nullable',
-        // 'district_id'   => 'nullable',
         'postal_code'   => 'required',
         'phone'         => 'required',
     ];
-    // Messages
+    // Custom validation error messages
     protected $messages = [
         'shop_name.required'    => 'Nama Toko tidak boleh kosong',
         'email.required'        => 'Email tidak boleh kosong',
         'email.email'           => 'Email tidak valid',
         'address.required'      => 'Alamat tidak boleh kosong',
-        // 'city_id.required'      => 'Kota tidak boleh kosong',
-        // 'province_id.required'  => 'Provinsi tidak boleh kosong',
-        // 'district_id.required'  => 'Kecamatan tidak boleh kosong',
         'postal_code.required'  => 'Kode Pos tidak boleh kosong',
         'phone.required'        => 'No. Telepon tidak boleh kosong',
     ];
-
-    // Buatkan listeners untuk refresh
+    // Event listeners
     protected $listeners = [
         'contactUpdated' => '$refresh',
         'getContact' => 'show'
     ];
 
-
     /**
-     * mount
-     *
-     * @return void
+     * The mount function is called when the component is initialized.
+     * It fetches the provinces using the RajaOngkir API.
      */
-
-    //  *** TODO: City and District not working ***
-    public function mount()
+    public function mount(ApiRajaOngkirService $apiRajaOngkirService)
     {
-        $this->provinces    = Province::all();
-        $this->cities       = collect();
-        $this->districts    = collect();
-        $contact            = Contact::with('province', 'city', 'district')->first();
+        $contact = Contact::first();
+
+        $this->provinces = $apiRajaOngkirService->getProvinces();
+        $this->cities = collect();
         $this->show($contact);
     }
 
+    /**
+     * The render function is responsible for viewing the component.
+     */
     public function render()
     {
         return view('livewire.backend.setting.contact.data-contact');
     }
 
+    /**
+     * The show function is used to fetch a contact and assign its properties to the public variables.
+     */
     public function show($contact)
     {
-        $this->contact_id   = $contact->contact_id;
-        $this->shop_name    = $contact->shop_name;
-        $this->email        = $contact->email;
-        $this->address      = $contact->address;
-        $this->postal_code  = $contact->postal_code;
-        $this->phone        = $contact->phone;
-        $this->tiktok       = $contact->tiktok;
-        $this->instagram    = $contact->instagram;
-        $this->facebook     = $contact->facebook;
-        $this->shopee       = $contact->shopee;
-        $this->tokped       = $contact->tokped;
-
-        $this->province_id  = $contact->province_id;
-        $this->city_id      = $contact->city_id;
-        $this->district_id  = $contact->district_id;
-        if (!is_null($contact->province_id)) {
-            $this->cities   = Regency::where('province_id', $contact->province_id)->get();
+        // Assign the properties of contact to the public variables
+        foreach ($contact->getAttributes() as $attribute => $value) {
+            if (property_exists($this, $attribute)) {
+                $this->{$attribute} = $value;
+            }
         }
+
+        // If a city is selected, populate the city field and fetch the cities belonging to the selected province
         if (!is_null($contact->city_id)) {
-            $this->districts = District::where('regency_id', $contact->city_id)->get();
+            $this->city_id = $contact->city_id;
+            $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+            $this->cities = $apiRajaOngkirService->getCities($contact->province_id);
         }
     }
 
-    // buatkan function updatenya
-    public function update()
+    /**
+     * The update function is responsible for validating the request and updating the contact.
+     */
+    public function update(ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->validate();
+
+        // Update the contact
         $contact = Contact::find($this->contact_id);
+        $dataCity = $apiRajaOngkirService->getCityById($this->city_id);
+        $cityName = $dataCity['type'] . " " . $dataCity['city_name'];
+        $provinceName =  $dataCity['province'];
         $contact->update([
             'shop_name'     => $this->shop_name,
             'email'         => $this->email,
             'address'       => $this->address,
-            'city_id'       => $this->city_id,
             'province_id'   => $this->province_id,
-            'district_id'   => $this->district_id,
+            'city_id'       => $this->city_id,
+            'province'      => $provinceName,
+            'city'          => $cityName,
             'postal_code'   => $this->postal_code,
             'phone'         => $this->phone,
             'tiktok'        => $this->tiktok,
@@ -123,46 +110,29 @@ class DataContact extends Component
             'shopee'        => $this->shopee,
             'tokped'        => $this->tokped,
         ]);
-        // Set Flash Message
+
+        // Set flash message and emit event
         session()->flash('success', 'Data Kontak Berhasil di Update!');
         $this->emit('updateContact');
     }
 
     /**
-     * updatedProvinceId
-     *
-     * @param  mixed $value
-     * @return void
+     * This function is triggered when the province_id property is updated.
+     * It fetches the cities that belong to the selected province.
      */
     public function updatedProvinceId($value)
     {
-        // dd($value);
-        $this->cities = Regency::where('province_id', $value)->get();
-        $this->reset(['city_id', 'district_id']);
+        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+        $this->cities = $apiRajaOngkirService->getCities($value);
+        $this->reset(['city_id']);
     }
 
     /**
-     * updatedCityId
-     *
-     * @param  mixed $value
-     * @return void
-     */
-    public function updatedCityId($value)
-    {
-        $this->districts = District::where('regency_id', $value)->get();
-        $this->reset('district_id');
-    }
-
-    /**
-     * updated
-     *
-     * @param  mixed $property
-     * @return void
+     * This function is triggered whenever a property is updated.
+     * It validates the updated property.
      */
     public function updated($property)
     {
-        // Every time a property changes
-        // (only `text` for now), validate it
         $this->validateOnly($property);
     }
 }

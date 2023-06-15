@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        {{-- Province, City and District--}}
+                        {{-- Province and City--}}
                         <div class="row mt-3">
                             <div class="col-6">
                                 <label for="province_id">Provinsi</label>
