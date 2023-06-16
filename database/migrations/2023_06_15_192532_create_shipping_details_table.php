@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('expedition');
             $table->string('parcel');
             $table->integer('delivery_cost');
-            $table->integer('weight');
+            $table->double('weight', 8, 2);
             $table->timestamps();
 
             $table->foreign('order_id')

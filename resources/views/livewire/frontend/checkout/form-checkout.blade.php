@@ -9,17 +9,20 @@
                     <div class="field-label">Nama Lengkap</div>
                     <input type="hidden" name="customer_uid" wire:model="customer_uid">
                     <input type="text" name="name" placeholder="Masukan Nama Lengkap" wire:model="name">
-                    @error('name') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('name') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">No. Telepon / WhatsApp</div>
                     <input type="text" name="phone" placeholder="Masukan No. Telepon / WhatsApp" wire:model="phone">
-                    @error('phone') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('phone') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Email</div>
                     <input type="email" name="email" placeholder="Masukan Email" wire:model="email" readonly>
-                    @error('email') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('email') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
                 </div>
 
                 {{-- *** TODO: WITH RAJAONGKIR API --}}
@@ -32,7 +35,8 @@
                         <option value="{{ $province['province_id'] }}">{{ strtoupper($province['province']) }}</option>
                         @endforeach
                     </select>
-                    @error('province_id') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('province_id') <small class="error text-danger" style="margin-left: 5px;">{{ $message
+                        }}</small> @enderror
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Kota / Kabupaten</div>
@@ -45,12 +49,8 @@
                         @endforeach
                         @endif
                     </select>
-                    @error('city_id') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
-                </div>
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                    <div class="field-label">Kode Pos</div>
-                    <input type="text" name="postal_code" placeholder="Masukan Email" wire:model="postal_code">
-                    @error('postal_code') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('city_id') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Ekspedisi</div>
@@ -60,7 +60,8 @@
                         <option value="pos">POS INDONESIA</option>
                         <option value="tiki">TIKI</option>
                     </select>
-                    @error('expedition') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('expedition') <small class="error text-danger" style="margin-left: 5px;">{{ $message
+                        }}</small> @enderror
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                     <div class="field-label">Paket</div>
@@ -69,24 +70,27 @@
                         @if(!is_null($parcels))
                         @foreach($parcels as $parcel)
                         <option value="{{ $parcel['service'] }}" ongkir="{{ $parcel['cost'][0]['value'] }}"
-                        estimasi="{{ ucwords($parcel['cost'][0]['etd']) . " Hari" }}">
-                        {{ $parcel['service'] . " - Rp. " . number_format($parcel['cost'][0]['value'],0,',','.') . "
+                            estimasi="{{ ucwords($parcel['cost'][0]['etd']) . " Hari" }}">
+                            {{ $parcel['service'] . " - Rp. " . number_format($parcel['cost'][0]['value'],0,',','.') . "
                             - Estimasi " .
                             ucwords($parcel['cost'][0]['etd']) . " Hari" }}
                         </option>
                         @endforeach
                         @endif
                     </select>
-                    @error('parcel') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('parcel') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
                 </div>
 
-                <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
                     <div class="field-label">Alamat</div>
                     <input type="text" name="address" placeholder="Masukan Alamat" wire:model="address">
                     @if (!$address)
-                    <small class="error text-danger" style="margin-left: 5px;">Anda belum mengatur alamat pengiriman!</small>
+                    <small class="error text-danger" style="margin-left: 5px;">Anda belum mengatur alamat
+                        pengiriman!</small>
                     @endif
-                    @error('address') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                    @error('address') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
                 </div>
             </div>
         </div>
@@ -106,9 +110,9 @@
                         @php
                         $totalPerPrice = $cart->quantity * $cart->product->price;
                         if ($cart->product->discount > 0){
-                            $subtotal += $totalPerPrice - $cart->product->discount;
+                        $subtotal += $totalPerPrice - $cart->product->discount;
                         }else{
-                            $subtotal += $totalPerPrice;
+                        $subtotal += $totalPerPrice;
                         }
                         @endphp
 
@@ -141,18 +145,21 @@
                             <ul>
                                 <li>
                                     <div class="radio-option">
-                                        <input type="radio" value="cod" wire:model="paymentMethod" name="payment-group" id="payment-2">
+                                        <input type="radio" value="cod" wire:model="paymentMethod" name="payment-group"
+                                            id="payment-2">
                                         <label for="payment-2">(COD) / Bayar di Tempat</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="radio-option paypal">
-                                        <input type="radio" value="bank" wire:model="paymentMethod" name="payment-group" id="payment-3">
+                                        <input type="radio" value="bank" wire:model="paymentMethod" name="payment-group"
+                                            id="payment-3">
                                         <label for="payment-3">Pembayaran Melalui Bank</label>
                                     </div>
                                 </li>
                             </ul>
-                            @error('paymentMethod') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
+                            @error('paymentMethod') <small class="error text-danger" style="margin-left: 5px;">{{
+                                $message }}</small> @enderror
                             <div id="bank_dropdown" style="display: none;" wire:ignore>
                                 <p style="color: black;"><b>Tujuan Transfer : </b></p>
                                 <table class="table table-borderless table-hover">
@@ -184,17 +191,60 @@
         </div>
     </div>
 </form>
+
 @push('scripts')
-    <script>
-        $(document).ready(function(){
-            $("input[name='payment-group']").click(function(){
-                var radioValue = $("input[name='payment-group']:checked").attr("id");
-                if(radioValue == "payment-3"){
-                    $("#bank_dropdown").show();
-                } else {
-                    $("#bank_dropdown").hide();
-                }
+<script src="{{ asset('assets/cart/add-to-cart.js') }}"></script>
+@if (session()->has('success'))
+<script>
+    $(document).ready(function() {
+            $.notify({
+                icon: 'fa fa-check',
+                title: 'Berhasil!',
+                message: '{{ session('success') }}'
+            }, {
+                element: 'body',
+                position: null,
+                type: "success",
+                allow_dismiss: true,
+                newest_on_top: false,
+                showProgressbar: true,
+                placement: {
+                    from: "top",
+                    align: "right"
+                },
+                offset: 20,
+                spacing: 10,
+                z_index: 1031,
+                delay: 5000,
+                animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutUp'
+                },
+                icon_type: 'class',
+                template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                    '<button type="button" aria-hidden="true" class="btn-close" data-notify="dismiss"></button>' +
+                    '<span data-notify="icon"></span> ' +
+                    '<span data-notify="title">{1}</span> ' +
+                    '<span data-notify="message">{2}</span>' +
+                    '<div class="progress" data-notify="progressbar">' +
+                    '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+                    '</div>' +
+                    '<a href="{3}" target="{4}" data-notify="url"></a>' +
+                    '</div>'
             });
         });
-    </script>
+</script>
+@endif
+<script>
+    $(document).ready(function(){
+        $("input[name='payment-group']").click(function(){
+            var radioValue = $("input[name='payment-group']:checked").attr("id");
+            if(radioValue == "payment-3"){
+                $("#bank_dropdown").show();
+            } else {
+                $("#bank_dropdown").hide();
+            }
+        });
+    });
+</script>
 @endpush

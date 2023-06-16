@@ -7,9 +7,11 @@ use App\Models\OrderDetail;
 use App\Models\ShippingDetail;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Cart\CartService;
+use App\Services\Checkout\CheckoutService;
 use App\Services\Customer\CustomerService;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 class FormCheckout extends Component
@@ -21,7 +23,7 @@ class FormCheckout extends Component
     // FOR API
     public $expedition,$parcel, $deliveryCost = 0;
     // FOR TRANSACTION
-    public $product_id, $quantity, $price, $subTotal, $total, $paymentMethod;
+    public $product_id, $quantity, $price, $subTotal, $total, $paymentMethod, $weight;
     // ShippingCost Parcels
     public $parcels = [];
 
@@ -33,7 +35,6 @@ class FormCheckout extends Component
         'province_id' => 'required',
         'city_id' => 'required',
         'address' => 'required',
-        'postal_code' => 'required',
         'expedition' => 'required',
         'parcel' => 'required',
         'paymentMethod' => 'required',
@@ -49,7 +50,6 @@ class FormCheckout extends Component
         'province_id.required' => 'Provinsi wajib diisi.',
         'city_id.required' => 'Kota wajib diisi.',
         'address.required' => 'Alamat wajib diisi.',
-        'postal_code.required' => 'Kode pos wajib diisi.',
         'expedition.required' => 'Ekspedisi wajib dipilih.',
         'parcel.required' => 'Paket wajib dipilih.',
         'paymentMethod.required' => 'Jenis Transaksi wajib dipilih.',
@@ -117,6 +117,16 @@ class FormCheckout extends Component
     }
 
     /**
+     * Handle city_id updates.
+     * @param mixed $value
+     */
+    public function updatedCityId($value)
+    {
+        $cityData = app(ApiRajaOngkirService::class)->getCityById($value);
+        $this->postal_code = $cityData['postal_code'];
+    }
+
+    /**
      * Handle expedition updates.
      * @param mixed $value
      */
@@ -144,61 +154,61 @@ class FormCheckout extends Component
     }
 
     /**
-     * Store the order and its details.
+     * Store the checkout data using a CheckoutService and handle success and error scenarios.
+     * @param CheckoutService $checkoutService The instance of CheckoutService responsible for storing the checkout order.
+     * @return void
      */
-    // TODO:
-    public function storeCheckout(CartService $cartService)
+    public function storeCheckout(CheckoutService $checkoutService)
     {
         // Validate the data before storing it
         $this->validate();
-        dd("TODO:");
-
         try {
-            $order = $this->createOrder();
-            $this->createShippingDetail($order);
-            $cartData = $this->getCustomerCartData($cartService);
-
-            foreach ($cartData as $cart) {
-                $this->createOrderDetail($order, $cart);
-                // After creating the OrderDetail, remove the item from the cart
-                $this->removeFromCart($cart);
+            // You can use the data() method to get an array of all the public non-null properties on a component.
+            $data = $this->prepareDataStoreCheckout();
+            $result = $checkoutService->storeCheckout($data);
+            // If success
+            if (isset($result['success'])) {
+                // Here you can handle a success scenario, such as redirecting to another page or displaying a success message.
+                session()->flash('success', 'Order berhasil dibuat.');
+                // TODO: HANDLE EMIT
+            } else {
+                // Display generic error message
+                session()->flash('error', 'Terjadi kesalahan saat mencoba membuat order.');
             }
-
-            return "sucess";
-
         } catch (Exception $e) {
+            // Log the exception for debugging
+            Log::error($e->getMessage());
 
-            // You might want to return or display the error message here
-            // For example: return back()->withErrors(['msg', $e->getMessage()]);
+            // Flash error message to the session
+            session()->flash('error', 'Terjadi kesalahan saat mencoba membuat order. Silakan coba lagi.');
         }
     }
 
-    /**
-     * Create a new shipping detail instance.
-     * @param Order $order The order instance that the shipping detail is associated with.
-     * @return void
-     */
-    // TODO:
-    private function createShippingDetail(Order $order)
-    {
-        $shippingDetail = new ShippingDetail();
-        $shippingDetail->order_id = $order->order_id;
-        $shippingDetail->expedition = $this->expedition;
-        $shippingDetail->parcel = $this->parcel;
-        $shippingDetail->delivery_cost = $this->deliveryCost;
-        $shippingDetail->weight = array_sum($this->parcels); // Assuming $this->parcels contains the weight of each parcel
-        $shippingDetail->save();
-    }
 
     /**
-     * Remove an item from the cart.
-     * @param $cart
+     * The function prepares and returns an array of data for use in the checkout process, including
+     * order details, shipping details, and cart items.
      */
-    private function removeFromCart($cart)
+    private function prepareDataStoreCheckout()
     {
-        $cart->delete();
+        return [
+            // For function createOrder in CheckoutService and updateCustomer
+            'total' => $this->total,
+            'name' => $this->name,
+            'email' => $this->email,
+            'address' => $this->address,
+            'city_id' => $this->city_id,
+            'province_id' => $this->province_id,
+            'postal_code' => $this->postal_code,
+            'phone' => $this->phone,
+            // For function createShippingDetail in CheckoutService
+            'expedition' => $this->expedition,
+            'parcel' => $this->parcel,
+            'deliveryCost' => $this->deliveryCost,
+            'weight' => $this->weight,
+            // For function processCartItems in CheckoutService
+        ];
     }
-
 
     /**
      * Fetch customer cart data.
@@ -212,9 +222,11 @@ class FormCheckout extends Component
 
         // Initialize the subtotal
         $this->subTotal = 0;
+        $this->weight = 0;
         // Calculate the subtotal
         foreach ($carts as $cart) {
             $totalPerPrice = $cart->quantity * $cart->product->price;
+            $this->weight = $cart->quantity * $cart->product->weight;
             if ($cart->product->discount > 0
             ) {
                 // Apply discount if available
@@ -249,44 +261,6 @@ class FormCheckout extends Component
             $this->city_id = $customer->city_id;
             $this->cities = $apiRajaOngkirService->getCities($customer->province_id);
         }
-    }
-
-    /**
-     * Create a new order instance.
-     *
-     * @return Order
-     */
-    private function createOrder()
-    {
-        $order = new Order;
-        $order->customer_id = 1; // You need to set this according to your application
-        $order->order_date = now();
-        $order->order_status = 'Pending';
-        $order->total_price = $this->total;
-        $order->receiver_name = $this->name;
-        $order->shipping_address = $this->address;
-        $order->shipping_city = $this->city_id;
-        $order->shipping_province = $this->province_id;
-        $order->shipping_postal_code = $this->postal_code;
-        $order->receiver_phone = $this->phone;
-        $order->save();
-
-        return $order;
-    }
-
-    /**
-     * Create a new order detail instance.
-     * @param Order $order
-     * @param $cart
-     */
-    private function createOrderDetail(Order $order, $cart)
-    {
-        $orderDetail = new OrderDetail();
-        $orderDetail->order_id = $order->order_id;
-        $orderDetail->product_id = $cart->product_id;
-        $orderDetail->price = $cart->product->price;
-        $orderDetail->quantity = $cart->quantity;
-        $orderDetail->save();
     }
 
     /**

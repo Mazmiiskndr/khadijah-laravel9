@@ -77,9 +77,9 @@ class DatabaseSeeder extends Seeder
             $product->tags()->attach($tag_ids, ['product_id' => $product->product_id]);
 
             // For each productImages, generate 1-3 product Images
-            $numImages = rand(1, 3);
-            $images = ProductImage::factory()->count($numImages)->make(['product_id' => $product->product_id]);
-            $product->images()->createMany($images->toArray());
+            // $numImages = rand(1);
+            // $images = ProductImage::factory()->count($numImages)->make(['product_id' => $product->product_id]);
+            // $product->images()->createMany($images->toArray());
         });
 
         $this->call(OrdersAndOrderDetailsSeeder::class);

@@ -18,17 +18,12 @@ class ContactSeeder extends Seeder
     {
         $faker = \Faker\Factory::create('id_ID');
 
-        // Mengambil data provinsi, kota, dan kecamatan dari Indonesia
-        $provinces = DB::table('provinces')->pluck('id');
-        $cities = DB::table('regencies')->pluck('id');
-        $districts = DB::table('districts')->pluck('id');
-
-        // Memasukkan 1 data acak ke dalam tabel Contact
         for ($i = 0; $i < 1; $i++) {
             Contact::create([
-                'province_id' => 32,
-                'city_id' => 3278,
-                'district_id' => 3278050,
+                'province_id' => 9,
+                'city_id' => 469,
+                'province' => "Jawa Barat",
+                'city' => "Kota Tasikmalaya",
                 'shop_name' => "Khadijah Label",
                 'email' => "khadijah_label@gmail.com",
                 'address' => "Jl. HZ. Mustofa No.326, Tugujaya, Plaza Asia",

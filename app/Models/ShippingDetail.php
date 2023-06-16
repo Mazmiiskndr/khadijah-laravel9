@@ -9,9 +9,9 @@ class ShippingDetail extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'order_id';
+    protected $primaryKey = 'shipping_id';
 
-    protected $table = 'order';
+    protected $table = 'shipping_details';
 
     protected $fillable = [
         'shipping_uid',

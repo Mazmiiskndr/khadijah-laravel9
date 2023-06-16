@@ -2,13 +2,17 @@
 
 namespace App\Repositories\Checkout;
 
+use App\Exceptions\CheckoutException;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
 use App\Models\ShippingDetail;
 use App\Models\OrderDetail;
 use App\Services\Cart\CartService;
+use App\Services\Customer\CustomerService;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
 {
@@ -22,86 +26,56 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
     protected $cartService;
     protected $shippingDetail;
     protected $orderDetail;
+    protected $customerService;
 
-    public function __construct(Order $model, CartService $cartService, ShippingDetail $shippingDetail, OrderDetail $orderDetail)
+    public function __construct(Order $model, CartService $cartService, ShippingDetail $shippingDetail, OrderDetail $orderDetail, CustomerService $customerService)
     {
         $this->model = $model;
         $this->cartService = $cartService;
         $this->shippingDetail = $shippingDetail;
         $this->orderDetail = $orderDetail;
+        $this->customerService = $customerService;
     }
 
     /**
      * Store the order and its details.
-     * @param  mixed $data
-     * @return void
+     * @param array $data Checkout data
+     * @return array Result of the checkout operation
      */
     public function storeCheckout($data)
     {
         try {
-            $order = $this->createOrder($data);
+            $customer_id = Auth::guard('customer')->user()->id;
+
+            // Update customer data
+            $this->customerService->updateCustomer($customer_id, $data);
+            // Store the order and its details
+            $order = $this->createOrder($customer_id, $data);
             $this->createShippingDetail($order, $data);
-            $cartData = $this->getCustomerCartData();
+            $this->processCartItems($order);
 
-            foreach ($cartData as $cart) {
-                $this->createOrderDetail($order, $cart);
-                // After creating the OrderDetail, remove the item from the cart
-                $this->removeFromCart($cart);
-            }
+            return ['success' => true];
+        } catch (\Exception $e) {
+            // Log the exception message for debugging
+            Log::error('Failed to checkout: ' . $e->getMessage());
 
-            return "success";
-        } catch (Exception $e) {
-            // You might want to return or display the error message here
-            // For example: return back()->withErrors(['msg', $e->getMessage()]);
+            // Throwing the custom exception
+            throw new CheckoutException('Terjadi kesalahan saat proses checkout. Silakan coba lagi.', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     /**
-     * Create a new shipping detail instance.
-     * @param Order $order The order instance that the shipping detail is associated with.
-     * @param $data
-     * @return void
-     */
-    private function createShippingDetail(Order $order, $data)
-    {
-        $shippingDetail = $this->shippingDetail;
-        $shippingDetail->order_id = $order->order_id;
-        $shippingDetail->expedition = $data['expedition'];
-        $shippingDetail->parcel = $data['parcel'];
-        $shippingDetail->delivery_cost = $data['deliveryCost'];
-        $shippingDetail->weight = array_sum($data['parcels']); // Assuming $data['parcels'] contains the weight of each parcel TODO:
-        $shippingDetail->save();
-    }
-
-    /**
-     * Remove an item from the cart.
-     * @param $cart
-     */
-    private function removeFromCart($cart)
-    {
-        $cart->delete();
-    }
-
-    /**
-     * Fetch customer cart data.
-     * @return mixed
-     */
-    private function getCustomerCartData()
-    {
-        return $this->cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
-    }
-
-    /**
      * Create a new order instance.
-     *
+     * @param int $customer_id The ID of the customer making the order.
      * @param array $data The data for creating the order.
      * @return \App\Models\Order
      */
-    private function createOrder($data)
+    private function createOrder($customer_id, $data)
     {
+        // Create a new order instance
         $order = $this->model->create([
-            'customer_id' => 1, // You need to set this according to your application TODO:
-            'order_date' => now(),
+            'customer_id' => $customer_id,
+            'order_date' => date('Y-m-d H:i:s'),
             'order_status' => 'Pending',
             'total_price' => $data['total'],
             'receiver_name' => $data['name'],
@@ -116,19 +90,91 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
     }
 
     /**
+     * Create a new shipping detail instance.
+     * @param Order $order The order instance that the shipping detail is associated with.
+     * @param array $data The data for creating the shipping detail.
+     * @return \App\Models\ShippingDetail
+     * @throws \Exception
+     */
+    private function createShippingDetail(Order $order, $data)
+    {
+        try {
+            return $this->shippingDetail->create([
+                'order_id' => $order->order_id,
+                'expedition' => $data['expedition'],
+                'parcel' => $data['parcel'],
+                'delivery_cost' => $data['deliveryCost'],
+                'weight' => $data['weight']
+            ]);
+        } catch (\Exception $e) {
+            // Log the exception message for debugging
+            Log::error('Failed to create shipping detail: ' . $e->getMessage());
+
+            // Rethrow the exception to be handled by the parent method
+            throw $e;
+        }
+    }
+
+    /**
+     * Process all items in the customer's cart.
+     * @param Order $order The order instance that the cart items are associated with.
+     * @return void
+     */
+    private function processCartItems(Order $order)
+    {
+        // Retrieve all items in the customer's cart
+        $cartItems = $this->getCustomerCartData();
+
+        // Loop through each cart item
+        foreach ($cartItems as $cart) {
+            // Create an order detail for the cart item
+            $this->createOrderDetail($order, $cart);
+
+            // Remove the cart item
+            $this->removeFromCart($cart);
+        }
+    }
+
+    /**
+     * Fetch customer cart data.
+     * @return mixed
+     */
+    private function getCustomerCartData()
+    {
+        return $this->cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
+    }
+
+    /**
      * Create a new order detail instance.
-     * @param Order $order
-     * @param $cart
+     * @param Order $order The order instance that the order detail is associated with.
+     * @param $cart The cart item for creating the order detail.
+     * @return void
      */
     private function createOrderDetail(Order $order, $cart)
     {
-        $orderDetail = new OrderDetail();
-        $orderDetail->order_id = $order->order_id;
-        $orderDetail->product_id = $cart->product_id;
-        $orderDetail->price = $cart->product->price;
-        $orderDetail->quantity = $cart->quantity;
-        $orderDetail->save();
+        try {
+            return $this->orderDetail->create([
+                'order_id' => $order->order_id,
+                'product_id' => $cart->product_id,
+                'price' => $cart->product->price,
+                'quantity' => $cart->quantity
+            ]);
+        } catch (\Exception $e) {
+            // Log the exception message for debugging
+            Log::error('Failed to create order detail: ' . $e->getMessage());
+
+            // Rethrow the exception to be handled by the parent method
+            throw $e;
+        }
     }
 
-    // Write something awesome :)
+    /**
+     * Remove an item from the cart.
+     * @param $cart The cart item to remove.
+     * @return void
+     */
+    private function removeFromCart($cart)
+    {
+        return $cart->delete();
+    }
 }

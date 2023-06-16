@@ -18,7 +18,7 @@
                         </div>
                         <div class="back">
                             <a href="javascript:void(0)">
-                                @if($product->images->first()->image_name == null)
+                                @if(!isset($product->images->first()->image_name))
                                 <img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt="{{ $product->product_name }}">
                                 @else
