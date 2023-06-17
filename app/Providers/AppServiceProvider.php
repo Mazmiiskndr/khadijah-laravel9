@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $contact = Contact::first();
 
         // Using the retrieved contact data, we pass it to the views
-        View::composer(['components.frontend.footer', 'components.frontend.top-header'], function ($view) use ($contact) {
+        View::composer(['components.frontend.footer', 'components.frontend.top-header', 'frontend.invoice.index'], function ($view) use ($contact) {
             $view->with('contact', $contact);
         });
 
