@@ -17,6 +17,7 @@ class GridCards extends Component
         'rekeningUpdated' => 'handleUpdated',
         'deleteCard' => 'destroy',
     ];
+
     public function render()
     {
         $customer = Customer::with( 'rekening_customers')->where('id', Auth::guard('customer')->user()->id)->first();

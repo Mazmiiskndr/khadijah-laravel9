@@ -21,7 +21,17 @@ return new class extends Migration
             $table->dateTime('order_date');
             $table->dateTime('payment_date')->nullable();
             $table->dateTime('shipping_date')->nullable();
-            $table->string('order_status', 50);
+            $table->enum('order_status', [
+                'Menunggu Pembayaran',
+                'Pembayaran Sedang Diverifikasi',
+                'Pembayaran Berhasil',
+                'Pesanan Diproses',
+                'Pesanan Dikirim',
+                'Pesanan Diterima',
+                'Pesanan Selesai',
+                'Pesanan Dibatalkan',
+                'Pengembalian Dana'
+            ]);
             $table->integer('total_price');
             $table->string('receiver_name', 200);
             $table->text('shipping_address');

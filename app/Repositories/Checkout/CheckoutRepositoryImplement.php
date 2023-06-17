@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Checkout;
 
+use App\Enums\OrderStatus;
 use App\Exceptions\CheckoutException;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
@@ -79,7 +80,7 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
         $order = $this->model->create([
             'customer_id' => $customer_id,
             'order_date' => date('Y-m-d H:i:s'),
-            'order_status' => 'Pending',
+            'order_status' => OrderStatus::PENDING_PAYMENT,
             'total_price' => $data['total'],
             'receiver_name' => $data['name'],
             'shipping_address' => $data['address'],

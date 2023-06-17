@@ -47,7 +47,9 @@
                     </svg>
                 </div>
                 <h2>thank you</h2>
-                <p>Payment is successfully processsed and your order is on the way</p>
+                <p>
+                    Order berhasil di buat dan pesanan akan segera di konfirmasi
+                </p>
                 <p class="font-weight-bold">Transaction ID:267676GHERT105467</p>
             </div>
         </div>

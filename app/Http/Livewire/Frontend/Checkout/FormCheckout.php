@@ -138,7 +138,7 @@ class FormCheckout extends Component
     {
         // Fetch the parcels for the selected expedition
         $contactData = app('contactData');
-        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->city_id, 300, $value);
+        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->city_id, $this->weight, $value);
 
         // Reset parcel selection
         $this->parcel = null;
