@@ -81,11 +81,12 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             'customer_id' => $customer_id,
             'order_date' => date('Y-m-d H:i:s'),
             'order_status' => OrderStatus::PENDING_PAYMENT,
+            'order_type' => $data['paymentMethod'],
             'total_price' => $data['total'],
             'receiver_name' => $data['name'],
             'shipping_address' => $data['address'],
-            'shipping_city' => $data['city_id'],
-            'shipping_province' => $data['province_id'],
+            'shipping_city' => $data['city_name'],
+            'shipping_province' => $data['province_name'],
             'shipping_postal_code' => $data['postal_code'],
             'receiver_phone' => $data['phone'],
             'order_number' => $this->generateOrderNumber() // Add this line
@@ -105,7 +106,6 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             ->whereDate('created_at', Carbon::today())
             ->orderBy('created_at', 'desc')
             ->first();
-
         if ($lastOrderToday) {
             $lastOrderNumber = $lastOrderToday->order_number;
             $lastOrderSequenceNumber = intval(substr($lastOrderNumber, -6)); // Get the last 6 digits of order number

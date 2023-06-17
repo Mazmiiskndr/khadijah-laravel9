@@ -21,6 +21,7 @@ use App\Http\Controllers\Frontend\GalleryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\TransactionController;
 use App\Http\Middleware\CountVisitor;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,6 @@ Route::middleware(CountVisitor::class)->controller(HomeController::class)->group
 
 // Frontend Product Page
 Route::middleware(CountVisitor::class)->group(function () {
-    // TODO:
     Route::resource('product', FrontendProductController::class)->only(['index', 'show']);
     // About Page
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
@@ -49,6 +49,7 @@ Route::middleware(CountVisitor::class)->group(function () {
     Route::middleware(['customer.auth'])->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
         Route::resource('checkout', CheckoutController::class)->only(['index', 'show']);
+        Route::get('transaction/{uid}', [TransactionController::class, 'show'])->name('transaction.show');
     });
 });
 

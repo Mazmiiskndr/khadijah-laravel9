@@ -29,16 +29,17 @@ class OrderFactory extends Factory
             'payment_date' => $this->faker->dateTimeThisYear(),
             'shipping_date' => $this->faker->dateTimeThisYear(),
             'order_status' => $this->faker->randomElement([
-                'Menunggu Pembayaran', // Number 1
-                'Pembayaran Sedang Diverifikasi', // Number 2
-                'Pembayaran Berhasil', // Number 3
-                'Pesanan Diproses', // Number 4
-                'Pesanan Dikirim', // Number 5
-                'Pesanan Diterima', // Number 6
-                'Pesanan Selesai', // Number 7
-                'Pesanan Dibatalkan',  // Number 8
-                'Pengembalian Dana' // Number 9
+                'Menunggu Pembayaran',
+                'Pembayaran Sedang Diverifikasi',
+                'Pembayaran Berhasil',
+                'Pesanan Diproses',
+                'Pesanan Dikirim',
+                'Pesanan Diterima',
+                'Pesanan Selesai',
+                'Pesanan Dibatalkan',
+                'Pengembalian Dana'
             ]),
+            'order_type' => $this->faker->randomElement(['COD', 'BANK']),
             'total_price' => 0,
             'receiver_name' => $this->faker->name(),
             'shipping_address' => $this->faker->address(),

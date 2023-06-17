@@ -150,14 +150,14 @@
                             <ul>
                                 <li>
                                     <div class="radio-option">
-                                        <input type="radio" value="cod" wire:model="paymentMethod" name="payment-group"
+                                        <input type="radio" value="COD" wire:model="paymentMethod" name="payment-group"
                                             id="payment-2">
                                         <label for="payment-2">(COD) / Bayar di Tempat</label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="radio-option paypal">
-                                        <input type="radio" value="bank" wire:model="paymentMethod" name="payment-group"
+                                        <input type="radio" value="BANK" wire:model="paymentMethod" name="payment-group"
                                             id="payment-3">
                                         <label for="payment-3">Pembayaran Melalui Bank</label>
                                     </div>

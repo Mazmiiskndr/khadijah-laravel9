@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\Services\Order\OrderService;
 use Illuminate\Http\Request;
 
-class CheckoutController extends Controller
+class TransactionController extends Controller
 {
     /**
      * The order service instance.
@@ -26,15 +26,6 @@ class CheckoutController extends Controller
     }
 
     /**
-     * Display the checkout page.
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
-        return view('frontend.checkout.index');
-    }
-
-    /**
      * Display the specified order.
      * @param  string  $orderUid
      * @return \Illuminate\View\View
@@ -45,6 +36,6 @@ class CheckoutController extends Controller
         $orders = $this->orderService->getOrderWithUid($orderUid);
 
         // Returning the view with the order data.
-        return view('frontend.checkout.order-success', compact('orders'));
+        return view('frontend.transaction.detail', compact('orders'));
     }
 }

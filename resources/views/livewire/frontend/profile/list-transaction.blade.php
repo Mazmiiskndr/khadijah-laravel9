@@ -53,7 +53,7 @@
                                     <span class="fs-6">Rp. {{ number_format($order->total_price, 0, ',', '.') }}</span>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)">
+                                    <a href="{{ route('transaction.show', $order->order_uid) }}">
                                         <i class="fa fa-eye text-theme"></i>
                                     </a>
                                 </td>

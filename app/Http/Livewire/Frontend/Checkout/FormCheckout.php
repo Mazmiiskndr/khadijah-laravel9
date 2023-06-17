@@ -16,7 +16,7 @@ class FormCheckout extends Component
     // Define public properties
     public $customer_uid, $name, $email, $address, $postal_code, $phone;
     public $provinces, $cities, $districts;
-    public $province_id, $city_id;
+    public $province_id, $city_id, $province_name, $city_name;
     // FOR API
     public $expedition,$parcel, $deliveryCost = 0;
     // FOR TRANSACTION
@@ -115,7 +115,6 @@ class FormCheckout extends Component
     {
         // Fetch the cities in the selected province
         $this->cities = app(ApiRajaOngkirService::class)->getCities($value);
-
         // Reset the selected city
         $this->reset(['city_id']);
     }
@@ -127,6 +126,8 @@ class FormCheckout extends Component
     public function updatedCityId($value)
     {
         $cityData = app(ApiRajaOngkirService::class)->getCityById($value);
+        $this->province_name = $cityData['province'];
+        $this->city_name = $cityData['type'] . " " . $cityData['city_name'];
         $this->postal_code = $cityData['postal_code'];
     }
 
@@ -217,10 +218,11 @@ class FormCheckout extends Component
             'name' => $this->name,
             'email' => $this->email,
             'address' => $this->address,
-            'city_id' => $this->city_id,
-            'province_id' => $this->province_id,
+            'city_name' => $this->city_name,
+            'province_name' => $this->province_name,
             'postal_code' => $this->postal_code,
             'phone' => $this->phone,
+            'paymentMethod' => $this->paymentMethod,
             // For function createShippingDetail in CheckoutService
             'expedition' => $this->expedition,
             'parcel' => $this->parcel,

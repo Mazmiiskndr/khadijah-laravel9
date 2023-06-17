@@ -21,6 +21,7 @@ class Order extends Model
         'payment_date',
         'shipping_date',
         'order_status',
+        'order_type',
         'total_price',
         'receiver_name',
         'shipping_address',

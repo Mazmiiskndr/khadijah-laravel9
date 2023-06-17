@@ -46,21 +46,20 @@
                         </path>
                     </svg>
                 </div>
-                <h2>thank you</h2>
+                <h2>Terima Kasih</h2>
                 <p>
                     Order berhasil dibuat.
                 </p>
                 <p>
                     Mohon segera lakukan pembayaran untuk memproses pesanan Anda.
                 </p>
-                <p>
-                    Terima kasih!
-                </p>
                 <p class="font-weight-bold">
                     <b>
                         ID Transaksi : 267676GHERT105467
                     </b>
                 </p>
+                {{-- TODO: --}}
+                <button type="button" class="btn-solid btn">Bayar</button>
             </div>
         </div>
     </div>

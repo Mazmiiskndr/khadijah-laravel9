@@ -32,6 +32,7 @@ return new class extends Migration
                 'Pesanan Dibatalkan',
                 'Pengembalian Dana'
             ]);
+            $table->string('order_type', 100);
             $table->integer('total_price');
             $table->string('receiver_name', 200);
             $table->text('shipping_address');
