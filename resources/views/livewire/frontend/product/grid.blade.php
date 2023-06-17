@@ -62,8 +62,7 @@
                             <div class="d-flex">
                                 <h4>Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}</h4>
                                 @if ($product->discount > 0)
-                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.')
-                                    }}</del>
+                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
                                 @endif
                             </div>
                             {{-- <ul class="color-variant">

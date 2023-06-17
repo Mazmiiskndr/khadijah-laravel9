@@ -29,7 +29,6 @@ class DashboardAccount extends Component
         $this->totalOrder = $orderService->countTotalOrdersByCustomerId($customerId);
         // Use the OrderService to count the total pending orders made by the user id
         $this->totalPendingOrder = $orderService->countPendingOrdersByCustomerId($customerId);
-        dd($this->totalPendingOrder);
     }
 
     /**

@@ -65,4 +65,19 @@ class OrderServiceImplement extends Service implements OrderService
             throw $th;
         }
     }
+
+    /**
+     * This method retrieves all order details for a given customer.
+     * @param int $customerId The ID of the customer.
+     * @return Collection Returns a collection of all orders associated with the provided customer ID.
+     */
+    public function getOrderDetailsByCustomerId($customerId)
+    {
+        try {
+            return $this->mainRepository->getOrderDetailsByCustomerId($customerId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
 }

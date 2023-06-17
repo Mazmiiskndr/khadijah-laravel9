@@ -19,7 +19,7 @@
             <div class="counter-box">
                 <img src="{{ asset('assets/assets/images/icon/dashboard/homework.png') }}" class="img-fluid">
                 <div>
-                    <h3>5</h3>
+                    <h3>{{ $totalPendingOrder }}</h3>
                     <h5>Pending Orders</h5>
                 </div>
             </div>

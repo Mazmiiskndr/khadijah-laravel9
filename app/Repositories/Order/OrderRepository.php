@@ -27,4 +27,11 @@ interface OrderRepository extends Repository{
      * @return int Returns the total count of all pending orders associated with the provided customer ID.
      */
     public function countPendingOrdersByCustomerId($customerId);
+
+    /**
+     * This method retrieves all order details for a given customer.
+     * @param int $customerId The ID of the customer.
+     * @return Collection Returns a collection of all orders associated with the provided customer ID.
+     */
+    public function getOrderDetailsByCustomerId($customerId);
 }

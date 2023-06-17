@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Order;
 
+use App\Enums\OrderStatus;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
 
@@ -47,7 +48,18 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository{
      */
     public function countPendingOrdersByCustomerId($customerId)
     {
-        return $this->model->where('customer_id', $customerId)->where('order_status', 'Pending')->count();
+        return $this->model->where('customer_id', $customerId)->where('order_status', OrderStatus::PENDING_PAYMENT)->count();
     }
+
+    /**
+     * This method retrieves all order details for a given customer.
+     * @param int $customerId The ID of the customer.
+     * @return Collection Returns a collection of all orders associated with the provided customer ID.
+     */
+    public function getOrderDetailsByCustomerId($customerId)
+    {
+        return $this->model->with('orderDetails.product', 'shippingDetail')->where('customer_id', $customerId)->get();
+    }
+
 
 }

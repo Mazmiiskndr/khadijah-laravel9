@@ -48,9 +48,19 @@
                 </div>
                 <h2>thank you</h2>
                 <p>
-                    Order berhasil di buat dan pesanan akan segera di konfirmasi
+                    Order berhasil dibuat.
                 </p>
-                <p class="font-weight-bold">Transaction ID:267676GHERT105467</p>
+                <p>
+                    Mohon segera lakukan pembayaran untuk memproses pesanan Anda.
+                </p>
+                <p>
+                    Terima kasih!
+                </p>
+                <p class="font-weight-bold">
+                    <b>
+                        ID Transaksi : 267676GHERT105467
+                    </b>
+                </p>
             </div>
         </div>
     </div>
