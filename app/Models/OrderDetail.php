@@ -40,6 +40,18 @@ class OrderDetail extends Model
         return $this->belongsTo(Product::class, 'product_id');
     }
 
+    // // OrderDetail belongs to Product
+    // public function product()
+    // {
+    //     return $this->belongsTo(Product::class, 'product_id', 'product_id');
+    // }
+
+    // // OrderDetail belongs to Order
+    // public function order()
+    // {
+    //     return $this->belongsTo(Order::class, 'order_id', 'order_id');
+    // }
+
 
 
 }

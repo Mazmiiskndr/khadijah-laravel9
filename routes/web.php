@@ -48,7 +48,7 @@ Route::middleware(CountVisitor::class)->group(function () {
     // Wrap the cart route with the 'customer.auth' middleware to require customer login
     Route::middleware(['customer.auth'])->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-        Route::resource('checkout', CheckoutController::class)->only(['index', 'show', 'create']);
+        Route::resource('checkout', CheckoutController::class)->only(['index', 'show']);
     });
 });
 

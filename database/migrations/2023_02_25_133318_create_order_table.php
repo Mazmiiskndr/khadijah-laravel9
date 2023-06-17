@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('order_id');
             $table->uuid('order_uid')->unique(); // Added uid column
             $table->unsignedBigInteger('customer_id');
+            $table->string('order_number', 100);
             $table->dateTime('order_date');
             $table->dateTime('payment_date')->nullable();
             $table->dateTime('shipping_date')->nullable();

@@ -2,9 +2,6 @@
 
 namespace App\Http\Livewire\Frontend\Checkout;
 
-use App\Models\Order;
-use App\Models\OrderDetail;
-use App\Models\ShippingDetail;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Cart\CartService;
 use App\Services\Checkout\CheckoutService;
@@ -26,6 +23,12 @@ class FormCheckout extends Component
     public $product_id, $quantity, $price, $subTotal, $total, $paymentMethod, $weight;
     // ShippingCost Parcels
     public $parcels = [];
+    // FOR CARTS DATA
+    public $carts = [];
+
+    protected $listeners = [
+        'cartDeletedInCart' => 'handleCartDeleted',
+    ];
 
     // Validation rules
     protected $rules = [
@@ -88,7 +91,8 @@ class FormCheckout extends Component
      */
     public function render(CartService $cartService)
     {
-        return view('livewire.frontend.checkout.form-checkout', ['carts' => $this->getCustomerCartData($cartService)]);
+        $this->carts = $this->getCustomerCartData($cartService);
+        return view('livewire.frontend.checkout.form-checkout', ['carts' => $this->carts]);
     }
 
     /**
@@ -158,28 +162,44 @@ class FormCheckout extends Component
      * @param CheckoutService $checkoutService The instance of CheckoutService responsible for storing the checkout order.
      * @return void
      */
-    public function storeCheckout(CheckoutService $checkoutService)
+    public function storeCheckout(CheckoutService $checkoutService, CartService $cartService)
     {
-        // Validate the data before storing it
+        // Get the cart data
+        $carts = $this->getCustomerCartData($cartService);
+
+        // If the cart is empty, stop the process and display an error message
+        if (count($carts) == 0) {
+            session()->flash('error', 'Tidak ada produk di keranjang. Silakan tambahkan produk ke keranjang sebelum melakukan checkout.');
+            return;
+        }
+
+        // Validate the incoming request data
         $this->validate();
+
         try {
-            // You can use the data() method to get an array of all the public non-null properties on a component.
+            // Prepare the data for storing a checkout by calling the prepareDataStoreCheckout method
             $data = $this->prepareDataStoreCheckout();
+
+            // Store the checkout data using the checkout service and store the result
             $result = $checkoutService->storeCheckout($data);
-            // If success
+
+            // Check if the operation was successful by checking if 'success' key exists in the result
             if (isset($result['success'])) {
-                // Here you can handle a success scenario, such as redirecting to another page or displaying a success message.
-                session()->flash('success', 'Order berhasil dibuat.');
-                // TODO: HANDLE EMIT
+                // Convert the order_uid to a string format
+                $uuidString = $result['order_uid']->toString();
+
+                // If the operation was successful, redirect to the 'checkout.show' route with a success message
+                // Also, pass the order UID in the route parameters
+                redirect()->route('checkout.show', $uuidString)->with('success', 'Order berhasil dibuat.');
             } else {
-                // Display generic error message
+                // If the operation was not successful, flash an error message to the session
                 session()->flash('error', 'Terjadi kesalahan saat mencoba membuat order.');
             }
         } catch (Exception $e) {
-            // Log the exception for debugging
+            // If an exception occurred during the operation, log the exception message for debugging
             Log::error($e->getMessage());
 
-            // Flash error message to the session
+            // Also, flash a generic error message to the session
             session()->flash('error', 'Terjadi kesalahan saat mencoba membuat order. Silakan coba lagi.');
         }
     }
@@ -206,7 +226,6 @@ class FormCheckout extends Component
             'parcel' => $this->parcel,
             'deliveryCost' => $this->deliveryCost,
             'weight' => $this->weight,
-            // For function processCartItems in CheckoutService
         ];
     }
 
@@ -235,7 +254,6 @@ class FormCheckout extends Component
                 $this->subTotal += $totalPerPrice;
             }
         }
-
         // Calculate the total by adding the subtotal and delivery cost
         $this->total = $this->subTotal + $this->deliveryCost;
         return $carts;
@@ -291,6 +309,15 @@ class FormCheckout extends Component
         $this->parcels = [];
     }
 
+
+    /**
+     * This method handles the 'detailCartDeleted' event.
+     * @param CartService $cartService An instance of CartService, which provides methods for interacting with the cart.
+     */
+    public function handleCartDeleted(CartService $cartService)
+    {
+        $this->carts = $this->getCustomerCartData($cartService);
+    }
 
 }
 

@@ -16,6 +16,7 @@ class Order extends Model
     protected $fillable = [
         'order_uid',
         'customer_id',
+        'order_number',
         'order_date',
         'payment_date',
         'shipping_date',
@@ -43,7 +44,14 @@ class Order extends Model
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
-    public function shippingDetails()
+    // One Order has many OrderDetail
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderDetail::class, 'order_id', 'order_id');
+    }
+
+    // One Order has one ShippingDetail
+    public function shippingDetail()
     {
         return $this->hasOne(ShippingDetail::class, 'order_id', 'order_id');
     }

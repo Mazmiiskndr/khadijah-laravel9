@@ -30,4 +30,10 @@ class ShippingDetail extends Model
             $model->shipping_uid = str()->uuid();
         });
     }
+
+    // ShippingDetail belongs to Order
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'order_id');
+    }
 }

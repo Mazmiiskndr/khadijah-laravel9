@@ -9,6 +9,7 @@ use App\Models\ShippingDetail;
 use App\Models\OrderDetail;
 use App\Services\Cart\CartService;
 use App\Services\Customer\CustomerService;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Http\Response;
@@ -53,8 +54,10 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             $order = $this->createOrder($customer_id, $data);
             $this->createShippingDetail($order, $data);
             $this->processCartItems($order);
-
-            return ['success' => true];
+            return [
+                'order_uid' => $order->order_uid,
+                'success' => true
+            ];
         } catch (\Exception $e) {
             // Log the exception message for debugging
             Log::error('Failed to checkout: ' . $e->getMessage());
@@ -83,10 +86,37 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             'shipping_city' => $data['city_id'],
             'shipping_province' => $data['province_id'],
             'shipping_postal_code' => $data['postal_code'],
-            'receiver_phone' => $data['phone']
+            'receiver_phone' => $data['phone'],
+            'order_number' => $this->generateOrderNumber() // Add this line
         ]);
 
         return $order;
+    }
+
+    /**
+     * Generate a unique order number.
+     * @return string
+     */
+    private function generateOrderNumber()
+    {
+        $datePrefix = date('ymd'); // Will generate something like 230617
+        $lastOrderToday = $this->model
+            ->whereDate('created_at', Carbon::today())
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        if ($lastOrderToday) {
+            $lastOrderNumber = $lastOrderToday->order_number;
+            $lastOrderSequenceNumber = intval(substr($lastOrderNumber, -6)); // Get the last 6 digits of order number
+
+            $nextSequenceNumber = $lastOrderSequenceNumber + 1;
+        } else {
+            $nextSequenceNumber = 1;
+        }
+
+        // Padding the sequence number with leading zeros, to get it 6 digits long.
+        $nextSequenceNumber = str_pad($nextSequenceNumber, 6, '0', STR_PAD_LEFT);
+        return "ORD-" . $datePrefix . $nextSequenceNumber; // Will generate something like ORD-230617000020
     }
 
     /**

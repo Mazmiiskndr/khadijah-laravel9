@@ -1,5 +1,10 @@
 <form wire:submit.prevent="storeCheckout" method="POST">
     <div class="row">
+        @if(count($carts) <= 0 )
+        <div class="alert alert-danger" style="margin-left: 5px;">
+            Tidak ada produk di keranjang. Silakan tambahkan produk ke keranjang sebelum melakukan checkout.
+        </div>
+        @else
         <div class="col-lg-7 col-sm-12 col-xs-12">
             <div class="checkout-title">
                 <h3>Detail Penagihan</h3>
@@ -158,8 +163,11 @@
                                     </div>
                                 </li>
                             </ul>
-                            @error('paymentMethod') <small class="error text-danger" style="margin-left: 5px;">{{
-                                $message }}</small> @enderror
+                            @error('paymentMethod')
+                            <div class="alert alert-danger" style="margin-left: 5px;">
+                                {{ $message }}
+                            </div>
+                            @enderror
                             <div id="bank_dropdown" style="display: none;" wire:ignore>
                                 <p style="color: black;"><b>Tujuan Transfer : </b></p>
                                 <table class="table table-borderless table-hover">
@@ -189,52 +197,31 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
+    @if (session()->has('success'))
+    <script>
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    </script>
+    @endif
+    @if (session()->has('error'))
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '{{ session('error') }}',
+        })
+    </script>
+    @endif
 </form>
 
 @push('scripts')
-<script src="{{ asset('assets/cart/add-to-cart.js') }}"></script>
-@if (session()->has('success'))
-<script>
-    $(document).ready(function() {
-            $.notify({
-                icon: 'fa fa-check',
-                title: 'Berhasil!',
-                message: '{{ session('success') }}'
-            }, {
-                element: 'body',
-                position: null,
-                type: "success",
-                allow_dismiss: true,
-                newest_on_top: false,
-                showProgressbar: true,
-                placement: {
-                    from: "top",
-                    align: "right"
-                },
-                offset: 20,
-                spacing: 10,
-                z_index: 1031,
-                delay: 5000,
-                animate: {
-                    enter: 'animated fadeInDown',
-                    exit: 'animated fadeOutUp'
-                },
-                icon_type: 'class',
-                template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
-                    '<button type="button" aria-hidden="true" class="btn-close" data-notify="dismiss"></button>' +
-                    '<span data-notify="icon"></span> ' +
-                    '<span data-notify="title">{1}</span> ' +
-                    '<span data-notify="message">{2}</span>' +
-                    '<div class="progress" data-notify="progressbar">' +
-                    '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-                    '</div>' +
-                    '<a href="{3}" target="{4}" data-notify="url"></a>' +
-                    '</div>'
-            });
-        });
-</script>
-@endif
 <script>
     $(document).ready(function(){
         $("input[name='payment-group']").click(function(){

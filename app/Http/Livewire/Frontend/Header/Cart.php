@@ -50,6 +50,7 @@ class Cart extends Component
     {
         $cart = ModelsCart::where('cart_uid',$this->cart_uid)->first();
         if ($cart) {
+            $this->emit('cartDeletedInCart');
             $cart->delete();
             session()->flash('success', 'Keranjang Berhasil di Hapus!');
         }
