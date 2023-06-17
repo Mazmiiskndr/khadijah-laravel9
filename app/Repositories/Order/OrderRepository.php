@@ -34,4 +34,11 @@ interface OrderRepository extends Repository{
      * @return Collection Returns a collection of all orders associated with the provided customer ID.
      */
     public function getOrderDetailsByCustomerId($customerId);
+
+    /**
+     * Function to get the color associated with the order status. This is used for displaying the status in the front end.
+     * @param string $status The status of the order
+     * @return string The color associated with the status
+     */
+    public function getColors($status);
 }

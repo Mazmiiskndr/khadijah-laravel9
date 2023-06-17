@@ -28,7 +28,7 @@ class UpdateCards extends Component
 
     // MESSAGE VALIDATION
     protected $messages = [
-        'provider.required' => 'Provider harus diisi',
+        'provider.required' => 'Metode Pembayaran harus diisi',
         'rekening_name.required' => 'Nama Rekening harus diisi',
         'rekening_number.required' => 'Nomor Rekening harus diisi',
         'rekening_number.numeric' => 'Nomor Rekening harus berupa angka',

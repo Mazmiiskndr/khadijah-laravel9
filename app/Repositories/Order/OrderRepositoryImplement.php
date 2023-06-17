@@ -61,5 +61,27 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository{
         return $this->model->with('orderDetails.product', 'shippingDetail')->where('customer_id', $customerId)->get();
     }
 
+    /**
+     * Function to get the color associated with the order status. This is used for displaying the status in the front end.
+     * @param string $status The status of the order
+     * @return string The color associated with the status
+     */
+    public function getColors($status)
+    {
+        // Mapping of order statuses to their associated colors
+        $colors = [
+            OrderStatus::PENDING_PAYMENT => 'warning',
+            OrderStatus::PAYMENT_VERIFICATION => 'primary',
+            OrderStatus::ORDER_PROCESSING => 'primary',
+            OrderStatus::ORDER_SENT => 'info',
+            OrderStatus::ORDER_RECEIVED => 'info',
+            OrderStatus::PAYMENT_SUCCESS => 'success',
+            OrderStatus::ORDER_CANCELED => 'danger',
+            OrderStatus::REFUND => 'danger',
+        ];
+
+        // Return the color associated with the status, or 'secondary' if the status is not in the mapping
+        return $colors[$status] ?? 'secondary';
+    }
 
 }

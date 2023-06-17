@@ -41,10 +41,8 @@ class CheckoutController extends Controller
      */
     public function show($orderUid)
     {
-        // Getting the order with the UID.
-        $orders = $this->orderService->getOrderWithUid($orderUid);
 
         // Returning the view with the order data.
-        return view('frontend.checkout.order-success', compact('orders'));
+        return view('frontend.checkout.order-success', compact('orderUid'));
     }
 }

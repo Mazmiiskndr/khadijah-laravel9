@@ -50,6 +50,7 @@ Route::middleware(CountVisitor::class)->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
         Route::resource('checkout', CheckoutController::class)->only(['index', 'show']);
         Route::get('transaction/{uid}', [TransactionController::class, 'show'])->name('transaction.show');
+        Route::get('invoice/{uid}', [TransactionController::class, 'invoice'])->name('transaction.invoice');
     });
 });
 

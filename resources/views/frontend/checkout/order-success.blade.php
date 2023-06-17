@@ -1,4 +1,4 @@
-<x-frontend.master title="Pembayaran">
+<x-frontend.master title="Pesanan Berhasil">
 
     {{-- START ALERT SUCCESS SECTION --}}
     <section class="section-b-space light-layout">
@@ -9,7 +9,7 @@
 
     {{-- START ORDER DETAIL SECTION --}}
     <section class="section-b-space">
-        @livewire('frontend.checkout.order-detail')
+        @livewire('frontend.checkout.order-detail', ['orderUid' => $orderUid])
     </section>
     {{-- END ORDER DETAIL SECTION --}}
 

@@ -3,7 +3,7 @@
 
     {{-- START ORDER DETAIL SECTION --}}
     <section class="section-b-space">
-        @livewire('frontend.checkout.order-detail')
+        @livewire('frontend.checkout.order-detail', ['orderUid' => $orderUid])
     </section>
     {{-- END ORDER DETAIL SECTION --}}
 

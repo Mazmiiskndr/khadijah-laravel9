@@ -2,59 +2,49 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="product-order">
+                @php
+                $totalPrice = 0;
+                @endphp
+                @foreach ($products as $productDetail)
                 <div class="row product-order-detail">
-                    <div class="col-3"><img src="../assets/images/pro3/27.jpg" alt=""
-                            class="img-fluid blur-up lazyload"></div>
+                    <div class="col-3">
+                        <img src="{{ asset('storage/'.$productDetail['product']->thumbnail) }}" alt=""
+                            class="img-fluid blur-up lazyload">
+                    </div>
                     <div class="col-3 order_detail">
                         <div>
-                            <h4>product name</h4>
-                            <h5>cotton shirt</h5>
+                            <h4>Nama Produk</h4>
+                            <h5>{{ $productDetail['product']->product_name }}</h5>
                         </div>
                     </div>
                     <div class="col-3 order_detail">
                         <div>
-                            <h4>quantity</h4>
-                            <h5>1</h5>
+                            <h4>Kuantitas</h4>
+                            <h5>{{ $productDetail['quantity'] }}</h5>
                         </div>
                     </div>
                     <div class="col-3 order_detail">
                         <div>
-                            <h4>price</h4>
-                            <h5>$555.00</h5>
+                            <h4>Harga</h4>
+                            <h5>Rp. {{ number_format($productDetail['product']->price, 0, ',', '.') }}</h5>
                         </div>
                     </div>
                 </div>
-                <div class="row product-order-detail">
-                    <div class="col-3"><img src="../assets/images/pro3/35.jpg" alt=""
-                            class="img-fluid blur-up lazyload"></div>
-                    <div class="col-3 order_detail">
-                        <div>
-                            <h4>product name</h4>
-                            <h5>cotton shirt</h5>
-                        </div>
-                    </div>
-                    <div class="col-3 order_detail">
-                        <div>
-                            <h4>quantity</h4>
-                            <h5>1</h5>
-                        </div>
-                    </div>
-                    <div class="col-3 order_detail">
-                        <div>
-                            <h4>price</h4>
-                            <h5>$555.00</h5>
-                        </div>
-                    </div>
-                </div>
+                @php
+                $totalPrice += $productDetail['product']->price * $productDetail['quantity'];
+                @endphp
+                @endforeach
+
                 <div class="total-sec">
                     <ul>
-                        <li>subtotal <span>$55.00</span></li>
-                        <li>shipping <span>$12.00</span></li>
-                        <li>tax(GST) <span>$10.00</span></li>
+                        <li>Sub Total <span>Rp. {{ number_format($totalPrice, 0, ',', '.') }}</span></li>
+                        <li>Ongkos Kirim <span>Rp. {{ number_format($shippingDetail['delivery_cost'], 0, ',', '.')
+                                }}</span></li>
                     </ul>
                 </div>
                 <div class="final-total">
-                    <h3>total <span>$77.00</span></h3>
+                    <h3>total <span>Rp. {{ number_format($totalPrice + $shippingDetail['delivery_cost'] , 0, ',', '.')
+                            }}</span></h3>
                 </div>
             </div>
         </div>
@@ -62,31 +52,44 @@
             <div class="order-success-sec">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h4>summery</h4>
+                        <h4>Ringkasan</h4>
                         <ul class="order-detail">
-                            <li>order ID: 5563853658932</li>
-                            <li>Order Date: October 22, 2018</li>
-                            <li>Order Total: $907.28</li>
+                            <li>ID Pesanan : {{ $orders->order_number }}</li>
+                            <li>Tanggal Pesanan : {{ date('d-m-Y', strtotime($orders->order_date)) }}</li>
+                            <li>Total Pesanan: Rp. {{ number_format($totalPrice + $shippingDetail['delivery_cost'], 0,
+                                ',', '.') }}</li>
                         </ul>
                     </div>
-                    <div class="col-sm-6">
-                        <h4>shipping address</h4>
-                        <ul class="order-detail">
-                            <li>gerg harvell</li>
-                            <li>568, suite ave.</li>
-                            <li>Austrlia, 235153</li>
-                            <li>Contact No. 987456321</li>
-                        </ul>
+                    <div class="col-sm-6 payment-mode">
+                        <h4>Metode Pembayaran</h4>
+                        <p>{{ strtoupper($orders->order_type) }}</p>
                     </div>
-                    <div class="col-sm-12 payment-mode">
-                        <h4>payment method</h4>
-                        <p>Pay on Delivery (Cash/Card). Cash on delivery (COD) available. Card/Net banking
-                            acceptance subject to device availability.</p>
+                    <div class="col-sm-6 mt-3">
+                        <h4>Alamat Pengiriman</h4>
+                        <ul class="order-detail">
+                            <li>{{ $orders->receiver_name }}</li>
+                            <li>{{ $orders->shipping_province }}, {{ $orders->shipping_city }}, {{
+                                $orders->shipping_address }}, {{ $orders->shipping_postal_code }}</li>
+                            <li>No.Kontak : {{ $orders->receiver_phone }}</li>
+                        </ul>
                     </div>
                     <div class="col-md-12">
                         <div class="delivery-sec">
-                            <h3>expected date of delivery: <span>october 22, 2018</span></h3>
-                            <a href="order-tracking.html">track order</a>
+                            <h3>Status Order : <span class="{{ 'text-' . $colors }}">{{ $orders->order_status }}</span>
+                            </h3>
+                            @if($orderStatuses['PENDING_PAYMENT'] == $orders->order_status )
+                            <button type="button" class="btn-solid btn-sm mt-3"
+                                onclick="javascript:window.history.back(-1);return false;"><i
+                                    class="fas fa-backward"></i> Kembali</button>
+                            <button type="button" class="btn-solid btn-sm mt-3"><i class="fas fa-credit-card"></i>
+                                Bayar</button>
+                            @else
+                            <button type="button" class="btn-solid btn-sm mt-3"
+                                onclick="javascript:window.history.back(-1);return false;"><i
+                                    class="fas fa-backward"></i> Kembali</button>
+                            <button type="button" class="btn-solid btn-sm mt-3"><i class="fas fa-print"></i> Cetak
+                                Invoice</button>
+                            @endif
                         </div>
                     </div>
                 </div>
