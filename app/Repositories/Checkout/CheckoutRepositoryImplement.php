@@ -47,12 +47,10 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
     public function storeCheckout($data)
     {
         try {
-            $customer_id = Auth::guard('customer')->user()->id;
-
             // Update customer data
-            $this->customerService->updateCustomer($customer_id, $data);
+            $this->customerService->updateCustomer($data['customer_id'], $data);
             // Store the order and its details
-            $order = $this->createOrder($customer_id, $data);
+            $order = $this->createOrder($data['customer_id'], $data);
             $this->createShippingDetail($order, $data);
             $this->processCartItems($order);
             return [

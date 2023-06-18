@@ -14,7 +14,7 @@ use Livewire\Component;
 class FormCheckout extends Component
 {
     // Define public properties
-    public $customer_uid, $name, $email, $address, $postal_code, $phone;
+    public $customer_id, $customer_uid, $name, $email, $address, $postal_code, $phone;
     public $provinces, $cities, $districts;
     public $province_id, $city_id, $province_name, $city_name;
     // FOR API
@@ -103,9 +103,12 @@ class FormCheckout extends Component
     public function showCustomer(CustomerService $customerService, ApiRajaOngkirService $apiRajaOngkirService, $customer_uid)
     {
         $customer = $customerService->findByUid($customer_uid);
-        $this->province_name = $customer['provinceAndCity']['province'];
-        $this->city_name = $customer['provinceAndCity']['type'] . " " . $customer['provinceAndCity']['city_name'];
-        $this->postal_code = $customer['provinceAndCity']['postal_code'];
+        $this->customer_id = $customer->id;
+        if($customer->province_id && $customer->city_id){
+            $this->province_name = $customer['provinceAndCity']['province'];
+            $this->city_name = $customer['provinceAndCity']['type'] . " " . $customer['provinceAndCity']['city_name'];
+            $this->postal_code = $customer['provinceAndCity']['postal_code'];
+        }
         $this->populateFormFields($customer, $apiRajaOngkirService);
     }
 
@@ -216,16 +219,18 @@ class FormCheckout extends Component
     {
         return [
             // For function createOrder in CheckoutService and updateCustomer
+            'customer_id' => $this->customer_id,
             'total' => $this->total,
             'name' => $this->name,
             'email' => $this->email,
             'address' => $this->address,
             'city_name' => $this->city_name,
             'province_name' => $this->province_name,
+            'city_id' => $this->city_id,
+            'province_id' => $this->province_id,
             'postal_code' => $this->postal_code,
             'phone' => $this->phone,
             'paymentMethod' => $this->paymentMethod,
-            'subTotal' => $this->subTotal,
             // For function createShippingDetail in CheckoutService
             'expedition' => $this->expedition,
             'parcel' => $this->parcel,
@@ -260,7 +265,6 @@ class FormCheckout extends Component
 
             $this->subTotal += $totalPerPrice;
         }
-
         // Calculate the total by adding the subtotal and delivery cost
         $this->total = $this->subTotal + $this->deliveryCost;
 

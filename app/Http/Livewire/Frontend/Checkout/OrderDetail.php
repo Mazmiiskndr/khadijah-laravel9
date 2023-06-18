@@ -100,11 +100,12 @@ class OrderDetail extends Component
                 // Check if the order detail has a product
                 if (isset($orderDetail->product)) {
                     // Add the product to the products array along with the quantity
-                    $this->products[] = ['product' => $orderDetail->product, 'quantity' => $orderDetail->quantity];
+                    $this->products[] = ['product' => $orderDetail->product, 'price' => $orderDetail->price, 'quantity' => $orderDetail->quantity];
 
                 }
             }
         }
+        // dd($this->products);
     }
 
     public function handlePaymentUpdated(OrderService $orderService)

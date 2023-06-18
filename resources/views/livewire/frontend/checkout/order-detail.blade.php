@@ -26,13 +26,13 @@
                     <div class="col-3 order_detail">
                         <div>
                             <h4>Harga / pcs</h4>
-                            <h5>Rp. {{ number_format(($productDetail['product']->price - $productDetail['product']->discount), 0, ',', '.') }}</h5>
+                            <h5>Rp. {{ number_format($productDetail['price'], 0, ',', '.') }}</h5>
                         </div>
                     </div>
 
                 </div>
                 @php
-                $totalPrice += ($productDetail['product']->price - $productDetail['product']->discount) * $productDetail['quantity'];
+                $totalPrice += $productDetail['price'];
                 @endphp
                 @endforeach
 
@@ -44,7 +44,7 @@
                     </ul>
                 </div>
                 <div class="final-total">
-                    <h3>Total <span>Rp. {{ number_format($totalPrice + $shippingDetail['delivery_cost'] , 0, ',', '.')
+                    <h3>Total <span>Rp. {{ number_format($orders->total_price , 0, ',', '.')
                             }}</span></h3>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                         <ul class="order-detail">
                             <li>ID Pesanan : {{ $orders->order_number }}</li>
                             <li>Tanggal Pesanan : {{ date('d-m-Y', strtotime($orders->order_date)) }}</li>
-                            <li>Total Pesanan: Rp. {{ number_format($totalPrice + $shippingDetail['delivery_cost'], 0,
+                            <li>Total Pesanan: Rp. {{ number_format($orders->total_price, 0,
                                 ',', '.') }}</li>
                         </ul>
                     </div>
@@ -78,21 +78,21 @@
                         <div class="delivery-sec">
                             <h3>Status Order : <span class="{{ 'text-' . $colors }}">{{ $orders->order_status }}</span>
                             </h3>
-                            @if($orderStatuses['PENDING_PAYMENT'] == $orders->order_status )
                             <button type="button" class="btn-solid btn-sm mt-3"
                                 onclick="javascript:window.history.back(-1);return false;"><i
                                     class="fas fa-backward"></i> Kembali</button>
-                            @if(strtoupper($orders->order_type) == "BANK")
 
-                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="showPaymentModal"><i
-                                    class="fas fa-credit-card"></i>
-                                Bayar</button>
+
+                            @if($orderStatuses['PENDING_PAYMENT'] == $orders->order_status )
+                            @if(strtoupper($orders->order_type) == "BANK")
+                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="showPaymentModal">
+                                <i class="fas fa-credit-card"></i>
+                                Bayar
+                            </button>
                             @endif
                             @else
-                            <button type="button" class="btn-solid btn-sm mt-3"
-                                onclick="javascript:window.history.back(-1);return false;"><i
-                                    class="fas fa-backward"></i> Kembali</button>
-                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
+                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}"
+                                class="btn-solid btn-sm mt-3">
                                 <i class="fas fa-print"></i> Cetak Invoice
                             </button>
                             @endif
@@ -110,14 +110,17 @@
     @push('scripts')
     <script>
         window.addEventListener('show-payment-modal', event => {
-                $('#createPayment').modal('show');
-            });
+            $('#createPayment').modal('show');
+        });
 
-            document.querySelector('#printInvoice').addEventListener('click', function () {
-                var uid = this.getAttribute('data-uid');
-                var invoiceUrl = '/invoice/' + uid;
-                window.open(invoiceUrl, '_blank'); // Membuka tautan di tab baru
-            });
+        document.addEventListener('click', function (event) {
+            if (event.target.id !== 'printInvoice') return;
+
+            var uid = event.target.getAttribute('data-uid');
+            var invoiceUrl = '/invoice/' + uid;
+            window.open(invoiceUrl, '_blank');
+        });
+
     </script>
     @endpush
 
