@@ -22,13 +22,13 @@
                                 <span>
                                     {{ $cart->quantity }} x
                                     @php
+                                    if ($cart->product->discount > 0) {
+                                        $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);
+                                    }else{
                                         $totalPerPrice = $cart->quantity * $cart->product->price;
+                                    }
                                     @endphp
-                                    @if ($cart->product->discount > 0)
-                                    Rp. {{ number_format($totalPerPrice - $cart->product->discount, 0, ',', '.') }}
-                                    @else
                                     Rp. {{ number_format($totalPerPrice, 0, ',', '.') }}
-                                    @endif
                                 </span>
                             </h4>
                         </div>
@@ -38,7 +38,7 @@
                 {{-- Count Sub Total --}}
                 @php
                 if ($cart->product->discount > 0){
-                $subtotal += $totalPerPrice - $cart->product->discount;
+                $subtotal += $totalPerPrice;
                 }else{
                 $subtotal += $totalPerPrice;
                 }

@@ -27,7 +27,7 @@
                                     case 'Menunggu Pembayaran':
                                     $badgeColor = 'warning';
                                     break;
-                                    case 'Pembayaran Sedang Diverifikasi':
+                                    case 'Sedang Diverifikasi':
                                     case 'Pesanan Diproses':
                                     $badgeColor = 'primary';
                                     break;

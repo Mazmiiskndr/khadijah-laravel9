@@ -44,7 +44,6 @@ class FormCheckout extends Component
     ];
 
     // Validation error messages
-    // Validation error messages
     protected $messages = [
         'name.required' => 'Nama wajib diisi.',
         'phone.required' => 'Nomor telepon wajib diisi.',
@@ -104,6 +103,9 @@ class FormCheckout extends Component
     public function showCustomer(CustomerService $customerService, ApiRajaOngkirService $apiRajaOngkirService, $customer_uid)
     {
         $customer = $customerService->findByUid($customer_uid);
+        $this->province_name = $customer['provinceAndCity']['province'];
+        $this->city_name = $customer['provinceAndCity']['type'] . " " . $customer['provinceAndCity']['city_name'];
+        $this->postal_code = $customer['provinceAndCity']['postal_code'];
         $this->populateFormFields($customer, $apiRajaOngkirService);
     }
 
@@ -223,6 +225,7 @@ class FormCheckout extends Component
             'postal_code' => $this->postal_code,
             'phone' => $this->phone,
             'paymentMethod' => $this->paymentMethod,
+            'subTotal' => $this->subTotal,
             // For function createShippingDetail in CheckoutService
             'expedition' => $this->expedition,
             'parcel' => $this->parcel,
@@ -241,24 +244,29 @@ class FormCheckout extends Component
         $carts = $cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
         /** @var iterable|object $carts */
 
-        // Initialize the subtotal
+        // Initialize the subtotal and total variables
         $this->subTotal = 0;
-        $this->weight = 0;
+        $this->total = 0;
+
         // Calculate the subtotal
         foreach ($carts as $cart) {
-            $totalPerPrice = $cart->quantity * $cart->product->price;
-            $this->weight = $cart->quantity * $cart->product->weight;
-            if ($cart->product->discount > 0
-            ) {
-                // Apply discount if available
-                $this->subTotal += $totalPerPrice - $cart->product->discount;
-            } else {
-                $this->subTotal += $totalPerPrice;
+            $this->weight += $cart->quantity * $cart->product->weight;
+
+            if ($cart->product->discount > 0) {
+                $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);
+            }else{
+                $totalPerPrice = $cart->quantity * $cart->product->price;
             }
+
+            $this->subTotal += $totalPerPrice;
         }
+
         // Calculate the total by adding the subtotal and delivery cost
         $this->total = $this->subTotal + $this->deliveryCost;
+
+        // Return the updated value of $carts
         return $carts;
+
     }
 
     /**

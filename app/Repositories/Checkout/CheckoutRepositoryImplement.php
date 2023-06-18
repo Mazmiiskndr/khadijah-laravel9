@@ -76,11 +76,16 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
      */
     private function createOrder($customer_id, $data)
     {
+        if(strtoupper($data['paymentMethod']) == "COD"){
+            $orderStatus = OrderStatus::PAYMENT_VERIFICATION;
+        }else{
+            $orderStatus = OrderStatus::PENDING_PAYMENT;
+        }
         // Create a new order instance
         $order = $this->model->create([
             'customer_id' => $customer_id,
             'order_date' => date('Y-m-d H:i:s'),
-            'order_status' => OrderStatus::PENDING_PAYMENT,
+            'order_status' => $orderStatus,
             'order_type' => $data['paymentMethod'],
             'total_price' => $data['total'],
             'receiver_name' => $data['name'],
@@ -91,7 +96,6 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             'receiver_phone' => $data['phone'],
             'order_number' => $this->generateOrderNumber() // Add this line
         ]);
-
         return $order;
     }
 
@@ -155,9 +159,12 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
     {
         // Retrieve all items in the customer's cart
         $cartItems = $this->getCustomerCartData();
-
+        $subTotal = 0;
         // Loop through each cart item
         foreach ($cartItems as $cart) {
+            $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);
+            $subTotal += $totalPerPrice;
+            $cart->subTotal = $totalPerPrice;
             // Create an order detail for the cart item
             $this->createOrderDetail($order, $cart);
 
@@ -187,7 +194,7 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             return $this->orderDetail->create([
                 'order_id' => $order->order_id,
                 'product_id' => $cart->product_id,
-                'price' => $cart->product->price,
+                'price' => $cart->subTotal,
                 'quantity' => $cart->quantity
             ]);
         } catch (\Exception $e) {

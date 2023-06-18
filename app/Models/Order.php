@@ -28,7 +28,11 @@ class Order extends Model
         'shipping_city',
         'shipping_province',
         'shipping_postal_code',
-        'receiver_phone'
+        'receiver_phone',
+        'provider',
+        'rekening_name',
+        'rekening_number',
+        'payment_proof',
     ];
 
     protected static function boot()

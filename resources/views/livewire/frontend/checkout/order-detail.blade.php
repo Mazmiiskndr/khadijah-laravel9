@@ -20,18 +20,19 @@
                     <div class="col-3 order_detail">
                         <div>
                             <h4>Kuantitas</h4>
-                            <h5>{{ $productDetail['quantity'] }}</h5>
+                            <h5 class="text-center">{{ $productDetail['quantity'] }}</h5>
                         </div>
                     </div>
                     <div class="col-3 order_detail">
                         <div>
-                            <h4>Harga</h4>
-                            <h5>Rp. {{ number_format($productDetail['product']->price, 0, ',', '.') }}</h5>
+                            <h4>Harga / pcs</h4>
+                            <h5>Rp. {{ number_format(($productDetail['product']->price - $productDetail['product']->discount), 0, ',', '.') }}</h5>
                         </div>
                     </div>
+
                 </div>
                 @php
-                $totalPrice += $productDetail['product']->price * $productDetail['quantity'];
+                $totalPrice += ($productDetail['product']->price - $productDetail['product']->discount) * $productDetail['quantity'];
                 @endphp
                 @endforeach
 
@@ -43,7 +44,7 @@
                     </ul>
                 </div>
                 <div class="final-total">
-                    <h3>total <span>Rp. {{ number_format($totalPrice + $shippingDetail['delivery_cost'] , 0, ',', '.')
+                    <h3>Total <span>Rp. {{ number_format($totalPrice + $shippingDetail['delivery_cost'] , 0, ',', '.')
                             }}</span></h3>
                 </div>
             </div>
@@ -81,14 +82,19 @@
                             <button type="button" class="btn-solid btn-sm mt-3"
                                 onclick="javascript:window.history.back(-1);return false;"><i
                                     class="fas fa-backward"></i> Kembali</button>
-                            <button type="button" class="btn-solid btn-sm mt-3"><i class="fas fa-credit-card"></i>
+                            @if(strtoupper($orders->order_type) == "BANK")
+
+                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="showPaymentModal"><i
+                                    class="fas fa-credit-card"></i>
                                 Bayar</button>
+                            @endif
                             @else
                             <button type="button" class="btn-solid btn-sm mt-3"
                                 onclick="javascript:window.history.back(-1);return false;"><i
                                     class="fas fa-backward"></i> Kembali</button>
-                            <button type="button" class="btn-solid btn-sm mt-3"><i class="fas fa-print"></i> Cetak
-                                Invoice</button>
+                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
+                                <i class="fas fa-print"></i> Cetak Invoice
+                            </button>
                             @endif
                         </div>
                     </div>
@@ -96,4 +102,23 @@
             </div>
         </div>
     </div>
+
+    {{-- START FORM PAYMENT MODAL --}}
+    @livewire('frontend.checkout.payment',['order_uid' => $orders->order_uid,'customer_id' => $orders->customer_id,])
+    {{-- END FORM PAYMENT MODAL --}}
+
+    @push('scripts')
+    <script>
+        window.addEventListener('show-payment-modal', event => {
+                $('#createPayment').modal('show');
+            });
+
+            document.querySelector('#printInvoice').addEventListener('click', function () {
+                var uid = this.getAttribute('data-uid');
+                var invoiceUrl = '/invoice/' + uid;
+                window.open(invoiceUrl, '_blank'); // Membuka tautan di tab baru
+            });
+    </script>
+    @endpush
+
 </div>

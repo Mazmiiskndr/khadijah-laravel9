@@ -23,7 +23,7 @@ return new class extends Migration
             $table->dateTime('shipping_date')->nullable();
             $table->enum('order_status', [
                 'Menunggu Pembayaran',
-                'Pembayaran Sedang Diverifikasi',
+                'Sedang Diverifikasi',
                 'Pembayaran Berhasil',
                 'Pesanan Diproses',
                 'Pesanan Dikirim',
@@ -40,6 +40,10 @@ return new class extends Migration
             $table->string('shipping_province', 50);
             $table->string('shipping_postal_code', 10);
             $table->string('receiver_phone', 20);
+            $table->string('provider', 100)->nullable();
+            $table->string('rekening_name')->nullable();
+            $table->string('rekening_number')->nullable();
+            $table->string('payment_proof')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')

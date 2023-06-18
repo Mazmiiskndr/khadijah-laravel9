@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Livewire\Frontend\Checkout;
+namespace App\Http\Livewire\Frontend\Invoice;
 
 use App\Enums\OrderStatus;
 use App\Services\Order\OrderService;
 use Livewire\Component;
 use ReflectionClass;
 
-class OrderDetail extends Component
+class DetailInvoice extends Component
 {
     // Define public properties
-    public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors;
-
-    protected $listeners = [
-        'paymentUpdated' => 'handlePaymentUpdated',
-    ];
+    public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors, $contact, $totalPrice = 0;
 
     /**
      * The function to be executed when the component is being created.
@@ -27,33 +23,18 @@ class OrderDetail extends Component
         $this->fetchOrderDetails($orderService);
         $this->extractProductsFromOrderDetails();
         $this->fetchShippingDetails();
-
+        $this->contact = app('contactData');
         // get color for order status
         $this->colors = $orderService->getColors($this->orders->order_status);
     }
 
     /**
-     * Renders the order-detail view component.
+     * Renders the detail-invoice view component.
      * @return \Illuminate\View\View
      */
     public function render()
     {
-        // Returning the order-detail view.
-        return view('livewire.frontend.checkout.order-detail');
-    }
-
-    /**
-     * Displays the payment modal by re-fetching the data and emitting a browser event.
-     * @param  OrderService $orderService - The order service used to handle the order processes
-     * @return void
-     */
-    public function showPaymentModal(OrderService $orderService)
-    {
-        // Re-fetch the data
-        $this->mount($orderService);
-
-        // Emit a browser event to show the payment modal
-        $this->dispatchBrowserEvent('show-payment-modal');
+        return view('livewire.frontend.invoice.detail-invoice');
     }
 
     /**
@@ -84,14 +65,11 @@ class OrderDetail extends Component
         $this->shippingDetail = $this->orders->shippingDetail;
     }
 
-    /**
-     * Extract products from the fetched order details.
-     * @return void
-     */
     private function extractProductsFromOrderDetails()
     {
-        // Initialize an empty array for products
+        // Initialize an empty array for products and totalPrice
         $this->products = [];
+        $this->totalPrice = 0;
 
         // Check if there are any order details
         if (isset($this->orders->orderDetails)) {
@@ -99,18 +77,18 @@ class OrderDetail extends Component
             foreach ($this->orders->orderDetails as $orderDetail) {
                 // Check if the order detail has a product
                 if (isset($orderDetail->product)) {
-                    // Add the product to the products array along with the quantity
-                    $this->products[] = ['product' => $orderDetail->product, 'quantity' => $orderDetail->quantity];
+                    // Get the product and quantity
+                    $product = $orderDetail->product()->first();
+                    $quantity = $orderDetail->quantity;
 
+                    // Add the product to the products array along with the quantity
+                    $this->products[] = ['product' => $product, 'quantity' => $quantity];
+
+                    // Add the product's total cost to totalPrice (product price * quantity)
+                    $this->totalPrice += ($product->price - $product->discount) * $quantity;
                 }
             }
         }
-    }
-
-    public function handlePaymentUpdated(OrderService $orderService)
-    {
-        // Re-fetch the data
-        $this->mount($orderService);
     }
 
 }

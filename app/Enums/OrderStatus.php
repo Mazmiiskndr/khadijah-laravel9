@@ -5,7 +5,7 @@ namespace App\Enums;
 class OrderStatus
 {
     const PENDING_PAYMENT = 'Menunggu Pembayaran';
-    const PAYMENT_VERIFICATION = 'Pembayaran Sedang Diverifikasi';
+    const PAYMENT_VERIFICATION = 'Sedang Diverifikasi';
     const ORDER_PROCESSING = 'Pesanan Diproses';
     const ORDER_SENT = 'Pesanan Dikirim';
     const ORDER_RECEIVED = 'Pesanan Diterima';

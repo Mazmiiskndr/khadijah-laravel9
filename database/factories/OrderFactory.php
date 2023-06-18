@@ -30,7 +30,7 @@ class OrderFactory extends Factory
             'shipping_date' => $this->faker->dateTimeThisYear(),
             'order_status' => $this->faker->randomElement([
                 'Menunggu Pembayaran',
-                'Pembayaran Sedang Diverifikasi',
+                'Sedang Diverifikasi',
                 'Pembayaran Berhasil',
                 'Pesanan Diproses',
                 'Pesanan Dikirim',
