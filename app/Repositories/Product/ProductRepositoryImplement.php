@@ -36,6 +36,29 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
     }
 
     /**
+     * Get the latest products with stock greater than zero.
+     * @param int $start The offset for the query
+     * @param int $limit The number of items to retrieve
+     * @return \Illuminate\Support\Collection
+     */
+    public function getLatestProductsWithStock($start, $limit)
+    {
+        // Offset the query by subtracting 1 from the start parameter
+        $offset = $start - 1;
+
+        // Query the database for products with stock greater than zero
+        $products = $this->model->with('images')
+        ->where('stock', '>', 0)
+        ->orderBy('created_at', 'DESC')
+        ->offset($offset)
+            ->limit($limit)
+            ->get();
+
+        // Return the results
+        return $products;
+    }
+
+    /**
      * Retrieve paginated data with search, filters, and sorting options.
      * @param int $perPage - Number of items per page
      * @param string $search - Search keyword

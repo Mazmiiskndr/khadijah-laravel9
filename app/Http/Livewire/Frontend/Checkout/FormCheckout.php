@@ -210,7 +210,7 @@ class FormCheckout extends Component
             Log::error($e->getMessage());
 
             // Also, flash a generic error message to the session
-            session()->flash('error', 'Terjadi kesalahan saat mencoba membuat order. Silakan coba lagi.');
+            session()->flash('error', 'Terjadi kesalahan saat mencoba membuat order : ' . $e->getMessage());
         }
     }
 

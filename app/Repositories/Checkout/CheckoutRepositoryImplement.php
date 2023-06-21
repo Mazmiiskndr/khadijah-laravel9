@@ -8,6 +8,7 @@ use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
 use App\Models\ShippingDetail;
 use App\Models\OrderDetail;
+use App\Models\Product;
 use App\Services\Cart\CartService;
 use App\Services\Customer\CustomerService;
 use Carbon\Carbon;
@@ -29,14 +30,16 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
     protected $shippingDetail;
     protected $orderDetail;
     protected $customerService;
+    protected $productModel;
 
-    public function __construct(Order $model, CartService $cartService, ShippingDetail $shippingDetail, OrderDetail $orderDetail, CustomerService $customerService)
+    public function __construct(Order $model, CartService $cartService, ShippingDetail $shippingDetail, OrderDetail $orderDetail, CustomerService $customerService, Product $productModel)
     {
         $this->model = $model;
         $this->cartService = $cartService;
         $this->shippingDetail = $shippingDetail;
         $this->orderDetail = $orderDetail;
         $this->customerService = $customerService;
+        $this->productModel = $productModel;
     }
 
     /**
@@ -182,13 +185,19 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
 
     /**
      * Create a new order detail instance.
+     * Also reduce the product stock accordingly.
      * @param Order $order The order instance that the order detail is associated with.
      * @param $cart The cart item for creating the order detail.
      * @return void
+     * @throws \Exception
      */
     private function createOrderDetail(Order $order, $cart)
     {
         try {
+            // Reduce the product stock first
+            $this->reduceProductStock($cart->product_id, $cart->quantity);
+
+            // Create order detail
             return $this->orderDetail->create([
                 'order_id' => $order->order_id,
                 'product_id' => $cart->product_id,
@@ -203,6 +212,32 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             throw $e;
         }
     }
+
+    /**
+     * Reduce the product stock by a certain amount.
+     * @param int $productId The ID of the product.
+     * @param int $quantity The quantity to reduce.
+     * @return void
+     * @throws \Exception
+     */
+    private function reduceProductStock($productId, $quantity)
+    {
+        $product = $this->productModel->find($productId);
+        if ($product) {
+            if ($product->stock < $quantity) {
+                // If the product stock is not sufficient, throw an exception
+                throw new \Exception("Stok produk tidak cukup");
+            }
+
+            // Reduce the stock
+            $product->stock -= $quantity;
+            $product->save();
+        } else {
+            // If the product is not found, throw an exception
+            throw new \Exception("Produk tidak ditemukan");
+        }
+    }
+
 
     /**
      * Remove an item from the cart.

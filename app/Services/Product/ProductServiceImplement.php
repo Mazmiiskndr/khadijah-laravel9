@@ -35,6 +35,21 @@ class ProductServiceImplement extends Service implements ProductService
         }
     }
 
+    /**
+     * Get the latest products with stock greater than zero.
+     * @param int $start The offset for the query
+     * @param int $limit The number of items to retrieve
+     * @return \Illuminate\Support\Collection
+     */
+    public function getLatestProductsWithStock($start, $limit)
+    {
+        try {
+            return $this->mainRepository->getLatestProductsWithStock($start, $limit);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
 
     /**
      * getPaginatedData
