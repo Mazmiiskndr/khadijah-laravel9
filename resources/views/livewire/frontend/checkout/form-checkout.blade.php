@@ -173,17 +173,17 @@
                                 <tr>
                                     <th>Bank</th>
                                     <th>:</th>
-                                    <td>BCA</td>
+                                    <td>{{ strtoupper($bank->provider) ?? "" }}</td>
                                 </tr>
                                 <tr>
                                     <th>Nama Rekening</th>
                                     <th>:</th>
-                                    <td>MOCH AZMI ISKANDAR</td>
+                                    <td>{{ strtoupper($bank->rekening_name) ?? "" }}</td>
                                 </tr>
                                 <tr>
-                                    <th>No. Rek</th>
+                                    <th>No. Rekening</th>
                                     <th>:</th>
-                                    <td>1770006605478</td>
+                                    <td>{{ $bank->rekening_number }}</td>
                                 </tr>
 
                             </table>

@@ -3,7 +3,6 @@
         <div class="invoice">
             <div>
                 <div>
-
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="media">
@@ -19,7 +18,7 @@
                         <div class="col-sm-6">
                             <div class="text-md-end text-xs-center">
                                 <h3>Invoice #<span class="counter">{{ $orders->order_number }}</span></h3>
-                                <p>Issued: {{ date('F j, Y', strtotime($orders->order_date)) }}<br> Total Pesanan: Rp.
+                                <p>Tanggal : {{ date('F j, Y', strtotime($orders->order_date)) }}<br> Total Pesanan : Rp.
                                     {{ number_format($totalPrice + $shippingDetail['delivery_cost'], 0, ',', '.') }}</p>
                             </div>
                             <!-- End Title-->
@@ -80,7 +79,7 @@
                                         <h6 class="p-2 mb-0">Nama Produk</h6>
                                     </td>
                                     <td class="Hours">
-                                        <h6 class="p-2 mb-0">Kuantitah</h6>
+                                        <h6 class="p-2 mb-0">Kuantitas</h6>
                                     </td>
                                     <td class="Rate">
                                         <h6 class="p-2 mb-0">Harga</h6>

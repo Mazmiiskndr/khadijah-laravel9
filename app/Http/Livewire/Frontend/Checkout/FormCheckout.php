@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Frontend\Checkout;
 
+use App\Models\Bank;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Cart\CartService;
 use App\Services\Checkout\CheckoutService;
@@ -25,6 +26,8 @@ class FormCheckout extends Component
     public $parcels = [];
     // FOR CARTS DATA
     public $carts = [];
+    // BANK DATA
+    public $bank = [];
 
     protected $listeners = [
         'cartDeletedInCart' => 'handleCartDeleted',
@@ -64,6 +67,7 @@ class FormCheckout extends Component
      */
     public function mount(CustomerService $customerService, ApiRajaOngkirService $apiRajaOngkirService)
     {
+        $this->bank = Bank::first();
         // Set the customer_uid by retrieving the customer ID of the logged-in customer using Auth
         $this->customer_uid = Auth::guard('customer')->user()->customer_uid;
         // Show customer data by calling the showCustomer function

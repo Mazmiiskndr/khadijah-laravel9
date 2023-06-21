@@ -224,6 +224,17 @@
                                     <span>Kontak</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('backend.bank.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                    </svg>
+                                    <span>Bank</span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     {{-- END SIDEBAR SUBMENU SETTING --}}

@@ -10,6 +10,7 @@ use App\Http\Controllers\Backend\PromoController;
 use App\Http\Controllers\Backend\ReportProductController;
 use App\Http\Controllers\Backend\ReportVisitorController;
 use App\Http\Controllers\Backend\Setting\ContactController as SettingContactController;
+use App\Http\Controllers\Backend\Setting\BankController as SettingBankController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\AboutController;
@@ -90,6 +91,7 @@ Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->gro
 
 
     Route::get('contact', [SettingContactController::class, 'index'])->name('contact.index');
+    Route::get('bank', [SettingBankController::class, 'index'])->name('bank.index');
 });
 
 // Route::middleware('auth')->group(function () {
