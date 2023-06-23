@@ -147,7 +147,7 @@
                         <ul class="sidebar-submenu" style="display: block;">
                             {{-- *** TODO: *** --}}
                             <li>
-                                <a href="{{ route('backend.report-product.index') }}">
+                                <a href="{{ route('backend.sales.index') }}">
                                     <svg class="stroke-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
                                     </svg>

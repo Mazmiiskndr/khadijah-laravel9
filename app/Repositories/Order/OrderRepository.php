@@ -9,6 +9,13 @@ interface OrderRepository extends Repository{
     /**
      * This method retrieves an order along with its associated order details, products, and shipping details
      * using the unique order identifier.
+     * @return Order|null Returns the Order object if found; otherwise, null.
+     */
+    public function getAllOrder();
+
+    /**
+     * This method retrieves an order along with its associated order details, products, and shipping details
+     * using the unique order identifier.
      * @param string $orderUid The unique identifier of the order to be retrieved.
      * @return Order|null Returns the Order object if found; otherwise, null.
      */

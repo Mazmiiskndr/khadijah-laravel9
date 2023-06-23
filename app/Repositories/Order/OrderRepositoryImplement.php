@@ -6,18 +6,38 @@ use App\Enums\OrderStatus;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
 
-class OrderRepositoryImplement extends Eloquent implements OrderRepository{
+class OrderRepositoryImplement extends Eloquent implements OrderRepository
+{
 
     /**
-    * Model class to be used in this repository for the common methods inside Eloquent
-    * Don't remove or change $this->model variable name
-    * @property Model|mixed $model;
-    */
+     * Model class to be used in this repository for the common methods inside Eloquent
+     * Don't remove or change $this->model variable name
+     * @property Model|mixed $model;
+     */
     protected $model;
 
     public function __construct(Order $model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * This method retrieves an order along with its associated order details, products, and shipping details
+     * using the unique order identifier.
+     * @return Order|null Returns the Order object if found; otherwise, null.
+     */
+    // public function getAllOrder()
+    // {
+    //     return $this->model->with('orderDetails.product', 'shippingDetail')->latest()->get();
+
+    // }
+    public function getAllOrder()
+    {
+        return $this->model->with(['customer' => function ($query) {
+            $query->select('id', 'name');
+        }])
+            ->select('order_id', 'order_uid', 'order_number', 'order_status', 'customer_id') // customer_id added
+            ->latest()->get();
     }
 
     /**
@@ -83,5 +103,4 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository{
         // Return the color associated with the status, or 'secondary' if the status is not in the mapping
         return $colors[$status] ?? 'secondary';
     }
-
 }

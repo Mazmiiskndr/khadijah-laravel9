@@ -23,6 +23,21 @@ class OrderServiceImplement extends Service implements OrderService
     /**
      * This method retrieves an order along with its associated order details, products, and shipping details
      * using the unique order identifier.
+     * @return Order|null Returns the Order object if found; otherwise, null.
+     */
+    public function getAllOrder()
+    {
+        try {
+            return $this->mainRepository->getAllOrder();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
+     * This method retrieves an order along with its associated order details, products, and shipping details
+     * using the unique order identifier.
      * @param string $orderUid The unique identifier of the order to be retrieved.
      * @return Order|null Returns the Order object if found; otherwise, null.
      */
