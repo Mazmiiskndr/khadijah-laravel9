@@ -147,7 +147,7 @@
                         <ul class="sidebar-submenu" style="display: block;">
                             {{-- *** TODO: *** --}}
                             <li>
-                                <a href="{{ route('backend.report-product.index') }}">
+                                <a href="{{ route('backend.sales.index') }}">
                                     <svg class="stroke-icon">
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
                                     </svg>
@@ -222,6 +222,17 @@
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#fill-contact') }}"></use>
                                     </svg>
                                     <span>Kontak</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend.bank.index') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                    </svg>
+                                    <span>Bank</span>
                                 </a>
                             </li>
                         </ul>

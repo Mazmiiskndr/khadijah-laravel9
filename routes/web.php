@@ -9,7 +9,9 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\PromoController;
 use App\Http\Controllers\Backend\ReportProductController;
 use App\Http\Controllers\Backend\ReportVisitorController;
+use App\Http\Controllers\Backend\SalesController;
 use App\Http\Controllers\Backend\Setting\ContactController as SettingContactController;
+use App\Http\Controllers\Backend\Setting\BankController as SettingBankController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Customer\CustomerLoginController;
 use App\Http\Controllers\Frontend\AboutController;
@@ -21,6 +23,7 @@ use App\Http\Controllers\Frontend\GalleryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProductController as FrontendProductController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\TransactionController;
 use App\Http\Middleware\CountVisitor;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +37,6 @@ Route::middleware(CountVisitor::class)->controller(HomeController::class)->group
 
 // Frontend Product Page
 Route::middleware(CountVisitor::class)->group(function () {
-    // TODO:
     Route::resource('product', FrontendProductController::class)->only(['index', 'show']);
     // About Page
     Route::get('/about', [AboutController::class, 'index'])->name('about.index');
@@ -48,8 +50,10 @@ Route::middleware(CountVisitor::class)->group(function () {
     // Wrap the cart route with the 'customer.auth' middleware to require customer login
     Route::middleware(['customer.auth'])->group(function () {
         Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-        Route::resource('checkout', CheckoutController::class)->only(['index', 'show', 'create']);
+        Route::resource('checkout', CheckoutController::class)->only(['index', 'show']);
+        Route::get('transaction/{uid}', [TransactionController::class, 'show'])->name('transaction.show');
     });
+    Route::get('invoice/{uid}', [TransactionController::class, 'invoice'])->name('transaction.invoice');
 });
 
 // Login For Customer
@@ -86,8 +90,11 @@ Route::middleware(['auth','verified'])->name('backend.')->prefix('backend')->gro
     Route::get('report-product', [ReportProductController::class, 'index'])->name('report-product.index');
     Route::get('report-visitor', [ReportVisitorController::class, 'index'])->name('report-visitor.index');
 
+    Route::resource('sales', SalesController::class)->only(['index', 'show','edit']);
+
 
     Route::get('contact', [SettingContactController::class, 'index'])->name('contact.index');
+    Route::get('bank', [SettingBankController::class, 'index'])->name('bank.index');
 });
 
 // Route::middleware('auth')->group(function () {

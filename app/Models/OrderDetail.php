@@ -41,5 +41,4 @@ class OrderDetail extends Model
     }
 
 
-
 }

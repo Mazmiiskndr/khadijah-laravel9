@@ -51,7 +51,8 @@ class AddToCart extends Component
     {
         $this->selectedSize = $size;
     }
-    // TODO:
+
+
     public function addToCart(CartService $cartService,$productUid)
     {
         $customer = Auth::guard('customer')->user();

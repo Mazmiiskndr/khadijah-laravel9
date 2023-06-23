@@ -16,7 +16,7 @@
         @endphp
         @foreach ($carts as $cart)
         @php
-        $totalPerPrice = $cart->quantity * $cart->product->price;
+        $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);
         @endphp
         <tbody>
             <tr>
@@ -84,11 +84,7 @@
                 <td>
                     <h4 class="td-color">
                         <b>
-                            @if ($cart->product->discount > 0)
-                            Rp. {{ number_format($totalPerPrice - $cart->product->discount, 0, ',', '.') }}
-                            @else
                             Rp. {{ number_format($totalPerPrice, 0, ',', '.') }}
-                            @endif
                         </b>
                     </h4>
                 </td>
@@ -96,11 +92,7 @@
         </tbody>
         {{-- Count Sub Total --}}
         @php
-        if ($cart->product->discount > 0){
-        $subtotal += $totalPerPrice - $cart->product->discount;
-        }else{
         $subtotal += $totalPerPrice;
-        }
         @endphp
 
         @endforeach

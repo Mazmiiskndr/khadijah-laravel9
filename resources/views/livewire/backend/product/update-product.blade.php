@@ -125,7 +125,7 @@
                             </div>
                             <div class="col-4">
                                 <label for="weight_update">Berat</label>
-                                <input type="text" class="form-control @error('weight') is-invalid @enderror" placeholder="Contoh : 4.30 "
+                                <input type="text" class="form-control @error('weight') is-invalid @enderror" placeholder="Berat "
                                     name="weight" id="weight_update" wire:model.defer="weight" autofocus>
                                 @error('weight') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>

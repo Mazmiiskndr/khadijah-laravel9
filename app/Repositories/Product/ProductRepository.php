@@ -14,6 +14,14 @@ interface ProductRepository extends Repository{
     public function getAllData();
 
     /**
+     * Get the latest products with stock greater than zero.
+     * @param int $start The offset for the query
+     * @param int $limit The number of items to retrieve
+     * @return \Illuminate\Support\Collection
+     */
+    public function getLatestProductsWithStock($start, $limit);
+
+    /**
      * Get a product by ID from the repository.
      *
      * @param int $id

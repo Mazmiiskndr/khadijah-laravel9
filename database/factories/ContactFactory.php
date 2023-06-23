@@ -21,7 +21,6 @@ class ContactFactory extends Factory
         return [
             'province_id' => rand(1, 10),
             'city_id' => rand(1, 100),
-            'district_id' => rand(1, 1000),
             'shop_name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'address' => $this->faker->address,

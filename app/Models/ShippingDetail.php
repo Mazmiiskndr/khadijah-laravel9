@@ -9,9 +9,9 @@ class ShippingDetail extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'order_id';
+    protected $primaryKey = 'shipping_id';
 
-    protected $table = 'order';
+    protected $table = 'shipping_details';
 
     protected $fillable = [
         'shipping_uid',
@@ -29,5 +29,11 @@ class ShippingDetail extends Model
         static::creating(function ($model) {
             $model->shipping_uid = str()->uuid();
         });
+    }
+
+    // ShippingDetail belongs to Order
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id', 'order_id');
     }
 }

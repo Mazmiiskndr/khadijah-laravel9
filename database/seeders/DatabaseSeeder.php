@@ -30,19 +30,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Customer::factory()->create([
-        //     'name' => 'Moch Azmi Iskandar',
-        //     'email' => 'azmiiskandar0@gmail.com',
-        //     'password' => Hash::make('tasik123'),
-        //     'province_id' => '32',
-        //     'city_id' => '3278',
-        //     'district_id' => '3278010',
-        //     'address' => 'Perum Mitra Batik',
-        //     'postal_code' => '46182',
-        //     'phone' => '+62 8211-892-3691',
-        //     'registration_date' => now(),
-        //     'remember_token' => str()->random(10)
-        // ]);
         // Region Seeder
         $this->call(IndoRegionProvinceSeeder::class);
         $this->call(IndoRegionRegencySeeder::class);
@@ -77,7 +64,7 @@ class DatabaseSeeder extends Seeder
             $product->tags()->attach($tag_ids, ['product_id' => $product->product_id]);
 
             // For each productImages, generate 1-3 product Images
-            $numImages = rand(1, 3);
+            $numImages = rand(1,2);
             $images = ProductImage::factory()->count($numImages)->make(['product_id' => $product->product_id]);
             $product->images()->createMany($images->toArray());
         });

@@ -72,7 +72,7 @@ class ProductFactory extends Factory
             'size' => $this->faker->randomElement(['S', 'M', 'L', 'XL', 'XXL','XXXL', 'Super Jumbo']),
             'material' => $this->faker->word(),
             'thumbnail' => 'assets/images/products/' . $fileName, // Set Thumbnail to the Saved File Name
-            'weight' => $this->faker->randomFloat(2, 0.1, 10),
+            'weight' => $this->faker->numberBetween(1, 999),
             'date_added' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'date_updated' => $this->faker->optional()->dateTimeBetween('-1 year', 'now'),
 

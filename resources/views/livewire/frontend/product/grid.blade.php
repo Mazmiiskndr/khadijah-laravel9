@@ -18,7 +18,7 @@
                         </div>
                         <div class="back">
                             <a href="javascript:void(0)">
-                                @if($product->images->first()->image_name == null)
+                                @if(!isset($product->images->first()->image_name))
                                 <img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt="{{ $product->product_name }}">
                                 @else
@@ -62,8 +62,7 @@
                             <div class="d-flex">
                                 <h4>Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}</h4>
                                 @if ($product->discount > 0)
-                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.')
-                                    }}</del>
+                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
                                 @endif
                             </div>
                             {{-- <ul class="color-variant">
