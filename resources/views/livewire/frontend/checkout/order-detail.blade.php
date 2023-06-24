@@ -6,6 +6,7 @@
                 $totalPrice = 0;
                 @endphp
                 @foreach ($products as $productDetail)
+                {{-- {{ dd($productDetail['product']->thumbnail); }} --}}
                 <div class="row product-order-detail">
                     <div class="col-3">
                         <img src="{{ asset('storage/'.$productDetail['product']->thumbnail) }}" alt=""
@@ -90,6 +91,23 @@
                                 Bayar
                             </button>
                             @endif
+                            @elseif ($orderStatuses['ORDER_SENT'] == $orders->order_status)
+                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="orderReceived">
+                                <i class="fas fa-shopping-bag"></i>
+                                Pesanan di Terima
+                            </button>
+                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
+                                <i class="fas fa-print"></i> Cetak Invoice
+                            </button>
+                            @elseif ($orderStatuses['ORDER_RECEIVED'] == $orders->order_status || $orderStatuses['ORDER_COMPLETED'] == $orders->order_status)
+                            {{-- TODO: --}}
+                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="giveRating">
+                                <i class="fas fa-star"></i>
+                                Beri Penilaian
+                            </button>
+                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
+                                <i class="fas fa-print"></i> Cetak Invoice
+                            </button>
                             @else
                             <button id="printInvoice" data-uid="{{ $orders->order_uid }}"
                                 class="btn-solid btn-sm mt-3">

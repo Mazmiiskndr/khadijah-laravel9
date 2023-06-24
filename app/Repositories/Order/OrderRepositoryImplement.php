@@ -94,8 +94,8 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
             OrderStatus::PAYMENT_VERIFICATION => 'primary',
             OrderStatus::ORDER_PROCESSING => 'primary',
             OrderStatus::ORDER_SENT => 'info',
-            OrderStatus::ORDER_RECEIVED => 'info',
-            OrderStatus::PAYMENT_SUCCESS => 'success',
+            OrderStatus::ORDER_RECEIVED => 'success',
+            OrderStatus::ORDER_COMPLETED => 'success',
             OrderStatus::ORDER_CANCELED => 'danger',
             OrderStatus::REFUND => 'danger',
         ];
