@@ -95,7 +95,7 @@
                 </table>
                 <div style="margin-left: 10px;" class="mt-3">
                     @if($orders->payment_proof)
-                    <button type="button" class="btn btn-primary btn-sm" wire:click="downloadPaymentProof"><i
+                    <button type="button" class="btn btn-success btn-sm" wire:click="downloadPaymentProof"><i
                             class="fas fa-lg fa-download"></i> &nbsp;
                         Download Bukti
                         Pembayaran</button>
@@ -105,6 +105,9 @@
                             <i class="fas fa-lg fa-print"></i> &nbsp; Invoice
                         </button>
                     </a>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="javascript:window.history.back(-1);return false;"><i
+                            class="fas fa-lg fa-backward"></i> &nbsp;
+                        Back</button>
                 </div>
             </div>
         </div>

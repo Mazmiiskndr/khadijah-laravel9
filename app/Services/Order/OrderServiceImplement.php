@@ -67,6 +67,20 @@ class OrderServiceImplement extends Service implements OrderService
     }
 
     /**
+     * This method retrieves the total count of completed orders made by a given customer.
+     * @return int Returns the total count of all completed orders associated with the provided customer ID.
+     */
+    public function countCompletedOrders()
+    {
+        try {
+            return $this->mainRepository->countCompletedOrders();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
      * This method retrieves the total count of pending orders made by a given customer.
      * @param int $customerId The ID of the customer.
      * @return int Returns the total count of all pending orders associated with the provided customer ID.

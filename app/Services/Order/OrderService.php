@@ -36,6 +36,12 @@ interface OrderService extends BaseService{
     public function countPendingOrdersByCustomerId($customerId);
 
     /**
+     * This method retrieves the total count of completed orders made by a given customer.
+     * @return int Returns the total count of all completed orders associated with the provided customer ID.
+     */
+    public function countCompletedOrders();
+
+    /**
      * This method retrieves all order details for a given customer.
      * @param int $customerId The ID of the customer.
      * @return Collection Returns a collection of all orders associated with the provided customer ID.
