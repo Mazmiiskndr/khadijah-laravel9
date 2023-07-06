@@ -26,7 +26,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getProvinces()
     {
-        $url = "http://api.rajaongkir.com/starter/province";
+        $url = "http://pro.rajaongkir.com/api/province";
         return $this->executeCurl($url);
     }
 
@@ -37,7 +37,17 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCities($provinceId)
     {
-        $url = "http://api.rajaongkir.com/starter/city?province=" . $provinceId;
+        $url = "http://pro.rajaongkir.com/api/city?province=" . $provinceId;
+        return $this->executeCurl($url);
+    }
+
+    /**
+     * Retrieve subDistricts data from RajaOngkir API.
+     * @return mixed
+     */
+    public function subDistricts()
+    {
+        $url = "http://pro.rajaongkir.com/api/subdistrict";
         return $this->executeCurl($url);
     }
 
@@ -49,7 +59,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getProvinceById($provinceId, $cityId)
     {
-        $url = "http://api.rajaongkir.com/starter/city?province=" . $provinceId . "&id=" . $cityId;
+        $url = "http://pro.rajaongkir.com/api/city?province=" . $provinceId . "&id=" . $cityId;
         return $this->executeCurl($url);
     }
 
@@ -60,10 +70,31 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCityById($cityId)
     {
-        $url = "http://api.rajaongkir.com/starter/city?id=" . $cityId;
+        $url = "http://pro.rajaongkir.com/api/city?id=" . $cityId;
         return $this->executeCurl($url);
     }
 
+    /**
+     * Retrieve city data from RajaOngkir API by subDistrictId.
+     * @param mixed $subDistrictId
+     * @return mixed
+     */
+    public function getSubDistrictById($subDistrictId)
+    {
+        $url = "http://pro.rajaongkir.com/api/subdistrict?id=" . $subDistrictId;
+        return $this->executeCurl($url);
+    }
+
+    /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getSubDistrictByCity($cityId)
+    {
+        $url = "http://pro.rajaongkir.com/api/subdistrict?city=" . $cityId;
+        return $this->executeCurl($url);
+    }
 
     /**
      * Retrieve shipping cost data from RajaOngkir API.
@@ -75,12 +106,28 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCost($origin, $destination, $weight, $courier)
     {
-        $url = "http://api.rajaongkir.com/starter/cost";
+        $url = "http://pro.rajaongkir.com/api/cost";
         $postData = [
             "origin" => $origin,
             "destination" => $destination,
             "weight" => $weight,
             "courier" => $courier,
+        ];
+        return $this->executeCurl($url, "POST", $postData);
+    }
+
+    /**
+     * Retrieve Way Bill data from RajaOngkir API.
+     * @param string $noResi
+     * @param string $courier
+     * @return mixed
+     */
+    public function getWayBill($noResi, $courier)
+    {
+        $url = "http://pro.rajaongkir.com/api/cost";
+        $postData = [
+            "waybill" => $noResi,
+            "jne" => $courier
         ];
         return $this->executeCurl($url, "POST", $postData);
     }

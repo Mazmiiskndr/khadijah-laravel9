@@ -57,6 +57,20 @@ class OrderDetail extends Component
         $this->dispatchBrowserEvent('show-payment-modal');
     }
 
+    /**
+     * Displays the payment modal by re-fetching the data and emitting a browser event.
+     * @param  OrderService $orderService - The order service used to handle the order processes
+     * @return void
+     */
+    public function showRatingModal(OrderService $orderService)
+    {
+        // Re-fetch the data
+        $this->mount($orderService);
+
+        // Emit a browser event to show the payment modal
+        $this->dispatchBrowserEvent('show-rating-modal');
+    }
+
     public function orderReceived(OrderService $orderService)
     {
         // Enclose the code block within a try-catch statement

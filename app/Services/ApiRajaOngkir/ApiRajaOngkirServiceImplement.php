@@ -99,6 +99,22 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
     }
 
     /**
+     * Retrieve Way Bill data from RajaOngkir API.
+     * @param string $noResi
+     * @param string $courier
+     * @return mixed
+     */
+    public function getWayBill($noResi, $courier)
+    {
+        try {
+            return $this->mainRepository->getWayBill($noResi, $courier);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
      * Retrieve shipping cost for a parcel from RajaOngkir API.
      * @param object $contactData
      * @param string $city_id
@@ -111,6 +127,50 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
     {
         try {
             return $this->mainRepository->getCostParcel($contactData, $city_id, $weight, $courier);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getSubDistrictByCity($cityId)
+    {
+        try {
+            return $this->mainRepository->getSubDistrictByCity($cityId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
+     * Retrieve city data from RajaOngkir API by subDistrictId.
+     * @param mixed $subDistrictId
+     * @return mixed
+     */
+    public function getSubDistrictById($subDistrictId)
+    {
+        try {
+            return $this->mainRepository->getSubDistrictById($subDistrictId);
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
+     * Retrieve subDistricts data from RajaOngkir API.
+     * @return mixed
+     */
+    public function subDistricts()
+    {
+        try {
+            return $this->mainRepository->subDistricts();
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             throw $th;

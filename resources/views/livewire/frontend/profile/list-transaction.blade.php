@@ -33,7 +33,7 @@
                                     break;
                                     case 'Pesanan Dikirim':
                                     case 'Pesanan Diterima':
-                                    $badgeColor = 'info';
+                                    $badgeColor = 'success';
                                     break;
                                     case 'Pesanan Selesai':
                                     $badgeColor = 'success';

@@ -82,8 +82,6 @@
                             <button type="button" class="btn-solid btn-sm mt-3"
                                 onclick="javascript:window.history.back(-1);return false;"><i
                                     class="fas fa-backward"></i> Kembali</button>
-
-
                             @if($orderStatuses['PENDING_PAYMENT'] == $orders->order_status )
                             @if(strtoupper($orders->order_type) == "BANK")
                             <button type="button" class="btn-solid btn-sm mt-3" wire:click="showPaymentModal">
@@ -101,7 +99,7 @@
                             </button>
                             @elseif ($orderStatuses['ORDER_RECEIVED'] == $orders->order_status || $orderStatuses['ORDER_COMPLETED'] == $orders->order_status)
                             {{-- TODO: --}}
-                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="giveRating">
+                            <button type="button" class="btn-solid btn-sm mt-3" wire:click="showRatingModal">
                                 <i class="fas fa-star"></i>
                                 Beri Penilaian
                             </button>
@@ -125,10 +123,18 @@
     @livewire('frontend.checkout.payment',['order_uid' => $orders->order_uid,'customer_id' => $orders->customer_id,])
     {{-- END FORM PAYMENT MODAL --}}
 
+    {{-- START FORM RATING MODAL --}}
+    @livewire('frontend.checkout.rating',['order_uid' => $orders->order_uid,'customer_id' => $orders->customer_id,])
+    {{-- END FORM RATING MODAL --}}
+
     @push('scripts')
     <script>
         window.addEventListener('show-payment-modal', event => {
             $('#createPayment').modal('show');
+        });
+
+        window.addEventListener('show-rating-modal', event => {
+            $('#createRating').modal('show');
         });
 
         document.addEventListener('click', function (event) {
