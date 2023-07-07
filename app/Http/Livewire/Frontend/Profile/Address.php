@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Address extends Component
 {
-    public $customer, $addressCustomer, $provinceCustomer, $cityCustomer, $typeRegency;
+    public $customer, $addressCustomer, $provinceCustomer, $cityCustomer, $districtCustomer;
 
     protected $listeners = [
         'updatedCustomerAddress' => 'handleAddressUpdated',
@@ -16,9 +16,9 @@ class Address extends Component
     public function mount()
     {
         $this->addressCustomer = $this->customer->address ? $this->customer->address : "-";
-        $this->provinceCustomer = $this->customer->province_id ? ucwords(strtolower($this->customer->provinceAndCity['province'])) : "-";
-        $this->cityCustomer = $this->customer->city_id ? ucwords(strtolower($this->customer->provinceAndCity['city_name'])) : "-";
-        $this->typeRegency = $this->customer->city_id ? ucwords(strtolower($this->customer->provinceAndCity['type'])) : "-";
+        $this->provinceCustomer = $this->customer->province_id ? ucwords(strtolower($this->customer->province)) : "-";
+        $this->cityCustomer = $this->customer->city_id ? ucwords(strtolower($this->customer->city)) : "-";
+        $this->districtCustomer = $this->customer->district_id ? ucwords(strtolower($this->customer->district)) : "-";
     }
 
     public function render()
@@ -47,10 +47,10 @@ class Address extends Component
         $customerService = app(\App\Services\Customer\CustomerService::class);
         $customerData = $customerService->findByUid($updatedCustomer['customer_uid']);
         // We could, for example, update the local state of the component with the new customer data
-        $this->addressCustomer = $customerData->address;
-        $this->provinceCustomer = ucwords(strtolower($customerData->provinceAndCity['province']));
-        $this->cityCustomer = ucwords(strtolower($customerData->provinceAndCity['city_name']));
-        $this->typeRegency = ucwords(strtolower($customerData->provinceAndCity['type']));
+        $this->addressCustomer = $customerData->address ? $customerData->address : "-";
+        $this->provinceCustomer = $customerData->province_id ? ucwords(strtolower($customerData->province)) : "-";
+        $this->cityCustomer = $customerData->city_id ? ucwords(strtolower($customerData->city)) : "-";
+        $this->districtCustomer = $customerData->district_id ? ucwords(strtolower($customerData->district)) : "-";
     }
 
 

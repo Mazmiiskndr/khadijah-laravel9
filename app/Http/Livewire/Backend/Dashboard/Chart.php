@@ -8,10 +8,10 @@ use Livewire\Component;
 class Chart extends Component
 {
 
-    public function render(CountVisitorService $countCountVisitorService)
+    public function render(CountVisitorService $countVisitorService)
     {
         return view('livewire.backend.dashboard.chart', [
-            'visitors' => $countCountVisitorService->getAllData(),
+            'visitors' => $countVisitorService->getAllData(),
         ]);
     }
 }

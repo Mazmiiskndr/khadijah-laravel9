@@ -142,7 +142,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-landing-page') }}"></use>
                             </svg><span>Transaksi</span>
-                            <label class="badge badge-light-primary">3</label>
+                            <label class="badge badge-light-primary">1</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             {{-- *** TODO: *** --}}
@@ -194,6 +194,18 @@
                                         <use href="{{ asset('assets/svg/icon-sprite.svg#customers') }}"></use>
                                     </svg>
                                     <span>Pengunjung</span>
+                                </a>
+                            </li>
+                            {{-- TODO: --}}
+                            <li>
+                                <a href="#">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
+                                    </svg>
+                                    <span>Transaksi</span>
                                 </a>
                             </li>
 

@@ -43,12 +43,6 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
     {
         $customer = $this->model->with('rekening_customers')->where('customer_uid', $uid)->first();
 
-        if ($customer) {
-            // Fetch provinceById data from API.
-            $customer->provinceAndCity = $this->apiRajaOngkirService->getProvinceById($customer->province_id, $customer->city_id);
-            // Add more requests for other endpoints as needed.
-        }
-
         return $customer;
     }
 
@@ -128,8 +122,12 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
                 // Define the data to update.
                 $customerData = [
                     'address' => $data['address'],
-                    'city_id' => $data['city_id'],
                     'province_id' => $data['province_id'],
+                    'city_id' => $data['city_id'],
+                    'district_id' => $data['district_id'],
+                    'province' => $data['province'],
+                    'city' => $data['city'],
+                    'district' => $data['district'],
                     'postal_code' => $data['postal_code'],
                 ];
                 // Update the customer with the defined data.
@@ -160,8 +158,12 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
             'name' => $data['name'],
             'email' => $data['email'],
             'address' => $data['address'],
-            'city_id' => $data['city_id'],
             'province_id' => $data['province_id'],
+            'city_id' => $data['city_id'],
+            'district_id' => $data['district_id'],
+            'province' => $data['province'],
+            'city' => $data['city'],
+            'district' => $data['district'],
             'postal_code' => $data['postal_code'],
             'phone' => $data['phone'],
         ];

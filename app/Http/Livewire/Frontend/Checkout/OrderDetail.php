@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Enums\OrderStatus;
+use App\Models\Order;
 use App\Services\Order\OrderService;
 use Livewire\Component;
 use ReflectionClass;
@@ -13,7 +14,7 @@ class OrderDetail extends Component
     public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors;
 
     protected $listeners = [
-        'paymentUpdated' => 'handlePaymentUpdated',
+        'paymentUpdated' => 'handleUpdated',
     ];
 
     /**
@@ -54,6 +55,41 @@ class OrderDetail extends Component
 
         // Emit a browser event to show the payment modal
         $this->dispatchBrowserEvent('show-payment-modal');
+    }
+
+    /**
+     * Displays the payment modal by re-fetching the data and emitting a browser event.
+     * @param  OrderService $orderService - The order service used to handle the order processes
+     * @return void
+     */
+    public function showRatingModal(OrderService $orderService)
+    {
+        // Re-fetch the data
+        $this->mount($orderService);
+
+        // Emit a browser event to show the payment modal
+        $this->dispatchBrowserEvent('show-rating-modal');
+    }
+
+    public function orderReceived(OrderService $orderService)
+    {
+        // Enclose the code block within a try-catch statement
+        try {
+            // Use Eloquent's findOrFail method to fetch the order using order_uid.
+            $order = Order::where('order_uid', $this->orderUid)->first();
+            // Use Eloquent's update method to update the order_status.
+            $order->update([
+                'order_status' => OrderStatus::ORDER_RECEIVED,
+            ]);
+            // Notify the user that the update operation was successful.
+            session()->flash('success', 'Pesanan Berhasil di Terima!');
+
+            // Reset Form Fields After Updating Order Status
+            $this->handleUpdated($orderService);
+        } catch (\Exception $e) {
+            // If there is an exception, catch it and display its message.
+            session()->flash('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -105,10 +141,10 @@ class OrderDetail extends Component
                 }
             }
         }
-        // dd($this->products);
+
     }
 
-    public function handlePaymentUpdated(OrderService $orderService)
+    public function handleUpdated(OrderService $orderService)
     {
         // Re-fetch the data
         $this->mount($orderService);

@@ -36,8 +36,9 @@ return new class extends Migration
             $table->integer('total_price');
             $table->string('receiver_name', 200);
             $table->text('shipping_address');
-            $table->string('shipping_city', 50);
-            $table->string('shipping_province', 50);
+            $table->string('shipping_city', 100);
+            $table->string('shipping_district', 100);
+            $table->string('shipping_province', 100);
             $table->string('shipping_postal_code', 10);
             $table->string('receiver_phone', 20);
             $table->string('provider', 100)->nullable();

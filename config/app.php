@@ -197,9 +197,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        // Data Indonesian Region
-        AzisHapidin\IndoRegion\IndoRegionServiceProvider::class,
         // Yajra DataTables
         Yajra\DataTables\DataTablesServiceProvider::class,
 

@@ -42,14 +42,20 @@
 
                         {{-- Address and Postal Code --}}
                         <div class="row mt-3">
-                            <div class="col-4">
-                                <label for="postal_code_input_address">Kode Pos</label>
-                                <input type="text" class="form-control @error('postal_code') is-invalid @enderror"
-                                    placeholder="Masukan Kode Pos.." name="postal_code" id="postal_code_input_address"
-                                    wire:model="postal_code" autofocus>
-                                @error('postal_code') <small class="error text-danger">{{ $message }}</small> @enderror
+                            <div class="col-lg-6 col-12">
+                                <label for="district_id_input">Kecamatan</label>
+                                <select class="form-select col-sm-12 @error('district_id') is-invalid @enderror" id="district_id_input"
+                                    name="district_id" wire:model="district_id">
+                                    <option value="" selected>-- Pilih Kecamatan --</option>
+                                    @if(!is_null($districts))
+                                    @foreach($districts as $district)
+                                    <option value="{{ $district['subdistrict_id'] }}">{{ strtoupper($district['subdistrict_name']) }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
+                                @error('district_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
-                            <div class="col-8">
+                            <div class="col-lg-6 col-12">
                                 <label for="address_input_address">Alamat</label>
                                 <input type="text" class="form-control @error('address') is-invalid @enderror"
                                     placeholder="Masukan Alamat.." name="address" id="address_input_address"

@@ -35,21 +35,28 @@
                         <td>{{ $orders->order_type }}</td>
                     </tr>
                 </table>
-                <div style="margin-left: 10px;" class="mt-3">
-                    <h5>Status Order </h5>
-                    <div class="form-group">
-                        <select name="" id="" class="form-select" style="width: 300px;">
-                            {{-- <option value="{{ $orders->order_status }}">{{ $orders->order_status }}</option> --}}
-                            @foreach($orderStatuses as $status)
-                            <option value="{{ $status }}" {{ $orders->order_status == $status ? 'selected' : '' }}>
-                                {{ $status }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                <form wire:submit.prevent="updateStatus" method="POST">
+                    <div style="margin-left: 10px;" class="mt-3">
+                        <h5>Status Order </h5>
+                        <div class="form-group">
+                            <select name="order_status" id="order_status" wire:model="order_status" class="form-select"
+                                style="width: 300px;">
+                                <option value="{{ $orders->order_status }}">{{ $orders->order_status }}</option>
 
+                                @foreach($orderStatuses as $status)
+                                <option value="{{ $status }}">
+                                    {{ $status }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div style="margin-left: 10px;" class="mt-3">
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    </div>
+                </form>
             </div>
+
             <div class="col-lg-6 col-12">
                 <div style="margin-left: 10px;">
                     <h5 class>Alamat Pengiriman</h5>
@@ -87,16 +94,43 @@
                     </tr>
                 </table>
                 <div style="margin-left: 10px;" class="mt-3">
-                    <button class="btn btn-primary btn-sm"><i class="fas fa-lg fa-download"></i> &nbsp; Download Bukti
+                    @if($orders->payment_proof)
+                    <button type="button" class="btn btn-success btn-sm" wire:click="downloadPaymentProof"><i
+                            class="fas fa-lg fa-download"></i> &nbsp;
+                        Download Bukti
                         Pembayaran</button>
+                    @endif
                     <a href="{{ route('transaction.invoice', $orders->order_uid) }}" target="_blank">
                         <button class="btn btn-info btn-sm">
                             <i class="fas fa-lg fa-print"></i> &nbsp; Invoice
                         </button>
                     </a>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="javascript:window.history.back(-1);return false;"><i
+                            class="fas fa-lg fa-backward"></i> &nbsp;
+                        Back</button>
                 </div>
             </div>
         </div>
 
     </div>
+    @if (session()->has('success'))
+    <script>
+        Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1500
+            });
+    </script>
+    @endif
+    @if (session()->has('error'))
+    <script>
+        Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+            })
+    </script>
+    @endif
 </div>

@@ -40,7 +40,7 @@ class Login extends Component
         if ($customer) {
             if (Auth::guard('customer')->attempt(['email' => $this->email, 'password' => $this->password])) {
                 // Login Success
-                return redirect('');
+                return redirect()->route('product.index');
             } else {
                 // login failed
                 session()->flash('error', 'Alamat Email atau Password Anda salah!.');

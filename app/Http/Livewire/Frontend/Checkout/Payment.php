@@ -125,7 +125,7 @@ class Payment extends Component
      */
     private function handlePaymentProofUpload()
     {
-        $fileName = 'assets/images/payment_proof/' . str()->random(10) . '.' . $this->payment_proof->getClientOriginalExtension();
+        $fileName = 'assets/images/payment_proof/' . "bukti_pembayaran_" . str()->random(10) . '.' . $this->payment_proof->getClientOriginalExtension();
         $this->payment_proof->storeAs('public', $fileName);
 
         return $fileName;

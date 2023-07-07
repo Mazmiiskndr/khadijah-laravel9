@@ -26,7 +26,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getProvinces()
     {
-        $url = "http://api.rajaongkir.com/starter/province";
+        $url = "http://pro.rajaongkir.com/api/province";
         return $this->executeCurl($url);
     }
 
@@ -37,7 +37,17 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCities($provinceId)
     {
-        $url = "http://api.rajaongkir.com/starter/city?province=" . $provinceId;
+        $url = "http://pro.rajaongkir.com/api/city?province=" . $provinceId;
+        return $this->executeCurl($url);
+    }
+
+    /**
+     * Retrieve subDistricts data from RajaOngkir API.
+     * @return mixed
+     */
+    public function getSubDistricts()
+    {
+        $url = "http://pro.rajaongkir.com/api/subdistrict";
         return $this->executeCurl($url);
     }
 
@@ -49,7 +59,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getProvinceById($provinceId, $cityId)
     {
-        $url = "http://api.rajaongkir.com/starter/city?province=" . $provinceId . "&id=" . $cityId;
+        $url = "http://pro.rajaongkir.com/api/city?province=" . $provinceId . "&id=" . $cityId;
         return $this->executeCurl($url);
     }
 
@@ -60,10 +70,31 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCityById($cityId)
     {
-        $url = "http://api.rajaongkir.com/starter/city?id=" . $cityId;
+        $url = "http://pro.rajaongkir.com/api/city?id=" . $cityId;
         return $this->executeCurl($url);
     }
 
+    /**
+     * Retrieve city data from RajaOngkir API by subDistrictId.
+     * @param mixed $subDistrictId
+     * @return mixed
+     */
+    public function getSubDistrictById($subDistrictId)
+    {
+        $url = "http://pro.rajaongkir.com/api/subdistrict?id=" . $subDistrictId;
+        return $this->executeCurl($url);
+    }
+
+    /**
+     * Retrieve city data from RajaOngkir API by cityId.
+     * @param mixed $cityId
+     * @return mixed
+     */
+    public function getSubDistrictByCity($cityId)
+    {
+        $url = "http://pro.rajaongkir.com/api/subdistrict?city=" . $cityId;
+        return $this->executeCurl($url);
+    }
 
     /**
      * Retrieve shipping cost data from RajaOngkir API.
@@ -75,12 +106,31 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getCost($origin, $destination, $weight, $courier)
     {
-        $url = "http://api.rajaongkir.com/starter/cost";
+        $url = "http://pro.rajaongkir.com/api/cost";
         $postData = [
             "origin" => $origin,
+            "originType" => 'city',
             "destination" => $destination,
+            "destinationType" => 'subdistrict',
             "weight" => $weight,
             "courier" => $courier,
+        ];
+        // origin=501&originType=city&destination=574&destinationType=subdistrict&weight=1700&courier=jne",
+        return $this->executeCurl($url, "POST", $postData);
+    }
+
+    /**
+     * Retrieve Way Bill data from RajaOngkir API.
+     * @param string $noResi
+     * @param string $courier
+     * @return mixed
+     */
+    public function getWayBill($noResi, $courier)
+    {
+        $url = "http://pro.rajaongkir.com/api/cost";
+        $postData = [
+            "waybill" => $noResi,
+            "jne" => $courier
         ];
         return $this->executeCurl($url, "POST", $postData);
     }
@@ -135,7 +185,6 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
                 $postFields = http_build_query($postData);
             }
 
-
             // Set various options for a cURL transfer via an associative array
             curl_setopt_array(
                 $curl,
@@ -159,8 +208,10 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
             $response = curl_exec($curl);
             // Get the HTTP status code of the last cURL operation
             $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            // Close the cURL session and free all resources. The cURL handle, curl, is also deleted
-            curl_close($curl);
+            // Check for errors
+            if (curl_errno($curl)) {
+                throw new \Exception('cURL Error: ' . curl_error($curl));
+            }
 
             // Check HTTP status code
             if ($httpCode >= 200 && $httpCode < 300) {
@@ -178,6 +229,39 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
         }
     }
 
+    /**
+     * Retrieve the list of couriers.
+     * This function returns an array of couriers used in the RajaOngkir API.
+     * @return array The list of couriers.
+     */
+    public function getCouriers()
+    {
+        return [
+            "pos"      => "POS Indonesia",
+            "jne"      => "JNE",
+            "tiki"     => "TIKI",
+            "lion"     => "Lion Parcel",
+            "ninja"    => "Ninja Xpress",
+            "ide"      => "ID Express",
+            "sicepat"  => "SiCepat Express",
+            "sap"      => "SAP Express",
+            "ncs"      => "Nusantara Card Semesta",
+            "anteraja" => "AnterAja",
+            "rex"      => "Royal Express Indonesia",
+            "jtl"      => "JTL Express",
+            "rpx"      => "RPX Holding",
+            "wahana"   => "Wahana Prestasi Logistik",
+            "jnt"      => "J&T Express",
+            "pahala"   => "Pahala Kencana Express",
+            "slis"     => "Solusi Ekspres",
+            "expedito" => "Expedito",
+            "ray"      => "Ray Speed",
+            "dse"      => "21 Express",
+            "first"    => "First Logistics",
+            "star"     => "Star Cargo",
+            "idl"      => "IDL Cargo"
+        ];
+    }
 
 
 }

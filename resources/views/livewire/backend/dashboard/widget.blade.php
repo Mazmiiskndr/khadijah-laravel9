@@ -85,7 +85,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h4>4,200</h4><span class="f-light">Penjualan</span>
+                                        <h4>{{ $totalOrders }}</h4><span class="f-light">Penjualan</span>
                                     </div>
                                 </div>
                                 <div class="font-primary f-w-500"><i

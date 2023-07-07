@@ -54,8 +54,9 @@ class ProductFactory extends Factory
         // Combine color names into a string
         $colors = implode(', ', $randomColorNames);
 
-        $price = $this->faker->numberBetween(10000, 1000000);
-        $discount = $this->faker->numberBetween(5000, $price - 1);
+        $price = floor($this->faker->numberBetween(10, 1000)) * 1000;
+        $discount = floor($this->faker->numberBetween(5, $price / 1000 - 1)) * 1000;
+
 
         return [
             'product_uid' => str()->uuid(),

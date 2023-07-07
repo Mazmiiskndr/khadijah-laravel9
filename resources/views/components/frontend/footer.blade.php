@@ -99,8 +99,8 @@
                                     {{ $contact->address ?? "" }},
                                     @endif
                                 </li>
-                                <li><i class="fa fa-phone"></i>Hubungi Kami : {{ $contact->phone }}</li>
-                                <li><i class="fa fa-envelope"></i>Email: <a href="#">{{ $contact->email }}</a></li>
+                                <li><i class="fa fa-phone"></i>Hubungi Kami : {{ $contact->phone ?? "" }}</li>
+                                <li><i class="fa fa-envelope"></i>Email: <a href="#">{{ $contact->email ?? "" }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                 <div class="col-xl-12 col-md-12 col-sm-12">
                     <div class="footer-end">
                         <p class="text-center"><i class="fa fa-copyright" aria-hidden="true"></i>
-                        {{ \Carbon\Carbon::now()->format('Y') }} Copyright : Khadijah Label
+                        {{ \Carbon\Carbon::now()->format('Y') }} Copyright : <a href="{{ route('index') }}">Khadijah Label</a>
                         </p>
                     </div>
                 </div>

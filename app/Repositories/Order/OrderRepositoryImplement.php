@@ -62,6 +62,15 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
     }
 
     /**
+     * This method retrieves the total count of completed orders made by a given customer.
+     * @return int Returns the total count of all completed orders associated with the provided customer ID.
+     */
+    public function countCompletedOrders()
+    {
+        return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->count();
+    }
+
+    /**
      * This method retrieves the total count of pending orders made by a given customer.
      * @param int $customerId The ID of the customer.
      * @return int Returns the total count of all pending orders associated with the provided customer ID.
@@ -94,8 +103,8 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
             OrderStatus::PAYMENT_VERIFICATION => 'primary',
             OrderStatus::ORDER_PROCESSING => 'primary',
             OrderStatus::ORDER_SENT => 'info',
-            OrderStatus::ORDER_RECEIVED => 'info',
-            OrderStatus::PAYMENT_SUCCESS => 'success',
+            OrderStatus::ORDER_RECEIVED => 'success',
+            OrderStatus::ORDER_COMPLETED => 'success',
             OrderStatus::ORDER_CANCELED => 'danger',
             OrderStatus::REFUND => 'danger',
         ];
