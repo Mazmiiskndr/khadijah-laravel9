@@ -81,7 +81,7 @@ interface ApiRajaOngkirService extends BaseService{
      * Retrieve subDistricts data from RajaOngkir API.
      * @return mixed
      */
-    public function subDistricts();
+    public function getSubDistricts();
 
     /**
      * Retrieve the list of couriers.

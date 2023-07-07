@@ -45,7 +45,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      * Retrieve subDistricts data from RajaOngkir API.
      * @return mixed
      */
-    public function subDistricts()
+    public function getSubDistricts()
     {
         $url = "http://pro.rajaongkir.com/api/subdistrict";
         return $this->executeCurl($url);

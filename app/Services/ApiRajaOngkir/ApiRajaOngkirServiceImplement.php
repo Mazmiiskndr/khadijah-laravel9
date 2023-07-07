@@ -167,10 +167,10 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
      * Retrieve subDistricts data from RajaOngkir API.
      * @return mixed
      */
-    public function subDistricts()
+    public function getSubDistricts()
     {
         try {
-            return $this->mainRepository->subDistricts();
+            return $this->mainRepository->getSubDistricts();
         } catch (\Throwable $th) {
             Log::debug($th->getMessage());
             throw $th;

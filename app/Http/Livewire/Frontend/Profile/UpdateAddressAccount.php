@@ -11,13 +11,13 @@ class UpdateAddressAccount extends Component
     // UpdateModal
     public $updateModal = false;
     // Declare variable
-    public $customer_id,$address, $postal_code;
+    public $customer_id, $address, $postal_code;
 
     // Declare Region
-    public $provinces, $cities;
+    public $provinces, $cities, $districts;
 
     // Declare Region ID
-    public $province_id, $city_id;
+    public $province_id, $city_id, $district_id;
 
     public $selectedProvince = null;
     public $selectedCity = null;
@@ -48,7 +48,7 @@ class UpdateAddressAccount extends Component
             'address'       => 'required',
             'city_id'       => 'required',
             'province_id'   => 'required',
-            'postal_code'   => 'required',
+            'district_id'   => 'required',
         ];
     }
 
@@ -59,7 +59,7 @@ class UpdateAddressAccount extends Component
             'address.required'      => 'Alamat harus diisi',
             'city_id.required'      => 'Kota harus diisi',
             'province_id.required'  => 'Provinsi harus diisi',
-            'postal_code.required'  => 'Kode Pos harus diisi',
+            'district_id.required'  => 'Kecamatan harus diisi',
         ];
     }
 
@@ -90,13 +90,23 @@ class UpdateAddressAccount extends Component
      */
     public function updatedProvinceId($value)
     {
-        // Resolve the API service from the service container
-        $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+        $this->cities = $this->getCities($value);
 
-        // Fetch the cities belonging to the selected province
-        $this->cities = $apiRajaOngkirService->getCities($value);
-        // Reset the selected city
-        $this->reset(['city_id']);
+        // Reset the selected city and district
+        $this->reset(['district_id', 'city_id']);
+    }
+
+    /**
+     * Updates the districts list when the selected city changes.
+     * @param  mixed $value The ID of the selected city.
+     * @return void
+     */
+    public function updatedCityId($value)
+    {
+        $this->districts = $this->getDistricts($value);
+
+        // Reset the selected district
+        $this->reset('district_id');
     }
 
     /**
@@ -110,16 +120,17 @@ class UpdateAddressAccount extends Component
         $this->customer_id = $customer['id'];
         $this->address = $customer['address'];
         $this->province_id = $customer['province_id'];
-
         // If a city is selected, populate the city field and fetch the cities belonging to the selected province
         if (!is_null($customer['city_id'])) {
             $this->city_id = $customer['city_id'];
-
-            $apiRajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
-            $this->cities = $apiRajaOngkirService->getCities($customer['province_id']);
+            $this->cities = $this->getCities($customer['province_id']);
         }
 
-        $this->postal_code = $customer['postal_code'];
+        // If a district is selected, populate the district field and fetch the districts belonging to the selected city
+        if (!is_null($customer['district_id'])) {
+            $this->district_id = $customer['district_id'];
+            $this->districts = $this->getDistricts($customer['city_id']);
+        }
     }
 
     /**
@@ -133,13 +144,10 @@ class UpdateAddressAccount extends Component
         $this->validate($this->getRules(), $this->getMessages());
 
         if ($this->customer_id) {
+            $district = $this->getDistrictById($this->district_id);
+            $city = $this->getCityById($this->city_id);
             // Create an associative array with the data
-            $data = [
-                    'address' => $this->address,
-                    'city_id' => $this->city_id,
-                    'province_id' => $this->province_id,
-                    'postal_code' => $this->postal_code,
-                ];
+            $data = $this->prepareDataArray($district, $city);
             // Attempt to update the customer with the provided data
             $updatedCustomer = $customerService->updateCustomerAddress($this->customer_id, $data);
             $this->updateModal = false;
@@ -173,7 +181,83 @@ class UpdateAddressAccount extends Component
         $this->address = '';
         $this->city_id = '';
         $this->province_id = '';
-        $this->postal_code = '';
+        $this->district_id = '';
     }
 
+    /**
+     * Calls the RajaOngkir API to get a list of cities.
+     * @param  mixed $provinceId The ID of the selected province.
+     * @return Collection
+     */
+    protected function getCities($provinceId)
+    {
+        // Resolve the API service from the service container
+        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+
+        // Fetch the cities belonging to the selected province
+        return $apiRajaOngkirService->getCities($provinceId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of districts.
+     * @param  mixed $cityId The ID of the selected city.
+     * @return Collection
+     */
+    protected function getDistricts($cityId)
+    {
+        // Resolve the API service from the service container
+        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+
+        // Fetch the districts belonging to the selected city
+        return $apiRajaOngkirService->getSubDistrictByCity($cityId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of district by ID.
+     * @param  mixed $cityId The ID of the.
+     * @return Collection
+     */
+    protected function getDistrictById($districtId)
+    {
+        // Resolve the API service from the service container
+        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+
+        // Fetch the districts belonging to the selected city
+        return $apiRajaOngkirService->getSubDistrictById($districtId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of City by ID.
+     * @param  mixed $cityId The ID of the.
+     * @return Collection
+     */
+    protected function getCityById($cityId)
+    {
+        // Resolve the API service from the service container
+        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+
+        // Fetch the districts belonging to the selected city
+        return $apiRajaOngkirService->getCityById($cityId);
+    }
+
+    /**
+     * Prepare data array.
+     * @param array $district
+     * @param array $city
+     * @return array
+     */
+    protected function prepareDataArray($district, $city)
+    {
+        return [
+                'address' => $this->address,
+                'city_id' => $this->city_id,
+                'province_id' => $district['province_id'],
+                'city_id' => $district['city_id'],
+                'district_id' => $district['subdistrict_id'],
+                'province' => $district['province'],
+                'city' => $district['type'] . " " . $district['city'],
+                'district' => $district['subdistrict_name'],
+                'postal_code' => $city['postal_code'],
+            ];
+    }
 }

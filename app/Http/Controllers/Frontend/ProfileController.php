@@ -32,14 +32,16 @@ class ProfileController extends Controller
         } else {
             $customer = $this->customerService->findByUid($uid);
             $addressCustomer = $customer->address ? $customer->address : "-";
-            $provinceCustomer = $customer->province_id ? ucwords(strtolower($customer->provinceAndCity['province'])) : "-";
-            $cityCustomer = $customer->city_id ? ucwords(strtolower($customer->provinceAndCity['city_name'])) : "-";
+            $provinceCustomer = $customer->province_id ? ucwords(strtolower($customer->province)) : "-";
+            $cityCustomer = $customer->city_id ? ucwords(strtolower($customer->city)) : "-";
+            $districtCustomer = $customer->district_id ? ucwords(strtolower($customer->district)) : "-";
 
             return view('frontend.profile.index', [
                 'customer' => $customer,
                 'addressCustomer' => $addressCustomer,
                 'provinceCustomer' => $provinceCustomer,
                 'cityCustomer' => $cityCustomer,
+                'districtCustomer' => $districtCustomer,
             ]);
         }
     }

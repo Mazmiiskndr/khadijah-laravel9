@@ -17,7 +17,7 @@
                                 </div>
                                 <div class="middle">
                                     <div class="address">
-                                        <p>{{ $provinceCustomer }}, {{ $typeRegency }} {{ $cityCustomer }} </p>
+                                        <p>{{ $provinceCustomer }}, {{ $cityCustomer }}, {{ $districtCustomer }} </p>
                                         <p>{{ $addressCustomer }}</p>
                                         <p>{{ $customer->postal_code }}</p>
                                     </div>
