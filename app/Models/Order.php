@@ -27,6 +27,7 @@ class Order extends Model
         'shipping_address',
         'shipping_city',
         'shipping_province',
+        'shipping_district',
         'shipping_postal_code',
         'receiver_phone',
         'provider',

@@ -93,9 +93,10 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             'shipping_address' => $data['address'],
             'shipping_city' => $data['city_name'],
             'shipping_province' => $data['province_name'],
+            'shipping_district' => $data['district_name'],
             'shipping_postal_code' => $data['postal_code'],
             'receiver_phone' => $data['phone'],
-            'order_number' => $this->generateOrderNumber() // Add this line
+            'order_number' => $this->generateOrderNumber()
         ]);
         return $order;
     }

@@ -21,6 +21,26 @@ class OrderFactory extends Factory
     {
         $customer = Customer::inRandomOrder()->first();
         $order_date = $this->faker->dateTimeThisYear();
+        // Instantiate the RajaOngkirService by resolving it out of the service container.
+        $rajaOngkirService = app(\App\Services\ApiRajaOngkir\ApiRajaOngkirService::class);
+
+        // Call the getProvinces method on the service to get a list of provinces.
+        $provinces = $rajaOngkirService->getProvinces();
+
+        // Select a random province from the array of provinces.
+        $province = $provinces[array_rand($provinces)];
+
+        // Call the getCities method on the service, passing in the id of the randomly selected province, to get a list of cities in that province.
+        $cities = $rajaOngkirService->getCities($province['province_id']);
+
+        // Select a random city from the array of cities.
+        $city = $cities[array_rand($cities)];
+
+        // Call the getDistricts method on the service, passing in the id of the randomly selected province, to get a list of districts in that province.
+        $districts = $rajaOngkirService->getSubDistrictByCity($city['city_id']);
+
+        // Select a random city from the array of districts.
+        $district = $districts[array_rand($districts)];
         return [
             'order_uid' => str()->uuid(),
             'customer_id' => $customer->id,
@@ -43,8 +63,9 @@ class OrderFactory extends Factory
             'total_price' => 0,
             'receiver_name' => $this->faker->name(),
             'shipping_address' => $this->faker->address(),
-            'shipping_city' => $this->faker->city(),
-            'shipping_province' => $this->faker->state(),
+            'shipping_city' => $district['city'],
+            'shipping_province' => $district['province'],
+            'shipping_district' => $district['subdistrict_name'],
             'shipping_postal_code' => $this->faker->postcode(),
             'receiver_phone' => $this->faker->phoneNumber(),
         ];

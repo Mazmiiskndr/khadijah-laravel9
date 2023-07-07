@@ -16,8 +16,8 @@ class FormCheckout extends Component
 {
     // Define public properties
     public $customer_id, $customer_uid, $name, $email, $address, $postal_code, $phone;
-    public $provinces, $cities, $districts;
-    public $province_id, $city_id, $province_name, $city_name;
+    public $provinces, $cities, $districts, $couriers;
+    public $province_id, $city_id, $district_id, $province_name, $city_name, $district_name;
     // FOR API
     public $expedition,$parcel, $deliveryCost = 0;
     // FOR TRANSACTION
@@ -73,6 +73,7 @@ class FormCheckout extends Component
         // Show customer data by calling the showCustomer function
         $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
+        $this->couriers = $apiRajaOngkirService->getCouriers();
         $this->showCustomer($customerService, $apiRajaOngkirService, $this->customer_uid);
 
     }
@@ -108,36 +109,38 @@ class FormCheckout extends Component
     {
         $customer = $customerService->findByUid($customer_uid);
         $this->customer_id = $customer->id;
-        if($customer->province_id && $customer->city_id){
-            $this->province_name = $customer['provinceAndCity']['province'];
-            $this->city_name = $customer['provinceAndCity']['type'] . " " . $customer['provinceAndCity']['city_name'];
-            $this->postal_code = $customer['provinceAndCity']['postal_code'];
+        if($customer->province_id && $customer->city_id && $customer->district_id){
+            $this->province_name = $customer->province;
+            $this->city_name = $customer->city;
+            $this->district_name = $customer->district;
+            $this->postal_code = $customer->postal_code;
         }
         $this->populateFormFields($customer, $apiRajaOngkirService);
     }
 
     /**
-     * Handle province_id updates.
-     * @param mixed $value
+     * Updates the cities list when the selected province changes.
+     * @param  mixed $value The ID of the selected province.
+     * @return void
      */
     public function updatedProvinceId($value)
     {
-        // Fetch the cities in the selected province
-        $this->cities = app(ApiRajaOngkirService::class)->getCities($value);
-        // Reset the selected city
-        $this->reset(['city_id']);
+        $this->cities = $this->getCities($value);
+
+        // Reset the selected city and district
+        $this->reset(['district_id', 'city_id']);
     }
 
     /**
-     * Handle city_id updates.
-     * @param mixed $value
+     * Updates the districts list when the selected city changes.
+     * @param  mixed $value The ID of the selected city.
+     * @return void
      */
     public function updatedCityId($value)
     {
-        $cityData = app(ApiRajaOngkirService::class)->getCityById($value);
-        $this->province_name = $cityData['province'];
-        $this->city_name = $cityData['type'] . " " . $cityData['city_name'];
-        $this->postal_code = $cityData['postal_code'];
+        $this->districts = $this->getDistricts($value);
+        // Reset the selected district
+        $this->reset('district_id');
     }
 
     /**
@@ -187,8 +190,10 @@ class FormCheckout extends Component
         $this->validate();
 
         try {
+            $district = $this->getDistrictById($this->district_id);
+            $city = $this->getCityById($this->city_id);
             // Prepare the data for storing a checkout by calling the prepareDataStoreCheckout method
-            $data = $this->prepareDataStoreCheckout();
+            $data = $this->prepareDataStoreCheckout($district, $city['postal_code']);
 
             // Store the checkout data using the checkout service and store the result
             $result = $checkoutService->storeCheckout($data);
@@ -219,7 +224,7 @@ class FormCheckout extends Component
      * The function prepares and returns an array of data for use in the checkout process, including
      * order details, shipping details, and cart items.
      */
-    private function prepareDataStoreCheckout()
+    private function prepareDataStoreCheckout($district, $postal_code)
     {
         return [
             // For function createOrder in CheckoutService and updateCustomer
@@ -228,11 +233,13 @@ class FormCheckout extends Component
             'name' => $this->name,
             'email' => $this->email,
             'address' => $this->address,
-            'city_name' => $this->city_name,
-            'province_name' => $this->province_name,
-            'city_id' => $this->city_id,
-            'province_id' => $this->province_id,
-            'postal_code' => $this->postal_code,
+            'province_name' => $district['province'],
+            'city_name' => $district['type']. " " . $district['city'],
+            'district_name' => $district['subdistrict_name'],
+            'province_id' => $district['province_id'],
+            'city_id' => $district['city_id'],
+            'district_id' => $district['subdistrict_id'],
+            'postal_code' => $postal_code,
             'phone' => $this->phone,
             'paymentMethod' => $this->paymentMethod,
             // For function createShippingDetail in CheckoutService
@@ -291,11 +298,16 @@ class FormCheckout extends Component
         $this->province_id = $customer->province_id;
         $this->postal_code = $customer->postal_code;
         $this->phone = $customer->phone;
-
-        // If city_id is not null, fetch the cities in the selected province
+        // If a city is selected, populate the city field and fetch the cities belonging to the selected province
         if (!is_null($customer->city_id)) {
             $this->city_id = $customer->city_id;
-            $this->cities = $apiRajaOngkirService->getCities($customer->province_id);
+            $this->cities = $this->getCities($customer->province_id);
+        }
+
+        // If a district is selected, populate the district field and fetch the districts belonging to the selected city
+        if (!is_null($customer->district_id)) {
+            $this->district_id = $customer->district_id;
+            $this->districts = $this->getDistricts($customer->city_id);
         }
     }
 
@@ -336,6 +348,51 @@ class FormCheckout extends Component
     {
         $this->carts = $this->getCustomerCartData($cartService);
     }
+
+    /**
+     * Calls the RajaOngkir API to get a list of cities.
+     * @param  mixed $provinceId The ID of the selected province.
+     * @return Collection
+     */
+    protected function getCities($provinceId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getCities($provinceId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of districts.
+     * @param  mixed $cityId The ID of the selected city.
+     * @return Collection
+     */
+    protected function getDistricts($cityId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getSubDistrictByCity($cityId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of district by ID.
+     * @param  mixed $cityId The ID of the.
+     * @return Collection
+     */
+    protected function getDistrictById($districtId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getSubDistrictById($districtId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of City by ID.
+     * @param  mixed $cityId The ID of the.
+     * @return Collection
+     */
+    protected function getCityById($cityId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getCityById($cityId);
+    }
+
 
 }
 

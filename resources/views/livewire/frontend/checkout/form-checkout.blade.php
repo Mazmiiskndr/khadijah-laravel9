@@ -53,19 +53,34 @@
                     @endforeach
                     @endif
                 </select>
+                <small wire:loading wire:target="province_id" class="text-info">Loading...</small>
                 @error('city_id') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
                 @enderror
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                <div class="field-label">Ekspedisi</div>
-                <select name="expedition" id="expedition" wire:model="expedition" class="form-select">
-                    <option value="">-- Pilih Ekspedisi --</option>
-                    <option value="jne">JNE</option>
-                    <option value="pos">POS INDONESIA</option>
-                    <option value="tiki">TIKI</option>
+                <div class="field-label">Kecamatan</div>
+                <select name="district_id" id="district_id" wire:model="district_id" class="form-select">
+                    <option value="">-- Pilih Kecamatan --</option>
+                    @if(!is_null($districts))
+                    @foreach($districts as $district)
+                    <option value="{{ $district['subdistrict_id'] }}">{{ strtoupper($district['subdistrict_name']) }}</option>
+                    @endforeach
+                    @endif
                 </select>
-                @error('expedition') <small class="error text-danger" style="margin-left: 5px;">{{ $message
-                    }}</small> @enderror
+                <small wire:loading wire:target="city_id" class="text-info">Loading...</small>
+                @error('district_id') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                @enderror
+            </div>
+            <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                <div class="field-label">Ekspedisi</div>
+                <select name="expedition" id="district_id" wire:model="expedition" class="form-select">
+                    <option value="">-- Pilih Ekspedisi --</option>
+
+                    @foreach($couriers as $key => $name)
+                    <option value="{{ $key }}">{{ $name }}</option>
+                    @endforeach
+                </select>
+                @error('expedition') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Paket</div>
@@ -82,11 +97,12 @@
                     @endforeach
                     @endif
                 </select>
+                <small wire:loading wire:target="expedition" class="text-info">Loading...</small>
                 @error('parcel') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
                 @enderror
             </div>
 
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+            <div class="form-group col-md-6 col-sm-6 col-xs-12">
                 <div class="field-label">Alamat</div>
                 <input type="text" name="address" placeholder="Masukan Alamat" wire:model="address">
                 @if (!$address)
@@ -173,17 +189,17 @@
                                 <tr>
                                     <th>Bank</th>
                                     <th>:</th>
-                                    <td>{{ strtoupper($bank->provider) ?? "" }}</td>
+                                    <td>{{ strtoupper(isset($bank->provider)) ?? "" }}</td>
                                 </tr>
                                 <tr>
                                     <th>Nama Rekening</th>
                                     <th>:</th>
-                                    <td>{{ strtoupper($bank->rekening_name) ?? "" }}</td>
+                                    <td>{{ strtoupper(isset($bank->rekening_name)) ?? "" }}</td>
                                 </tr>
                                 <tr>
                                     <th>No. Rekening</th>
                                     <th>:</th>
-                                    <td>{{ $bank->rekening_number }}</td>
+                                    <td>{{ isset($bank->rekening_number) ?? "" }}</td>
                                 </tr>
 
                             </table>
