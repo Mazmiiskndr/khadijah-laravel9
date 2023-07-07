@@ -225,6 +225,43 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
         }
     }
 
+    /**
+     * Retrieve the list of couriers.
+     * This function returns an array of couriers used in the RajaOngkir API.
+     * @return array The list of couriers.
+     */
+    public function getCouriers()
+    {
+        // List all the couriers
+        $couriers = [
+            "pos",      // POS Indonesia
+            "lion",     // Lion Parcel
+            "ninja",    // Ninja Xpress
+            "ide",      // ID Express
+            "sicepat",  // SiCepat Express
+            "sap",      // SAP Express
+            "ncs",      // Nusantara Card Semesta
+            "anteraja", // AnterAja
+            "rex",      // Royal Express Indonesia
+            "jtl",      // JTL Express
+            "sentral",  // Sentral Cargo
+            "jne",      // Jalur Nugraha Ekakurir
+            "tiki",     // Citra Van Titipan Kilat
+            "rpx",      // RPX Holding
+            "pandu",    // Pandu Logistics
+            "wahana",   // Wahana Prestasi Logistik
+            "jnt",      // J&T Express
+            "pahala",   // Pahala Kencana Express
+            "slis",     // Solusi Ekspres
+            "expedito", // Expedito
+            "ray",      // Ray Speed
+            "dse",      // 21 Express
+            "first",    // First Logistics
+            "star",     // Star Cargo
+            "idl"       // IDL Cargo
+        ];
 
+        return $couriers;
+    }
 
 }

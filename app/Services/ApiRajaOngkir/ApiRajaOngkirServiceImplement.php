@@ -177,4 +177,19 @@ class ApiRajaOngkirServiceImplement extends Service implements ApiRajaOngkirServ
         }
     }
 
+    /**
+     * Retrieve the list of couriers.
+     * This function returns an array of couriers used in the RajaOngkir API.
+     * @return array The list of couriers.
+     */
+    public function getCouriers()
+    {
+        try {
+            return $this->mainRepository->getCouriers();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
 }

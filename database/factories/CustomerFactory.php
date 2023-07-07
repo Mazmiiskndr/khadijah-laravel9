@@ -36,6 +36,12 @@ class CustomerFactory extends Factory
         // Select a random city from the array of cities.
         $city = $cities[array_rand($cities)];
 
+        // Call the getDistricts method on the service, passing in the id of the randomly selected province, to get a list of districts in that province.
+        $districts = $rajaOngkirService->getSubDistrictByCity($city['city_id']);
+
+        // Select a random city from the array of districts.
+        $district = $districts[array_rand($districts)];
+
         // Return an array representing the default state of the model. This includes randomly generated data for some fields,
         // as well as the province_id and city_id retrieved from the RajaOngkirService.
         return [
@@ -44,8 +50,12 @@ class CustomerFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
-            'province_id' => $province['province_id'],
-            'city_id' => $city['city_id'],
+            'province_id' => $district['province_id'],
+            'city_id' => $district['city_id'],
+            'district_id' => $district['subdistrict_id'],
+            'province' => $district['province'],
+            'city' => $district['city'],
+            'district' => $district['subdistrict_name'],
             'address' => $this->faker->address(),
             'postal_code' => $city['postal_code'],
             'phone' => $this->faker->phoneNumber(),

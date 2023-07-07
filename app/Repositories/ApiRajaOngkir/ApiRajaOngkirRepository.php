@@ -82,4 +82,11 @@ interface ApiRajaOngkirRepository extends Repository{
      * @return mixed
      */
     public function subDistricts();
+
+    /**
+     * Retrieve the list of couriers.
+     * This function returns an array of couriers used in the RajaOngkir API.
+     * @return array The list of couriers.
+     */
+    public function getCouriers();
 }
