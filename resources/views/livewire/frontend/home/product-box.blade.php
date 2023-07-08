@@ -38,9 +38,6 @@
                         wire:click="openModal('{{ $product->product_uid }}')"></i>
                 </a>
                 @endif
-                <a href="javascript:void(0)" title="Add to Wishlist">
-                    <i class="fas fa-heart" aria-hidden="true"></i>
-                </a>
                 <a href="{{ route('product.show', ['product' => $product->product_slug]) }}" title="Compare">
                     <i class="fas fa-eye" aria-hidden="true"></i>
                 </a>

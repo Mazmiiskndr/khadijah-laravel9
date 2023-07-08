@@ -75,6 +75,7 @@
                                     @endforeach
                                     @endif
                                 </select>
+                                <small wire:loading wire:target="province_id" class="text-info">Loading...</small>
                                 @error('city_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                             <div class="col-lg-4 col-12">
@@ -88,6 +89,7 @@
                                     @endforeach
                                     @endif
                                 </select>
+                                <small wire:loading wire:target="city_id" class="text-info">Loading...</small>
                                 @error('district_id') <small class="error text-danger">{{ $message }}</small> @enderror
                             </div>
                         </div>

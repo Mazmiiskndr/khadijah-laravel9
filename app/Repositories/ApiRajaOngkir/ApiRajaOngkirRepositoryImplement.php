@@ -127,10 +127,10 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
      */
     public function getWayBill($noResi, $courier)
     {
-        $url = "http://pro.rajaongkir.com/api/cost";
+        $url = "http://pro.rajaongkir.com/api/waybill";
         $postData = [
             "waybill" => $noResi,
-            "jne" => $courier
+            "courier" => $courier
         ];
         return $this->executeCurl($url, "POST", $postData);
     }
@@ -219,8 +219,11 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
                 $responseDecoded = json_decode($response, true);
 
                 // If there's no error, return the response
-                return $responseDecoded['rajaongkir']['results'];
+                return isset($responseDecoded['rajaongkir']['results']) ? $responseDecoded['rajaongkir']['results'] : $responseDecoded['rajaongkir'];
             } else {
+                if($httpCode >= 400 && $httpCode < 500){
+                    return $httpCode;
+                }
                 throw new \Exception("HTTP request failed with status code " . $httpCode);
             }
         } catch (\Exception $e) {
