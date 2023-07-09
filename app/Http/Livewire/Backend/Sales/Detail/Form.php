@@ -50,17 +50,41 @@ class Form extends Component
     }
 
     /**
-     * The function to be executed when the component is being created.
+     * This function will run when the component is being created.
      * @param  App\Services\OrderService  $orderService
      * @return void
      */
-    public function mount(OrderService $orderService, ApiRajaOngkirService $apiRajaOngkirService)
+    public function mount(OrderService $orderService, ApiRajaOngkirService $apiRajaOngkirService) {
+        // Load order status, order details, shipping details and waybill
+        $this->loadOrderData($orderService, $apiRajaOngkirService);
+    }
+
+    /**
+     * Load data when component is mounted or refreshed.
+     * @param  App\Services\OrderService  $orderService
+     * @return void
+     */
+    private function loadOrderData(OrderService $orderService, ApiRajaOngkirService $apiRajaOngkirService)
     {
-        // Check if the tracking number is valid using the RajaOngkir API service
-        $this->fetchOrderStatuses();
-        $this->fetchOrderDetails($orderService);
-        $this->fetchShippingDetails();
-        $this->fetchWayBill($apiRajaOngkirService);
+        // Fetch the order status values from the OrderStatus enum.
+        $this->orderStatuses = (new ReflectionClass(OrderStatus::class))->getConstants();
+
+        // Fetch the order details by the order UID.
+        $this->orders = $orderService->getOrderWithUid($this->order_uid);
+
+        // Fetch the Shipping details.
+        $this->shippingDetail = $this->orders->shippingDetail;
+        $this->noResi = $this->shippingDetail['tracking_number'] ?? null;
+
+        // Fetch the WayBill details.
+        if ($this->noResi) {
+            $waybill = $apiRajaOngkirService->getWayBill($this->noResi, $this->shippingDetail['expedition']);
+            if (isset($waybill['status']['code']) && $waybill['status']['code'] == 200) {
+                $this->manifests = $waybill['result']['manifest'];
+                $this->statusResi = $waybill['result']['delivery_status']['status'];
+            }
+        }
+
         // get color for order status
         $this->colors = $orderService->getColors($this->orders->order_status);
     }
@@ -92,52 +116,6 @@ class Form extends Component
     public function render()
     {
         return view('livewire.backend.sales.detail.form');
-    }
-
-    /**
-     * Fetching the order status values from the OrderStatus enum.
-     * @return void
-     */
-    private function fetchOrderStatuses()
-    {
-        $this->orderStatuses = (new ReflectionClass(OrderStatus::class))->getConstants();
-    }
-
-    /**
-     * Fetching the order details by the order UID.
-     * @param  App\Services\OrderService  $orderService
-     * @return void
-     */
-    private function fetchOrderDetails(OrderService $orderService)
-    {
-        $this->orders = $orderService->getOrderWithUid($this->order_uid);
-    }
-
-    /**
-     * Fetching the Shipping details.
-     * @return void
-     */
-    private function fetchShippingDetails()
-    {
-        $this->shippingDetail = $this->orders->shippingDetail;
-        if(isset($this->shippingDetail['tracking_number'])){
-            $this->noResi = $this->shippingDetail['tracking_number'];
-        }
-    }
-
-    /**
-     * Fetching the WayBill details.
-     * @return void
-     */
-    private function fetchWayBill(ApiRajaOngkirService $apiRajaOngkirService)
-    {
-        if($this->noResi){
-            $waybill = $apiRajaOngkirService->getWayBill($this->noResi, 'jnt');
-            if (isset($waybill['status']['code']) == 200) {
-                $this->manifests = $waybill['result']['manifest'];
-                $this->statusResi = $waybill['result']['delivery_status']['status'];
-            }
-        }
     }
 
     /**
@@ -233,7 +211,7 @@ class Form extends Component
     {
         // Check if the tracking number is valid using the RajaOngkir API service
         // $this->shippingDetail['expedition'] TODO:
-        $checkTrackingNumber = $apiRajaOngkirService->getWayBill($this->tracking_number, 'jnt');
+        $checkTrackingNumber = $apiRajaOngkirService->getWayBill($this->tracking_number, $this->shippingDetail['expedition']);
         // If the tracking number is invalid, add an error and stop execution
         if ($checkTrackingNumber >= 400) {
             $this->addError('tracking_number', 'No Resi Salah . Tolong masukan No Resi yang valid!');

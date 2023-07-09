@@ -154,8 +154,9 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
 
             // Check if 'origin' and 'destination' are not empty
             if ($origin && $destination) {
-                // If both 'origin' and 'destination' are set, retrieve the shipping cost
+
                 $costs = $this->getCost($origin, $destination, $weight, $courier);
+                // If both 'origin' and 'destination' are set, retrieve the shipping cost
                 return $costs[0]['costs'];
             } else {
                 // If either 'origin' or 'destination' is empty, throw an exception
@@ -243,26 +244,26 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
             "pos"      => "POS Indonesia",
             "jne"      => "JNE",
             "tiki"     => "TIKI",
-            "lion"     => "Lion Parcel",
-            "ninja"    => "Ninja Xpress",
-            "ide"      => "ID Express",
-            "sicepat"  => "SiCepat Express",
-            "sap"      => "SAP Express",
-            "ncs"      => "Nusantara Card Semesta",
-            "anteraja" => "AnterAja",
-            "rex"      => "Royal Express Indonesia",
-            "jtl"      => "JTL Express",
-            "rpx"      => "RPX Holding",
-            "wahana"   => "Wahana Prestasi Logistik",
-            "jnt"      => "J&T Express",
-            "pahala"   => "Pahala Kencana Express",
-            "slis"     => "Solusi Ekspres",
-            "expedito" => "Expedito",
-            "ray"      => "Ray Speed",
-            "dse"      => "21 Express",
-            "first"    => "First Logistics",
-            "star"     => "Star Cargo",
-            "idl"      => "IDL Cargo"
+            // "lion"     => "Lion Parcel",
+            // "ninja"    => "Ninja Xpress",
+            // "sicepat"  => "SiCepat Express",
+            // "anteraja" => "AnterAja",
+            // "ide"      => "ID Express",
+            // "sap"      => "SAP Express",
+            // "ncs"      => "Nusantara Card Semesta",
+            // "rex"      => "Royal Express Indonesia",
+            // "jtl"      => "JTL Express",
+            // "rpx"      => "RPX Holding",
+            // "wahana"   => "Wahana Prestasi Logistik",
+            // "jnt"      => "J&T Express",
+            // "pahala"   => "Pahala Kencana Express",
+            // "slis"     => "Solusi Ekspres",
+            // "expedito" => "Expedito",
+            // "ray"      => "Ray Speed",
+            // "dse"      => "21 Express",
+            // "first"    => "First Logistics",
+            // "star"     => "Star Cargo",
+            // "idl"      => "IDL Cargo"
         ];
     }
 

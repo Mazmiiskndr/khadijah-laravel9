@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
             $customer->rekening_customers()->createMany($rekenings->toArray());
         });
         // PRODUCT TAGS, PRODUCT IMAGES AND DETAIL PRODUCTS
-        Product::factory()->count(5)->create()->each(function ($product) {
+        Product::factory()->count(20)->create()->each(function ($product) {
 
             // For each product, generate 3-5 product tags
             $numTags = rand(3, 5);

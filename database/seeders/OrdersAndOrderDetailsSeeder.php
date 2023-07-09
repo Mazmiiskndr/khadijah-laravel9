@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\ShippingDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -28,6 +29,13 @@ class OrdersAndOrderDetailsSeeder extends Seeder
 
             $order->total_price = $total_price;
             $order->save();
+
+            // Create ShippingDetail for this order
+            $shippingDetail = ShippingDetail::factory()->make([
+                'order_id' => $order->order_id,
+                // fill in more attributes here if necessary
+            ]);
+            $shippingDetail->save();
         }
     }
 }
