@@ -148,7 +148,6 @@ class Form extends Component
     public function handleUpdated(OrderService $orderService, ApiRajaOngkirService $apiRajaOngkirService)
     {
         $this->mount($orderService, $apiRajaOngkirService);
-        $this->dispatchBrowserEvent('refreshDatatable');
     }
 
     /**

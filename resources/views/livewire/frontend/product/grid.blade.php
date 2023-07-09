@@ -13,11 +13,11 @@
                         @endif
 
                         <div class="front">
-                            <a href="javascript:void(0)"><img src="{{ asset('storage/'.$product->thumbnail) }}"
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt=""></a>
                         </div>
                         <div class="back">
-                            <a href="javascript:void(0)">
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                                 @if(!isset($product->images->first()->image_name))
                                 <img src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt="{{ $product->product_name }}">

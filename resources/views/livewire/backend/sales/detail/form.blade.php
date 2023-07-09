@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <select name="order_status" id="order_status" wire:model="order_status" class="form-select"
                                 style="width: 300px;">
-                                <option value="{{ $orders->order_status }}">{{ $orders->order_status }}</option>
+                                <option value="{{ $orders->order_status }}" hidden selected>{{ $orders->order_status }}</option>
 
                                 @foreach($orderStatuses as $status)
                                 <option value="{{ $status }}">

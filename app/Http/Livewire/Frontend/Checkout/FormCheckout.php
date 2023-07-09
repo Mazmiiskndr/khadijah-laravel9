@@ -73,8 +73,11 @@ class FormCheckout extends Component
         // Show customer data by calling the showCustomer function
         $this->provinces = $apiRajaOngkirService->getProvinces();
         $this->cities = collect();
-        $this->couriers = $apiRajaOngkirService->getCouriers();
         $this->showCustomer($customerService, $apiRajaOngkirService, $this->customer_uid);
+        if($this->district_id)
+        {
+            $this->couriers = $apiRajaOngkirService->getCouriers();
+        }
 
     }
 
@@ -141,6 +144,17 @@ class FormCheckout extends Component
         $this->districts = $this->getDistricts($value);
         // Reset the selected district
         $this->reset('district_id');
+    }
+
+    /**
+     * Updates the districts list when the selected city changes.
+     * @param  mixed $value The ID of the selected city.
+     * @return void
+     */
+    public function updatedDistrictId($value)
+    {
+        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
+        $this->couriers = $apiRajaOngkirService->getCouriers();
     }
 
     /**
@@ -266,7 +280,7 @@ class FormCheckout extends Component
 
         // Calculate the subtotal
         foreach ($carts as $cart) {
-            $this->weight += $cart->quantity * $cart->product->weight;
+            $this->weight = $cart->quantity * $cart->product->weight;
 
             if ($cart->product->discount > 0) {
                 $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);

@@ -15,8 +15,8 @@ class DataContact extends Component
     public $contact_id, $shop_name, $email, $address, $postal_code, $phone, $tiktok, $instagram, $facebook, $shopee, $tokped;
 
     // Variables associated with the region of a contact
-    public $provinces, $cities;
-    public $province_id, $city_id;
+    public $provinces, $cities, $districts;
+    public $province_id, $city_id, $district_id;
 
     // Validation rules for updating a contact
     protected $rules = [
@@ -24,7 +24,9 @@ class DataContact extends Component
         'email'         => 'required|email',
         'address'       => 'required',
         'postal_code'   => 'required',
-        'phone'         => 'required',
+        'province_id'   => 'required',
+        'city_id'       => 'required',
+        'district_id'   => 'required',
     ];
     // Custom validation error messages
     protected $messages = [
@@ -34,6 +36,9 @@ class DataContact extends Component
         'address.required'      => 'Alamat tidak boleh kosong',
         'postal_code.required'  => 'Kode Pos tidak boleh kosong',
         'phone.required'        => 'No. Telepon tidak boleh kosong',
+        'province_id.required'  => 'Provinsi tidak boleh kosong',
+        'city_id.required'      => 'Kota / Kabupaten tidak boleh kosong',
+        'district_id.required'  => 'Kecamatan tidak boleh kosong',
     ];
     // Event listeners
     protected $listeners = [
@@ -77,31 +82,39 @@ class DataContact extends Component
         // If a city is selected, populate the city field and fetch the cities belonging to the selected province
         if (!is_null($contact->city_id)) {
             $this->city_id = $contact->city_id;
-            $apiRajaOngkirService = app(ApiRajaOngkirService::class);
-            $this->cities = $apiRajaOngkirService->getCities($contact->province_id);
+            $this->cities = $this->getCities($contact->province_id);
+        }
+
+        // If a district is selected, populate the district field and fetch the districts belonging to the selected city
+        if (!is_null($contact->district_id)) {
+            $this->district_id = $contact->district_id;
+            $this->districts = $this->getDistricts($contact->city_id);
         }
     }
 
     /**
      * The update function is responsible for validating the request and updating the contact.
      */
-    public function update(ApiRajaOngkirService $apiRajaOngkirService)
+    public function update()
     {
         $this->validate();
 
         // Update the contact
         $contact = Contact::find($this->contact_id);
-        $dataCity = $apiRajaOngkirService->getCityById($this->city_id);
-        $cityName = $dataCity['type'] . " " . $dataCity['city_name'];
-        $provinceName =  $dataCity['province'];
+        $dataDistrict = $this->getDistrictById($this->district_id);
+        $cityName = $dataDistrict['type'] . " " . $dataDistrict['city'];
+        $provinceName =  $dataDistrict['province'];
+        $districtName =  $dataDistrict['subdistrict_name'];
         $contact->update([
             'shop_name'     => $this->shop_name,
             'email'         => $this->email,
             'address'       => $this->address,
             'province_id'   => $this->province_id,
             'city_id'       => $this->city_id,
+            'district_id'   => $this->district_id,
             'province'      => $provinceName,
             'city'          => $cityName,
+            'district'      => $districtName,
             'postal_code'   => $this->postal_code,
             'phone'         => $this->phone,
             'tiktok'        => $this->tiktok,
@@ -117,15 +130,30 @@ class DataContact extends Component
     }
 
     /**
-     * This function is triggered when the province_id property is updated.
-     * It fetches the cities that belong to the selected province.
+     * Updates the cities list when the selected province changes.
+     * @param  mixed $value The ID of the selected province.
+     * @return void
      */
     public function updatedProvinceId($value)
     {
-        $apiRajaOngkirService = app(ApiRajaOngkirService::class);
-        $this->cities = $apiRajaOngkirService->getCities($value);
-        $this->reset(['city_id']);
+        $this->cities = $this->getCities($value);
+
+        // Reset the selected city and district
+        $this->reset(['district_id', 'city_id']);
     }
+
+    /**
+     * Updates the districts list when the selected city changes.
+     * @param  mixed $value The ID of the selected city.
+     * @return void
+     */
+    public function updatedCityId($value)
+    {
+        $this->districts = $this->getDistricts($value);
+        // Reset the selected district
+        $this->reset('district_id');
+    }
+
 
     /**
      * This function is triggered whenever a property is updated.
@@ -134,5 +162,38 @@ class DataContact extends Component
     public function updated($property)
     {
         $this->validateOnly($property);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of cities.
+     * @param  mixed $provinceId The ID of the selected province.
+     * @return Collection
+     */
+    protected function getCities($provinceId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getCities($provinceId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of districts.
+     * @param  mixed $cityId The ID of the selected city.
+     * @return Collection
+     */
+    protected function getDistricts($cityId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getSubDistrictByCity($cityId);
+    }
+
+    /**
+     * Calls the RajaOngkir API to get a list of district by ID.
+     * @param  mixed $cityId The ID of the.
+     * @return Collection
+     */
+    protected function getDistrictById($districtId)
+    {
+        // Resolve the API service from the service container
+        return app(ApiRajaOngkirService::class)->getSubDistrictById($districtId);
     }
 }

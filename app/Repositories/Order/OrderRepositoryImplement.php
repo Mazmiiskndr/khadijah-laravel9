@@ -3,8 +3,10 @@
 namespace App\Repositories\Order;
 
 use App\Enums\OrderStatus;
+use App\Http\Livewire\Frontend\Checkout\OrderDetail;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepositoryImplement extends Eloquent implements OrderRepository
 {
@@ -15,10 +17,12 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
      * @property Model|mixed $model;
      */
     protected $model;
+    protected $orderDetailModel;
 
-    public function __construct(Order $model)
+    public function __construct(Order $model, OrderDetail $orderDetailModel)
     {
         $this->model = $model;
+        $this->orderDetailModel = $orderDetailModel;
     }
 
     /**
@@ -68,6 +72,28 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
     public function countCompletedOrders()
     {
         return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->count();
+    }
+
+    /**
+     * This method calculates the total price of all completed orders.
+     * It sums up the 'total_price' field of all orders where the order status is 'completed'.
+     * @return float Returns the total price of all completed orders.
+     */
+    public function countTotalPrice()
+    {
+        return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->sum('total_price');;
+    }
+
+    /**
+     * This method calculates the total number of product units sold for completed orders.
+     * @return int Returns the total number of product units sold in completed orders.
+     */
+    public function countSoldProductUnits()
+    {
+        return DB::table('order_detail')
+        ->join('order', 'order_detail.order_id', '=', 'order.order_id')
+        ->where('order.order_status', OrderStatus::ORDER_COMPLETED)
+            ->sum('order_detail.quantity');
     }
 
     /**

@@ -51,10 +51,6 @@
                 <i class="fa fa-shopping-cart me-1" aria-hidden="true"></i>
                 Tambah ke Keranjang
             </button>
-            <a href="#" class="btn btn-solid">
-                <i class="fa fa-heart fz-16 me-2" aria-hidden="true"></i>
-                Favorit
-            </a>
         </div>
 
     @if (session()->has('success'))

@@ -18,9 +18,13 @@ class Widget extends Component
     {
         $totalProducts = Product::count();
         $totalOrders = $orderService->countCompletedOrders();
+        $totalPrice = $orderService->countTotalPrice();
+        $soldProductUnits = $orderService->countSoldProductUnits();
         return view('livewire.backend.dashboard.widget', [
             'totalProducts' => $totalProducts,
             'totalOrders' => $totalOrders,
+            'totalPrice' => $totalPrice,
+            'soldProductUnits' => $soldProductUnits,
         ]);
     }
 }

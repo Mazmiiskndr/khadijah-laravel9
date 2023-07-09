@@ -15,8 +15,9 @@
                     <i class="fa fa-edit"></i>
                 </button>
             </a>
-            <button wire:click="deleteConfirmation('{{ $order->order_uid }}')" class="btn btn-pill btn-danger"><i
-                    class="fa fa-trash"></i></button>
+            {{-- TODO: --}}
+            {{-- <button wire:click="deleteConfirmation('{{ $order->order_uid }}')" class="btn btn-pill btn-danger"><i
+                    class="fa fa-trash"></i></button> --}}
         </td>
     </tr>
     @endforeach
