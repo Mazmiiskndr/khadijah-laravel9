@@ -1,18 +1,18 @@
-<div class="col-xl-6 col-md-12 box-col-12">
-    <div class="card">
+<div class="col-xl-6 col-md-12 box-col-12 mb-3">
+    <div class="card h-100">
         <div class="card-header">
             <h4>Diagram Pengunjung</h4>
         </div>
         <div class="card-body chart-block">
-            <canvas id="count-visitors" height="500"></canvas>
+            <canvas id="count-visitors" height="700"></canvas>
         </div>
     </div>
 </div>
-
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     let visitorData = @json($visitors);
+        let countSales = new Chart(document.getElementById('count-sales'), lineConfig);
 
     let chromeCount = 0;
     let firefoxCount = 0;

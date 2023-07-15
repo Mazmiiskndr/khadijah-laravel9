@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="row">
-        <div class="col-xxl-6 col-sm-6 box-col-6">
+        <div class="col-xxl-6 col-sm-12 box-col-6">
             <div class="card profile-box">
                 <div class="card-body">
                     <div class="media media-wrapper">

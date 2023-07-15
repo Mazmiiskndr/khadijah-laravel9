@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Http\Livewire\Frontend\Checkout\OrderDetail;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class OrderRepositoryImplement extends Eloquent implements OrderRepository
@@ -30,11 +31,6 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
      * using the unique order identifier.
      * @return Order|null Returns the Order object if found; otherwise, null.
      */
-    // public function getAllOrder()
-    // {
-    //     return $this->model->with('orderDetails.product', 'shippingDetail')->latest()->get();
-
-    // }
     public function getAllOrder()
     {
         return $this->model->with(['customer' => function ($query) {
@@ -81,7 +77,24 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
      */
     public function countTotalPrice()
     {
-        return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->sum('total_price');;
+        return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->sum('total_price');
+    }
+
+    /**
+     * This method calculates the total income of all completed orders.
+     * It sums up the 'total_price' field of all orders where the order status is 'completed'.
+     * @return float Returns the total price of all completed orders to count income.
+     */
+    public function countTotalIncome()
+    {
+        // Dapatkan tanggal awal dan akhir bulan ini
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        // Query for getting all prices for the orders sold this month
+        return Order::where('order_status', OrderStatus::ORDER_COMPLETED)
+        ->whereBetween('order_date', [$startDate, $endDate])->orderBy('created_at', 'asc')
+            ->pluck('total_price');
     }
 
     /**
@@ -93,7 +106,7 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
         return DB::table('order_detail')
         ->join('order', 'order_detail.order_id', '=', 'order.order_id')
         ->where('order.order_status', OrderStatus::ORDER_COMPLETED)
-            ->sum('order_detail.quantity');
+        ->count();
     }
 
     /**
