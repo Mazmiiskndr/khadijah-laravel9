@@ -75,10 +75,11 @@
                 <div class="field-label">Ekspedisi</div>
                 <select name="expedition" id="district_id" wire:model="expedition" class="form-select">
                     <option value="">-- Pilih Ekspedisi --</option>
-
+                    @if(!is_null($couriers))
                     @foreach($couriers as $key => $name)
                     <option value="{{ $key }}">{{ $name }}</option>
                     @endforeach
+                    @endif
                 </select>
                 @error('expedition') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
             </div>

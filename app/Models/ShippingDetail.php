@@ -16,6 +16,7 @@ class ShippingDetail extends Model
     protected $fillable = [
         'shipping_uid',
         'order_id',
+        'tracking_number',
         'expedition',
         'parcel',
         'delivery_cost',

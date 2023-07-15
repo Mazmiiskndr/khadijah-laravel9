@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <select name="order_status" id="order_status" wire:model="order_status" class="form-select"
                                 style="width: 300px;">
-                                <option value="{{ $orders->order_status }}">{{ $orders->order_status }}</option>
+                                <option value="{{ $orders->order_status }}" hidden selected>{{ $orders->order_status }}</option>
 
                                 @foreach($orderStatuses as $status)
                                 <option value="{{ $status }}">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div style="margin-left: 10px;" class="mt-3">
-                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
                     </div>
                 </form>
             </div>
@@ -76,6 +76,11 @@
                         <th><b>Kota</b></th>
                         <th>:</th>
                         <td>{{ $orders->shipping_city }}</td>
+                    </tr>
+                    <tr>
+                        <th><b>Kecamatan</b></th>
+                        <th>:</th>
+                        <td>{{ $orders->shipping_district }}</td>
                     </tr>
                     <tr>
                         <th><b>Alamat</b></th>
@@ -105,14 +110,79 @@
                             <i class="fas fa-lg fa-print"></i> &nbsp; Invoice
                         </button>
                     </a>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="javascript:window.history.back(-1);return false;"><i
-                            class="fas fa-lg fa-backward"></i> &nbsp;
+                    <button type="button" class="btn btn-danger btn-sm"
+                        onclick="javascript:window.history.back(-1);return false;"><i class="fas fa-lg fa-backward"></i>
+                        &nbsp;
                         Back</button>
                 </div>
             </div>
-        </div>
+            @if(!$shippingDetail['tracking_number'])
+            <div class="col-lg-12">
+                <form wire:submit.prevent="storeWaybill" method="POST">
+                    <div style="margin-left: 10px;" class="mt-3">
+                        <h5>Cek Resi </h5>
+                        <div class="form-group">
+                            <label for="tracking_number">Masukan No Resi</label>
+                            <input type="text" class="form-control @error('tracking_number') is-invalid @enderror"
+                                placeholder="Masukan No Resi.." name="tracking_number" id="tracking_number"
+                                wire:model="tracking_number">
+                            @error('tracking_number') <small class="error text-danger">{{ $message }}</small> @enderror
+                        </div>
+                    </div>
+                    <div style="margin-left: 10px;" class="mt-3">
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    </div>
+                </form>
+            </div>
+            @endif
+            @if($manifests)
+            <div class="col-lg-12 mt-3">
+                <div class="d-flex justify-content-between">
+                    <h5>Perjalanan Paket</h5>
+                    <h5>Status Paket : {{ ucwords(strtolower($statusResi)) }}</h5>
+                </div>
+                <style>
+                    .table-bordered tbody,
+                    .table-bordered td,
+                    .table-bordered tfoot,
+                    .table-bordered th,
+                    .table-bordered thead,
+                    .table-bordered tr {
+                        border-color: #cccccc
+                    }
 
+                    .table>:not(:last-child)>:last-child>* {
+                        border-bottom-color: #cccccc
+                    }
+                </style>
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-hover" >
+                        <thead>
+                            <tr>
+                                <th width="5%"><b>No.</b></th>
+                                <th><b>Tanggal</b></th>
+                                <th><b>Keterangan</b></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($manifests as $key => $manifest)
+                            <tr>
+                                <td>{{ $key + 1 }}</td>
+                                <td>{{ date('Y-m-d', strtotime($manifest['manifest_date'])) }} {{
+                                    $manifest['manifest_time']
+                                    }}</td>
+                                <td>{{ $manifest['manifest_description'] }}: {{ $manifest['city_name'] }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            @endif
+        </div>
     </div>
+
     @if (session()->has('success'))
     <script>
         Swal.fire({

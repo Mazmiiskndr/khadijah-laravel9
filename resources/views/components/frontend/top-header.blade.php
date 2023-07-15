@@ -13,8 +13,6 @@
 
                 <ul class="header-dropdown">
                     @if(Auth::guard('customer')->check())
-                    <li class="mobile-wishlist"><a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                    </li>
                     @endif
 
                     <li class="onhover-dropdown mobile-account"> <i class="fa fa-user" aria-hidden="true"></i>

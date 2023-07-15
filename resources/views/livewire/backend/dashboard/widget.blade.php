@@ -1,6 +1,6 @@
 <div class="col-12">
     <div class="row">
-        <div class="col-xxl-6 col-sm-6 box-col-6">
+        <div class="col-xxl-6 col-sm-12 box-col-6">
             <div class="card profile-box">
                 <div class="card-body">
                     <div class="media media-wrapper">
@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h4>7000</h4><span class="f-light">Sales return</span>
+                                    <h4>{{ $soldProductUnits }}</h4><span class="f-light">Produk Terjual</span>
                                 </div>
                             </div>
                             <div class="font-warning f-w-500"><i class="icon-arrow-down icon-rotate me-1"></i><span>-20%</span>
@@ -135,7 +135,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h4>5700</h4><span class="f-light">Purchase rate</span>
+                                        <h4>Rp. {{ number_format($totalPrice, 0, ',', '.') }}</h4><span class="f-light">Total Pendapatan</span>
                                     </div>
                                 </div>
                                 <div class="font-success f-w-500"><i

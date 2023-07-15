@@ -22,6 +22,7 @@ class ContactSeeder extends Seeder
             Contact::create([
                 'province_id' => 9,
                 'city_id' => 469,
+                'district_id' => 6477,
                 'province' => "Jawa Barat",
                 'city' => "Kota Tasikmalaya",
                 'shop_name' => "Khadijah Label",

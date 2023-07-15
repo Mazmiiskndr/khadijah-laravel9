@@ -3,8 +3,11 @@
 namespace App\Repositories\Order;
 
 use App\Enums\OrderStatus;
+use App\Http\Livewire\Frontend\Checkout\OrderDetail;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepositoryImplement extends Eloquent implements OrderRepository
 {
@@ -15,10 +18,12 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
      * @property Model|mixed $model;
      */
     protected $model;
+    protected $orderDetailModel;
 
-    public function __construct(Order $model)
+    public function __construct(Order $model, OrderDetail $orderDetailModel)
     {
         $this->model = $model;
+        $this->orderDetailModel = $orderDetailModel;
     }
 
     /**
@@ -26,11 +31,6 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
      * using the unique order identifier.
      * @return Order|null Returns the Order object if found; otherwise, null.
      */
-    // public function getAllOrder()
-    // {
-    //     return $this->model->with('orderDetails.product', 'shippingDetail')->latest()->get();
-
-    // }
     public function getAllOrder()
     {
         return $this->model->with(['customer' => function ($query) {
@@ -68,6 +68,45 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
     public function countCompletedOrders()
     {
         return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->count();
+    }
+
+    /**
+     * This method calculates the total price of all completed orders.
+     * It sums up the 'total_price' field of all orders where the order status is 'completed'.
+     * @return float Returns the total price of all completed orders.
+     */
+    public function countTotalPrice()
+    {
+        return $this->model->where('order_status', OrderStatus::ORDER_COMPLETED)->sum('total_price');
+    }
+
+    /**
+     * This method calculates the total income of all completed orders.
+     * It sums up the 'total_price' field of all orders where the order status is 'completed'.
+     * @return float Returns the total price of all completed orders to count income.
+     */
+    public function countTotalIncome()
+    {
+        // Dapatkan tanggal awal dan akhir bulan ini
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        // Query for getting all prices for the orders sold this month
+        return Order::where('order_status', OrderStatus::ORDER_COMPLETED)
+        ->whereBetween('order_date', [$startDate, $endDate])->orderBy('created_at', 'asc')
+            ->pluck('total_price');
+    }
+
+    /**
+     * This method calculates the total number of product units sold for completed orders.
+     * @return int Returns the total number of product units sold in completed orders.
+     */
+    public function countSoldProductUnits()
+    {
+        return DB::table('order_detail')
+        ->join('order', 'order_detail.order_id', '=', 'order.order_id')
+        ->where('order.order_status', OrderStatus::ORDER_COMPLETED)
+        ->count();
     }
 
     /**

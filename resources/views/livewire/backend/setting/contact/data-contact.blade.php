@@ -80,7 +80,7 @@
 
     {{-- PROVINCES AND CITIES --}}
     <div class="row">
-        <div class="col-6">
+        <div class="col-lg-4">
             <div class="mb-3">
                 <label for="province_id_input">Provinsi</label>
                 <select class="select2 col-sm-12 @error('province_id') is-invalid @enderror" id="province_id_input"
@@ -93,7 +93,7 @@
                 @error('province_id') <small class="error text-danger">{{ $message }}</small> @enderror
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-lg-4">
             <div class="mb-3">
                 <label for="city_id_input">Kota / Kabupaten</label>
                 <select class="select2 col-sm-12 @error('city_id') is-invalid @enderror" id="city_id_input"
@@ -105,7 +105,24 @@
                     @endforeach
                     @endif
                 </select>
+                <small wire:loading wire:target="province_id" class="text-info">Loading...</small>
                 @error('city_id') <small class="error text-danger">{{ $message }}</small> @enderror
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="mb-3">
+                <label for="district_id_input">Kecamatan</label>
+                <select class="select2 col-sm-12 @error('district_id') is-invalid @enderror" id="district_id_input"
+                    name="district_id" wire:model="district_id">
+                    <option value="" selected>-- Pilih Kecamatan --</option>
+                    @if(!is_null($districts))
+                    @foreach($districts as $district)
+                    <option value="{{ $district['subdistrict_id'] }}">{{ strtoupper($district['subdistrict_name']) }}</option>
+                    @endforeach
+                    @endif
+                </select>
+                <small wire:loading wire:target="city_id" class="text-info">Loading...</small>
+                @error('district_id') <small class="error text-danger">{{ $message }}</small> @enderror
             </div>
         </div>
     </div>

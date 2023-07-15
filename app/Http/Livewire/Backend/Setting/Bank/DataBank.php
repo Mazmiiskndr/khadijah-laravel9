@@ -41,7 +41,16 @@ class DataBank extends Component
     public function mount()
     {
         $bank = Bank::first();
-        $this->show($bank);
+        if ($bank) {
+            $this->show($bank);
+        } else {
+            // Here you can also initialize your properties to null if you want
+            $this->bank_id = null;
+            $this->bank_uid = null;
+            $this->provider = null;
+            $this->rekening_name = null;
+            $this->rekening_number = null;
+        }
     }
 
     /**
@@ -79,28 +88,37 @@ class DataBank extends Component
 
     /**
      * Update the specified bank.
-     * Validate the request and update the bank, then flash a success message.
+     * Validate the request and update or create the bank, then flash a success message.
      */
     public function update()
     {
-        // Validate the input
-        $this->validate();
+        try {
+            // Validate the input
+            $this->validate();
 
-        // Find the bank and update it
-        $bank = Bank::where('bank_uid', $this->bank_uid)->first();
-        if ($bank) {
-            $bank->update([
-                'provider'        => strtoupper($this->provider),
-                'rekening_name'   => $this->rekening_name,
-                'rekening_number' => $this->rekening_number,
-            ]);
+            // Find the bank and update it or create a new one
+            $bank = Bank::updateOrCreate(
+                ['bank_uid' => $this->bank_uid],
+                [
+                    'provider'        => strtoupper($this->provider),
+                    'rekening_name'   => $this->rekening_name,
+                    'rekening_number' => $this->rekening_number,
+                ]
+            );
 
-            // Flash a success message
-            session()->flash('success', 'Data Bank Berhasil di Update!');
-            $this->emit('updateBank');
-        } else {
-            // Handle the case when bank is not found
-            session()->flash('error', 'Data Bank Tidak Ditemukan!');
+            // Check if it was an update or a creation
+            if ($bank->wasRecentlyCreated) {
+                // Flash a success message
+                session()->flash('success', 'Data Bank Berhasil di Buat!');
+            } else {
+                // Flash a success message
+                session()->flash('success', 'Data Bank Berhasil di Update!');
+            }
+
+            $this->emit('updateOrCreateBank');
+        } catch (\Exception $e) {
+            // Flash an error message
+            session()->flash('error', 'Terjadi Kesalahan: ' . $e->getMessage());
         }
     }
 

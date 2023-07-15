@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('shipping_id');
             $table->uuid('shipping_uid')->unique(); // Added uid column
             $table->unsignedBigInteger('order_id');
+            $table->string('tracking_number')->nullable();
             $table->string('expedition');
             $table->string('parcel');
             $table->integer('delivery_cost');
