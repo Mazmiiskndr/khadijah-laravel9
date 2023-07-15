@@ -121,7 +121,8 @@
                     {{-- END SIDEBAR PELANGGAN --}}
 
                     {{-- START SIDEBAR PROMO --}}
-                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
+                    {{-- TODO: PROMO --}}
+                    {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-task') }}"></use>
                             </svg>
@@ -129,7 +130,7 @@
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-task') }}"></use>
                             </svg>
                             <span>Promo</span></a>
-                    </li>
+                    </li> --}}
                     {{-- END SIDEBAR PROMO --}}
 
                     {{-- START SIDEBAR SUBMENU TRANSAKSI --}}
@@ -171,7 +172,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-charts') }}"></use>
                             </svg><span>Laporan</span>
-                            <label class="badge badge-light-primary">3</label>
+                            <label class="badge badge-light-primary">2</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             <li>
@@ -210,7 +211,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
                             </svg><span>Pengaturan</span>
-                            <label class="badge badge-light-primary">3</label>
+                            <label class="badge badge-light-primary">2</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             <li>

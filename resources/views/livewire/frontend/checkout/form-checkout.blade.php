@@ -84,7 +84,7 @@
                 @error('expedition') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small> @enderror
             </div>
             <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                <div class="field-label">Paket</div>
+                <div class="field-label">Paket / <small>(gr)</small></div>
                 <select name="parcel" id="parcel" wire:model="parcel" class="form-select">
                     <option value="">-- Pilih Paket --</option>
                     @if(!is_null($parcels))
@@ -190,17 +190,29 @@
                                 <tr>
                                     <th>Bank</th>
                                     <th>:</th>
-                                    <td>{{ strtoupper(isset($bank->provider)) ?? "" }}</td>
+                                    <td>
+                                        @isset($bank->provider)
+                                            {{ strtoupper($bank->provider) }}
+                                        @endisset
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Nama Rekening</th>
                                     <th>:</th>
-                                    <td>{{ strtoupper(isset($bank->rekening_name)) ?? "" }}</td>
+                                    <td>
+                                        @isset($bank->rekening_name)
+                                        {{ strtoupper($bank->rekening_name) ?? "" }}
+                                        @endisset
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>No. Rekening</th>
                                     <th>:</th>
-                                    <td>{{ isset($bank->rekening_number) ?? "" }}</td>
+                                    <td>
+                                        @isset($bank->rekening_number)
+                                        {{ $bank->rekening_number ?? "" }}
+                                        @endisset
+                                    </td>
                                 </tr>
 
                             </table>

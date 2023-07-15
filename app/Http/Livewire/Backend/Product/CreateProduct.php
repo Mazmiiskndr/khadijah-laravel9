@@ -34,13 +34,13 @@ class CreateProduct extends Component
         'thumbnail' => 'required|image|max:5120',
         'productImages.*' => 'image|max:20480',
         'weight' => 'required',
-        'color' => 'nullable',
+        'color' => 'required',
         'product_description' => 'nullable',
+        'length' => 'required',
+        'width' => 'required',
+        'height' => 'required',
         'type' => 'nullable',
         'material' => 'nullable',
-        'length' => 'nullable',
-        'width' => 'nullable',
-        'height' => 'nullable',
         'discount' => 'nullable'
     ];
 
@@ -52,6 +52,10 @@ class CreateProduct extends Component
         'size.required' => 'Ukuran harus diisi',
         'stock.required' => 'Stok harus diisi',
         'weight.required' => 'Berat harus diisi',
+        'color.required' => 'Warna harus diisi',
+        'length.required' => 'Panjang harus diisi',
+        'width.required' => 'Lebar harus diisi',
+        'height.required' => 'Tinggi harus diisi',
         'thumbnail.required' => 'Thumbnail harus diisi',
         'thumbnail.max' => 'Ukuran gambar maksimal 5mb',
         'productImages.*.max' => 'Ukuran gambar maksimal 20mb',
@@ -96,9 +100,9 @@ class CreateProduct extends Component
      */
     public function submit(ProductService $productService)
     {
+        // Perform validation based on the defined rules
+        $this->validate();
         try {
-            // Perform validation based on the defined rules
-            $this->validate();
 
             // Create the product using ProductService
             $createdProduct = $productService->createProduct($this);
@@ -140,6 +144,10 @@ class CreateProduct extends Component
     {
         $this->createModal = false;
         $this->resetFields();
+        // Reset the validation error messages
+        $this->resetErrorBag();
+        // Reset the validation status
+        $this->resetValidation();
     }
 
     /**
@@ -164,5 +172,6 @@ class CreateProduct extends Component
         $this->width = '';
         $this->height = '';
         $this->discount = '';
+        $this->dispatchBrowserEvent('fileInputReset');
     }
 }

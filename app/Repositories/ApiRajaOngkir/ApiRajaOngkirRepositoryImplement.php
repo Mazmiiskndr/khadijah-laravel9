@@ -112,7 +112,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
             "originType" => 'city',
             "destination" => $destination,
             "destinationType" => 'subdistrict',
-            "weight" => $weight,
+            "weight" => $weight ,
             "courier" => $courier,
         ];
         // origin=501&originType=city&destination=574&destinationType=subdistrict&weight=1700&courier=jne",
@@ -197,7 +197,7 @@ class ApiRajaOngkirRepositoryImplement extends Eloquent implements ApiRajaOngkir
                     CURLOPT_TIMEOUT => 30,
                     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                     CURLOPT_CUSTOMREQUEST => $method,
-                    CURLOPT_POSTFIELDS => $postFields,
+                    CURLOPT_POSTFIELDS => "$postFields",
                     CURLOPT_HTTPHEADER => [
                         "content-type: application/x-www-form-urlencoded",
                         "key: " . env('API_KEY_RAJA_ONGKIR'),

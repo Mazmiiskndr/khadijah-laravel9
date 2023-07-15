@@ -165,7 +165,7 @@ class FormCheckout extends Component
     {
         // Fetch the parcels for the selected expedition
         $contactData = app('contactData');
-        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->city_id, $this->weight, $value);
+        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->district_id, $this->weight, $value);
 
         // Reset parcel selection
         $this->parcel = null;
@@ -274,17 +274,19 @@ class FormCheckout extends Component
         $carts = $cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
         /** @var iterable|object $carts */
 
-        // Initialize the subtotal and total variables
+        // Initialize the subtotal, total, and weight variables
         $this->subTotal = 0;
         $this->total = 0;
+        $this->weight = 0; // initialize weight
 
-        // Calculate the subtotal
+        // Calculate the subtotal and total weight
         foreach ($carts as $cart) {
-            $this->weight = $cart->quantity * $cart->product->weight;
+            $this->weight += $cart->quantity * $cart->product->weight;
 
-            if ($cart->product->discount > 0) {
+            if ($cart->product->discount > 0
+            ) {
                 $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);
-            }else{
+            } else {
                 $totalPerPrice = $cart->quantity * $cart->product->price;
             }
 
@@ -295,15 +297,13 @@ class FormCheckout extends Component
 
         // Return the updated value of $carts
         return $carts;
-
     }
 
     /**
      * Populate the form fields with customer data.
      * @param mixed $customer
-     * @param ApiRajaOngkirService $apiRajaOngkirService
      */
-    private function populateFormFields($customer, ApiRajaOngkirService $apiRajaOngkirService)
+    private function populateFormFields($customer)
     {
         $this->customer_uid = $customer->customer_uid;
         $this->name = $customer->name;
