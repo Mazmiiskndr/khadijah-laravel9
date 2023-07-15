@@ -196,18 +196,6 @@
                                     <span>Pengunjung</span>
                                 </a>
                             </li>
-                            {{-- TODO: --}}
-                            <li>
-                                <a href="#">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
-                                    </svg>
-                                    <span>Transaksi</span>
-                                </a>
-                            </li>
 
                         </ul>
                     </li>

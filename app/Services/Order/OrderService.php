@@ -42,6 +42,14 @@ interface OrderService extends BaseService{
     public function countCompletedOrders();
 
     /**
+     * This method retrieves all products along with their associated order details and the total number of sales.
+     * @return \Illuminate\Database\Eloquent\Collection Returns a collection of Product models. Each Product model has two additional attributes:
+     * - sales: The total number of sales for the product.
+     * - orderDetails: A collection of OrderDetail models associated with the product.
+     */
+    public function getProductSales();
+
+    /**
      * This method calculates the total price of all completed orders.
      * It sums up the 'total_price' field of all orders where the order status is 'completed'.
      * @return float Returns the total price of all completed orders.

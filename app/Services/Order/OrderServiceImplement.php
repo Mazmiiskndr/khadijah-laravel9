@@ -52,6 +52,22 @@ class OrderServiceImplement extends Service implements OrderService
     }
 
     /**
+     * This method retrieves all products along with their associated order details and the total number of sales.
+     * @return \Illuminate\Database\Eloquent\Collection Returns a collection of Product models. Each Product model has two additional attributes:
+     * - sales: The total number of sales for the product.
+     * - orderDetails: A collection of OrderDetail models associated with the product.
+     */
+    public function getProductSales()
+    {
+        try {
+            return $this->mainRepository->getProductSales();
+        } catch (\Throwable $th) {
+            Log::debug($th->getMessage());
+            throw $th;
+        }
+    }
+
+    /**
      * This method retrieves the total count of orders made by a given customer.
      * @param int $customerId The ID of the customer.
      * @return int Returns the total count of all orders associated with the provided customer ID.

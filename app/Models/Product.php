@@ -39,12 +39,6 @@ class Product extends Model
         });
     }
 
-    // TODO: DETAIL PRODUCTS
-    // public function detailProducts()
-    // {
-    //     return $this->hasMany(DetailProduct::class, 'product_id', 'product_id');
-    // }
-
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');

@@ -1,5 +1,6 @@
 <x-backend.master title="Laporan Pengunjung | Khadijah">
     @push('styles')
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/vendors/datatables.css')}}">
     @endpush
 
     @slot('breadcrumbTitle')
@@ -11,46 +12,39 @@
     @endslot
 
     <div class="container-fluid">
-
+        <div class="row">
+            <div class="card">
+                <div class="card-header pb-0 card-no-border d-flex">
+                    <h5>Tabel Pengunjung</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="display" id="datatables">
+                            <thead>
+                                <tr>
+                                    <th width="5%">No.</th>
+                                    <th>Pengguna</th>
+                                    <th>IP Address</th>
+                                </tr>
+                            </thead>
+                            @livewire('backend.report.visitor.data-table')
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Data Pelanggan Ends-->
+        </div>
     </div>
-
-    {{-- *** TODO: *** --}}
-    {{-- START UPDATE MODAL PROMO --}}
-    {{-- @livewire('backend.promo.update-promo') --}}
-    {{-- END UPDATE MODAL PROMO --}}
     @push('scripts')
-
-    {{-- *** TODO: *** --}}
     {{-- START DATATABLE --}}
-    {{-- <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script> --}}
+    <script src="{{asset('assets/js/datatable/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/js/datatable/datatables/datatable.custom.js')}}"></script>
     {{-- END DATATABLE --}}
-    {{-- <script>
-        window.addEventListener('close-modal', event =>{
-            $('#createPromoModal').modal('hide');
-            $('#updatePromoModal').modal('hide');
-        });
-        window.addEventListener('delete-show-confirmation', event =>{
-            Swal.fire({
-                    title: 'Apakah kamu yakin?',
-                    text: "Anda tidak akan dapat mengembalikan data ini!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ya, Hapus!',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                if (result.isConfirmed) {
-                    Livewire.emit('deleteConfirmation');
-                }
-            })
-        });
+    <script>
         $(document).ready(function() {
             $('#datatables').DataTable();
         });
-    </script> --}}
-
+    </script>
     @endpush
 
 </x-backend.master>
