@@ -15,6 +15,7 @@ class OrderDetail extends Component
 
     protected $listeners = [
         'paymentUpdated' => 'handleUpdated',
+        'ratingCreated' => 'handleUpdated',
     ];
 
     /**
@@ -62,13 +63,12 @@ class OrderDetail extends Component
      * @param  OrderService $orderService - The order service used to handle the order processes
      * @return void
      */
-    public function showRatingModal(OrderService $orderService)
+    public function showRatingModal(OrderService $orderService,$product_uid)
     {
+        // TODO: RATINGS
         // Re-fetch the data
         $this->mount($orderService);
-
-        // Emit a browser event to show the payment modal
-        $this->dispatchBrowserEvent('show-rating-modal');
+        $this->emit('ratingModal', $product_uid);
     }
 
     public function orderReceived(OrderService $orderService)

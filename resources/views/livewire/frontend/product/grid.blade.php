@@ -9,11 +9,11 @@
                         <div class="lable-block">
                             <span class="lable3"> {{ round(($product->discount / $product->price) * 100) }}%</span>
                         </div>
-
                         @endif
 
                         <div class="front">
-                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img src="{{ asset('storage/'.$product->thumbnail) }}"
+                            <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"><img
+                                    src="{{ asset('storage/'.$product->thumbnail) }}"
                                     class="img-fluid blur-up lazyload bg-img" alt=""></a>
                         </div>
                         <div class="back">
@@ -37,7 +37,8 @@
                             </a>
                             @else
                             <a href="javascript:void(0)">
-                                <i class="fas fa fa-cart-shopping" data-bs-toggle="modal" data-bs-target="#quick-view" wire:click="openModal('{{ $product->product_uid }}')"></i>
+                                <i class="fas fa fa-cart-shopping" data-bs-toggle="modal" data-bs-target="#quick-view"
+                                    wire:click="openModal('{{ $product->product_uid }}')"></i>
                             </a>
                             @endif
                             <a href="{{ route('product.show', ['product' => $product->product_slug]) }}"
@@ -48,9 +49,14 @@
                     </div>
                     <div class="product-detail">
                         <div>
-                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                    class="fa fa-star"></i>
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                            <div class="rating">
+                                @for ($i = 1; $i <= 5; $i++)
+                                @if ($i <=round($product->averageRating()))
+                                    <i class="fa fa-star" style="color: #ffa200"></i>
+                                @else
+                                    <i class="fa fa-star" style="color: #ddd"></i>
+                                @endif
+                                @endfor
                             </div>
                             <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                                 <h6>{{ $product->product_name }}</h6>
@@ -59,14 +65,11 @@
                             <div class="d-flex">
                                 <h4>Rp. {{ number_format($product->price - $product->discount, 0, ',', '.') }}</h4>
                                 @if ($product->discount > 0)
-                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
+                                <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.')
+                                    }}</del>
                                 @endif
                             </div>
-                            {{-- <ul class="color-variant">
-                                <li class="bg-light0"></li>
-                                <li class="bg-light1"></li>
-                                <li class="bg-light2"></li>
-                            </ul> --}}
+
                         </div>
                     </div>
                 </div>
@@ -74,9 +77,6 @@
             @endforeach
         </div>
     </div>
-    {{-- <div class="d-flex justify-content-center mt-5">
-        {{ $products->links('frontend.product.custom-pagination') }}
-    </div> --}}
     <div class="product-pagination">
         <div class="theme-paggination-block">
             <div class="row">

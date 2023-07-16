@@ -17,12 +17,11 @@ return new class extends Migration
             $table->id('review_id');
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('customer_id');
-            $table->integer('rating');
+            $table->string('subject',200);
             $table->text('comment');
+            $table->integer('rating');
             $table->dateTime('review_date');
             $table->timestamps();
-
-
 
             $table->foreign('product_id')
                     ->references('product_id')

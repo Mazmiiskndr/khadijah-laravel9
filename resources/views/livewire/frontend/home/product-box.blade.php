@@ -44,8 +44,13 @@
             </div>
         </div>
         <div class="product-detail">
-            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                    class="fa fa-star"></i> <i class="fa fa-star"></i>
+            <div class="rating">
+                @for ($i = 1; $i <= 5; $i++) @if ($i <=round($product->averageRating()))
+                    <i class="fa fa-star" style="color: #ffa200"></i>
+                    @else
+                    <i class="fa fa-star" style="color: #ddd"></i>
+                    @endif
+                    @endfor
             </div>
             <a href="{{ route('product.show', ['product' => $product->product_slug]) }}">
                 <h6>{{ $product->product_name }} </h6>
@@ -56,13 +61,6 @@
                 <del style="margin-left: 10px;"> Rp. {{ number_format($product->price, 0, ',', '.') }}</del>
                 @endif
             </div>
-
-            {{-- *** TODO: COLOR *** --}}
-            {{-- <ul class="color-variant">
-                <li class="bg-light0"></li>
-                <li class="bg-light1"></li>
-                <li class="bg-light2"></li>
-            </ul> --}}
         </div>
     </div>
 

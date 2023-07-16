@@ -19,6 +19,7 @@ class LeftNewProduct extends Component
     {
         try {
             $this->products1 = $productService->getLatestProductsWithStock(1, 4);
+
             $this->products2 = $productService->getLatestProductsWithStock(5, 4);
         } catch (\Exception $e) {
             session()->flash('alert', 'Unable to fetch products at the moment.');

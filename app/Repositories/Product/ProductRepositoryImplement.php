@@ -54,6 +54,11 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
             ->limit($limit)
             ->get();
 
+        // Calculate average rating for each product
+        foreach ($products as $product) {
+            $product->averageRating = $product->averageRating();
+        }
+
         // Return the results
         return $products;
     }
@@ -199,10 +204,25 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
      * @param string $slug - Product slug
      * @return \App\Models\Product|null
      */
+    /**
+     * Retrieve a product by its slug.
+     * @param string $slug - Product slug
+     * @return \App\Models\Product|null
+     */
     public function getProductBySlug($slug)
     {
-        return $this->model->with('images', 'category', 'tags')->where('product_slug', $slug)->first();
+        // Retrieve the product with the given slug
+        $product = $this->model->with('images', 'category', 'tags','reviews')->where('product_slug', $slug)->first();
+
+        // If a product was found, calculate its average rating
+        if ($product) {
+            $product->averageRating = $product->averageRating();
+        }
+
+        // Return the product (with its average rating, if it was found)
+        return $product;
     }
+
 
     /**
      * Retrieve a limited number of products.
@@ -211,7 +231,9 @@ class ProductRepositoryImplement extends Eloquent implements ProductRepository
      */
     public function getLimitData($limit)
     {
-        return $this->model->with('images')->orderBy('created_at', 'DESC')->limit($limit)->get();
+        return $this->model->with('images')->orderBy('created_at', 'DESC')->limit($limit)->get()->each(function ($product) {
+            $product->averageRating = $product->averageRating();
+        });
     }
 
     /**
