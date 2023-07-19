@@ -117,7 +117,7 @@
     </div>
     <div class="col-lg-5 col-sm-12 col-xs-12">
         <div class="checkout-details">
-            <div class="order-box">
+            <div class="order-box" style="margin-bottom: 10px;">
                 <div class="title-box">
                     <div>Produk <span>Total</span></div>
                 </div>
@@ -156,13 +156,22 @@
                     <li>Ongkos Kirim <span class="count">Rp. {{ number_format($deliveryCost, 0, ',', '.') }}</span></li>
                     @endif
                 </ul>
-                <ul class="total">
+                <ul class="total" style="margin-bottom: 20px">
                     <li>Total <span class="count">Rp. {{ number_format($total,0, ',', '.') }}</span></li>
                 </ul>
             </div>
+            {{-- TODO: PROMO  --}}
+            <div class="row">
+                <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                    <div class="field-label">Promo <small>(optional)</small></div>
+                    <input type="text" name="promo" placeholder="Masukan Promo" wire:model="promo">
+                    @error('promo') <small class="error text-danger" style="margin-left: 5px;">{{ $message }}</small>
+                    @enderror
+                </div>
+            </div>
             <div class="payment-box">
                 <div class="upper-box">
-                    <div class="payment-options">
+                    <div class="payment-options" style="margin-top: 5px;">
                         <ul>
                             <li>
                                 <div class="radio-option">

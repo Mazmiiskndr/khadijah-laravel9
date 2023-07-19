@@ -122,7 +122,7 @@
 
                     {{-- START SIDEBAR PROMO --}}
                     {{-- TODO: PROMO --}}
-                    {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
+                    <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-task') }}"></use>
                             </svg>
@@ -130,7 +130,7 @@
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-task') }}"></use>
                             </svg>
                             <span>Promo</span></a>
-                    </li> --}}
+                    </li>
                     {{-- END SIDEBAR PROMO --}}
 
                     {{-- START SIDEBAR SUBMENU TRANSAKSI --}}

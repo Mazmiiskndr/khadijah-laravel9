@@ -95,8 +95,10 @@ class CreateProduct extends Component
     }
 
     /**
-     * Handle product submission.
+     * Submit the form and create a new product using the ProductService.
      * @param ProductService $productService
+     * @return void
+     * @throws \Throwable
      */
     public function submit(ProductService $productService)
     {
