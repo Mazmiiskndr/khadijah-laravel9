@@ -311,6 +311,7 @@ class FormCheckout extends Component
             'deliveryCost' => $this->deliveryCost,
             'weight' => $this->weight,
         ];
+        // test
     }
 
     /**
