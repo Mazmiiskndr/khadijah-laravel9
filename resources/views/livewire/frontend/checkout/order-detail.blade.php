@@ -48,8 +48,14 @@
                 <div class="total-sec">
                     <ul>
                         <li>Sub Total <span>Rp. {{ number_format($totalPrice, 0, ',', '.') }}</span></li>
-                        <li>Ongkos Kirim <span>Rp. {{ number_format($shippingDetail['delivery_cost'], 0, ',', '.')
-                                }}</span></li>
+                        <li>Ongkos Kirim <span>Rp. {{ number_format($shippingDetail['delivery_cost'], 0, ',', '.') }}</span></li>
+                        @if($promo && $promo !== null)
+                        @if ($promo->promo->discount_type == 'Persen')
+                        <li>Promo <span>- {{ $promo->promo->discount_value }}%</span></li>
+                        @else
+                        <li>Promo <span>- Rp. {{ number_format($promo->promo->discount_value, 0, ',', '.') }}</span></li>
+                        @endif
+                        @endif
                     </ul>
                 </div>
                 <div class="final-total">

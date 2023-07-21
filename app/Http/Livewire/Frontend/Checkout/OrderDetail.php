@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\OrderPromo;
 use App\Services\Order\OrderService;
 use Livewire\Component;
 use ReflectionClass;
@@ -11,7 +12,7 @@ use ReflectionClass;
 class OrderDetail extends Component
 {
     // Define public properties
-    public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors;
+    public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors, $promo;
 
     protected $listeners = [
         'paymentUpdated' => 'handleUpdated',
@@ -27,6 +28,7 @@ class OrderDetail extends Component
     {
         $this->fetchOrderStatuses();
         $this->fetchOrderDetails($orderService);
+        $this->fetchOrderPromo();
         $this->extractProductsFromOrderDetails();
         $this->fetchShippingDetails();
 
@@ -65,7 +67,6 @@ class OrderDetail extends Component
      */
     public function showRatingModal(OrderService $orderService,$product_uid)
     {
-        // TODO: RATINGS
         // Re-fetch the data
         $this->mount($orderService);
         $this->emit('ratingModal', $product_uid);
@@ -110,6 +111,19 @@ class OrderDetail extends Component
     {
         $this->orders = $orderService->getOrderWithUid($this->orderUid);
     }
+
+    public function fetchOrderPromo()
+    {
+        // First, check if the order_id exists in the order_promo table
+        $orderPromoExists = OrderPromo::where('order_id', $this->orders->order_id)->exists();
+        if($orderPromoExists) {
+            // If the order_id does exist, fetch the OrderPromo and its associated promo and order
+            $this->promo = OrderPromo::with('promo', 'order')->where('order_id', $this->orders->order_id)->first();
+        }else {
+            $this->promo = null;
+        }
+    }
+
 
     /**
      * Fetching the Shipping details.
