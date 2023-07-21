@@ -112,6 +112,12 @@ class OrderDetail extends Component
         $this->orders = $orderService->getOrderWithUid($this->orderUid);
     }
 
+    /**
+     * Fetches the order promo for the current order.
+     * This method checks if an order promo exists for the current order. If it exists, it retrieves the order promo along with its associated promo and order.
+     * If it does not exist, it sets the promo property to null.
+     * @return void
+     */
     public function fetchOrderPromo()
     {
         // First, check if the order_id exists in the order_promo table
@@ -123,7 +129,6 @@ class OrderDetail extends Component
             $this->promo = null;
         }
     }
-
 
     /**
      * Fetching the Shipping details.

@@ -27,11 +27,14 @@
                     <div class="col-3 order_detail">
                         <div>
                             <h4>Harga / pcs</h4>
-                            <h5 style="font-weight: 500">Rp. {{ number_format($productDetail['price'], 0, ',', '.') }}</h5>
-                            @if ($orderStatuses['ORDER_RECEIVED'] == $orders->order_status || $orderStatuses['ORDER_COMPLETED'] ==
+                            <h5 style="font-weight: 500">Rp. {{ number_format($productDetail['price'], 0, ',', '.') }}
+                            </h5>
+                            @if ($orderStatuses['ORDER_RECEIVED'] == $orders->order_status ||
+                            $orderStatuses['ORDER_COMPLETED'] ==
                             $orders->order_status)
                             {{-- TODO: --}}
-                            <button type="button" class="btn-solid btn-sm mt-3" style="padding: 2px 9px" wire:click="showRatingModal('{{ $productDetail['product']->product_uid }}')">
+                            <button type="button" class="btn-solid btn-sm mt-3" style="padding: 2px 9px"
+                                wire:click="showRatingModal('{{ $productDetail['product']->product_uid }}')">
                                 <i class="fas fa-star"></i>
                                 Beri Penilaian
                             </button>
@@ -48,13 +51,16 @@
                 <div class="total-sec">
                     <ul>
                         <li>Sub Total <span>Rp. {{ number_format($totalPrice, 0, ',', '.') }}</span></li>
-                        <li>Ongkos Kirim <span>Rp. {{ number_format($shippingDetail['delivery_cost'], 0, ',', '.') }}</span></li>
-                        @if($promo && $promo !== null)
-                        @if ($promo->promo->discount_type == 'Persen')
-                        <li>Promo <span>- {{ $promo->promo->discount_value }}%</span></li>
-                        @else
-                        <li>Promo <span>- Rp. {{ number_format($promo->promo->discount_value, 0, ',', '.') }}</span></li>
-                        @endif
+                        <li>Ongkos Kirim <span>Rp. {{ number_format($shippingDetail['delivery_cost'], 0, ',', '.')
+                                }}</span></li>
+                        @if($promo)
+                        <li>Promo <span>-
+                                @if ($promo->promo->discount_type == 'Persen')
+                                {{ $promo->promo->discount_value }}%
+                                @else
+                                Rp. {{ number_format($promo->promo->discount_value, 0, ',', '.') }}
+                                @endif
+                            </span></li>
                         @endif
                     </ul>
                 </div>
@@ -111,14 +117,14 @@
                             <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
                                 <i class="fas fa-print"></i> Cetak Invoice
                             </button>
-                            @elseif ($orderStatuses['ORDER_RECEIVED'] == $orders->order_status || $orderStatuses['ORDER_COMPLETED'] == $orders->order_status)
+                            @elseif ($orderStatuses['ORDER_RECEIVED'] == $orders->order_status ||
+                            $orderStatuses['ORDER_COMPLETED'] == $orders->order_status)
 
                             <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
                                 <i class="fas fa-print"></i> Cetak Invoice
                             </button>
                             @else
-                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}"
-                                class="btn-solid btn-sm mt-3">
+                            <button id="printInvoice" data-uid="{{ $orders->order_uid }}" class="btn-solid btn-sm mt-3">
                                 <i class="fas fa-print"></i> Cetak Invoice
                             </button>
                             @endif
