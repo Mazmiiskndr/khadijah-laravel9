@@ -100,22 +100,7 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
         }
     }
 
-    public function createOrderPromo($order, $data)
-    {
-        try {
-            $promo = $this->promoModel->where('promo_code', $data['promo'])->first();
-            $createPromo =  $this->orderPromoModel->create([
-                'order_id' => $order->order_id,
-                'promo_id' => $promo->promo_id
-            ]);
-        } catch (\Exception $e) {
-            // Log the exception message for debugging
-            Log::error('Failed to create order promo: ' . $e->getMessage());
-
-            // Rethrow the exception to be handled by the parent method
-            throw $e;
-        }
-    }
+    // 👇 🌟🌟🌟 PRIVATE FUNCTIONS 🌟🌟🌟 👇
 
     /**
      * Create a new order instance.
@@ -147,6 +132,30 @@ class CheckoutRepositoryImplement extends Eloquent implements CheckoutRepository
             'order_number' => $this->generateOrderNumber()
         ]);
         return $order;
+    }
+
+    /**
+     * Create an order promo for the given order and data.
+     * @param  mixed  $order
+     * @param  array  $data
+     * @return mixed
+     * @throws \Exception
+     */
+    private function createOrderPromo($order, $data)
+    {
+        try {
+            $promo = $this->promoModel->where('promo_code', $data['promo'])->first();
+            return $this->orderPromoModel->create([
+                'order_id' => $order->order_id,
+                'promo_id' => $promo->promo_id
+            ]);
+        } catch (\Exception $e) {
+            // Log the exception message for debugging
+            Log::error('Failed to create order promo: ' . $e->getMessage());
+
+            // Rethrow the exception to be handled by the parent method
+            throw $e;
+        }
     }
 
     /**
