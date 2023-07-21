@@ -65,6 +65,10 @@ class UpdateProduct extends Component
             'size' => 'required',
             'stock' => 'required',
             'weight' => 'required',
+            'color' => 'nullable',
+            'length' => 'nullable',
+            'width' => 'nullable',
+            'height' => 'nullable',
         ];
 
         if ($this->thumbnail) {
@@ -73,14 +77,10 @@ class UpdateProduct extends Component
         $rules['productImages.*'] = 'nullable|image|max:20480';
 
         $rules += [
-            'color' => 'nullable',
             'type' => 'nullable',
             'product_description' => 'nullable',
             'material' => 'nullable',
             'discount' => 'nullable',
-            'length' => 'nullable',
-            'width' => 'nullable',
-            'height' => 'nullable',
         ];
 
         return $rules;
@@ -99,6 +99,10 @@ class UpdateProduct extends Component
             'size.required' => 'Ukuran harus diisi',
             'stock.required' => 'Stok harus diisi',
             'weight.required' => 'Berat harus diisi',
+            'color.required' => 'Warna harus diisi',
+            'length.required' => 'Panjang harus diisi',
+            'width.required' => 'Lebar harus diisi',
+            'height.required' => 'Tinggi harus diisi',
         ];
 
         if ($this->thumbnail) {
@@ -184,6 +188,10 @@ class UpdateProduct extends Component
     {
         $this->updateModal = false;
         $this->resetFields();
+        // Reset the validation error messages
+        $this->resetErrorBag();
+        // Reset the validation status
+        $this->resetValidation();
     }
 
     /**
@@ -209,6 +217,7 @@ class UpdateProduct extends Component
         $this->width = '';
         $this->height = '';
         $this->discount = '';
+        $this->dispatchBrowserEvent('fileInputReset');
     }
 
 }

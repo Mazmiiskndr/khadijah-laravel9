@@ -43,6 +43,11 @@ class Customer extends Authenticatable
         });
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'customer_id');
+    }
+
     public function province()
     {
         return $this->belongsTo(Province::class);

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\OrderPromo;
 use App\Services\Order\OrderService;
 use Livewire\Component;
 use ReflectionClass;
@@ -11,10 +12,11 @@ use ReflectionClass;
 class OrderDetail extends Component
 {
     // Define public properties
-    public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors;
+    public $orderStatuses, $orderUid, $orders, $products, $shippingDetail, $colors, $promo;
 
     protected $listeners = [
         'paymentUpdated' => 'handleUpdated',
+        'ratingCreated' => 'handleUpdated',
     ];
 
     /**
@@ -26,6 +28,7 @@ class OrderDetail extends Component
     {
         $this->fetchOrderStatuses();
         $this->fetchOrderDetails($orderService);
+        $this->fetchOrderPromo();
         $this->extractProductsFromOrderDetails();
         $this->fetchShippingDetails();
 
@@ -62,13 +65,11 @@ class OrderDetail extends Component
      * @param  OrderService $orderService - The order service used to handle the order processes
      * @return void
      */
-    public function showRatingModal(OrderService $orderService)
+    public function showRatingModal(OrderService $orderService,$product_uid)
     {
         // Re-fetch the data
         $this->mount($orderService);
-
-        // Emit a browser event to show the payment modal
-        $this->dispatchBrowserEvent('show-rating-modal');
+        $this->emit('ratingModal', $product_uid);
     }
 
     public function orderReceived(OrderService $orderService)
@@ -109,6 +110,24 @@ class OrderDetail extends Component
     private function fetchOrderDetails(OrderService $orderService)
     {
         $this->orders = $orderService->getOrderWithUid($this->orderUid);
+    }
+
+    /**
+     * Fetches the order promo for the current order.
+     * This method checks if an order promo exists for the current order. If it exists, it retrieves the order promo along with its associated promo and order.
+     * If it does not exist, it sets the promo property to null.
+     * @return void
+     */
+    public function fetchOrderPromo()
+    {
+        // First, check if the order_id exists in the order_promo table
+        $orderPromoExists = OrderPromo::where('order_id', $this->orders->order_id)->exists();
+        if($orderPromoExists) {
+            // If the order_id does exist, fetch the OrderPromo and its associated promo and order
+            $this->promo = OrderPromo::with('promo', 'order')->where('order_id', $this->orders->order_id)->first();
+        }else {
+            $this->promo = null;
+        }
     }
 
     /**

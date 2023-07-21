@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Backend\Sales\Detail;
 
 use App\Enums\OrderStatus;
 use App\Models\Order;
+use App\Models\OrderPromo;
 use App\Models\ShippingDetail;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Order\OrderService;
@@ -13,7 +14,7 @@ use ReflectionClass;
 class Form extends Component
 {
     // Define public properties for UpdateStatus
-    public $orderStatuses, $order_uid, $orders, $shippingDetail, $colors, $order_status;
+    public $orderStatuses, $order_uid, $orders, $shippingDetail, $colors, $order_status, $promo;
 
     // Define public properties for UpdateWayBill
     public $tracking_number, $noResi, $manifests, $statusResi;
@@ -71,6 +72,7 @@ class Form extends Component
 
         // Fetch the order details by the order UID.
         $this->orders = $orderService->getOrderWithUid($this->order_uid);
+        $this->fetchOrderPromo();
 
         // Fetch the Shipping details.
         $this->shippingDetail = $this->orders->shippingDetail;
@@ -87,6 +89,24 @@ class Form extends Component
 
         // get color for order status
         $this->colors = $orderService->getColors($this->orders->order_status);
+    }
+
+    /**
+     * Fetches the order promo for the current order.
+     * This method checks if an order promo exists for the current order. If it exists, it retrieves the order promo along with its associated promo and order.
+     * If it does not exist, it sets the promo property to null.
+     * @return void
+     */
+    public function fetchOrderPromo()
+    {
+        // First, check if the order_id exists in the order_promo table
+        $orderPromoExists = OrderPromo::where('order_id', $this->orders->order_id)->exists();
+        if ($orderPromoExists) {
+            // If the order_id does exist, fetch the OrderPromo and its associated promo and order
+            $this->promo = OrderPromo::with('promo', 'order')->where('order_id', $this->orders->order_id)->first();
+        } else {
+            $this->promo = null;
+        }
     }
 
     /**

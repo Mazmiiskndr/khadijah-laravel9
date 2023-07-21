@@ -121,6 +121,7 @@
                     {{-- END SIDEBAR PELANGGAN --}}
 
                     {{-- START SIDEBAR PROMO --}}
+                    {{-- TODO: PROMO --}}
                     <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav" href="{{ route('backend.promo.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-task') }}"></use>
@@ -171,7 +172,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-charts') }}"></use>
                             </svg><span>Laporan</span>
-                            <label class="badge badge-light-primary">3</label>
+                            <label class="badge badge-light-primary">2</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             <li>
@@ -196,18 +197,6 @@
                                     <span>Pengunjung</span>
                                 </a>
                             </li>
-                            {{-- TODO: --}}
-                            <li>
-                                <a href="#">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#doller-return') }}"></use>
-                                    </svg>
-                                    <span>Transaksi</span>
-                                </a>
-                            </li>
 
                         </ul>
                     </li>
@@ -222,7 +211,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
                             </svg><span>Pengaturan</span>
-                            <label class="badge badge-light-primary">3</label>
+                            <label class="badge badge-light-primary">2</label>
                         </a>
                         <ul class="sidebar-submenu" style="display: block;">
                             <li>

@@ -226,6 +226,13 @@
 
     @push('scripts')
     <script>
+        // Event listener for reset input file
+            window.addEventListener('fileInputReset', () => {
+                document.getElementById('thumbnail').value = '';
+                document.getElementById('productImages').value = '';
+            });
+    </script>
+    <script>
         (function($){
             $(document).on('livewire:load', function() {
                 $('.select2').select2()

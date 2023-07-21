@@ -150,9 +150,15 @@
                                         <a href="{{ route('product.show', ['product' => $newProduct1->product_slug]) }}"><img class="img-fluid blur-up lazyload" src="{{ asset('storage/'.$newProduct1->thumbnail) }}"
                                                 alt=""></a>
                                         <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                            </div><a href="{{ route('product.show', ['product' => $newProduct1->product_slug]) }}">
+                                            <div class="rating">
+                                                @for ($i = 1; $i <= 5; $i++) @if ($i <=round($newProduct1->averageRating()))
+                                                    <i class="fa fa-star" style="color: #ffa200"></i>
+                                                    @else
+                                                    <i class="fa fa-star" style="color: #ddd"></i>
+                                                    @endif
+                                                    @endfor
+                                            </div>
+                                            <a href="{{ route('product.show', ['product' => $newProduct1->product_slug]) }}">
                                                 <h6>{{ $newProduct1->product_name }}</h6>
                                             </a>
                                             <h4>Rp. {{ number_format($newProduct1->price - $newProduct1->discount, 0, ',', '.') }}</h4>
@@ -168,9 +174,15 @@
                                         <a href="{{ route('product.show', ['product' => $newProduct2->product_slug]) }}"><img class="img-fluid blur-up lazyload" src="{{ asset('storage/'.$newProduct2->thumbnail) }}"
                                                 alt=""></a>
                                         <div class="media-body align-self-center">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                            </div><a href="{{ route('product.show', ['product' => $newProduct2->product_slug]) }}">
+                                            <div class="rating">
+                                                @for ($i = 1; $i <= 5; $i++) @if ($i <=round($newProduct2->averageRating()))
+                                                    <i class="fa fa-star" style="color: #ffa200"></i>
+                                                    @else
+                                                    <i class="fa fa-star" style="color: #ddd"></i>
+                                                    @endif
+                                                    @endfor
+                                            </div>
+                                            <a href="{{ route('product.show', ['product' => $newProduct2->product_slug]) }}">
                                                 <h6>{{ $newProduct2->product_name }}</h6>
                                             </a>
                                             <h4>Rp. {{ number_format($newProduct2->price - $newProduct2->discount, 0, ',', '.') }}</h4>
@@ -228,25 +240,23 @@
                                         <div class="product-count">
                                             <ul>
                                                 <li>
-                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                    <span class="p-counter">37</span>
-                                                    <span class="lang"> Produk Terjual</span>
-                                                </li>
-                                                <li>
                                                     <i class="fa-solid fa-face-grin-stars"></i>
-                                                    <span class="p-counter">44</span>
+                                                    <span class="p-counter">{{ $product->reviews->count() }}</span>
                                                     <span class="lang"> Ulasan</span>
                                                 </li>
                                             </ul>
                                         </div>
                                         <h2>{{ $product->product_name }}</h2>
                                         <div class="rating-section">
-                                            <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-                                                    class="fa fa-star"></i>
+                                            <div class="rating">
+                                                @for ($i = 1; $i <= 5; $i++) @if ($i <=round($product->averageRating()))
+                                                    <i class="fa fa-star" style="color: #ffa200"></i>
+                                                    @else
+                                                    <i class="fa fa-star" style="color: #ddd"></i>
+                                                    @endif
+                                                    @endfor
                                             </div>
-                                            {{-- *** TODO: RATINGS *** --}}
-                                            <h6>120 ratings</h6>
+                                            <h6>{{ $product->reviews->count() }} Ulasan</h6>
                                         </div>
                                         <div class="label-section">
                                             <span class="badge badge-grey-color mb-1">#1 Best seller</span>
@@ -262,12 +272,6 @@
                                             <span>({{ round(($product->discount / $product->price) * 100) }}%)</small>
                                                 @endif
                                         </h3>
-                                        {{-- *** TODO: COLOR *** --}}
-                                        {{-- <ul class="color-variant">
-                                            <li class="bg-light0 active"></li>
-                                            <li class="bg-light1"></li>
-                                            <li class="bg-light2"></li>
-                                        </ul> --}}
 
                                         {{-- Start Add To Cart Detail Product --}}
                                         @livewire('frontend.product.detail.add-to-cart', [
@@ -288,12 +292,6 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                        {{-- <div class="border-product">
-                                            <h6 class="product-title">Sales Ends In</h6>
-                                            <div class="timer">
-                                                <p id="demo"></p>
-                                            </div>
-                                        </div> --}}
                                         <div class="border-product">
                                             <h6 class="product-title">shipping info</h6>
                                             <ul class="shipping-info">
@@ -335,29 +333,11 @@
                                             </a>
                                             <div class="material-border"></div>
                                         </li>
-                                        {{-- *** TODO: *** --}}
                                         <li class="nav-item">
                                             <a class="nav-link" id="profile-top-tab" data-bs-toggle="tab" href="#top-profile" role="tab"
                                                 aria-selected="false">
                                                 <i class="icofont icofont-man-in-glasses"></i>
                                                 Detail Produk
-                                            </a>
-                                            <div class="material-border"></div>
-                                        </li>
-                                        {{-- TODO: VIDEOS --}}
-                                        {{-- <li class="nav-item">
-                                            <a class="nav-link" id="contact-top-tab" data-bs-toggle="tab" href="#top-contact" role="tab"
-                                                aria-selected="false">
-                                                <i class="icofont icofont-contacts"></i>
-                                                Video
-                                            </a>
-                                            <div class="material-border"></div>
-                                        </li> --}}
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="review-top-tab" data-bs-toggle="tab" href="#top-review" role="tab"
-                                                aria-selected="false">
-                                                <i class="icofont icofont-contacts"></i>
-                                                Beri Ulasan
                                             </a>
                                             <div class="material-border"></div>
                                         </li>
@@ -373,11 +353,6 @@
                                         </div>
                                         <div class="tab-pane fade" id="top-profile" role="tabpanel"
                                             aria-labelledby="profile-top-tab">
-                                            {{-- TODO: --}}
-                                            {{-- <p>The Model is wearing a white blouse from our stylist's collection, see
-                                                the image for a mock-up of what the actual blouse would look like.it has
-                                                text written on it in a black cursive language which looks great on a
-                                                white color.</p> --}}
                                             <div class="single-product-tables">
                                                 <table>
                                                     <tbody>
@@ -410,20 +385,10 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        {{-- TODO: VIDEOS --}}
-                                        {{-- <div class="tab-pane fade" id="top-contact" role="tabpanel"
-                                            aria-labelledby="contact-top-tab">
-                                            <div class="">
-                                                <iframe width="560" height="315"
-                                                    src="https://www.youtube.com/embed/BUWzX78Ye_8"
-                                                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                                            </div>
-                                        </div> --}}
-                                        {{-- TODO: REVIEW --}}
-                                        {{-- START REVIEW --}}
-                                        @livewire('frontend.product.detail.review-product')
+                                        {{-- TODO: STILL NEED TO CHECK --}}
+                                        {{-- @livewire('frontend.product.detail.review-product') --}}
                                         {{-- END REVIEW --}}
-                                    </div>
+                                    </div>`
                                 </div>
                             </div>
                         </section>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Models\Bank;
+use App\Models\Promo;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use App\Services\Cart\CartService;
 use App\Services\Checkout\CheckoutService;
@@ -24,6 +25,8 @@ class FormCheckout extends Component
     public $product_id, $quantity, $price, $subTotal, $total, $paymentMethod, $weight;
     // ShippingCost Parcels
     public $parcels = [];
+    // For Promo
+    public $promo;
     // FOR CARTS DATA
     public $carts = [];
     // BANK DATA
@@ -165,7 +168,7 @@ class FormCheckout extends Component
     {
         // Fetch the parcels for the selected expedition
         $contactData = app('contactData');
-        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->city_id, $this->weight, $value);
+        $this->parcels = app(ApiRajaOngkirService::class)->getCostParcel($contactData, $this->district_id, $this->weight, $value);
 
         // Reset parcel selection
         $this->parcel = null;
@@ -189,7 +192,7 @@ class FormCheckout extends Component
      * @param CheckoutService $checkoutService The instance of CheckoutService responsible for storing the checkout order.
      * @return void
      */
-    public function storeCheckout(CheckoutService $checkoutService, CartService $cartService)
+    public function storeCheckout(CheckoutService $checkoutService, CartService $cartService, Promo $promo)
     {
         // Get the cart data
         $carts = $this->getCustomerCartData($cartService);
@@ -206,8 +209,21 @@ class FormCheckout extends Component
         try {
             $district = $this->getDistrictById($this->district_id);
             $city = $this->getCityById($this->city_id);
+
             // Prepare the data for storing a checkout by calling the prepareDataStoreCheckout method
             $data = $this->prepareDataStoreCheckout($district, $city['postal_code']);
+
+            // Check if promo code exists and apply discount
+            $totalPriceWithDiscount = $this->applyDiscount($data['total']);
+
+            // Check if applyDiscount method return string (error message), if yes then return it as error
+            if (is_string($totalPriceWithDiscount)) {
+                session()->flash('error', $totalPriceWithDiscount);
+                return;
+            }
+
+            // If no error occured, assign the discounted price to total
+            $data['total'] = $totalPriceWithDiscount;
 
             // Store the checkout data using the checkout service and store the result
             $result = $checkoutService->storeCheckout($data);
@@ -233,6 +249,37 @@ class FormCheckout extends Component
         }
     }
 
+    /**
+     * Apply a discount to the total price based on the promo code.
+     * @param float $totalPrice
+     * @return float|string The discounted total price or error message
+     */
+    private function applyDiscount($totalPrice)
+    {
+        // Check if promo code exists
+        if (isset($this->promo) && $this->promo !== null && $this->promo !== "") {
+            $promoCode = Promo::where('promo_code', $this->promo)->first();
+
+            if ($promoCode) {
+                // Check if the promo is still valid
+                $currentDate = now();
+                if ($currentDate->greaterThan($promoCode->start_date) && $currentDate->lessThan($promoCode->end_date)) {
+                    if ($promoCode->discount_type == 'Persen') {
+                        $discount = $totalPrice * ($promoCode->discount_value / 100);
+                        $totalPrice -= $discount;
+                    } elseif ($promoCode->discount_type == 'Nominal') {
+                        $totalPrice -= $promoCode->discount_value;
+                    }
+                } else {
+                    return 'Kode promo sudah tidak berlaku.';
+                }
+            } else {
+                return 'Kode promo tidak valid.';
+            }
+        }
+
+        return $totalPrice;
+    }
 
     /**
      * The function prepares and returns an array of data for use in the checkout process, including
@@ -247,9 +294,9 @@ class FormCheckout extends Component
             'name' => $this->name,
             'email' => $this->email,
             'address' => $this->address,
-            'province_name' => $district['province'],
-            'city_name' => $district['type']. " " . $district['city'],
-            'district_name' => $district['subdistrict_name'],
+            'province' => $district['province'],
+            'city' => $district['type']. " " . $district['city'],
+            'district' => $district['subdistrict_name'],
             'province_id' => $district['province_id'],
             'city_id' => $district['city_id'],
             'district_id' => $district['subdistrict_id'],
@@ -261,6 +308,7 @@ class FormCheckout extends Component
             'parcel' => $this->parcel,
             'deliveryCost' => $this->deliveryCost,
             'weight' => $this->weight,
+            'promo' => $this->promo,
         ];
     }
 
@@ -274,17 +322,19 @@ class FormCheckout extends Component
         $carts = $cartService->getAllDataByCustomer(Auth::guard('customer')->user()->id);
         /** @var iterable|object $carts */
 
-        // Initialize the subtotal and total variables
+        // Initialize the subtotal, total, and weight variables
         $this->subTotal = 0;
         $this->total = 0;
+        $this->weight = 0; // initialize weight
 
-        // Calculate the subtotal
+        // Calculate the subtotal and total weight
         foreach ($carts as $cart) {
-            $this->weight = $cart->quantity * $cart->product->weight;
+            $this->weight += $cart->quantity * $cart->product->weight;
 
-            if ($cart->product->discount > 0) {
+            if ($cart->product->discount > 0
+            ) {
                 $totalPerPrice = $cart->quantity * ($cart->product->price - $cart->product->discount);
-            }else{
+            } else {
                 $totalPerPrice = $cart->quantity * $cart->product->price;
             }
 
@@ -295,15 +345,13 @@ class FormCheckout extends Component
 
         // Return the updated value of $carts
         return $carts;
-
     }
 
     /**
      * Populate the form fields with customer data.
      * @param mixed $customer
-     * @param ApiRajaOngkirService $apiRajaOngkirService
      */
-    private function populateFormFields($customer, ApiRajaOngkirService $apiRajaOngkirService)
+    private function populateFormFields($customer)
     {
         $this->customer_uid = $customer->customer_uid;
         $this->name = $customer->name;

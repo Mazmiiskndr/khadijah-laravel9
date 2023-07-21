@@ -10,7 +10,7 @@
                 </div>
                 <div class="back">
                     <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}">
-                        @if($productLimit->images->first()->image_name == null)
+                        @if(!isset($productLimit->images->first()->image_name))
                         <img src="{{ asset('storage/'.$productLimit->thumbnail) }}"
                             class="img-fluid blur-up lazyload bg-img" alt="{{ $productLimit->product_name }}">
                         @else
@@ -40,8 +40,13 @@
             </div>
             <div class="product-detail">
                 <div>
-                    <div class="rating"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                    <div class="rating">
+                        @for ($i = 1; $i <= 5; $i++) @if ($i <=round($productLimit->averageRating()))
+                            <i class="fa fa-star" style="color: #ffa200"></i>
+                            @else
+                            <i class="fa fa-star" style="color: #ddd"></i>
+                            @endif
+                            @endfor
                     </div>
                     <a href="{{ route('product.show', ['product' => $productLimit->product_slug]) }}">
                         <h6>{{ $productLimit->product_name }}</h6>

@@ -10,7 +10,9 @@ class ProductLimits extends Component
 {
     public function render()
     {
-        $productLimits = Product::with('images')->orderBy('created_at', 'DESC')->offset(9 - 1)->limit(6)->get();
+        $productLimits = Product::with('images')->orderBy('created_at', 'DESC')->offset(9 - 1)->limit(6)->get()->each(function ($product) {
+            $product->averageRating = $product->averageRating();
+        });
         return view('livewire.frontend.product.detail.product-limits',[
             'productLimits' => $productLimits,
         ]);

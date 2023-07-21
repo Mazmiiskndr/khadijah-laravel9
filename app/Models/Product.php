@@ -39,12 +39,6 @@ class Product extends Model
         });
     }
 
-    // TODO: DETAIL PRODUCTS
-    // public function detailProducts()
-    // {
-    //     return $this->hasMany(DetailProduct::class, 'product_id', 'product_id');
-    // }
-
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');
@@ -65,16 +59,13 @@ class Product extends Model
         return $this->hasMany(OrderDetail::class, 'product_id', 'product_id');
     }
 
-    // QUERY BEST SELLING PRODUCTS
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id');
+    }
 
-    // $bestSellingProducts = Product::select('product.*')
-    // ->withCount(['orderDetails as total_sold' => function ($query) {
-    //     $query->join('order', 'order_detail.order_id', '=', 'order.order_id')
-    //         ->where('order.order_status', 'Pesanan Selesai'); // atau status yang sesuai untuk pesanan yang berhasil
-    // }])
-    // ->join('order_detail', 'product.product_id', '=', 'order_detail.product_id')
-    // ->groupBy('product.product_id')
-    // ->orderBy('total_sold', 'desc')
-    // ->take(10) // Jumlah produk terlaris yang ingin diambil (misalnya, 10 produk terlaris)
-    // ->get();
+    public function averageRating()
+    {
+        return $this->reviews()->avg('rating');
+    }
 }

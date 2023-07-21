@@ -60,6 +60,11 @@ class Grid extends Component
         // Retrieving the products based on the provided filters
         $products = $productService->getProductFrontend($this->perPage, $this->search, $this->showing, $this->categoryFilters, $this->sizes);
 
+        // Calculate average rating for each product
+        foreach ($products as $product) {
+            $product->averageRating = $product->averageRating();
+        }
+
         // Preparing the pagination data or default values when no products are found
         $paginationData = is_object($products) ? [
             'firstItem' => $products->firstItem(),

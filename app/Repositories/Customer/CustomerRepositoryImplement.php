@@ -168,6 +168,7 @@ class CustomerRepositoryImplement extends Eloquent implements CustomerRepository
             'phone' => $data['phone'],
         ];
 
+
         // If a password is provided, hash it and add it to the data to update.
         if (!empty($data['password'])) {
             $customerData['password'] = Hash::make($data['password']);

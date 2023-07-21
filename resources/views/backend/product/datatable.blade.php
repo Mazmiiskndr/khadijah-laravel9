@@ -13,9 +13,6 @@
 
     <div class="container-fluid">
         <div class="row">
-            {{-- <div class="mb-3">
-                @livewire('backend.product.create-product')
-            </div> --}}
             <div class="card">
                 <div class="card-header pb-0 card-no-border d-flex">
                     <h5>Tabel Produk</h5>

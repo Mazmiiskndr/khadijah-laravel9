@@ -24,6 +24,18 @@
                         <th>:</th>
                         <td>Rp. {{ number_format($shippingDetail['delivery_cost'], 0, ',', '.') }}</td>
                     </tr>
+                    @if($promo)
+                    <tr>
+                        <th><b>Promo</b></th>
+                        <th>:</th>
+                        @if ($promo->promo->discount_type == 'Persen')
+                        <td>- {{ $promo->promo->discount_value }}%</td>
+                        @else
+                        <td>- Rp. {{ number_format($promo->promo->discount_value, 0, ',', '.') }}</td>
+                        @endif
+                    </tr>
+                    @endif
+
                     <tr>
                         <th><b>Total Pesanan</b></th>
                         <th>:</th>

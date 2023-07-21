@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Http\Livewire\Frontend\Checkout\OrderDetail;
 use LaravelEasyRepository\Implementations\Eloquent;
 use App\Models\Order;
+use App\Models\OrderDetail as ModelsOrderDetail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,7 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
     protected $model;
     protected $orderDetailModel;
 
-    public function __construct(Order $model, OrderDetail $orderDetailModel)
+    public function __construct(Order $model, ModelsOrderDetail $orderDetailModel)
     {
         $this->model = $model;
         $this->orderDetailModel = $orderDetailModel;
@@ -38,6 +39,23 @@ class OrderRepositoryImplement extends Eloquent implements OrderRepository
         }])
             ->select('order_id', 'order_uid', 'order_number', 'order_status', 'customer_id') // customer_id added
             ->latest()->get();
+    }
+
+    /**
+     * This method retrieves all products along with their associated order details and the total number of sales.
+     * @return \Illuminate\Database\Eloquent\Collection Returns a collection of Product models. Each Product model has two additional attributes:
+     * - sales: The total number of sales for the product.
+     * - orderDetails: A collection of OrderDetail models associated with the product.
+     */
+    public function getProductSales()
+    {
+        return $this->orderDetailModel
+            ->select('product_id', DB::raw('SUM(quantity) as total_quantity'))
+            ->with('product')
+            ->join('order', 'order_detail.order_id', '=', 'order.order_id')
+            ->where('order.order_status', OrderStatus::ORDER_COMPLETED)
+            ->groupBy('product_id')
+            ->get();
     }
 
     /**
