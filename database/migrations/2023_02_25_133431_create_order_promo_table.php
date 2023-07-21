@@ -16,10 +16,6 @@ return new class extends Migration
         Schema::create('order_promo', function (Blueprint $table) {
             $table->unsignedBigInteger('order_id');
             $table->unsignedBigInteger('promo_id');
-            $table->primary(['order_id', 'promo_id']);
-
-
-
 
             $table->foreign('order_id')
                     ->references('order_id')

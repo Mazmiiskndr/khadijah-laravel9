@@ -257,7 +257,7 @@ class FormCheckout extends Component
     private function applyDiscount($totalPrice)
     {
         // Check if promo code exists
-        if (isset($this->promo) && $this->promo !== null) {
+        if (isset($this->promo) && $this->promo !== null && $this->promo !== "") {
             $promoCode = Promo::where('promo_code', $this->promo)->first();
 
             if ($promoCode) {
@@ -280,8 +280,6 @@ class FormCheckout extends Component
 
         return $totalPrice;
     }
-
-
 
     /**
      * The function prepares and returns an array of data for use in the checkout process, including
@@ -310,8 +308,8 @@ class FormCheckout extends Component
             'parcel' => $this->parcel,
             'deliveryCost' => $this->deliveryCost,
             'weight' => $this->weight,
+            'promo' => $this->promo,
         ];
-        // test
     }
 
     /**
