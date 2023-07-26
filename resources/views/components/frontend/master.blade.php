@@ -13,16 +13,10 @@
     {{-- End Favicon --}}
     <title>{{ $title ?? config('app.name') }}</title>
     @livewireStyles
-    <!--Google font-->
-    {{-- <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet"> --}}
 
     {{-- Start Css --}}
     <x-frontend.css />
     @stack('styles')
-    {{-- End Css --}}
-    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome/css/all.min.css') }}" />
 
 
 

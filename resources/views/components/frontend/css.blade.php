@@ -1,4 +1,6 @@
-{{-- <!--Slick slider css-->
+<!--Slick slider css-->
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick.min.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/slick-theme.min.css') }}">
 
@@ -12,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/vendors/bootstrap.min.css') }}">
 
 <!-- Theme css -->
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/style.min.css') }}"> --}}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/assets/css/style.min.css') }}">
 
 
-@vite(['resources/css/frontend.css'])
+{{-- @vite(['resources/css/frontend.css']) --}}

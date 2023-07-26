@@ -177,7 +177,7 @@
 <!-- cart start -->
 <div class="addcart_btm_popup" id="fixed_cart_icon">
     <a href="#" class="fixed_cart">
-        <i class="ti-shopping-cart"></i>
+        <i class="fas fa-shopping-cart"></i>
     </a>
 </div>
 <!-- cart end -->

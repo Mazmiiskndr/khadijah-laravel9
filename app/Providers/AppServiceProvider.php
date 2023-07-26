@@ -6,6 +6,7 @@ use App\Models\Contact;
 use App\Services\ApiRajaOngkir\ApiRajaOngkirService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -18,7 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if(env('APP_ENV') !== 'local')
+        {
+            URL::forceScheme('https');
+        }
     }
 
     /**
