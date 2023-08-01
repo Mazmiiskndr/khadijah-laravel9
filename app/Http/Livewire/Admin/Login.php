@@ -47,6 +47,8 @@ class Login extends Component
 
         // Attempt to login the user
         if (Auth::guard('web')->attempt($credentials)) {
+            // Regenerate the session to avoid conflicts
+            session()->regenerate();
             // Successful login, redirect user to intended page
             return redirect()->intended(RouteServiceProvider::HOME);
         } else {

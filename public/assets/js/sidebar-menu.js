@@ -427,25 +427,25 @@ if ($(window).width() <= 1199) {
     $(".left-header .link-section").children("ul").css("display", "none");
     $(this).parent().children("ul").toggleClass("d-block").slideToggle();
 }
-// if ($(window).width() <= 991) {
-//     $('.sidebar-wrapper .back-btn').on('click', function (e) {
-//         $(".page-header").toggleClass("close_icon");
-//         $(".sidebar-wrapper").toggleClass("close_icon");
-//     });
-// }
 
 // active link
-if (
-    $(".simplebar-wrapper .simplebar-content-wrapper") &&
-    $("#pageWrapper").hasClass("compact-wrapper")
-) {
-    $(".simplebar-wrapper .simplebar-content-wrapper").animate(
-        {
-            scrollTop:
-                $(
-                    ".simplebar-wrapper .simplebar-content-wrapper a.active"
-                ).offset().top - 400,
-        },
-        1000
+//Check if the compact-wrapper class exists
+var pageWrapper = document.getElementById("pageWrapper");
+if (pageWrapper && pageWrapper.classList.contains("compact-wrapper")) {
+    var activeLink = document.querySelector(
+        ".simplebar-wrapper .simplebar-content-wrapper a.active"
     );
+
+    //Check if the active link exists
+    if (activeLink !== null) {
+        //Get the offset top position of the active link
+        var activeLinkPosition = activeLink.getBoundingClientRect().top;
+        //Use a smooth scroll polyfill to ensure browser compatibility for smooth scrolling
+        window.scroll({
+            top: activeLinkPosition - 400,
+            behavior: "smooth",
+        });
+    } else {
+        console.log("Active link not found!");
+    }
 }
